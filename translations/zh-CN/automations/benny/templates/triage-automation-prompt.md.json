@@ -1,0 +1,62 @@
+{
+  "source": "automations/benny/templates/triage-automation-prompt.md",
+  "sha256": "e0bba594547834f013ec805915610eb597e7929efe3ffbe85ae00339ee16d474",
+  "blocks": [
+    {
+      "en": "# Triage automation prompt\n\n",
+      "zh": "# 分诊自动化提示词\n\n"
+    },
+    {
+      "en": "> Source material for the copied setup workflow. Paraphrase this intent into a built-in `automate` draft after `automate` confirms that the copied pack is committed in the repository where the automation will run.\n\n",
+      "zh": "> 用于复制包配置流程的源材料。待 `automate` 确认复制包已提交到自动化实际运行的仓库后，将此意图改写为内置 `automate` 草稿。\n\n"
+    },
+    {
+      "en": "Read and follow `.cursor/automations/benny/skills/triage-issue-reports/SKILL.md` for this run.\n\n",
+      "zh": "本次运行请阅读并遵循 `.cursor/automations/benny/skills/triage-issue-reports/SKILL.md`。\n\n"
+    },
+    {
+      "en": "Configuration source. Include this repository-relative path only when it is committed in the same target repository. Otherwise paraphrase the configured values. Never use a plugin source or cache path:\n\n",
+      "zh": "配置来源。仅当此相对仓库路径已提交到同一目标仓库时，才包含它；否则转述配置值。绝不使用插件源目录或缓存路径：\n\n"
+    },
+    {
+      "en": "```text\n{{BENNY_CONFIG_PATH}}\n```\n\n",
+      "zh": "```text\n{{BENNY_CONFIG_PATH}}\n```\n\n"
+    },
+    {
+      "en": "Trigger:\n\n",
+      "zh": "触发信息：\n\n"
+    },
+    {
+      "en": "```json\n{\n\t\"source_channel_id\": \"{{SLACK_CHANNEL_ID}}\",\n\t\"message_ts\": \"{{SLACK_MESSAGE_TS}}\",\n\t\"thread_ts\": \"{{SLACK_THREAD_TS_OR_EMPTY}}\"\n}\n```\n\n",
+      "zh": "```json\n{\n\t\"source_channel_id\": \"{{SLACK_CHANNEL_ID}}\",\n\t\"message_ts\": \"{{SLACK_MESSAGE_TS}}\",\n\t\"thread_ts\": \"{{SLACK_THREAD_TS_OR_EMPTY}}\"\n}\n```\n\n"
+    },
+    {
+      "en": "The creation intent should describe this as a new top-level report in the configured source Slack channel.\n\n",
+      "zh": "创建意图应描述为：配置的来源 Slack 频道中出现一份新的顶层报告。\n\n"
+    },
+    {
+      "en": "Treat the source channel and root thread timestamp as immutable. If either is missing or does not match configuration, stop without posting or writing to the issue tracker.\n\n",
+      "zh": "来源频道和根线程时间戳不可更改。如果其中任何一项缺失或与配置不符，停止，不发帖，也不写入问题追踪系统。\n\n"
+    },
+    {
+      "en": "The committed operational file owns classification, attachment review, cause tracing, routing, dedupe, tracker writes, and the final verdict. Post no progress messages. Never post a root message in the source channel.\n\n",
+      "zh": "已提交的操作文件负责分类、附件审查、原因追踪、路由、去重、追踪系统写入及最终结论。不发送进度消息，绝不在来源频道发送根消息。\n\n"
+    },
+    {
+      "en": "The coordinator is the only Slack poster. Any delegated worker must be read-only, return findings only, and receive an explicit ban on every Slack write action.\n\n",
+      "zh": "协调者是唯一可以在 Slack 发帖的角色。委派执行者必须只读，仅返回发现，并收到明确禁止一切 Slack 写操作的指令。\n\n"
+    },
+    {
+      "en": "End the single verdict with exactly one configured marker:\n\n",
+      "zh": "单条结论必须以且仅以一个配置标记结束：\n\n"
+    },
+    {
+      "en": "```text\n[benny:bug]\n[benny:performance]\n[benny:other]\n```\n\n",
+      "zh": "```text\n[benny:bug]\n[benny:performance]\n[benny:other]\n```\n\n"
+    },
+    {
+      "en": "A bug or performance marker may add `tracker=<URL>`.\n",
+      "zh": "缺陷或性能标记后可以附加 `tracker=<URL>`。\n"
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "source": "docs/guide/03-understand.md",
+  "sha256": "16f3fe0f7df092a5c69dac90971ef57e63a8a9ae926eed851285c7bfddc0f3fd",
+  "blocks": [
+    {
+      "en": "# Understand the code before changing it\n\n",
+      "zh": "# 先理解代码，再动手修改"
+    },
+    {
+      "en": "Editing code you don't understand is how subtle regressions ship. pstack gives you four ways in. `/how` explains what the code does now. `/why` digs up the reasons it's shaped that way. `/teach` blends both into one explanation. `/recall` rebuilds your own recent context on a topic.\n\n",
+      "zh": "在没理解代码时直接修改，容易让隐蔽的回归问题进入交付。pstack 提供四种切入方式。`/how` 解释代码目前做什么。`/why` 查明它为什么设计成这样。`/teach` 把两者串成一份说明。`/recall` 帮你恢复某个主题近期的工作上下文。"
+    },
+    {
+      "en": "![A detective studies a machine blueprint with a magnifying glass while robots fetch case files; the evidence board behind her links clues under /how and /why.](./images/understanding.jpg)\n\n",
+      "zh": "![侦探拿着放大镜研究机器蓝图，机器人取来案件档案；身后的证据板在 /how 和 /why 下连接着各种线索。](./images/understanding.jpg)"
+    },
+    {
+      "en": "## Trace behavior with `/how`\n\n",
+      "zh": "## 用 `/how` 追踪行为"
+    },
+    {
+      "en": "```text\n/how do we dedupe notifications? is there an n+1 when we look up subscribers?\n```\n\n",
+      "zh": "```text\n/how 通知是怎么去重的？查询订阅者时有没有 N+1 问题？\n```"
+    },
+    {
+      "en": "Ask the question you actually have. [`/how`](../../skills/how/SKILL.md) reads the code and answers at the level of a senior engineer onboarding you onto the subsystem, with the runtime flow, the key types, and the non-obvious parts. For a big subsystem it fans out two to four read-only explorers first. For a narrow question it just reads and explains.\n\n",
+      "zh": "直接问你真正想知道的问题。[`/how`](../../skills/how/SKILL.md) 会阅读代码，像资深工程师带你熟悉子系统一样，讲清运行时流程、关键类型，以及不容易看出的细节。面对大型子系统，它会先分派 2 到 4 个只读探索任务；问题范围较小时，则直接阅读并解释。"
+    },
+    {
+      "en": "## Dig up history with `/why`\n\n",
+      "zh": "## 用 `/why` 查明历史原因"
+    },
+    {
+      "en": "```text\n/why was the retry limit set to five? does the reason still hold?\n```\n\n",
+      "zh": "```text\n/why 为什么把重试上限设为五次？当初的理由现在还成立吗？\n```"
+    },
+    {
+      "en": "[`/why`](../../skills/why/SKILL.md) works like a detective on a cold case. It starts from source control, then queries whatever evidence categories your MCPs expose, such as the issue tracker, long-form docs, team chat, observability, error tracking, and analytics, all in parallel. The report cites everything, separates direct evidence from inference, and says \"appears to\" when the record is thin. A null result gets reported too, because \"nobody wrote down why\" is itself an answer.\n\n",
+      "zh": "[`/why`](../../skills/why/SKILL.md) 像在重新调查一桩旧案。它从版本控制记录入手，再并行查询 MCP 能访问的证据类别，例如 issue 跟踪、长篇文档、团队聊天、可观测性数据、错误跟踪和分析数据。报告为各项结论注明来源，区分直接证据与推断；记录不足时，会明确用“看起来”这样的措辞。没有查到结果也会报告，因为“没有人记录原因”本身就是答案。"
+    },
+    {
+      "en": "The two compose naturally. `do why first then how` is a perfectly good prompt when you suspect the history explains the mess.\n\n",
+      "zh": "这两个 skill 可以自然组合。如果怀疑历史原因能解释当前的混乱，可以直接说 `先 why，再 how`。"
+    },
+    {
+      "en": "## Actually understand it with `/teach`\n\n",
+      "zh": "## 用 `/teach` 理解透彻"
+    },
+    {
+      "en": "```text\n/teach me how this PR changes retries. convince me it fixes the cause and not the symptom.\n```\n\n",
+      "zh": "```text\n/teach 讲清这个 PR 如何改变重试行为。用证据说服我，它解决的是根因，而不是只处理症状。\n```"
+    },
+    {
+      "en": "[`/teach`](../../skills/teach/SKILL.md) is for when a summary isn't enough. It runs `/how` and `/why`, for a small change maybe just one of them, and weaves the findings into a plain explanation that builds up diagram by diagram. The \"convince me\" framing is worth stealing. It turns the explanation into an argument you can poke at instead of a tour.\n\n",
+      "zh": "当概述不足以帮助你理解时，使用 [`/teach`](../../skills/teach/SKILL.md)。它会运行 `/how` 和 `/why`，小改动也可能只运行其中一个，再把结果整合成通俗的说明，配合逐步展开的图示。“说服我”这个表达值得借用，它让解释变成可以质疑、核查的论证，而不是泛泛介绍。"
+    },
+    {
+      "en": "## Rebuild your own context with `/recall`\n\n",
+      "zh": "## 用 `/recall` 恢复自己的工作上下文"
+    },
+    {
+      "en": "```text\n/recall catch me up on the export work from last week\n```\n\n",
+      "zh": "```text\n/recall 帮我回顾上周的导出功能工作，目前进展到哪里了\n```"
+    },
+    {
+      "en": "[`/recall`](../../skills/recall/SKILL.md) mines your own recent chats plus the shared record (issues, prior fixes, errors still firing) and hands back a brief on where things stand and what's next. Use it when you're returning to a topic cold. If you want to resume one specific chat, that's the Session pickup playbook below, not `/recall`.\n\n",
+      "zh": "[`/recall`](../../skills/recall/SKILL.md) 会查看你近期的对话和共享记录，例如 issue、以前的修复，以及仍在发生的错误，给出当前状态和下一步的简报。隔了一段时间重新处理某个主题时，可以用它。如果要接续某一段具体对话，应使用下面的 Session pickup 执行规程，而不是 `/recall`。"
+    },
+    {
+      "en": "## Take over prior work with Session pickup\n\n",
+      "zh": "## 用 Session pickup 接手已有工作"
+    },
+    {
+      "en": "When another agent (or you, last week) left a branch mid-flight:\n\n",
+      "zh": "如果另一个 agent，或者上周的你，留下了一个尚未完成的分支："
+    },
+    {
+      "en": "```text\n/poteto-mode take over this branch. read the decision log, figure out what's done, and continue from there. don't redo finished work.\n```\n\n",
+      "zh": "```text\n/poteto-mode 接手这个分支。阅读决策记录，确认已经完成哪些工作，再从那里继续。不要重做已完成的部分。\n```"
+    },
+    {
+      "en": "The [Session pickup playbook](../../skills/poteto-mode/playbooks/session-pickup.md) treats the prior trail as authoritative. It reconstructs the branch state and decisions, names the resume point, and verifies inherited claims against the original goal instead of re-deriving everything from scratch.\n\n",
+      "zh": "[Session pickup 执行规程](../../skills/poteto-mode/playbooks/session-pickup.md) 把已有记录作为权威依据。它会恢复分支状态和决策，明确从哪里继续，并对照原始目标验证继承下来的结论，而不是从头重新推导一切。"
+    },
+    {
+      "en": "**Pitfall:** don't skip this page's skills because \"the agent will read the code anyway.\" An agent that starts editing without a traced model tends to fix the symptom at the first plausible spot. `/how` first is cheaper than the second bug.\n\n",
+      "zh": "**易错点：** 不要因为“agent 反正会读代码”而跳过本页的 skill。没有先追踪并建立行为模型就开始修改的 agent，往往会在第一个看似合理的位置处理症状。先运行 `/how`，比事后再修一个 bug 更省成本。"
+    },
+    {
+      "en": "Next: [Design the change](./04-design.md).\n",
+      "zh": "下一页：[设计改动](./04-design.md)。"
+    }
+  ]
+}

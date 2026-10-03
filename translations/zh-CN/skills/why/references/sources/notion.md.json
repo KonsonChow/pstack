@@ -1,0 +1,58 @@
+{
+  "source": "skills/why/references/sources/notion.md",
+  "sha256": "3bcfa695c49dfad4ac036d5d7181c12585f55ac04f1936198d16ab75a2788997",
+  "blocks": [
+    {
+      "en": "# Notion Docs\n\n",
+      "zh": "# Notion 文档\n\n"
+    },
+    {
+      "en": "## What this source contains\n\n",
+      "zh": "## 这个来源包含什么\n\n"
+    },
+    {
+      "en": "- PRDs (product requirement documents)\n- Technical specs and RFCs\n- Architectural decision records (ADRs)\n- Meeting notes from design reviews\n- Team pages with domain context\n- Postmortems from incidents\n- Runbooks that may explain defensive code\n- Strategy documents that set priorities\n\n",
+      "zh": "- PRD（产品需求文档）\n- 技术规范和 RFC\n- 架构决策记录（ADR）\n- 设计评审会议记录\n- 包含领域上下文的团队页面\n- 事故复盘\n- 可能说明防御性代码缘由的操作手册\n- 设定优先级的战略文档\n\n"
+    },
+    {
+      "en": "Notion is where \"why\" often lives in long-form before it becomes code. A significant feature usually has a doc.\n\n",
+      "zh": "在成为代码之前，“为什么”往往先以长篇文档的形式存在于 Notion。重要功能通常有对应文档。\n\n"
+    },
+    {
+      "en": "## How to search it\n\n",
+      "zh": "## 如何搜索\n\n"
+    },
+    {
+      "en": "Use the Notion MCP.\n\n",
+      "zh": "使用 Notion MCP。\n\n"
+    },
+    {
+      "en": "1. **Keyword searches with `notion-search`.** Try:\n   - The feature name\n   - Key symbols / class names from the target code\n   - Author handles (design docs are often authored before the code lands)\n   - Error strings or user-visible terms\n   - Time-bounded queries if you know when the code shipped\n2. **Fetch candidate pages with `notion-fetch`.** Read the full content, not the preview. Rationale is often buried mid-document.\n3. **Follow backlinks and child pages.** Design docs often have sub-pages for alternatives considered, appendices, or implementation notes.\n4. **Check related databases.** `notion-query-data-sources` and `notion-query-meeting-notes` can surface meeting notes that discussed the decision.\n5. **Search author-specific spaces.** If the PR author has a personal notebook (common at some companies), it may hold exploratory thinking that preceded the code.\n\n",
+      "zh": "1. **使用 `notion-search` 搜索关键词。** 尝试：\n   - 功能名称\n   - 目标代码中的关键符号／类名\n   - 作者账号（设计文档通常早于代码合入）\n   - 错误字符串或用户可见术语\n   - 如果知道代码何时交付，使用时间范围查询\n2. **使用 `notion-fetch` 获取候选页面。** 阅读完整内容，不要只看预览。设计理由经常埋在文档中间。\n3. **跟随反向链接和子页面。** 设计文档往往有介绍候选方案、附录或实现笔记的子页面。\n4. **检查相关数据库。** `notion-query-data-sources` 和 `notion-query-meeting-notes` 可以找到讨论该决策的会议记录。\n5. **搜索作者个人空间。** 如果 PR 作者有个人笔记本（在一些公司很常见），其中可能保存了编写代码之前的探索思路。\n\n"
+    },
+    {
+      "en": "## What good evidence looks like here\n\n",
+      "zh": "## 这里的可靠证据是什么样的\n\n"
+    },
+    {
+      "en": "- A PRD with a \"Problem statement\" or \"Motivation\" section that matches the target code's purpose\n- An \"Alternatives considered\" or \"Rejected approaches\" section\n- A postmortem that names the target code as the fix for a specific incident\n- Meeting notes that record \"we decided X because Y\" and tie to the same author/date range as the PR\n- An ADR template filled out non-trivially (status, context, decision, consequences)\n\n",
+      "zh": "- PRD 的“问题陈述”或“动机”章节与目标代码用途吻合。\n- “考虑过的替代方案”或“已否决方案”章节。\n- 复盘明确指出目标代码修复了某次具体事故。\n- 会议记录写明“我们因为 Y 决定 X”，且作者／日期范围与 PR 对应。\n- 内容具体的 ADR 模板（状态、背景、决策、后果）。\n\n"
+    },
+    {
+      "en": "## Common pitfalls\n\n",
+      "zh": "## 常见陷阱\n\n"
+    },
+    {
+      "en": "- **Outdated docs.** Specs are often written before implementation and not updated. The doc may describe a plan that changed. Cross-check against the actual PR.\n- **Doc vs. reality drift.** A spec may say \"we'll do X\" but the code actually does Y. Flag the divergence. The synthesizer will surface the contradiction.\n- **Boilerplate templates.** Some orgs require a \"Why\" section that gets filled with fluff. Look for specificity.\n- **Unlinked docs.** The most relevant doc may not be linked from anywhere. Broad keyword searches help.\n- **Multiple drafts.** If a topic has multiple docs, find the one that was finalized or most recently updated. Check dates.\n- **Access-restricted pages.** If you can't access a page, note it as a gap.\n\n",
+      "zh": "- **过时文档。** 规范通常在实现前编写，之后没有更新。文档可能描述的是已改变的计划。与实际 PR 交叉核对。\n- **文档与现实偏离。** 规范可能写“我们会做 X”，实际代码却做 Y。标明差异，综合分析者会呈现矛盾。\n- **样板模板。** 一些组织要求填写“Why”章节，结果只是套话。寻找具体内容。\n- **无链接文档。** 最相关的文档可能没有被任何地方链接，广泛关键词搜索会有帮助。\n- **多个草稿。** 一个主题有多份文档时，找到定稿或最近更新的一份，并检查日期。\n- **访问受限页面。** 无法访问时，记录为证据缺口。\n\n"
+    },
+    {
+      "en": "## What to return\n\n",
+      "zh": "## 返回什么\n\n"
+    },
+    {
+      "en": "For each relevant doc:\n- Title and URL\n- Authors and last-updated date\n- The motivation text (verbatim quote), with page/section location\n- Relevant linked pages (so the synthesizer can cite them)\n- Whether the doc was finalized or draft\n",
+      "zh": "每份相关文档都返回：\n- 标题及 URL\n- 作者及最后更新日期\n- 动机原文（逐字引用），带页面／章节位置\n- 相关链接页面（供综合分析者引用）\n- 文档是定稿还是草稿\n\n"
+    }
+  ]
+}

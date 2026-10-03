@@ -1,0 +1,30 @@
+{
+  "source": "automations/benny/skills/triage-issue-reports/references/routing.example.md",
+  "sha256": "e5e53013692568cf69da8e8b302fff929fe2fbc9aec1a4651fd7997e2c7a4025",
+  "blocks": [
+    {
+      "en": "# Routing map example\n\n",
+      "zh": "# 路由表示例\n\n"
+    },
+    {
+      "en": "Copy this file outside `.cursor/automations/benny/`, for example to `.cursor/benny/routing.md`, and replace every placeholder. Point `routing.map_path` at the copy. Pack refreshes must not overwrite it.\n\n",
+      "zh": "把本文件复制到 `.cursor/automations/benny/` 外，例如 `.cursor/benny/routing.md`，替换所有占位符。让 `routing.map_path` 指向副本。刷新包时不得覆盖它。\n\n"
+    },
+    {
+      "en": "The triage skill treats this as data. A route needs evidence from the report or cause trace. A keyword match alone is not enough.\n\n",
+      "zh": "分流 skill 将其视为数据。路由必须有报告或原因追踪中的证据，只有关键词匹配不够。\n\n"
+    },
+    {
+      "en": "```yaml\nroutes:\n  - name: \"billing-example\"\n    match:\n      product_areas:\n        - \"billing-area-placeholder\"\n      code_paths:\n        - \"billing-code-path-placeholder\"\n      error_signatures:\n        - \"billing-error-placeholder\"\n    destination:\n      slack_channel: \"billing-channel-placeholder\"\n      tracker_team: \"billing-team-placeholder\"\n    owners:\n      - \"billing-owner-placeholder\"\n    allow_feature_owner_ping: false\n\n  - name: \"desktop-example\"\n    match:\n      product_areas:\n        - \"desktop-area-placeholder\"\n      code_paths:\n        - \"desktop-code-path-placeholder\"\n      error_signatures:\n        - \"desktop-error-placeholder\"\n    destination:\n      slack_channel: \"desktop-channel-placeholder\"\n      tracker_team: \"desktop-team-placeholder\"\n    owners:\n      - \"desktop-owner-placeholder\"\n    allow_feature_owner_ping: false\n\nfallback:\n  destination: \"\"\n  owners: []\n  allow_feature_owner_ping: false\n\nping_policy:\n  default: \"off\"\n  allow:\n    - \"configured-feature-owner\"\n    - \"confirmed-regression-author\"\n  deny:\n    - \"broad-on-call-group\"\n    - \"unverified-owner\"\n```\n\n",
+      "zh": "```yaml\nroutes:\n  - name: \"billing-example\"\n    match:\n      product_areas:\n        - \"billing-area-placeholder\"\n      code_paths:\n        - \"billing-code-path-placeholder\"\n      error_signatures:\n        - \"billing-error-placeholder\"\n    destination:\n      slack_channel: \"billing-channel-placeholder\"\n      tracker_team: \"billing-team-placeholder\"\n    owners:\n      - \"billing-owner-placeholder\"\n    allow_feature_owner_ping: false\n\n  - name: \"desktop-example\"\n    match:\n      product_areas:\n        - \"desktop-area-placeholder\"\n      code_paths:\n        - \"desktop-code-path-placeholder\"\n      error_signatures:\n        - \"desktop-error-placeholder\"\n    destination:\n      slack_channel: \"desktop-channel-placeholder\"\n      tracker_team: \"desktop-team-placeholder\"\n    owners:\n      - \"desktop-owner-placeholder\"\n    allow_feature_owner_ping: false\n\nfallback:\n  destination: \"\"\n  owners: []\n  allow_feature_owner_ping: false\n\nping_policy:\n  default: \"off\"\n  allow:\n    - \"configured-feature-owner\"\n    - \"confirmed-regression-author\"\n  deny:\n    - \"broad-on-call-group\"\n    - \"unverified-owner\"\n```\n\n"
+    },
+    {
+      "en": "## Rules\n\n",
+      "zh": "## 规则\n\n"
+    },
+    {
+      "en": "- Leave `fallback.destination` empty unless one team accepts all unmatched reports.\n- Use stable product areas, code paths, and error signatures.\n- Do not include private data in a public copy.\n- Do not paste raw user or channel IDs into an example that will be published.\n- Keep feature-owner pings off until the target team agrees to them.\n- A reroute tells the reporter where to go. The automation never cross-posts.\n",
+      "zh": "- 除非一个团队接受所有未匹配报告，否则 `fallback.destination` 保持空。\n- 使用稳定的产品领域、代码路径、错误特征。\n- 公开副本不含私密数据。\n- 不在将公开的示例中粘贴原始用户或频道 ID。\n- 目标团队同意前，保持关闭 feature-owner ping。\n- 转交只是告诉报告者该去哪，自动化绝不跨频道转发。\n\n"
+    }
+  ]
+}

@@ -1,0 +1,366 @@
+{
+  "source": "automations/benny/skills/reproduce-and-fix-issues/references/feature-map.example.md",
+  "sha256": "1e5c7c8522daec3e43fcc2e73ceb97289ded65b552949ce65a11cc8eb3d2b6ee",
+  "blocks": [
+    {
+      "en": "# Feature-map example\n\n",
+      "zh": "# 功能验证清单示例"
+    },
+    {
+      "en": "Map every user-facing feature Benny may reproduce. Read the relevant section before driving the app. Keep this map at the user point of view. Discover internals and current code paths at runtime instead of freezing them here.\n\n",
+      "zh": "列出 Benny 可能复现的每个面向用户的功能。操作应用前，先阅读对应章节。保持用户视角，内部实现与当前代码路径在运行时查明，不要固化在这里。"
+    },
+    {
+      "en": "Copy this file outside `.cursor/automations/benny/`, for example to `.cursor/benny/feature-map.md`, and set `control.feature_map_path` to the copy. Pack refreshes must not overwrite it.\n\n",
+      "zh": "把本文件复制到 `.cursor/automations/benny/` 之外，例如 `.cursor/benny/feature-map.md`，再将 `control.feature_map_path` 指向副本。自动化包更新时不得覆盖它。"
+    },
+    {
+      "en": "## Per-feature template\n\n",
+      "zh": "## 单功能模板"
+    },
+    {
+      "en": "### `<feature name>`\n\n",
+      "zh": "### `<功能名称>`"
+    },
+    {
+      "en": "`<one-line user-visible purpose>`\n\n",
+      "zh": "`<一句话说明用户可见的用途>`"
+    },
+    {
+      "en": "#### How a user gets there\n\n",
+      "zh": "#### 用户如何进入"
+    },
+    {
+      "en": "- Click path: `<screen> -> <menu, tab, or panel> -> <control>`\n- Keyboard shortcut: `<shortcut or none>`\n\n",
+      "zh": "- 点击路径：`<页面> -> <菜单、标签页或面板> -> <控件>`\n- 快捷键：`<快捷键或无>`"
+    },
+    {
+      "en": "#### How the control adapter drives it\n\n",
+      "zh": "#### 操作适配器如何执行"
+    },
+    {
+      "en": "- `<adapter action>` with `<inputs>` should `<visible result>`.\n- Reset: `<how the adapter returns to a fresh state>`.\n\n",
+      "zh": "- 使用 `<输入>` 执行 `<适配器操作>` 后，应出现 `<可见结果>`。\n- 重置：`<适配器如何返回初始状态>`。"
+    },
+    {
+      "en": "#### Stable selectors\n\n",
+      "zh": "#### 稳定的 selector"
+    },
+    {
+      "en": "- `<role and accessible name>`\n- `<ARIA relationship>`\n- `<data-component or purpose-named data attribute>`\n\n",
+      "zh": "- `<role 和 accessible name>`\n- `<ARIA 关系>`\n- `<data-component 或以用途命名的 data attribute>`"
+    },
+    {
+      "en": "Never use generated CSS or StyleX classes, dynamic hashes, child indexes, or brittle DOM position.\n\n",
+      "zh": "绝不能使用生成的 CSS 或 StyleX 类名、动态 hash、子节点索引，或脆弱的 DOM 位置。"
+    },
+    {
+      "en": "#### States to exercise\n\n",
+      "zh": "#### 需要触发的状态"
+    },
+    {
+      "en": "- Default, hover, focus-visible, active, disabled\n- Loading, empty, error\n- Selected, open, expanded\n- `<relevant feature-specific variants>`\n\n",
+      "zh": "- 默认、hover、focus-visible、active、disabled\n- 加载中、空数据、错误\n- 已选中、已打开、已展开\n- `<相关的功能专有变体>`"
+    },
+    {
+      "en": "Mark states that do not apply.\n\n",
+      "zh": "标明不适用的状态。"
+    },
+    {
+      "en": "#### Preconditions and setup\n\n",
+      "zh": "#### 前置条件与准备"
+    },
+    {
+      "en": "- Auth: `<account state>`\n- Data: `<fixture>`\n- Permissions: `<role>`\n- Flags: `<flag or none>`\n- Services: `<required availability>`\n\n",
+      "zh": "- 身份认证：`<账号状态>`\n- 数据：`<测试样本>`\n- 权限：`<角色>`\n- Flags：`<flag 或无>`\n- 服务：`<所需可用状态>`"
+    },
+    {
+      "en": "#### Evidence and cross-check\n\n",
+      "zh": "#### 证据与交叉验证"
+    },
+    {
+      "en": "- Screenshot: `<app identity, feature, and discriminating state>`\n- Video: `<entry path, interaction, and final state>`\n- Cross-check: `<read-only state or value that confirms the UI>`\n\n",
+      "zh": "- 截图：`<应用身份、功能，以及能区分正常与异常的状态>`\n- 视频：`<进入路径、交互及最终状态>`\n- 交叉验证：`<佐证 UI 的只读状态或值>`"
+    },
+    {
+      "en": "#### Gotchas\n\n",
+      "zh": "#### 注意事项"
+    },
+    {
+      "en": "- `<known dead end or wrong surface>`\n- `<safe environment translation>`\n\n",
+      "zh": "- `<已知死路或错误的操作界面>`\n- `<安全的环境替代方式>`"
+    },
+    {
+      "en": "## Fictional example\n\n",
+      "zh": "## 虚构示例"
+    },
+    {
+      "en": "These features belong to a fictional task app. They are examples, not required Benny features.\n\n",
+      "zh": "这些功能来自一个虚构的任务应用，只是示例，不是 Benny 必须具备的功能。"
+    },
+    {
+      "en": "### Sign in\n\n",
+      "zh": "### 登录"
+    },
+    {
+      "en": "Lets a user enter the task app.\n\n",
+      "zh": "让用户进入任务应用。"
+    },
+    {
+      "en": "#### How a user gets there\n\n",
+      "zh": "#### 用户如何进入"
+    },
+    {
+      "en": "- Open the app and choose `Sign in`. No shortcut.\n\n",
+      "zh": "- 打开应用并选择 `Sign in`，没有快捷键。"
+    },
+    {
+      "en": "#### How the control adapter drives it\n\n",
+      "zh": "#### 操作适配器如何执行"
+    },
+    {
+      "en": "- `open_app`, `click Sign in`, `fill credentials`, and `click Continue` should open the item list.\n- Reset by signing out and clearing the disposable session.\n\n",
+      "zh": "- `open_app`、`click Sign in`、`fill credentials` 和 `click Continue` 应打开条目列表。\n- 通过退出登录并清除一次性会话来重置。"
+    },
+    {
+      "en": "#### Stable selectors\n\n",
+      "zh": "#### 稳定的 selector"
+    },
+    {
+      "en": "- Button `Sign in`, textboxes `Email` and `Password`, `data-component=\"sign-in-form\"`\n\n",
+      "zh": "- 按钮 `Sign in`、文本框 `Email` 和 `Password`、`data-component=\"sign-in-form\"`"
+    },
+    {
+      "en": "#### States to exercise\n\n",
+      "zh": "#### 需要触发的状态"
+    },
+    {
+      "en": "- Default, focus-visible, submitting, disabled, loading, error\n\n",
+      "zh": "- 默认、focus-visible、提交中、disabled、加载中、错误"
+    },
+    {
+      "en": "#### Preconditions and setup\n\n",
+      "zh": "#### 前置条件与准备"
+    },
+    {
+      "en": "- Disposable account and available authentication service\n\n",
+      "zh": "- 一次性账号，以及可用的身份认证服务"
+    },
+    {
+      "en": "#### Evidence and cross-check\n\n",
+      "zh": "#### 证据与交叉验证"
+    },
+    {
+      "en": "- Record landing page through item list. Check read-only session state.\n\n",
+      "zh": "- 录制从落地页到条目列表的路径，检查只读会话状态。"
+    },
+    {
+      "en": "#### Gotchas\n\n",
+      "zh": "#### 注意事项"
+    },
+    {
+      "en": "- A marketing page is the wrong surface. A missing auth service is a block.\n\n",
+      "zh": "- 营销页面不是目标操作界面。缺少身份认证服务意味着受阻。"
+    },
+    {
+      "en": "### Item list and detail\n\n",
+      "zh": "### 条目列表与详情"
+    },
+    {
+      "en": "Lets a user browse items and open one.\n\n",
+      "zh": "让用户浏览并打开某个条目。"
+    },
+    {
+      "en": "#### How a user gets there\n\n",
+      "zh": "#### 用户如何进入"
+    },
+    {
+      "en": "- Open the `Items` tab, then choose a row.\n\n",
+      "zh": "- 打开 `Items` 标签页，再选择一行。"
+    },
+    {
+      "en": "#### How the control adapter drives it\n\n",
+      "zh": "#### 操作适配器如何执行"
+    },
+    {
+      "en": "- `select_tab Items` and `click <fixture item>` should open its detail.\n- Reset by closing the detail and clearing selection.\n\n",
+      "zh": "- `select_tab Items` 和 `click <fixture item>` 应打开对应详情。\n- 通过关闭详情并清除选中状态来重置。"
+    },
+    {
+      "en": "#### Stable selectors\n\n",
+      "zh": "#### 稳定的 selector"
+    },
+    {
+      "en": "- Tab and list named `Items`, fixture-named row, `data-component=\"item-detail\"`\n\n",
+      "zh": "- 名称为 `Items` 的标签页和列表、按测试样本命名的行、`data-component=\"item-detail\"`"
+    },
+    {
+      "en": "#### States to exercise\n\n",
+      "zh": "#### 需要触发的状态"
+    },
+    {
+      "en": "- Loading, empty, error, selected, open, expanded\n\n",
+      "zh": "- 加载中、空数据、错误、已选中、已打开、已展开"
+    },
+    {
+      "en": "#### Preconditions and setup\n\n",
+      "zh": "#### 前置条件与准备"
+    },
+    {
+      "en": "- Named fixture items, read permission, available item service\n\n",
+      "zh": "- 具名的测试样本条目、读取权限，以及可用的条目服务"
+    },
+    {
+      "en": "#### Evidence and cross-check\n\n",
+      "zh": "#### 证据与交叉验证"
+    },
+    {
+      "en": "- Show selection and matching detail title. Check selected-item ID.\n\n",
+      "zh": "- 展示选中状态及匹配的详情标题，检查所选条目 ID。"
+    },
+    {
+      "en": "#### Gotchas\n\n",
+      "zh": "#### 注意事项"
+    },
+    {
+      "en": "- Search results may look similar but use a different path.\n\n",
+      "zh": "- 搜索结果可能看起来相似，但属于另一条操作路径。"
+    },
+    {
+      "en": "### Item editor\n\n",
+      "zh": "### 条目编辑器"
+    },
+    {
+      "en": "Lets a user create or edit an item.\n\n",
+      "zh": "让用户创建或编辑条目。"
+    },
+    {
+      "en": "#### How a user gets there\n\n",
+      "zh": "#### 用户如何进入"
+    },
+    {
+      "en": "- Choose `Edit` from detail or `New item` from the list.\n\n",
+      "zh": "- 在详情中选择 `Edit`，或在列表中选择 `New item`。"
+    },
+    {
+      "en": "#### How the control adapter drives it\n\n",
+      "zh": "#### 操作适配器如何执行"
+    },
+    {
+      "en": "- `click Edit`, `fill <field>`, and `click Save` should update detail.\n- Reset by restoring the fixture.\n\n",
+      "zh": "- `click Edit`、`fill <field>` 和 `click Save` 应更新详情。\n- 通过恢复测试样本重置。"
+    },
+    {
+      "en": "#### Stable selectors\n\n",
+      "zh": "#### 稳定的 selector"
+    },
+    {
+      "en": "- Buttons `Edit`, `New item`, `Save`, form `Item editor`, label-linked fields\n\n",
+      "zh": "- 按钮 `Edit`、`New item`、`Save`，表单 `Item editor`，以及与 label 关联的字段"
+    },
+    {
+      "en": "#### States to exercise\n\n",
+      "zh": "#### 需要触发的状态"
+    },
+    {
+      "en": "- Default, focus-visible, dirty, validating, disabled, saving, error, success\n\n",
+      "zh": "- 默认、focus-visible、有未保存修改、校验中、disabled、保存中、错误、成功"
+    },
+    {
+      "en": "#### Preconditions and setup\n\n",
+      "zh": "#### 前置条件与准备"
+    },
+    {
+      "en": "- Editable fixture, write permission, available save service\n\n",
+      "zh": "- 可编辑测试样本、写入权限，以及可用的保存服务"
+    },
+    {
+      "en": "#### Evidence and cross-check\n\n",
+      "zh": "#### 证据与交叉验证"
+    },
+    {
+      "en": "- Show field change through updated detail. Check the stored item value read-only.\n\n",
+      "zh": "- 展示从字段修改到详情更新的过程，以只读方式检查实际存储的条目值。"
+    },
+    {
+      "en": "#### Gotchas\n\n",
+      "zh": "#### 注意事项"
+    },
+    {
+      "en": "- Do not inject form state. A read-only detail field is not the editor.\n\n",
+      "zh": "- 不要注入表单状态。只读详情字段不是编辑器。"
+    },
+    {
+      "en": "### Settings\n\n",
+      "zh": "### 设置"
+    },
+    {
+      "en": "Lets a user change personal preferences.\n\n",
+      "zh": "让用户修改个人偏好。"
+    },
+    {
+      "en": "#### How a user gets there\n\n",
+      "zh": "#### 用户如何进入"
+    },
+    {
+      "en": "- Open the profile menu, then choose `Settings`.\n\n",
+      "zh": "- 打开个人资料菜单，再选择 `Settings`。"
+    },
+    {
+      "en": "#### How the control adapter drives it\n\n",
+      "zh": "#### 操作适配器如何执行"
+    },
+    {
+      "en": "- `open_menu Profile`, `click Settings`, and `toggle <preference>` should update the control.\n- Reset by restoring the starting preference.\n\n",
+      "zh": "- `open_menu Profile`、`click Settings` 和 `toggle <preference>` 应更新控件。\n- 通过恢复初始偏好重置。"
+    },
+    {
+      "en": "#### Stable selectors\n\n",
+      "zh": "#### 稳定的 selector"
+    },
+    {
+      "en": "- Button `Profile`, menu item `Settings`, region `Settings`, purpose-named preference attribute\n\n",
+      "zh": "- 按钮 `Profile`、菜单项 `Settings`、区域 `Settings`，以及按用途命名的偏好属性"
+    },
+    {
+      "en": "#### States to exercise\n\n",
+      "zh": "#### 需要触发的状态"
+    },
+    {
+      "en": "- Closed, open, selected, focus-visible, disabled, loading, error\n\n",
+      "zh": "- 已关闭、已打开、已选中、focus-visible、disabled、加载中、错误"
+    },
+    {
+      "en": "#### Preconditions and setup\n\n",
+      "zh": "#### 前置条件与准备"
+    },
+    {
+      "en": "- Signed-in test account, known preferences, available preference service\n\n",
+      "zh": "- 已登录的测试账号、已知的偏好值，以及可用的偏好服务"
+    },
+    {
+      "en": "#### Evidence and cross-check\n\n",
+      "zh": "#### 证据与交叉验证"
+    },
+    {
+      "en": "- Show the menu path and final control state. Check the preference value read-only.\n\n",
+      "zh": "- 展示菜单路径及最终控件状态，以只读方式检查偏好值。"
+    },
+    {
+      "en": "#### Gotchas\n\n",
+      "zh": "#### 注意事项"
+    },
+    {
+      "en": "- Operating-system settings are a different surface.\n\n",
+      "zh": "- 操作系统设置属于另一个操作界面。"
+    },
+    {
+      "en": "## Completeness checklist\n\n",
+      "zh": "## 完整性检查清单"
+    },
+    {
+      "en": "- Every reproducible user-facing feature has a section.\n- Every section names a user path, adapter actions, and reset.\n- Selectors use roles, names, ARIA, stable component markers, or purpose-named attributes.\n- No selector uses generated classes or DOM position.\n- Relevant interaction, loading, empty, error, selected, and expanded states are covered.\n- Auth, fixtures, permissions, flags, and services are explicit.\n- Screenshot, video, and underlying cross-check requirements are explicit.\n- Wrong surfaces, dead ends, and safe environment translations are listed.\n- Implementation details remain runtime discoveries.\n",
+      "zh": "- 每个可复现的面向用户的功能都有章节。\n- 每个章节明确用户路径、适配器操作及重置方式。\n- selector 使用 role、名称、ARIA、稳定的组件标识，或按用途命名的属性。\n- 没有 selector 使用生成类名或 DOM 位置。\n- 覆盖相关交互、加载中、空数据、错误、选中及展开状态。\n- 身份认证、测试样本、权限、flag 和服务均明确。\n- 截图、视频及底层状态交叉验证要求均明确。\n- 列明错误操作界面、死路及安全的环境替代方式。\n- 实现细节仍在运行时查明。"
+    }
+  ]
+}

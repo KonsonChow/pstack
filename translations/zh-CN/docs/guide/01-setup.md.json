@@ -1,0 +1,94 @@
+{
+  "source": "docs/guide/01-setup.md",
+  "sha256": "0a928ce6ff6199104e57914692ce71bb4ec5c629dec2a54988ae97ea4f3c64ef",
+  "blocks": [
+    {
+      "en": "# Set up pstack\n\n",
+      "zh": "# 配置 pstack"
+    },
+    {
+      "en": "In this page you install the plugin, pick which models pstack uses, and run your first task. Setup is one command plus a short conversation.\n\n",
+      "zh": "本页带你安装插件、选择 pstack 使用的模型，并执行第一个任务。配置过程是一条命令加一段简短对话。"
+    },
+    {
+      "en": "## Install the plugin\n\n",
+      "zh": "## 安装插件"
+    },
+    {
+      "en": "In a Cursor chat, run:\n\n",
+      "zh": "在 Cursor 对话中运行："
+    },
+    {
+      "en": "```text\n/add-plugin pstack\n```\n\n",
+      "zh": "```text\n/add-plugin pstack\n```"
+    },
+    {
+      "en": "Cursor confirms the plugin is installed.\n\n",
+      "zh": "Cursor 会确认插件已安装。"
+    },
+    {
+      "en": "## Pick your models\n\n",
+      "zh": "## 选择模型"
+    },
+    {
+      "en": "Run:\n\n",
+      "zh": "运行："
+    },
+    {
+      "en": "```text\n/setup-pstack\n```\n\n",
+      "zh": "```text\n/setup-pstack\n```"
+    },
+    {
+      "en": "[`/setup-pstack`](../../skills/setup-pstack/SKILL.md) detects the models you have access to, asks for a reasoning budget, shows you each role (code delegates, judgment, the review panels), and asks what you want. Answer the questions. It writes `~/.cursor/rules/pstack-models.mdc`, a small rule every pstack skill reads.\n\n",
+      "zh": "[`/setup-pstack`](../../skills/setup-pstack/SKILL.md) 会检测你可以使用的模型，询问推理预算，列出各类角色，包括代码实现者、判断角色和评审组，再询问你的选择。回答这些问题后，它会写入 `~/.cursor/rules/pstack-models.mdc`。这是一份小型规则文件，所有 pstack skill 都会读取它。"
+    },
+    {
+      "en": "You only override what you care about. A role with no line in the rule keeps the skill's default. To restore a default later, delete that role's line, or just run `/setup-pstack` again.\n\n",
+      "zh": "只需要覆盖你在意的配置。规则文件中没有配置的角色继续使用对应 skill 的默认值。以后要恢复某个默认值，可以删除该角色对应的配置行，也可以重新运行 `/setup-pstack`。"
+    },
+    {
+      "en": "You might be wondering what happens if you use Auto. Set a role to `inherit-parent` or `auto` and pstack omits the subagent `model` field, so the subagent inherits your parent chat model. Both values mean the same thing, and neither is a model slug. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. Setup also configures `swarm workers`, the default model for every `/swarm` worker unless a race names a model for each arm.\n\n",
+      "zh": "如果使用 Auto 会怎样？将角色设为 `inherit-parent` 或 `auto` 时，pstack 会省略 subagent 的 `model` 字段，让它继承主对话的模型。这两个值含义相同，都不是模型标识。评审组角色的配置值是列表，每个列表项启动一个 subagent，因此列表长度决定评审组人数。配置过程还会设置 `swarm workers`，作为所有 `/swarm` worker 的默认模型；只有在竞赛任务为各个候选明确指定模型时，才使用指定值。"
+    },
+    {
+      "en": "## Accept the verification offer, or don't\n\n",
+      "zh": "## 决定是否创建验证能力"
+    },
+    {
+      "en": "At the end of setup, `/setup-pstack` looks for a way to prove app behavior in your project, either a `verify-*` skill or an existing harness. If it finds neither, it offers once to generate one with [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md).\n\n",
+      "zh": "配置结束时，`/setup-pstack` 会查找项目中用于证明应用实际行为的机制，包括 `verify-*` skill 或已有的验证运行环境。如果两者都没有，它会询问一次，是否通过 [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md) 生成一个。"
+    },
+    {
+      "en": "Say yes and it writes `.cursor/skills/verify-<app>/`, a project-local skill that teaches agents to drive your app the way a user does. It proves the skill works once before handing it over. Say no and setup moves on. You can run `/create-verification-skill` yourself any time. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers when it earns its place.\n\n",
+      "zh": "同意后，它会创建 `.cursor/skills/verify-<app>/`。这是项目内的 skill，教 agent 按用户的实际使用方式操作应用。交付前，它会实际执行一次，证明这个 skill 可用。如果拒绝，配置流程继续进行。你随时都可以自行运行 `/create-verification-skill`。[验证并交付](./06-verify-and-ship.md#create-a-project-verification-skill) 会说明何时值得引入它。"
+    },
+    {
+      "en": "After setup, start a new chat. The model rule applies to new sessions.\n\n",
+      "zh": "配置完成后，开始一个新对话。模型规则从新会话开始生效。"
+    },
+    {
+      "en": "## Run your first task\n\n",
+      "zh": "## 执行第一个任务"
+    },
+    {
+      "en": "Pick something real but small, and describe it the way you'd describe it to a colleague:\n\n",
+      "zh": "选一个真实而小的任务，像向同事交代工作一样说明要求："
+    },
+    {
+      "en": "```text\n/poteto-mode add a --json flag to this command. text output stays byte-identical. verify both.\n```\n\n",
+      "zh": "```text\n/poteto-mode 给这个命令增加 --json 参数。文本输出必须逐字节保持一致。验证这两种输出。\n```"
+    },
+    {
+      "en": "Watch the todo list. Its first items are the matched playbook's steps copied in, the Feature playbook for this prompt. If `/poteto-mode` skips a step, the step stays in the list with `skip: <reason>`, so you can see what it chose not to do.\n\n",
+      "zh": "观察待办列表。开头的条目是从匹配到的执行规程中复制的步骤。这个提示词对应 Feature 执行规程。如果 `/poteto-mode` 跳过某一步，该步骤仍会留在列表中，并标注 `skip: <reason>`，让你看到它选择跳过什么，以及原因。"
+    },
+    {
+      "en": "From here you can type normal follow-ups. `/poteto-mode` is sticky. It stays on for the conversation until you opt out by saying so.\n\n",
+      "zh": "之后可以用普通语言继续对话。`/poteto-mode` 会持续生效，直到你明确表示退出。"
+    },
+    {
+      "en": "Next: [Route work through `/poteto-mode`](./02-poteto-mode.md).\n",
+      "zh": "下一页：[通过 `/poteto-mode` 分派工作](./02-poteto-mode.md)。"
+    }
+  ]
+}

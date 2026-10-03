@@ -1,0 +1,30 @@
+{
+  "source": "skills/principle-never-block-on-the-human/SKILL.md",
+  "sha256": "d82bce9ab9193249d1ec0d514202d89602f0fd3d312174d622c2dd222bae5a2e",
+  "blocks": [
+    {
+      "en": "---\nname: principle-never-block-on-the-human\ndescription: \"Apply when tempted to ask 'should I do X?' on reversible work. Proceed, present the result, let the human course-correct after the fact; reserve confirmation for irreversible actions.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-never-block-on-the-human\ndescription: \"处理可逆工作时，如果想问‘要不要做 X？’，就应用本原则。继续执行，展示结果，让人事后纠正方向；只对不可逆操作请求确认。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Never Block on the Human\n\n",
+      "zh": "# 不要等待人类而阻塞\n\n"
+    },
+    {
+      "en": "The human supervises asynchronously. Agents must stay unblocked. Make reasonable decisions, proceed, and let the human course-correct after the fact.\n\n",
+      "zh": "人类以异步方式监督。agent 必须保持不阻塞：作出合理决定并继续，让人事后纠正方向。\n\n"
+    },
+    {
+      "en": "**Why:** Every permission pause stalls the pipeline and makes the human the bottleneck. Since code changes are reversible and reviewable, a wrong decision usually costs less than blocking.\n\n",
+      "zh": "**原因：** 每次等待许可都会停滞流水线，让人成为瓶颈。代码改动可逆且可评审，因此错误决策的成本通常低于阻塞的成本。\n\n"
+    },
+    {
+      "en": "**Pattern:**\n- **Proceed, then present.** Do the work, show the result. Don't ask \"should I do X?\" Do X, explain why.\n- **Reserve questions for genuine ambiguity.** Ask only when you cannot infer intent from context.\n- **Make the system self-healing.** When you notice a problem, log it and fix it in the next round.\n- **Supervision is async.** Design workflows for review-after-the-fact.\n\n",
+      "zh": "**模式：**\n- **先执行，再展示。** 完成工作，展示结果。不要问“要不要做 X？”，先做 X，再解释原因。\n- **只对真正的歧义提问。** 只有无法从上下文推断意图时才问。\n- **让系统自行修复。** 发现问题时记录下来，在下一轮修复。\n- **监督是异步的。** 按事后评审设计工作流程。\n\n"
+    },
+    {
+      "en": "**Boundaries:**\n- **Irreversible actions** (force-push, delete production data, send external messages) still require confirmation.\n- **Reversible actions** (write code, edit notes, split tasks) should proceed without blocking.\n- **Product direction** comes from the human. *Execution* should not block.\n",
+      "zh": "**边界：**\n- **不可逆操作**（强制推送、删除生产数据、发送外部消息）仍需确认。\n- **可逆操作**（编写代码、编辑笔记、拆分任务）应直接执行，不阻塞。\n- **产品方向**由人确定，*执行*不应阻塞。\n\n"
+    }
+  ]
+}

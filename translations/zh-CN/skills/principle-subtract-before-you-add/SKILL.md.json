@@ -1,0 +1,30 @@
+{
+  "source": "skills/principle-subtract-before-you-add/SKILL.md",
+  "sha256": "a983a50e732c1ed315eba7aaf47a61329e31c4794eb1ab9d25d9945265b31e03",
+  "blocks": [
+    {
+      "en": "---\nname: principle-subtract-before-you-add\ndescription: \"Apply when sequencing an addition, refactor, or rewrite. Remove dead code, redundant validators, and stub references first, then build on the simpler base.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-subtract-before-you-add\ndescription: \"安排新增、重构或重写的步骤时使用。先删除死代码、冗余校验器和空壳引用，再在更简单的基础上构建。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Subtract Before You Add\n\n",
+      "zh": "# 先做减法，再做加法\n\n"
+    },
+    {
+      "en": "When evolving a system, remove complexity first, then build.\n\n",
+      "zh": "演进系统时，先消除复杂性，再构建。\n\n"
+    },
+    {
+      "en": "**Why:** Adding to a complex system compounds complexity. Removing first leaves less code, reveals the essential structure, and usually makes the next design obvious. Default to subtraction.\n\n",
+      "zh": "**原因：**在复杂系统中继续添加会使复杂性叠加。先删除能减少代码、显露本质结构，通常也会让下一步设计变得明显。默认先做减法。\n\n"
+    },
+    {
+      "en": "Make simplification a continual investment. Leave the design slightly simpler and more capable behind the same or smaller surface than you found it.\n\n",
+      "zh": "持续投入简化工作。在相同或更小的对外接口之下，让设计比接手时更简单、更有能力。\n\n"
+    },
+    {
+      "en": "**The pattern:**\n- Sequence removal before construction\n- Cut before you polish (get to the minimum before investing in quality)\n- Design for observed usage, not speculative edge cases\n- No speculative validators, parsers, or guards beyond what the spec demands\n- Simplify prompts (remove redundant instructions, excessive templates)\n- When a reference has no novel content, delete it rather than leaving a stub\n",
+      "zh": "**模式：**\n- 先删除，再构建\n- 先删减，再打磨（达到最小范围后再投入质量）\n- 面向观察到的用法设计，不为臆测的边界情况设计\n- 不添加超出规范要求的臆测性校验器、解析器或防护逻辑\n- 简化提示词（删除冗余指令和过多模板）\n- 引用资料没有新内容时，直接删除，不要留下空壳\n"
+    }
+  ]
+}

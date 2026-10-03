@@ -1,0 +1,70 @@
+{
+  "source": "skills/architect/references/design-red-flags.md",
+  "sha256": "905066f9bbac81c573c2b325be47751d2c0f9325e0a0772bd4384e82dafe9336",
+  "blocks": [
+    {
+      "en": "# Design red flags\n\n",
+      "zh": "# 设计警示信号\n\n"
+    },
+    {
+      "en": "Screen every candidate before synthesis. A red flag is a reason to revise or reject the shape.\n\n",
+      "zh": "综合候选方案前，筛查每一个方案。警示信号是修改或拒绝当前结构的理由。\n\n"
+    },
+    {
+      "en": "## Shallow module\n\n",
+      "zh": "## 浅模块\n\n"
+    },
+    {
+      "en": "A shallow module exposes a large interface while hiding little complexity. Judge depth by the capability and policy hidden behind the public surface relative to the size of that surface. Prefer a simple interface backed by substantial behavior.\n\n",
+      "zh": "浅模块暴露很大的接口，却只隐藏少量复杂度。判断模块深度时，比较公开接口背后封装的能力和策略与接口自身的大小。优先选择由丰富行为支撑的简单接口。\n\n"
+    },
+    {
+      "en": "Do not confuse a deep module with a deep call chain. A deep call chain scatters understanding across layers. A deep module concentrates capability behind one interface.\n\n",
+      "zh": "不要把深模块与深调用链混淆。深调用链让理解分散在各层；深模块则将能力集中在一个接口之后。\n\n"
+    },
+    {
+      "en": "Look for these signs:\n\n",
+      "zh": "留意这些信号：\n\n"
+    },
+    {
+      "en": "- Callers coordinate several methods to complete one operation.\n- Public options expose internal stages or implementation choices.\n- Learning the interface does not save the caller from learning the implementation.\n\n",
+      "zh": "- 调用方需要协调多个方法才能完成一个操作。\n- 公开选项暴露内部阶段或实现选择。\n- 学会接口之后，调用方仍需要学习实现。\n\n"
+    },
+    {
+      "en": "## Information leakage\n\n",
+      "zh": "## 信息泄漏\n\n"
+    },
+    {
+      "en": "Information leakage makes multiple modules depend on the same internal decision. A representation, policy, or protocol detail appears in more than one place, so changing it requires coordinated edits.\n\n",
+      "zh": "信息泄漏会让多个模块依赖同一个内部决策。某种表示、策略或协议细节出现在多个地方，因此修改时需要同步调整。\n\n"
+    },
+    {
+      "en": "Public re-exports of transport or wire types are leakage. Parse external data into domain types behind the interface. Keep storage schemas, framework objects, and protocol details private.\n\n",
+      "zh": "通过公开接口重新导出传输或 wire 类型也是泄漏。在接口之后将外部数据解析为领域类型。让存储 schema、框架对象和协议细节保持私有。\n\n"
+    },
+    {
+      "en": "## Temporal decomposition\n\n",
+      "zh": "## 按执行时序拆分\n\n"
+    },
+    {
+      "en": "Temporal decomposition organizes modules by execution order instead of the knowledge they own. Separate load, validate, transform, and save stages often repeat one representation and its invariants across several boundaries.\n\n",
+      "zh": "按执行时序拆分，是根据执行顺序而不是模块拥有的知识来组织模块。分开的加载、校验、转换和保存阶段，常常在多个边界重复同一种表示及其不变量。\n\n"
+    },
+    {
+      "en": "Group code around domain knowledge and ownership. Methods that run at different times can still belong to one module when they protect the same decisions.\n\n",
+      "zh": "围绕领域知识和职责归属组织代码。在不同时刻运行的方法，如果保护的是同一组决策，仍可以属于同一个模块。\n\n"
+    },
+    {
+      "en": "## Pass-through method\n\n",
+      "zh": "## 透传方法\n\n"
+    },
+    {
+      "en": "A pass-through method forwards the same arguments to another method with the same shape. It adds a layer without hiding complexity.\n\n",
+      "zh": "透传方法将同一组参数转发给形状相同的另一个方法。它增加一层，却没有隐藏复杂度。\n\n"
+    },
+    {
+      "en": "Remove it or move responsibility to the module that can complete the operation. Keep a forwarding boundary only when it adds policy, adaptation, or a distinct abstraction.\n",
+      "zh": "删除它，或把职责移到能完整执行操作的模块。只有转发边界增加了策略、适配或独立抽象时才保留。\n\n"
+    }
+  ]
+}

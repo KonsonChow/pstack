@@ -1,0 +1,102 @@
+{
+  "source": "skills/interrogate/references/rubric.md",
+  "sha256": "59e9b7cc4556e735e1b859a7dd1f7637b013a2426a84825ac1c51979942c158a",
+  "blocks": [
+    {
+      "en": "# Review Rubric\n\n",
+      "zh": "# 评审标准\n\n"
+    },
+    {
+      "en": "Review through whichever lenses are relevant. Not every lens applies to every change. Use judgment.\n\n",
+      "zh": "采用相关的评审视角。并非每个视角适用于每个改动，要自行判断。\n\n"
+    },
+    {
+      "en": "## Correctness\n\n",
+      "zh": "## 正确性\n\n"
+    },
+    {
+      "en": "Does the code actually do what the intent says it should?\n\n",
+      "zh": "代码真的实现了意图要求的行为吗？\n\n"
+    },
+    {
+      "en": "- Edge cases: empty inputs, nil/undefined, boundary values, concurrent access\n- Error handling: are errors caught, propagated, or silently swallowed?\n- Off-by-one, type coercion, integer overflow, string encoding\n- State management: race conditions, stale closures, dangling references\n- Does the happy path work? Does the sad path work?\n- Idempotency: what happens if this operation runs twice, or if a previous run crashed halfway? If the answer is \"it depends on what state was left behind,\" there's a missing reconciliation step.\n- Concurrency: if multiple actors can touch the same mutable state (files, branches, shared data), is access serialized structurally (locks, sequential phases, exclusive ownership), or by conventions that won't hold?\n\n",
+      "zh": "- 边界情况：空输入、nil/undefined、边界值、并发访问。\n- 错误处理：错误被捕获、传播，还是悄悄吞掉？\n- 差一位错误、类型强制转换、整数溢出、字符串编码。\n- 状态管理：竞态、过期闭包、悬空引用。\n- 正常路径能工作吗？失败路径呢？\n- 幂等：操作执行两次，或上次执行中途崩溃，会怎样？如果答案是“看留下什么状态”，就缺少状态协调步骤。\n- 并发：多个参与者能修改同一可变状态（文件、分支、共享数据）时，访问由结构（锁、顺序阶段、独占归属）串行化，还是依赖无法保证的约定？\n\n"
+    },
+    {
+      "en": "When you find a potential bug, trace the execution path. Don't just flag \"this could be nil\". Show the call chain that makes it nil.\n\n",
+      "zh": "发现潜在 bug 时，追踪执行路径。不要只说“这里可能 nil”，要展示导致 nil 的调用链。\n\n"
+    },
+    {
+      "en": "## Root Causes vs. Symptoms\n\n",
+      "zh": "## 根因与症状\n\n"
+    },
+    {
+      "en": "Is the code fixing the actual problem or papering over a symptom?\n\n",
+      "zh": "代码修的是实际问题，还是掩盖症状？\n\n"
+    },
+    {
+      "en": "Answering this often requires looking beyond the changed files. Read the surrounding code (callers, callees, type definitions, sibling modules) and understand the architecture the change lives in. Use the tools available to you (Read, Grep, Glob) to explore. Follow the call chain. Read the types. Understand why the code exists before judging whether the change addresses the right layer.\n\n",
+      "zh": "回答通常要看改动文件之外。阅读周边代码（调用方、被调用方、类型定义、相邻模块），理解改动所在架构。用现有工具（Read、Grep、Glob）探索，沿调用链追踪，阅读类型，先理解代码存在的原因，再判断改动是否落在正确层。\n\n"
+    },
+    {
+      "en": "- Guard clauses that mask a deeper invariant violation\n- Retry logic that hides a broken contract\n- Type casts that silence a modeling error\n- If you see a workaround, ask: why is the workaround needed? What would a proper fix look like?\n- A fix in module A that should really be a fix in module B's contract\n- Instructions where structure would be better: if the fix is a comment saying \"don't do X\" or a convention someone has to remember, ask whether it could instead be a type constraint, a lint rule, or a runtime check that makes the wrong thing impossible\n\n",
+      "zh": "- 掩盖更深不变量违例的 guard clause。\n- 隐藏破损契约的重试逻辑。\n- 压住建模错误的类型 cast。\n- 发现 workaround 时，问为什么需要它，正确修复应是什么样。\n- 放在模块 A 的修复，实际应改模块 B 的契约。\n- 用结构比写指令更好：修复若是“不要做 X”的注释，或必须靠人记住的约定，询问能否改成类型约束、lint 规则或运行时检查，让错误做法无法发生。\n\n"
+    },
+    {
+      "en": "## Structural Integrity\n\n",
+      "zh": "## 结构完整性\n\n"
+    },
+    {
+      "en": "Does the code fit well into the system it's part of?\n\n",
+      "zh": "代码是否合理融入所属系统？\n\n"
+    },
+    {
+      "en": "- Boundary discipline: is validation at system boundaries, or scattered through business logic? Validate data once where it enters the system, then trust it internally.\n- Abstraction level: is the code mixing high-level orchestration with low-level detail?\n- Coupling: does this change introduce dependencies that will make future changes harder?\n- Data model fit: do the data structures match the actual access patterns? The right structure makes downstream code obvious. The wrong one fights you at every turn.\n- Bolted-on vs. integrated: was the change patched onto the existing design, or does it read as if the design always accounted for it? If the new requirement had been known from the start, would the code look like this?\n- Legacy dual-paths: does the change introduce a new API while keeping the old one alive? If there are no external consumers, migrate callers and delete the old path in the same wave. Don't leave compatibility layers that will become permanent.\n\n",
+      "zh": "- 边界纪律：校验集中在系统边界，还是散在业务逻辑中？数据进入系统时校验一次，内部随后信任它。\n- 抽象层次：是否混合高层协调与低层细节？\n- 耦合：是否新增让未来改动更难的依赖？\n- 数据模型匹配：数据结构是否符合真实访问模式？正确结构让后续代码自然明确，错误结构处处掣肘。\n- 拼接还是融合：是在旧设计上打补丁，还是读来像设计一直考虑了它？如果一开始知道新需求，代码会这样写吗？\n- 新旧双路径：是否引入新 API 却保留旧 API？没有外部使用者时，同一轮迁移调用方并删除旧路径。别留下最终变永久的兼容层。\n\n"
+    },
+    {
+      "en": "Don't penalize simple code for lacking abstraction. Premature abstraction is worse than duplication.\n\n",
+      "zh": "不要因简单代码缺少抽象而扣分。过早抽象比重复更糟。\n\n"
+    },
+    {
+      "en": "## Verification\n\n",
+      "zh": "## 验证\n\n"
+    },
+    {
+      "en": "Can you tell that this code works from reading it?\n\n",
+      "zh": "阅读代码能判断它能工作吗？\n\n"
+    },
+    {
+      "en": "- Are there tests? Do they test behavior or implementation details?\n- Are there assertions/invariants that would catch regressions?\n- If this is a bug fix: is there a test for the bug?\n- If this touches an integration boundary: is the full path tested?\n- Check the real thing, not a proxy. If the code checks liveness via file mtime or cached state instead of reading the actual value, that's a verification gap.\n- For delegated or async work: does the code verify actual output artifacts, or does it trust self-reports and summaries?\n\n",
+      "zh": "- 有测试吗？测的是行为还是实现细节？\n- 有能捕获回归的断言或不变量吗？\n- Bug 修复有针对该 bug 的测试吗？\n- 涉及集成边界时，完整路径测试了吗？\n- 检查真实对象，不看替代指标。用文件 mtime 或缓存状态判断存活，而不读实际值，就是验证缺口。\n- 委派或异步工作：是否验证实际输出产物，还是相信自述与摘要？\n\n"
+    },
+    {
+      "en": "## Complexity Budget\n\n",
+      "zh": "## 复杂性预算\n\n"
+    },
+    {
+      "en": "Is the complexity justified by what the code accomplishes?\n\n",
+      "zh": "代码带来的价值足以支撑这些复杂性吗？\n\n"
+    },
+    {
+      "en": "- Code that could be simpler without losing correctness or clarity\n- Abstractions that serve only one call site\n- Configuration or parameterization for cases that don't exist yet\n- Dead code, unused imports, vestigial parameters\n- Over-engineering: \"just in case\" code paths with no current callers\n- Obsolete compatibility paths kept alive for transitional stability that's no longer needed. If the migration is done, delete the scaffolding\n- Does the user experience justify the complexity? Every feature, control, and option should earn its place. Half-finished features are worse than missing ones.\n\n",
+      "zh": "- 不损失正确性或清晰性就能简化的代码。\n- 只服务一个调用点的抽象。\n- 为尚不存在的情况设计的配置或参数化。\n- 死代码、未用导入、残留参数。\n- 过度设计：没有当前调用方的“以防万一”路径。\n- 为已不需要的过渡稳定性保留旧兼容路径。迁移完成就删掉基础支架。\n- 用户体验是否值得这些复杂性？每个功能、控件、选项都要证明价值。半成品功能比没有更糟。\n\n"
+    },
+    {
+      "en": "Simpler is better unless simpler is wrong. Three lines of duplication beat a premature abstraction.\n\n",
+      "zh": "只要不导致错误，越简单越好。重复三行好过过早抽象。\n\n"
+    },
+    {
+      "en": "## Security\n\n",
+      "zh": "## 安全\n\n"
+    },
+    {
+      "en": "Only flag security issues you can actually trace through the code. \"This could be an injection vector\" without showing the input path is not useful.\n\n",
+      "zh": "只报告能实际沿代码追踪的安全问题。说“可能是注入入口”却不给输入路径，没有用。\n\n"
+    },
+    {
+      "en": "- User input flowing to dangerous sinks (SQL, shell, eval, innerHTML) without sanitization\n- Authentication/authorization gaps in new endpoints\n- Secrets in code, logs, or error messages\n- TOCTOU (time-of-check-time-of-use) in security-critical paths\n",
+      "zh": "- 用户输入未净化就进入危险出口（SQL、shell、eval、innerHTML）。\n- 新 endpoint 的认证或授权缺口。\n- 代码、日志、错误消息中的秘密。\n- 安全关键路径中的 TOCTOU（检查与使用之间的时序竞态）。\n\n"
+    }
+  ]
+}

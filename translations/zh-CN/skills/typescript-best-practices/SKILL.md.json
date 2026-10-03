@@ -1,0 +1,26 @@
+{
+  "source": "skills/typescript-best-practices/SKILL.md",
+  "sha256": "28f9e61710e205f6f3c5476f333483cff0e988f6a5b639e2faad536344b40c5e",
+  "blocks": [
+    {
+      "en": "---\nname: typescript-best-practices\ndescription: TypeScript best practices. Use when reading or editing any .ts or .tsx file.\npaths: [\"**/*.ts\", \"**/*.tsx\"]\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: typescript-best-practices\ndescription: TypeScript 最佳实践。读取或编辑任何 .ts 或 .tsx 文件时使用。\npaths: [\"**/*.ts\", \"**/*.tsx\"]\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# TypeScript best practices\n\n",
+      "zh": "# TypeScript 最佳实践\n\n"
+    },
+    {
+      "en": "Apply the **type-system-discipline** principle skill first.\n\n",
+      "zh": "先应用 **type-system-discipline** 原则 skill。\n\n"
+    },
+    {
+      "en": "| Rule | Summary |\n|------|---------|\n| Discriminated unions | Model variants with a `kind` literal discriminant so impossible states can't be represented. No optional-field bags. |\n| Branded types | Brand primitives with `& { readonly __brand: \"X\" }` so they can't be mixed up. Validate once at the boundary. |\n| Constructive modeling | Build the shape so the illegal value can't be constructed. `[T, ...T[]]` for non-empty, `[T, T][]` for even length, `start` plus `duration` for a range. Not a runtime guard, not a wish for refinement types. |\n| Simplest total type | Keep `T[]` while every operation on it stays total. Strengthen to `NonEmpty<T>` only where the loose type forces `!`, a cast, or a \"should never happen\" throw. |\n| `unknown` over `any` | External data is `unknown`. |\n| Schemas before guards | Before hand-writing a property-by-property type guard, use the repository's runtime schema library and infer the type from the schema, such as `z.infer`. |\n| No `as` casts | Every `as` is a runtime crash waiting. Cast only after validation. |\n| Narrowing hierarchy | Discriminant switch > `in` operator > `typeof`/`instanceof` > user-defined type guard > `as`. |\n| Type guards | Must verify the claim. A lying guard is worse than `as` because the bug hides behind a name that says it's safe. Name them `isX` or `hasX`. |\n| Exhaustiveness | Inline `const _exhaustive: never = x;` in default arms so the compiler errors when a new variant is added. |\n| `satisfies` over `as` | Validates the value without widening literal types. |\n| Boundary validation | Parse where data crosses in, into a named domain type. `Record<string, unknown>` (however spelled) stops at that parse. Trust types inside. See the **boundary-discipline** principle skill. |\n| Schema-derived types | Reach for `Pick`/`Omit`/`Parameters`/`ReturnType`/`Awaited`/`typeof` before declaring a new interface. |\n| Object args | Pass objects, not positional, so argument order is self-documenting. Skip on hot paths (per-frame render, tokenizers, parsers). |\n| Real tests | Don't mock what you can run. Prefer the framework's real test primitives with leak/disposable checks, and verify UI in a running build. Mock only what you can't run locally. |\n| Structured telemetry | Prefer structured logger diagnostics with enough context to debug from an id. No `console.log` in shipped code. |\n\n",
+      "zh": "| 规则 | 摘要 |\n|------|---------|\n| 可辨识联合 | 用 `kind` 字面量判别字段表达变体，使不可能的状态无法表示。不要把一堆可选字段塞在同一个对象中。 |\n| Branded types | 用 `& { readonly __brand: \"X\" }` 为基础类型添加品牌，避免混用。在边界处校验一次。 |\n| 构造式建模 | 设计数据结构，使非法值无法构造。非空集合用 `[T, ...T[]]`，偶数长度用 `[T, T][]`，区间用 `start` 加 `duration`。这不是运行时保护，也不是寄希望于 refinement types。 |\n| 最简单的全定义类型 | 只要所有操作都对任意输入有定义，就保留 `T[]`。仅在宽松类型迫使你使用 `!`、强制转换或“绝不应该发生”的异常时，才加强为 `NonEmpty<T>`。 |\n| `unknown` 优于 `any` | 外部数据使用 `unknown`。 |\n| schema 先于类型守卫 | 手写逐属性类型守卫之前，先使用仓库中的运行时 schema 库，并从 schema 推导类型，例如 `z.infer`。 |\n| 不使用 `as` 强制转换 | 每个 `as` 都潜藏运行时崩溃。只在校验之后进行转换。 |\n| 类型收窄优先级 | 判别字段 switch > `in` 运算符 > `typeof`／`instanceof` > 用户定义类型守卫 > `as`。 |\n| 类型守卫 | 必须真实验证其声明。撒谎的守卫比 `as` 更糟，因为 Bug 藏在一个声称安全的名称背后。命名为 `isX` 或 `hasX`。 |\n| 穷尽性 | 在 default 分支内写 `const _exhaustive: never = x;`，让新增变体时编译器报错。 |\n| `satisfies` 优于 `as` | 校验值，同时不扩大字面量类型。 |\n| 边界校验 | 数据进入系统时解析为有名称的领域类型。`Record<string, unknown>`（无论怎样拼写）在解析处终止。内部信任类型。见 **boundary-discipline** 原则 skill。 |\n| schema 派生类型 | 声明新 interface 前，优先考虑 `Pick`／`Omit`／`Parameters`／`ReturnType`／`Awaited`／`typeof`。 |\n| 对象参数 | 传对象而不是位置参数，让参数顺序含义自明。热点路径（逐帧渲染、tokenizer、parser）可以例外。 |\n| 真实测试 | 能运行的就不要 mock。优先使用框架真正的测试原语，带上泄漏／disposable 检查，并在运行中的构建验证 UI。仅 mock 本地无法运行的部分。 |\n| 结构化遥测 | 优先使用结构化 logger 诊断信息，提供足够上下文，以便凭一个 ID 排查。交付代码中不使用 `console.log`。 |\n\n"
+    },
+    {
+      "en": "Examples: `references/patterns.md`.\n",
+      "zh": "示例：`references/patterns.md`。\n\n"
+    }
+  ]
+}

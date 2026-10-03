@@ -1,0 +1,34 @@
+{
+  "source": "automations/benny/README.md",
+  "sha256": "ca3c42cbb7f0bf7068f7407eb355815e6c234d5c2786942f3cbe751a3690024b",
+  "blocks": [
+    {
+      "en": "# benny\n\n",
+      "zh": "# benny\n\n"
+    },
+    {
+      "en": "benny gives you two cursor automations for slack issue reports. one triages each report. the other reproduces confirmed bugs and may prepare a small draft fix.\n\n",
+      "zh": "benny 为 Slack 问题报告提供两个 Cursor 自动化：一个对每份报告进行分诊，另一个复现已确认的缺陷，并可能准备一个小范围修复草稿。\n\n"
+    },
+    {
+      "en": "the files in this directory are dormant setup and automation sources. they do not appear as slash skills.\n\n",
+      "zh": "本目录中的文件是尚未启用的配置及自动化源文件，不会作为斜杠 skill 出现。\n\n"
+    },
+    {
+      "en": "## set it up\n\n",
+      "zh": "## 配置\n\n"
+    },
+    {
+      "en": "1. point cursor at [`FOR_AGENTS.md`](./FOR_AGENTS.md) and name the target repository.\n2. let setup merge this whole directory into the target at `.cursor/automations/benny/`. it must preserve destination-only files and review conflicts instead of overwriting local edits.\n3. let setup enable pstack in the target repository's `.cursor/settings.json` for shared dependencies:\n\n",
+      "zh": "1. 让 Cursor 阅读 [`FOR_AGENTS.md`](./FOR_AGENTS.md)，并指定目标仓库。\n2. 让配置流程将整个目录合并到目标仓库的 `.cursor/automations/benny/`。必须保留仅存在于目标中的文件，并审查冲突，不得覆盖本地编辑。\n3. 让配置流程在目标仓库的 `.cursor/settings.json` 中启用 pstack，以提供共享依赖：\n\n"
+    },
+    {
+      "en": "```json\n{\n\t\"plugins\": {\n\t\t\"pstack\": { \"enabled\": true }\n\t}\n}\n```\n\n",
+      "zh": "```json\n{\n\t\"plugins\": {\n\t\t\"pstack\": { \"enabled\": true }\n\t}\n}\n```\n\n"
+    },
+    {
+      "en": "4. keep user-owned configuration outside the copied pack, for example in `.cursor/benny/`. adapt [`configuration.example.yaml`](./templates/configuration.example.yaml) and [`feature-map.example.md`](./skills/reproduce-and-fix-issues/references/feature-map.example.md).\n5. commit `.cursor/settings.json`, `.cursor/automations/benny/`, and any secret-free configuration before enabling either automation.\n6. review each new automation draft or update existing automations in their editors. then send a harmless test report and verify every source-channel post stays in the original thread.\n",
+      "zh": "4. 将用户自己的配置放在复制包之外，例如 `.cursor/benny/`。调整 [`configuration.example.yaml`](./templates/configuration.example.yaml) 和 [`feature-map.example.md`](./skills/reproduce-and-fix-issues/references/feature-map.example.md)。\n5. 启用任一自动化前，提交 `.cursor/settings.json`、`.cursor/automations/benny/` 及不含秘密的配置。\n6. 审阅每份新自动化草稿，或在编辑器中更新已有自动化。然后发送一份无害的测试报告，验证来源频道的每条发帖都留在原始线程内。\n"
+    }
+  ]
+}

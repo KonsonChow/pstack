@@ -1,0 +1,114 @@
+{
+  "source": "docs/guide/07-overnight.md",
+  "sha256": "eefbc665ad411ee22b6430d779674e5e8d8f304d51fafd80a62ab2334d095ebc",
+  "blocks": [
+    {
+      "en": "# Run work while you sleep\n\n",
+      "zh": "# 让任务在你休息时继续"
+    },
+    {
+      "en": "This is the payoff for everything before it. An agent you can trust to verify its own work is an agent you can leave alone with a hard task. What makes that safe isn't hope. It's a checkable finish condition, an isolated worktree, and a decision log you audit in the morning.\n\n",
+      "zh": "前面所有做法的价值，在这里体现出来。一个能可靠验证自己工作的 agent，才值得让它独立处理困难任务。安全性来自可检验的完成条件、隔离的 worktree，以及第二天可以复核的决策记录，而不是一厢情愿的信任。"
+    },
+    {
+      "en": "![She waves goodnight from the door while robots keep the factory running, one updating a DECISION LOG wall board under a BUILD LOOP ACTIVE sign.](./images/overnight.jpg)\n\n",
+      "zh": "![她站在门口挥手道晚安，机器人继续运转工厂，其中一个在 BUILD LOOP ACTIVE 标牌下更新 DECISION LOG 记录板。](./images/overnight.jpg)"
+    },
+    {
+      "en": "## The overnight contract\n\n",
+      "zh": "## 夜间执行约定"
+    },
+    {
+      "en": "A good handoff has the goal, the finish condition, permissions, and an escape hatch. It doesn't need to be long:\n\n",
+      "zh": "一次有效交接要包含目标、完成条件、权限，以及无法继续时的退出机制。不必写很长："
+    },
+    {
+      "en": "```text\n/poteto-mode im going to bed. migrate every caller to the new parser in a fresh worktree off <base>.\ndone means zero old callers, all parser fixtures pass, old api deleted.\nkeep a decision log. don't ask me before committing.\n/loop until done. if you're truly stuck after a few hours, stop and write up why.\n```\n\n",
+      "zh": "```text\n/poteto-mode 我要睡了。在从 <base> 创建的新 worktree 中，把所有调用方迁移到新 parser。\n完成条件是旧调用方为零、所有 parser 测试样本通过、旧 API 已删除。\n保留决策记录。提交前不必问我。\n/loop 持续执行直到完成。如果几个小时后确实卡住了，就停止并写清原因。\n```"
+    },
+    {
+      "en": "Walk through what each line buys you:\n\n",
+      "zh": "逐行看它们解决了什么问题："
+    },
+    {
+      "en": "- \"im going to bed\" is a session override. The agent stops asking and keeps going.\n- \"done means...\" turns the goal into checks every iteration can run.\n- \"fresh worktree off `<base>`\" keeps the run from colliding with anything else you have open.\n- \"don't ask me before committing\" pre-answers the permission the agent would otherwise block on.\n- `/loop` is Cursor's built-in wake mechanism, not a pstack skill. The [Autonomous run playbook](../../skills/poteto-mode/playbooks/autonomous-run.md) uses it to re-check the finish condition on events or a heartbeat.\n- The escape hatch lets it stop at a genuine dead end and write up why, which beats eight hours of creative goal reinterpretation.\n\n",
+      "zh": "- “我要睡了”会覆盖本次会话的交互约定，让 agent 不再反复询问，继续执行。\n- “完成条件是……”把目标转成每轮都可以执行的检查。\n- “从 `<base>` 创建的新 worktree”避免这次执行与其他正在进行的工作相互干扰。\n- “提交前不必问我”提前给出权限，避免 agent 因等待授权而停住。\n- `/loop` 是 Cursor 内置的唤醒机制，不是 pstack skill。[Autonomous run 执行规程](../../skills/poteto-mode/playbooks/autonomous-run.md) 用它在事件触发或定时心跳时重新检查完成条件。\n- 退出机制允许 agent 遇到真正无法推进的障碍时停下并说明原因，优于花八小时不断重新解释目标。"
+    },
+    {
+      "en": "Because you'll review this work after stepping away, `/poteto-mode` routes it through [`/figure-it-out`](../../skills/figure-it-out/SKILL.md), which designs the run's phases before any code and wires in the decision log.\n\n",
+      "zh": "因为你会在离开后再复核工作，`/poteto-mode` 会把任务交给 [`/figure-it-out`](../../skills/figure-it-out/SKILL.md)，在写代码前设计执行阶段，并接入决策记录。"
+    },
+    {
+      "en": "## What the loop does all night\n\n",
+      "zh": "## 整夜循环做什么"
+    },
+    {
+      "en": "```mermaid\nflowchart TD\n    A[Check the finish condition] --> B[Make the smallest justified change]\n    B --> C[Verify against the real artifact]\n    C --> D{Progress?}\n    D -->|Yes| E[Commit]\n    D -->|No| F[Discard]\n    E --> G[Log one decision row]\n    F --> G\n    G --> A\n```\n\n",
+      "zh": "```mermaid\nflowchart TD\n    A[检查完成条件] --> B[做最小且有依据的改动]\n    B --> C[对真实产物进行验证]\n    C --> D{有进展吗？}\n    D -->|有| E[提交]\n    D -->|没有| F[舍弃改动]\n    E --> G[写入一条决策记录]\n    F --> G\n    G --> A\n```"
+    },
+    {
+      "en": "One change, one check, one log row, every iteration. Changes that didn't help get discarded, not left to ride. A plateau means pivot, not stop, and the finish condition never quietly relaxes to declare victory.\n\n",
+      "zh": "每轮只做一项改动、一次检查、记录一条决策。没有帮助的改动要舍弃，不能混在结果里保留。进入瓶颈意味着换一个思路，而不是停止；也不能悄悄放宽完成条件来宣布成功。"
+    },
+    {
+      "en": "## The morning audit\n\n",
+      "zh": "## 第二天如何复核"
+    },
+    {
+      "en": "[`/show-me-your-work`](../../skills/show-me-your-work/SKILL.md) is what makes the run reviewable. Each row records the time, phase, decision, reason, an evidence pointer, and the result, in a TSV at `decisions.tsv` (or `.audit/<task-slug>.tsv` when several runs share a directory). It stays local by default. Commit it when the work is ambitious enough that a reviewer needs the trail to trust the result.\n\n",
+      "zh": "[`/show-me-your-work`](../../skills/show-me-your-work/SKILL.md) 让执行过程可复核。每条记录包含时间、阶段、决策、理由、证据位置和结果，写入 `decisions.tsv`；多个任务共享目录时，则写入 `.audit/<task-slug>.tsv`。默认只保存在本地。如果工作规模大到评审者需要完整过程才能信任结果，就把记录一并提交。"
+    },
+    {
+      "en": "When you're back, ask for the run in review form:\n\n",
+      "zh": "回来后，可以要求按复核视角汇报："
+    },
+    {
+      "en": "```text\n/show-me-your-work catch me up on what you did last night\n```\n\n",
+      "zh": "```text\n/show-me-your-work 帮我回顾昨晚做了什么\n```"
+    },
+    {
+      "en": "Before the skill hands back its summary, it spawns a reviewer on a different model family to read the trail and the transcript, and the reply ends with an Attention section listing what deserves your scrutiny. Read that section first, then the log rows it points at. You're auditing decisions, not re-reading the whole night.\n\n",
+      "zh": "生成摘要之前，这个 skill 会启动一个不同模型系列的评审者，阅读记录和对话。回复最后的 Attention 部分列出值得你重点检查的事项。先读这一部分，再查看它引用的记录行。你要复核的是决策，而不是重读一整夜的对话。"
+    },
+    {
+      "en": "## When the night holds a queue, not a task\n\n",
+      "zh": "## 当夜间工作是一组任务"
+    },
+    {
+      "en": "The contract above drives one task to one finish condition. Some nights hold more, a queue of independent changes or a whole program. Three playbooks scale the same trust up.\n\n",
+      "zh": "上述约定把一个任务推进到一个完成条件。有些夜间工作是一组独立改动，甚至整个项目计划。下面三套执行规程把同样的验证机制扩展到更大范围。"
+    },
+    {
+      "en": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) runs a queue of independent PRs to merged. Each PR gets one owner agent that carries it from build through merge, and no owner merges on its own verdict. A swarm of fresh verifiers checks every merge-ready head, and only a clean verdict authorizes the merge:\n\n",
+      "zh": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) 把一组独立 PR 推进到合入。每个 PR 有一个负责 agent，从实现一路负责到合并，但任何负责 agent 都不能仅凭自己的判断合并。新启动的一组验证者会检查每个达到可合并状态的分支当前提交，只有验证通过的结论才能授权合并："
+    },
+    {
+      "en": "```text\n/poteto-mode full autopilot on this queue. each item is independent. i want them merged by morning.\n```\n\n",
+      "zh": "```text\n/poteto-mode 对这个队列全自动执行。每项任务互相独立。我希望明早之前全部合入。\n```"
+    },
+    {
+      "en": "[Autopilot-stack](../../skills/poteto-mode/playbooks/autopilot-stack.md) runs the same owner loop but ships nothing. You wake up to one linear base-branch stack with a verifier's verdict on every link, and you review and land it yourself. Pick it over Autopilot-full when the changes are coupled, or when you want your own eyes on the work before anything merges:\n\n",
+      "zh": "[Autopilot-stack](../../skills/poteto-mode/playbooks/autopilot-stack.md) 使用相同的负责者循环，但不执行合入。第二天你会得到一个线性的基线分支 PR 栈，每一环都有验证者的判断，由你自行评审并合入。如果改动相互依赖，或你希望所有改动合并前都亲自看过，应选择它而不是 Autopilot-full："
+    },
+    {
+      "en": "```text\n/poteto-mode autopilot these five changes but stack them, don't ship. i'll land the stack in the morning.\n```\n\n",
+      "zh": "```text\n/poteto-mode 自动推进这五项改动，但组织成 PR 栈，不要合入。我明早自己合入。\n```"
+    },
+    {
+      "en": "[Orchestrate](../../skills/poteto-mode/playbooks/orchestrate.md) is for a program that outlives any single agent: multi-day, many stacked PRs, fleets of subagents under one standing coordinator chat. The coordinator authors briefs, collects what its subagents finish, keeps the lowest unmerged PR green, and never writes code itself. It's deliberately heavy machinery. If one agent could finish the work in a session, the playbook itself routes you back to the overnight contract above:\n\n",
+      "zh": "[Orchestrate](../../skills/poteto-mode/playbooks/orchestrate.md) 用于超过单个 agent 生命周期的项目级工作：持续多天、包含多个相互依赖的 PR，由一个长期协调对话管理大量 subagent。协调者编写任务说明、收集 subagent 的完成结果、让最底层尚未合入的 PR 保持检查通过，自己从不写代码。这套机制刻意设计得较重。如果一个 agent 能在一次会话内完成，执行规程会把你引回上面的夜间执行约定："
+    },
+    {
+      "en": "```text\n/poteto-mode orchestrate the store migration. own it until every package is converted and merged. i'll check in twice a day.\n```\n\n",
+      "zh": "```text\n/poteto-mode 协调 store 迁移。一直负责，直到每个包都完成迁移并合入。我每天查看两次进展。\n```"
+    },
+    {
+      "en": "**Pitfall:** a duration is not a finish condition. \"work on this for 4 hours\" gives the agent nothing to check, and you'll wake up to four hours of motion instead of a result. Give `/loop` a predicate that can pass or fail.\n\n",
+      "zh": "**易错点：** 执行时长不是完成条件。“做四个小时”没有可检验的结果，第二天得到的可能只是四小时的忙碌，而不是成果。给 `/loop` 一个能明确判定通过或失败的条件。"
+    },
+    {
+      "en": "Next: [Steer with principle names](./08-principles.md).\n",
+      "zh": "下一页：[用原则名称调整方向](./08-principles.md)。"
+    }
+  ]
+}

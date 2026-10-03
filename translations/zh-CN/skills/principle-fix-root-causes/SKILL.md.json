@@ -1,0 +1,34 @@
+{
+  "source": "skills/principle-fix-root-causes/SKILL.md",
+  "sha256": "ba4cd38da1dcc8fe5432feb64457cba95594736a9b21b2ebf8f8c52aee068707",
+  "blocks": [
+    {
+      "en": "---\nname: principle-fix-root-causes\ndescription: \"Apply when debugging. Trace each symptom to its root cause and fix it there; reproduce first, ask why until you reach it, resist nil-check guards that silence crashes.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-fix-root-causes\ndescription: \"调试时应用。每个症状都追踪到根因并在那里修复；先复现，不断追问为什么直到根因，抵制仅靠 nil 检查压住崩溃的防护。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Fix Root Causes\n\n",
+      "zh": "# 修复根因\n\n"
+    },
+    {
+      "en": "When debugging, do not fix symptoms. Trace every problem to its root cause and fix it there.\n\n",
+      "zh": "调试时，不修表面症状。把每个问题追到根因，在根因处修复。\n\n"
+    },
+    {
+      "en": "**Why:** Symptom fixes accumulate. Each workaround makes the system harder to reason about, and the real bug remains. Root-cause fixes are slower upfront but reduce total debugging time.\n\n",
+      "zh": "**原因：** 症状修复会累积。每个 workaround 都增加系统理解难度，真实 bug 却仍存在。根因修复前期慢一些，但减少总调试时间。\n\n"
+    },
+    {
+      "en": "**Pattern:**\n- Reproduce first\n- Ask \"why\" until you hit the root cause\n- Do not add guards (adding a nil check to silence a crash is a symptom fix)\n- If a workaround needs a paragraph-long comment to justify it, the code is wrong (fix the code, not the comment)\n- Check for the pattern, not just the instance (grep for the same pattern, fix all instances)\n- When stuck, instrument. Don't guess (add logging, read the actual error)\n\n",
+      "zh": "**模式：**\n- 先复现。\n- 不断问“为什么”，直到根因。\n- 不加掩盖问题的防护（加 nil 检查让崩溃消失，就是症状修复）。\n- Workaround 需要一整段注释才能合理化时，代码有问题（修代码，不修注释）。\n- 检查模式，不只查实例（grep 相同模式，修所有实例）。\n- 卡住就增加观测，不猜（加日志，读真实错误）。\n\n"
+    },
+    {
+      "en": "**Restart bugs: suspect state before code**\n\n",
+      "zh": "**重启后出错：先怀疑状态，再怀疑代码**\n\n"
+    },
+    {
+      "en": "When something \"fails after restart,\" suspect stale persistent state first: config files, caches, lock files, serialized state. If clearing a state file restores behavior, prioritize state validation as the fix.\n",
+      "zh": "问题“重启后失败”时，先怀疑过期持久化状态：配置文件、缓存、锁文件、序列化状态。清除状态文件能恢复行为时，优先从状态校验入手修复。\n\n"
+    }
+  ]
+}

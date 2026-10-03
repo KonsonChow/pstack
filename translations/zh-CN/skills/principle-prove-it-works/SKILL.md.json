@@ -1,0 +1,50 @@
+{
+  "source": "skills/principle-prove-it-works/SKILL.md",
+  "sha256": "ae13d287984a5864312b6286899d4ee2b60f8272b5e5e8fcc586a7c3ea51020b",
+  "blocks": [
+    {
+      "en": "---\nname: principle-prove-it-works\ndescription: \"Apply after completing a task, before declaring done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-prove-it-works\ndescription: \"完成任务后、宣布完成前使用。针对真实产物进行验证（运行功能、读取实际值、检查 diff），不要依赖代理指标、自报结果或‘能编译’。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Prove It Works\n\n",
+      "zh": "# 证明它能工作\n\n"
+    },
+    {
+      "en": "Verify every task output by checking the real thing directly. Do not infer from proxies, self-reports, or \"it compiles.\"\n\n",
+      "zh": "直接检查真实对象，验证每个任务输出。不要从代理指标、自报结果或“能编译”推断。\n\n"
+    },
+    {
+      "en": "**Why:** Unverified work has unknown correctness. Indirect verification (file mtimes, output freshness, agent self-reports, cached screenshots) feels cheaper than direct observation. Acting on a wrong inference costs far more than checking the source.\n\n",
+      "zh": "**原因：**未经验证的工作，正确性未知。间接验证（文件修改时间、输出新鲜度、agent 自报、缓存截图）看似省事，但直接观察成本更低；依据错误推断行动，代价远高于检查源头。\n\n"
+    },
+    {
+      "en": "**Pattern:** After completing any task, ask: \"how do I prove this actually works?\"\n\n",
+      "zh": "**模式：**完成任何任务后都问：“如何证明它真的有效？”\n\n"
+    },
+    {
+      "en": "Check the real thing, not a proxy:\n- Check process liveness directly, not indirectly through derived state\n- Read the actual value, not a cached or derived representation\n- When verification fails, suspect the observation method before suspecting the system\n\n",
+      "zh": "检查真实对象，而非代理指标：\n- 直接检查进程是否存活，不要通过派生状态间接判断\n- 读取实际值，不要读取缓存或派生表示\n- 验证失败时，先怀疑观察方法，再怀疑系统\n\n"
+    },
+    {
+      "en": "Code and features:\n1. Build it (necessary but not sufficient)\n2. Run it and exercise the actual feature path\n3. Check the full chain: does data flow from input to output?\n4. For integrations, test the full communication path end-to-end\n\n",
+      "zh": "代码和功能：\n1. 构建（必要但不充分）\n2. 运行并执行真实功能路径\n3. 检查完整链路：数据是否从输入流到输出？\n4. 对集成进行端到端的完整通信路径测试\n\n"
+    },
+    {
+      "en": "Delegation: trust artifacts, not self-reports.\nWhen verifying delegated work, inspect the actual output artifact (git diff, file contents, runtime behavior), not the delegate's summary.\n\n",
+      "zh": "委派：相信产物，不相信自报。\n验证委派工作时，检查实际输出产物（git diff、文件内容、运行行为），不要只看委派者的总结。\n\n"
+    },
+    {
+      "en": "## Script the check when you can\n\n",
+      "zh": "## 能脚本化就脚本化检查\n\n"
+    },
+    {
+      "en": "The strongest proof is a deterministic script that re-runs the same comparison, not a one-time eyeball. Write the script, run it, and keep its output as an artifact a reviewer can re-run instead of trusting your word.\n\n",
+      "zh": "最有力的证明是可重复运行同一比较的确定性脚本，而不是一次性目测。编写并运行脚本，保留其输出作为评审者可以重新运行的产物，不要让人只相信你的话。\n\n"
+    },
+    {
+      "en": "Keep the artifact visible for the human. Commit it only for large or complex work where the trail has to be auditable later, like a big port or migration (the **show-me-your-work** skill).\n",
+      "zh": "让产物对人可见。只有大型或复杂工作（例如大规模移植或迁移）需要日后审计轨迹时，才提交它（使用 **show-me-your-work** skill）。\n"
+    }
+  ]
+}

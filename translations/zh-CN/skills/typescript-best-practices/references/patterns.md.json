@@ -1,0 +1,266 @@
+{
+  "source": "skills/typescript-best-practices/references/patterns.md",
+  "sha256": "62e9cd32d2fa066a35d0d1349aac22dce31a48ad7d5eaf142570770cfe707384",
+  "blocks": [
+    {
+      "en": "# TypeScript patterns\n\n",
+      "zh": "# TypeScript 模式\n\n"
+    },
+    {
+      "en": "Code examples for each rule in `SKILL.md`. The underlying principles are language-agnostic. See the **type-system-discipline** and **boundary-discipline** principle skills.\n\n",
+      "zh": "`SKILL.md` 每条规则的代码示例。底层原则与语言无关，参见 **type-system-discipline** 和 **boundary-discipline** 原则 skill。\n\n"
+    },
+    {
+      "en": "## Branded types\n\n",
+      "zh": "## 品牌类型（branded types）\n\n"
+    },
+    {
+      "en": "Brand primitives so they can't be mixed up. Validate once at the boundary. Downstream code trusts the type.\n\n",
+      "zh": "为原始类型添加品牌标记，防止混用。在边界处校验一次，后续代码信任类型。\n\n"
+    },
+    {
+      "en": "```ts\ntype AgentId = string & { readonly __brand: \"AgentId\" };\n\nfunction parseAgentId(input: string): AgentId {\n  if (!isUUID(input)) throw new Error(`Invalid agent id: ${input}`);\n  return input as AgentId;\n}\n\nfunction focusAgent(id: AgentId): void {\n  /* input is trusted */\n}\n```\n\n",
+      "zh": "```ts\ntype AgentId = string & { readonly __brand: \"AgentId\" };\n\nfunction parseAgentId(input: string): AgentId {\n  if (!isUUID(input)) throw new Error(`Invalid agent id: ${input}`);\n  return input as AgentId;\n}\n\nfunction focusAgent(id: AgentId): void {\n  /* 输入已可信 */\n}\n```\n\n"
+    },
+    {
+      "en": "Match the `readonly __brand: 'X'` shape. Don't invent a new convention.\n\n",
+      "zh": "遵循 `readonly __brand: 'X'` 的形态，不要另创约定。\n\n"
+    },
+    {
+      "en": "## Discriminated unions\n\n",
+      "zh": "## 可辨识联合类型\n\n"
+    },
+    {
+      "en": "Model variants with a literal discriminant. Every variant shares the field name and each variant's value is unique, so impossible combos can't be represented.\n\n",
+      "zh": "使用字面量辨识字段建模不同变体。每个变体使用相同字段名、各自唯一的值，使非法组合无法表示。\n\n"
+    },
+    {
+      "en": "```ts\n// Don't. Boolean + optionals lets contradictory states exist.\ntype DiffState = { loading: boolean; diff?: GitDiff; error?: string };\n\n// Do. Only valid states exist.\ntype DiffState =\n  | { kind: \"loading\" }\n  | { kind: \"ready\"; diff: GitDiff }\n  | { kind: \"error\"; error: string };\n```\n\n",
+      "zh": "```ts\n// 不要这样：布尔值加可选字段允许矛盾状态存在。\ntype DiffState = { loading: boolean; diff?: GitDiff; error?: string };\n\n// 应这样：只能表示合法状态。\ntype DiffState =\n  | { kind: \"loading\" }\n  | { kind: \"ready\"; diff: GitDiff }\n  | { kind: \"error\"; error: string };\n```\n\n"
+    },
+    {
+      "en": "Pick one discriminant name (`kind`, `type`, `tag`) and stick to it.\n\n",
+      "zh": "选择一个辨识字段名（`kind`、`type`、`tag`），并始终沿用。\n\n"
+    },
+    {
+      "en": "## Constructive modeling\n\n",
+      "zh": "## 构造式建模\n\n"
+    },
+    {
+      "en": "Build the type from parts that are all legal instead of restricting a loose type with runtime checks.\n\n",
+      "zh": "由全都合法的部分构建类型，而不是用运行时检查限制一个宽松类型。\n\n"
+    },
+    {
+      "en": "Non-empty, via a variadic tuple:\n\n",
+      "zh": "用可变长元组表示非空：\n\n"
+    },
+    {
+      "en": "```ts\ntype NonEmpty<T> = [T, ...T[]];\n\n// Don't: T[] plus a length check every caller must repeat\nfunction pickWinner(entries: string[]): string {\n  if (entries.length === 0) throw new Error(\"no entries\");\n  return entries[Math.floor(Math.random() * entries.length)];\n}\n\n// Do: an empty value of the type can't exist\nfunction pickWinner(entries: NonEmpty<string>): string {\n  return entries[Math.floor(Math.random() * entries.length)];\n}\n```\n\n",
+      "zh": "```ts\ntype NonEmpty<T> = [T, ...T[]];\n\n// 不要这样：T[] 要求每个调用方重复检查长度\nfunction pickWinner(entries: string[]): string {\n  if (entries.length === 0) throw new Error(\"no entries\");\n  return entries[Math.floor(Math.random() * entries.length)];\n}\n\n// 应这样：该类型无法构造空值\nfunction pickWinner(entries: NonEmpty<string>): string {\n  return entries[Math.floor(Math.random() * entries.length)];\n}\n```\n\n"
+    },
+    {
+      "en": "Where a plain `T[]` arrives, narrow once with a guard. The fact then travels in the type:\n\n",
+      "zh": "普通 `T[]` 从边界进入时，用类型守卫收窄一次，此后该事实由类型携带：\n\n"
+    },
+    {
+      "en": "```ts\nconst isNonEmpty = <T>(arr: T[]): arr is NonEmpty<T> => arr.length > 0;\n```\n\n",
+      "zh": "```ts\nconst isNonEmpty = <T>(arr: T[]): arr is NonEmpty<T> => arr.length > 0;\n```\n\n"
+    },
+    {
+      "en": "Even length, as pairs:\n\n",
+      "zh": "用成对结构表示偶数长度：\n\n"
+    },
+    {
+      "en": "```ts\ntype Pairs<T> = [T, T][];\n```\n\n",
+      "zh": "```ts\ntype Pairs<T> = [T, T][];\n```\n\n"
+    },
+    {
+      "en": "A time range, as start plus duration:\n\n",
+      "zh": "用开始时间加时长表示时间范围：\n\n"
+    },
+    {
+      "en": "```ts\n// Don't: a comment holds the invariant\ntype TimeRange = { start: Date; end: Date }; // start <= end\n\n// Do: a negative range can't be written; derive end when needed\ntype TimeRange = { start: Date; durationMs: number };\n```\n\n",
+      "zh": "```ts\n// 不要这样：靠注释承载不变量\ntype TimeRange = { start: Date; end: Date }; // start <= end\n\n// 应这样：无法写出负范围；需要时推导 end\ntype TimeRange = { start: Date; durationMs: number };\n```\n\n"
+    },
+    {
+      "en": "Keep `durationMs` a plain number. Brand it (per Branded types) only if a raw number could be passed where a duration is expected, not by reflex. Pick the representation that makes the bad state unconstructable, then expose the reading you need on top (`pairs.flat()`, a `rangeEnd()` helper).\n\n",
+      "zh": "`durationMs` 保持普通 number。仅当原始数字可能误传到要求时长的位置时，才按品牌类型规则添加品牌，不要习惯性添加。选择让非法状态无法构造的表示，再在其上提供所需读取方式（`pairs.flat()`、`rangeEnd()` 辅助函数）。\n\n"
+    },
+    {
+      "en": "## Simplest total type\n\n",
+      "zh": "## 满足操作全定义要求的最简类型"
+    },
+    {
+      "en": "Don't strengthen everything. Keep `T[]` when every operation on it is total:\n\n",
+      "zh": "不必强化所有类型。当所有操作对任意值都有定义时，保留 `T[]`：\n\n"
+    },
+    {
+      "en": "```ts\nconst sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0); // [] is 0, fine\n```\n\n",
+      "zh": "```ts\nconst sum = (xs: number[]) => xs.reduce((a, b) => a + b, 0); // [] 的结果为 0，没有问题\n```\n\n"
+    },
+    {
+      "en": "Strengthen when the loose type forces a lie at a use site. The tells are `!`, `arr[0] as T`, and a \"should never happen\" throw:\n\n",
+      "zh": "宽松类型迫使调用处说谎时才强化。迹象包括 `!`、`arr[0] as T`，以及“本不应发生”的抛错：\n\n"
+    },
+    {
+      "en": "```ts\n// Don't: partiality smuggled past the compiler\nfunction newestSession(sessions: Session[]): Session {\n  return sessions.at(0)!;\n}\n\n// Do: strengthen the input; the assertion disappears\nfunction newestSession(sessions: NonEmpty<Session>): Session {\n  return sessions[0];\n}\n```\n\n",
+      "zh": "```ts\n// 不要这样：绕过编译器隐藏对部分输入无定义的问题\nfunction newestSession(sessions: Session[]): Session {\n  return sessions.at(0)!;\n}\n\n// 应这样：强化输入，断言就不再需要\nfunction newestSession(sessions: NonEmpty<Session>): Session {\n  return sessions[0];\n}\n```\n\n"
+    },
+    {
+      "en": "Weakening the result to `Session | undefined` is the other total signature.\n\n",
+      "zh": "将结果放宽为 `Session | undefined`，是另一种对所有输入都有定义的签名。\n\n"
+    },
+    {
+      "en": "## `unknown` over `any`\n\n",
+      "zh": "## 优先 `unknown`，而非 `any`\n\n"
+    },
+    {
+      "en": "External data is always `unknown`. Narrow before use.\n\n",
+      "zh": "外部数据一律视为 `unknown`，使用前先收窄。\n\n"
+    },
+    {
+      "en": "```ts\n// Don't\nfunction handle(input: any) {\n  return input.foo.bar;\n}\n\n// Do\nfunction handle(input: unknown) {\n  if (typeof input === \"object\" && input !== null && \"foo\" in input) {\n    // narrowed; compiler verifies access\n  }\n}\n```\n\n",
+      "zh": "```ts\n// 不要这样\nfunction handle(input: any) {\n  return input.foo.bar;\n}\n\n// 应这样\nfunction handle(input: unknown) {\n  if (typeof input === \"object\" && input !== null && \"foo\" in input) {\n    // 已收窄；编译器验证访问\n  }\n}\n```\n\n"
+    },
+    {
+      "en": "External sources include RPC payloads, `JSON.parse`, `postMessage`, IPC, file contents, environment variables, database results.\n\n",
+      "zh": "外部来源包括 RPC 负载、`JSON.parse`、`postMessage`、IPC、文件内容、环境变量、数据库结果。\n\n"
+    },
+    {
+      "en": "## Schemas before hand-rolled guards\n\n",
+      "zh": "## 优先 schema，不手写逐字段守卫\n\n"
+    },
+    {
+      "en": "Before writing a property-by-property type guard for external data, look for the repository's runtime schema library and existing schemas. Let one schema own validation and derive the TypeScript type from it. Do not maintain a schema, a duplicate interface, and a guard that can drift apart.\n\n",
+      "zh": "为外部数据手写逐属性类型守卫前，先查仓库已有运行时 schema 库和 schema。由一个 schema 负责校验，并从中推导 TypeScript 类型。不要同时维护可能相互偏离的 schema、重复接口和守卫。\n\n"
+    },
+    {
+      "en": "```ts\nimport { z } from \"zod\";\n\nconst UserSchema = z.object({\n  id: z.string().uuid(),\n  role: z.enum([\"admin\", \"member\"]),\n});\n\ntype User = z.infer<typeof UserSchema>;\n\nfunction parseUser(input: unknown): User {\n  return UserSchema.parse(input);\n}\n```\n\n",
+      "zh": "```ts\nimport { z } from \"zod\";\n\nconst UserSchema = z.object({\n  id: z.string().uuid(),\n  role: z.enum([\"admin\", \"member\"]),\n});\n\ntype User = z.infer<typeof UserSchema>;\n\nfunction parseUser(input: unknown): User {\n  return UserSchema.parse(input);\n}\n```\n\n"
+    },
+    {
+      "en": "Use `safeParse` when failure is an expected branch. Use the equivalent inference helper when the repository uses another schema library. Do not add a new schema dependency for one guard. This rule prefers the schema system the codebase already trusts.\n\n",
+      "zh": "失败是预期分支时，使用 `safeParse`。仓库使用其他 schema 库时，用其对应的类型推导工具。不要为了一个守卫引入新 schema 依赖；本规则优先沿用代码库已经信任的 schema 系统。\n\n"
+    },
+    {
+      "en": "## No `as` casts\n\n",
+      "zh": "## 不使用 `as` 类型转换\n\n"
+    },
+    {
+      "en": "Every `as` is a potential runtime crash. Cast only after the type system has verified the claim.\n\n",
+      "zh": "每个 `as` 都可能导致运行时崩溃。只有类型系统已经验证主张后，才允许转换。\n\n"
+    },
+    {
+      "en": "```ts\n// Don't\nconst user = data as User;\n\n// Do. Earn the cast at the boundary.\nfunction parseUser(data: unknown): User {\n  if (typeof data !== \"object\" || data === null) {\n    throw new Error(\"expected object\");\n  }\n  if (!(\"id\" in data) || typeof (data as Record<string, unknown>).id !== \"string\") {\n    throw new Error(\"expected id\");\n  }\n  // ... validate all fields\n  return data as User; // OK, earned cast after full validation\n}\n```\n\n",
+      "zh": "```ts\n// 不要这样\nconst user = data as User;\n\n// 应这样：在边界校验后取得转换依据。\nfunction parseUser(data: unknown): User {\n  if (typeof data !== \"object\" || data === null) {\n    throw new Error(\"expected object\");\n  }\n  if (!(\"id\" in data) || typeof (data as Record<string, unknown>).id !== \"string\") {\n    throw new Error(\"expected id\");\n  }\n  // ……校验所有字段\n  return data as User; // 可以，完整校验后有据可依\n}\n```\n\n"
+    },
+    {
+      "en": "When refactoring an `as` out of existing code, identify why TypeScript can't infer:\n\n",
+      "zh": "从现有代码中移除 `as` 时，先确定 TypeScript 无法推导的原因：\n\n"
+    },
+    {
+      "en": "- Missing discriminant: add one, switch to a discriminated union.\n- Overly wide source type (e.g. `Record<string, unknown>`): narrow it.\n- Untyped boundary: add a parse function or schema.\n- Genuinely inexpressible: use a branded type or `satisfies`.\n\n",
+      "zh": "- 缺少辨识字段：添加字段，改用可辨识联合。\n- 来源类型过宽（例如 `Record<string, unknown>`）：收窄。\n- 边界未定义类型：添加解析函数或 schema。\n- 确实无法表达：使用品牌类型或 `satisfies`。\n\n"
+    },
+    {
+      "en": "## Narrowing hierarchy\n\n",
+      "zh": "## 收窄方式的优先顺序\n\n"
+    },
+    {
+      "en": "From best to last-resort:\n\n",
+      "zh": "从最佳到最后手段：\n\n"
+    },
+    {
+      "en": "1. **Discriminated union switch / if.** Compiler narrows automatically.\n2. **`in` operator.** `\"key\" in obj` narrows to variants containing that key.\n3. **`typeof` / `instanceof`.** For primitives and class instances.\n4. **User-defined type guard.** When the above aren't enough.\n5. **`as` cast.** Only after validation.\n\n",
+      "zh": "1. **可辨识联合的 switch / if。**编译器自动收窄。\n2. **`in` 运算符。**`\"key\" in obj` 收窄到包含该键的变体。\n3. **`typeof` / `instanceof`。**用于原始类型和类实例。\n4. **自定义类型守卫。**上述方式不够时使用。\n5. **`as` 转换。**只能在校验后使用。\n\n"
+    },
+    {
+      "en": "```ts\nfunction area(s: Shape): number {\n  if (\"radius\" in s) return Math.PI * s.radius ** 2; // narrowed to circle\n  return s.width * s.height; // narrowed to rect\n}\n```\n\n",
+      "zh": "```ts\nfunction area(s: Shape): number {\n  if (\"radius\" in s) return Math.PI * s.radius ** 2; // 收窄为 circle\n  return s.width * s.height; // 收窄为 rect\n}\n```\n\n"
+    },
+    {
+      "en": "## Type guards\n\n",
+      "zh": "## 类型守卫\n\n"
+    },
+    {
+      "en": "A guard must actually verify the claim. A lying guard is worse than `as`.\n\n",
+      "zh": "守卫必须真的验证它声称的条件。说谎的守卫比 `as` 更糟。\n\n"
+    },
+    {
+      "en": "```ts\nfunction isCircle(s: Shape): s is Shape & { kind: \"circle\" } {\n  return s.kind === \"circle\";\n}\n```\n\n",
+      "zh": "```ts\nfunction isCircle(s: Shape): s is Shape & { kind: \"circle\" } {\n  return s.kind === \"circle\";\n}\n```\n\n"
+    },
+    {
+      "en": "Prefer discriminant narrowing when possible.\n\n",
+      "zh": "可以用辨识字段收窄时，优先用它。\n\n"
+    },
+    {
+      "en": "## Exhaustiveness\n\n",
+      "zh": "## 穷尽性检查\n\n"
+    },
+    {
+      "en": "In default arms, assign the discriminant to a `never`-typed local.\n\n",
+      "zh": "在 default 分支中，将辨识对象赋给 `never` 类型局部变量。\n\n"
+    },
+    {
+      "en": "```ts\n// Value-returning switch\nfunction area(s: Shape): number {\n  switch (s.kind) {\n    case \"circle\":\n      return Math.PI * s.radius ** 2;\n    case \"rect\":\n      return s.width * s.height;\n    default: {\n      const _exhaustive: never = s;\n      return _exhaustive;\n    }\n  }\n}\n\n// Void switch\nfunction handle(s: Shape): void {\n  switch (s.kind) {\n    case \"circle\":\n      drawCircle(s);\n      break;\n    case \"rect\":\n      drawRect(s);\n      break;\n    default: {\n      const _exhaustive: never = s;\n      void _exhaustive;\n    }\n  }\n}\n```\n\n",
+      "zh": "```ts\n// 返回值的 switch\nfunction area(s: Shape): number {\n  switch (s.kind) {\n    case \"circle\":\n      return Math.PI * s.radius ** 2;\n    case \"rect\":\n      return s.width * s.height;\n    default: {\n      const _exhaustive: never = s;\n      return _exhaustive;\n    }\n  }\n}\n\n// 不返回值的 switch\nfunction handle(s: Shape): void {\n  switch (s.kind) {\n    case \"circle\":\n      drawCircle(s);\n      break;\n    case \"rect\":\n      drawRect(s);\n      break;\n    default: {\n      const _exhaustive: never = s;\n      void _exhaustive;\n    }\n  }\n}\n```\n\n"
+    },
+    {
+      "en": "Return-style in value-returning switches, void-style in statement switches.\n\n",
+      "zh": "返回值的 switch 使用 return 写法，语句型 switch 使用 void 写法。\n\n"
+    },
+    {
+      "en": "## `satisfies` over `as`\n\n",
+      "zh": "## 优先 `satisfies`，而非 `as`\n\n"
+    },
+    {
+      "en": "`satisfies` validates without widening literal types.\n\n",
+      "zh": "`satisfies` 在校验的同时不放宽字面量类型。\n\n"
+    },
+    {
+      "en": "```ts\n// Don't. Widens, loses literal types.\nconst config = { theme: \"dark\", cols: 3 } as Config;\n\n// Do. Validates AND preserves literal types.\nconst config = { theme: \"dark\", cols: 3 } satisfies Config;\n// config.theme is \"dark\" (literal), not string\n```\n\n",
+      "zh": "```ts\n// 不要这样：放宽类型，丢失字面量类型。\nconst config = { theme: \"dark\", cols: 3 } as Config;\n\n// 应这样：既校验又保留字面量类型。\nconst config = { theme: \"dark\", cols: 3 } satisfies Config;\n// config.theme 是字面量 \"dark\"，不是 string\n```\n\n"
+    },
+    {
+      "en": "## Boundary validation\n\n",
+      "zh": "## 边界校验\n\n"
+    },
+    {
+      "en": "Validate once where data crosses in. Trust types inside. See the **boundary-discipline** principle skill.\n\n",
+      "zh": "在数据进入的边界校验一次，内部信任类型。参见 **boundary-discipline** 原则 skill。\n\n"
+    },
+    {
+      "en": "- **Wire formats** (proto, JSON-RPC): parse with `ignoreUnknownFields` so forward-compatible changes don't break old clients.\n- **Persisted JSON:** versioned blob with a try/catch around the parse.\n- **Don't re-validate** deep in call chains.\n\n",
+      "zh": "- **传输格式**（proto、JSON-RPC）：解析时设置 `ignoreUnknownFields`，使前向兼容改动不破坏旧客户端。\n- **持久化 JSON：**使用带版本的 blob，并在解析外层用 try/catch。\n- **不要**在调用链深处重复校验。\n\n"
+    },
+    {
+      "en": "## Schema-derived types\n\n",
+      "zh": "## 从 schema 推导类型\n\n"
+    },
+    {
+      "en": "When a `.proto`, OpenAPI spec, GraphQL schema, or database migration already defines a shape, derive from the generated types instead of duplicating them.\n\n",
+      "zh": "`.proto`、OpenAPI 规范、GraphQL schema 或数据库迁移已经定义数据形态时，从生成类型推导，不要重复定义。\n\n"
+    },
+    {
+      "en": "```ts\n// Don't. Duplicate shape, drifts when the schema changes.\ntype CheckSummary = {\n  totalCount: number;\n  checks: { name: string; status: string }[];\n};\nfunction renderChecks(s: CheckSummary) {\n  /* ... */\n}\n\n// Do. Derive from the generated schema type.\nimport type { ChecksMessage } from \"<generated module>\";\nfunction renderChecks(s: Pick<ChecksMessage, \"totalCount\" | \"checks\">) {\n  /* ... */\n}\n```\n\n",
+      "zh": "```ts\n// 不要这样：重复定义形态，schema 改变时会偏离。\ntype CheckSummary = {\n  totalCount: number;\n  checks: { name: string; status: string }[];\n};\nfunction renderChecks(s: CheckSummary) {\n  /* ... */\n}\n\n// 应这样：从生成的 schema 类型推导。\nimport type { ChecksMessage } from \"<generated module>\";\nfunction renderChecks(s: Pick<ChecksMessage, \"totalCount\" | \"checks\">) {\n  /* ... */\n}\n```\n\n"
+    },
+    {
+      "en": "Reach for `Pick`, `Omit`, `Parameters`, `ReturnType`, `Awaited`, `typeof` before writing a new interface.\n\n",
+      "zh": "编写新接口前，先考虑 `Pick`、`Omit`、`Parameters`、`ReturnType`、`Awaited`、`typeof`。\n\n"
+    },
+    {
+      "en": "## Object args\n\n",
+      "zh": "## 使用对象参数\n\n"
+    },
+    {
+      "en": "```ts\n// Don't. Swap two args, still compiles.\nopenFile(uri, {\n  startLineNumber: 10,\n  startColumn: 1,\n  endLineNumber: 10,\n  endColumn: 1,\n});\n\n// Do. Order-independent, self-documenting.\nopenFile({\n  uri,\n  selection: {\n    startLineNumber: 10,\n    startColumn: 1,\n    endLineNumber: 10,\n    endColumn: 1,\n  },\n});\n```\n\n",
+      "zh": "```ts\n// 不要这样：交换两个参数后仍能编译。\nopenFile(uri, {\n  startLineNumber: 10,\n  startColumn: 1,\n  endLineNumber: 10,\n  endColumn: 1,\n});\n\n// 应这样：与顺序无关，自带含义。\nopenFile({\n  uri,\n  selection: {\n    startLineNumber: 10,\n    startColumn: 1,\n    endLineNumber: 10,\n    endColumn: 1,\n  },\n});\n```\n\n"
+    },
+    {
+      "en": "Skip on hot paths: per-frame render, tokenizers, parsers, anything in a tight loop where the allocation cost matters.\n",
+      "zh": "热点路径可跳过：逐帧渲染、分词器、解析器，以及分配成本重要的紧密循环。\n"
+    }
+  ]
+}

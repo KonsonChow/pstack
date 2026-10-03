@@ -1,0 +1,90 @@
+{
+  "source": "skills/figure-it-out/SKILL.md",
+  "sha256": "e041c64a39f1084a20e60ee99762c4dbd3ec8be56ed33fd68ea867b8bd8bd3e4",
+  "blocks": [
+    {
+      "en": "---\nname: figure-it-out\ndescription: \"Design an auditable playbook when no narrower one fits: a large migration, an ambitious multi-part change, or work a human reviews after stepping away. Scales rigor to the task, runs a hypothesis loop, and logs decisions via show-me-your-work. Use for /figure-it-out, 'figure it out', a large migration, or when no narrower playbook applies.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: figure-it-out\ndescription: \"没有更具体规程适用时，设计可审计的执行规程：大型迁移、复杂多部分改动，或用户离开后回来审阅的工作。按任务调整严谨程度，运行假设验证循环，通过 show-me-your-work 记录决策。用于 /figure-it-out、figure it out、大型迁移，或没有更窄规程适用时。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Figure it out\n\n",
+      "zh": "# 设计执行方法\n\n"
+    },
+    {
+      "en": "When the task matches no playbook, design one. The deliverable before any code is the workflow itself: a sequence of phases that scales rigor to the task, runs the scientific method, and leaves a decision trail a human can audit after stepping away. Bias toward more rigor. The cost of building the wrong thing dwarfs the cost of being careful.\n\n",
+      "zh": "任务没有匹配规程，就设计一个。写任何代码前的交付物是工作流本身：一串与任务风险匹配的阶段，采用科学方法，并留下用户离开后能审计的决策轨迹。倾向更严格。做错东西的代价远大于谨慎的代价。\n\n"
+    },
+    {
+      "en": "## Start\n\n",
+      "zh": "## 开始\n\n"
+    },
+    {
+      "en": "Open a todolist whose first item is to read the Principles section of the **poteto-mode** skill. Then add the phases below as todos.\n\n",
+      "zh": "创建待办列表，首项是阅读 **poteto-mode** skill 的 Principles 一节，再把下列阶段加入待办。\n\n"
+    },
+    {
+      "en": "## Phase A: Frame\n\n",
+      "zh": "## 阶段 A：界定任务\n\n"
+    },
+    {
+      "en": "Ground first, then commit. Don't start the run until you can state:\n\n",
+      "zh": "先根据证据摸清现状，再投入执行。能够说明以下内容之前，不开始正式运行：\n\n"
+    },
+    {
+      "en": "- The definition of done as a falsifiable predicate (the **prove-it-works** principle skill).\n- Scope, quantified: rough units and effort, plus the blockers grounding surfaced.\n- The rigor level, biased high. One-way doors and high blast radius get more. Reversible low-stakes steps get less. Rigor is gates and artifacts, not \"try harder\".\n\n",
+      "zh": "- 可证伪的完成判定条件（**prove-it-works** 原则 skill）。\n- 量化范围：大致单元数与工作量，以及摸清现状时发现的阻塞。\n- 严谨程度，倾向从严。不可逆决策和大影响范围用更严格流程；可逆低风险步骤适当降低。严谨体现为检查关卡和产物，不是“再努力一点”。\n\n"
+    },
+    {
+      "en": "Present the framing and tradeoffs before committing to a long run. Reversible work proceeds (the **never-block-on-the-human** principle skill), but a multi-hour run earns one checkpoint.\n\n",
+      "zh": "投入长时间执行前，展示任务界定与权衡。可逆工作直接进行（**never-block-on-the-human** 原则 skill），但多小时执行应有一次检查点。\n\n"
+    },
+    {
+      "en": "## Phase B: Design the workflow\n\n",
+      "zh": "## 阶段 B：设计工作流\n\n"
+    },
+    {
+      "en": "Decompose into atomic, independently-landable units. Sequence riskiest-unknown-first. Scaffold and verification come before features (the **foundational-thinking** principle skill).\n\n",
+      "zh": "拆成原子、可独立合入的单元，先处理风险最高的未知项。基础结构和验证先于功能（**foundational-thinking** 原则 skill）。\n\n"
+    },
+    {
+      "en": "- Build the verification harness before the work, with the baseline captured from the pre-change state, so the check reads as \"old value vs new value\".\n- For one-way-door design decisions, run the **architect** skill (it runs **arena**). Skip it for mechanical work whose shape is already concrete. A second arena over a settled design is over-engineering (the **laziness-protocol** principle skill).\n- Decide what fans out. Parallelize only across seams, and give each worker its own worktree or branch (the **separate-before-serializing-shared-state** principle skill). Don't over-fan.\n- Write the designed phase list down. That list is what the human reviews.\n\n",
+      "zh": "- 工作开始前构建验证运行环境，从改动前状态采集基准，使检查呈现为“旧值对比新值”。\n- 不可逆设计决策使用 **architect** skill（它会运行 **arena**）。形态已明确的机械工作跳过。已定设计再跑一次 arena 是过度设计（**laziness-protocol** 原则 skill）。\n- 决定哪些工作可并行分派。只沿边界并行，每个 worker 使用独立 worktree 或分支（**separate-before-serializing-shared-state** 原则 skill）。不要过度并行。\n- 写下设计好的阶段列表，这是用户评审的内容。\n\n"
+    },
+    {
+      "en": "Then execute the design. Add its steps to the todolist as concrete items, after the Phase C entry and before Phase D. Run each under the Phase C loop discipline, and weave the Phase D log through them, a row as each step lands, rather than saving the whole trail for the end.\n\n",
+      "zh": "随后执行设计。把具体步骤加入待办，放在 Phase C 条目之后、Phase D 之前。每步遵循 Phase C 的循环纪律，Phase D 的日志贯穿其间；每步落实时写一行，不要最后才补整段轨迹。\n\n"
+    },
+    {
+      "en": "## Phase C: Run the loop\n\n",
+      "zh": "## 阶段 C：运行循环\n\n"
+    },
+    {
+      "en": "Each unit is an experiment. State the hypothesis, make the smallest change, measure against the predicate on the real artifact, keep it if it advanced, revert it if it didn't.\nApply the **sequence-verifiable-units** principle skill, verifying each unit before starting the next instead of batching checks at the end.\n\n",
+      "zh": "每个单元都是实验。说明假设，做最小改动，在真实产物上测量是否满足判定条件；有进展就保留，没有就回滚。\n应用 **sequence-verifiable-units** 原则 skill，验证一个单元再开始下一个，不把检查堆到最后。\n\n"
+    },
+    {
+      "en": "- Verify by inspecting the artifact, never a self-report. When something passes too easily, suspect the observation method before the system.\n- Pair delegated work with a judge and audit the delegates' artifacts yourself before trusting them. If a worker games the gate, reset and harden the contract. If the gate itself is wrong, fix the gate in its own change rather than routing around it.\n- A verdict is VERIFIED, NOT VERIFIED, or INCONCLUSIVE. Inconclusive is not a pass. Don't hide a negative.\n\n",
+      "zh": "- 检查产物来验证，绝不相信自述。太容易通过时，先怀疑观测方法，再怀疑系统。\n- 委派工作配独立评审者，信任前亲自审计委派产物。worker 钻检查关卡空子，就重置并收紧约定。关卡本身错误，就用独立改动修关卡，不绕过去。\n- 结论为 VERIFIED、NOT VERIFIED 或 INCONCLUSIVE。无法确定不等于通过，不能隐藏负面结果。\n\n"
+    },
+    {
+      "en": "## Phase D: Keep the audit trail\n\n",
+      "zh": "## 阶段 D：保留审计轨迹\n\n"
+    },
+    {
+      "en": "Log the run via the **show-me-your-work** skill, one canonical TSV with a row per decision and per unit, evidence as links. figure-it-out's work is usually ambitious enough to commit the trail so the reviewer can read it in the PR. Commit it when confidence has to be shown. Prefer evidence produced by committed scripts. The trail plus the diff is what lets the human come back and trust the work.\n\n",
+      "zh": "通过 **show-me-your-work** skill 记录执行，使用一份权威 TSV，每个决策和单元一行，证据写链接。figure-it-out 的工作通常足够复杂，应提交轨迹让评审者在 PR 阅读。需要展示信心依据时就提交。优先已提交脚本产生的证据。轨迹和 diff 一起，让用户回来后能信任结果。\n\n"
+    },
+    {
+      "en": "## Phase E: Verify and hand back\n\n",
+      "zh": "## 阶段 E：验证并交回结果\n\n"
+    },
+    {
+      "en": "Check the whole against the Phase A predicate on the real product, not just the harness. Encode any recurring correction as a gate, a lint rule, a check, or a script (the **encode-lessons-in-structure** principle skill).\n\n",
+      "zh": "在真实产品上用阶段 A 的判定条件验证整体，不能只验证运行环境。反复出现的纠正，固化成关卡、lint、检查或脚本（**encode-lessons-in-structure** 原则 skill）。\n\n"
+    },
+    {
+      "en": "**Reply:** the playbook you designed, the rigor level and why, the decision-trail path, what's verified against the predicate, and what's still open.\n",
+      "zh": "**回复：** 设计的规程、严谨程度及理由、决策轨迹路径、按条件验证了什么、还有什么未解决。\n\n"
+    }
+  ]
+}

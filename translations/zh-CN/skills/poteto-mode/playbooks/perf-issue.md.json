@@ -1,0 +1,26 @@
+{
+  "source": "skills/poteto-mode/playbooks/perf-issue.md",
+  "sha256": "dd81d608d6ab19b3d9c900004fd71e9b2e46b3f1b3c2c88f80ef256268717524",
+  "blocks": [
+    {
+      "en": "### Perf issue\n\n",
+      "zh": "### 性能问题\n\n"
+    },
+    {
+      "en": "**You own the measurement story. Plan, review, verify the numbers.** Tie every fix to a measurement, don't read source instead of measuring.\n\n",
+      "zh": "**你负责测量全过程。规划、评审并验证数字。** 每个修复都必须绑定测量结果；不要用阅读源码代替测量。\n\n"
+    },
+    {
+      "en": "1. Capture a baseline trace via the matching control skill.\n2. `how` to ground hypotheses. Don't claim a perf ceiling without running it first.\n   Most fixes come from eight strategy families. Use them as hypothesis generators, not a checklist. A family earns an attempt only when the trace shows the signal it names.\n   - **Elimination.** Before optimizing the hot path, ask whether it needs to exist: a computation nobody consumes, a feature gate that's always off for this user, a sync that redundantly mirrors state, a legacy path kept \"just in case\". The trace shows what's slow, never that it's deletable, so this family needs the `how` pass, not the profiler.\n   - **Divide and conquer.** The dominant cost scales with input size. Split the work so each piece touches less (chunk, shard, prune the search space) or so independent pieces run in parallel.\n   - **Caching.** The same computation or fetch repeats on identical inputs. Store and reuse the result. Name what invalidates it before claiming the win.\n   - **Indirection.** The hot path does expensive work a cheaper intermediate could absorb: an index instead of a scan, a queue that shifts work off the interactive thread, a handle that lets a cheaper implementation swap in. Add the hop only when it removes more from the critical path than it adds.\n   - **Batching.** Many small operations each pay a fixed overhead (RPC, query, syscall, draw call). Coalesce them to pay the overhead once per batch.\n   - **Redundancy.** The wait hangs on one slow instance or attempt. Duplicate the work (replicas, hedged requests, speculative execution) and take the fastest result. The trace has to show the wait dominates and the system has headroom.\n   - **Lazy evaluation.** Cost lands on results that are never used or not needed yet (eager init on the boot path, rendering offscreen items). Defer the work until first use.\n   - **Scheduling.** The work must happen, but not during the interactive moment. Move it to where nobody is waiting: idle callbacks, a background warmup after boot, precompute before the user arrives, cleanup after the frame commits. The win is perceived latency, so measure the interactive path, not total work done.\n3. Plan the fix from the trace. If it crosses a function boundary, `architect` first. Delegate implementation to a subagent using your configured perf-issue model (default `grok-4.6-fast-xhigh`). Review the diff. Capture a post-fix trace.\n   Apply the **sequence-verifiable-units** principle skill, verifying each attempt before trying the next.\n4. Parse and compare the artifacts (JSON to sqlite, diff). \"Inconclusive\" or wrong-surface is not a pass. Flag it.\n5. Cite the measurement in the PR.\n6. Run **Opening a PR**.\n\n",
+      "zh": "1. 通过匹配的操作与验证 skill 采集基准 trace。\n2. 使用 `how` 为假设提供依据。没有先运行测量，就不要声称已达到性能上限。\n   大多数修复来自八类策略。把它们当作生成假设的工具，而不是清单。只有 trace 显示出某类策略所对应的信号，才值得尝试。\n   - **消除。** 优化热点路径之前，先问它是否需要存在：无人使用的计算、对该用户始终关闭的功能开关、重复镜像状态的同步，或“以防万一”而保留的旧路径。trace 能显示哪里慢，却不能证明哪里可删，因此这类策略需要 `how` 分析，而不是只看 profiler。\n   - **分而治之。** 主要成本随输入规模增长。拆分工作，让每部分接触更少的数据（分块、分片、裁剪搜索空间），或让独立部分并行执行。\n   - **缓存。** 相同输入触发重复计算或获取。保存并复用结果。在宣称收益之前，先说明缓存何时失效。\n   - **间接层。** 热点路径上的昂贵工作可以由更廉价的中间机制承担：用索引替代扫描，用队列将工作移出交互线程，或用句柄替换为更廉价的实现。只有新增这一跳从关键路径移除的成本超过它自身增加的成本，才添加它。\n   - **批处理。** 大量小操作各自支付固定开销（RPC、查询、系统调用、draw call）。合并它们，让每批只支付一次开销。\n   - **冗余。** 等待受制于一个慢实例或慢尝试。重复执行工作（副本、hedged requests、推测执行），取最快的结果。trace 必须显示等待占主导，而且系统还有资源余量。\n   - **惰性求值。** 成本花在从未使用或尚不需要的结果上（启动路径上的提前初始化、渲染屏幕外项目）。将工作延迟到首次使用。\n   - **调度。** 工作必须完成，但不必在用户交互时完成。将其移到无人等待的时机：空闲回调、启动后的后台预热、用户到来前预计算、帧提交后的清理。收益是感知延迟，因此要测量交互路径，而不是总工作量。\n3. 根据 trace 规划修复。如果跨越函数边界，先用 `architect`。使用配置的 perf-issue 模型（默认 `grok-4.6-fast-xhigh`）将实现委派给 subagent。评审 diff。采集修复后的 trace。\n   应用 **sequence-verifiable-units** 原则 skill，在尝试下一个方案前验证当前方案。\n4. 解析并比较产物（JSON 转 sqlite、diff）。“无法下结论”或测量了错误界面都不算通过，必须标明。\n5. 在 PR 中引用测量结果。\n6. 执行 **Opening a PR**。\n\n"
+    },
+    {
+      "en": "For sustained improvement against a metric rather than a one-off fix, use the Hillclimb playbook (`playbooks/hillclimb.md`).\n\n",
+      "zh": "如果目标是持续改善某项指标，而不是一次性修复，请使用 Hillclimb playbook（`playbooks/hillclimb.md`）。\n\n"
+    },
+    {
+      "en": "**Reply:** baseline number, post-fix number, delta, artifact path.\n",
+      "zh": "**回复：** 基准数值、修复后数值、差值、产物路径。\n\n"
+    }
+  ]
+}

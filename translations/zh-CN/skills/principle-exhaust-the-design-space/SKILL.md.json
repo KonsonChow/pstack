@@ -1,0 +1,30 @@
+{
+  "source": "skills/principle-exhaust-the-design-space/SKILL.md",
+  "sha256": "8583310d7297b7823d75494faa57b003564d436807febecdecbd8321abe5cf6e",
+  "blocks": [
+    {
+      "en": "---\nname: principle-exhaust-the-design-space\ndescription: \"Apply when facing a novel UI interaction or architectural decision with no precedent in the codebase. Build 2-3 competing prototypes and compare side by side before committing.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-exhaust-the-design-space\ndescription: \"面对代码库中没有先例的新 UI 交互或架构决策时使用。构建 2 到 3 个竞争性原型，并在确定方案前并排比较。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Exhaust the Design Space\n\n",
+      "zh": "# 充分探索设计空间\n\n"
+    },
+    {
+      "en": "When a novel interaction or architectural decision has no established precedent, explore several concrete alternatives before implementation. Building the wrong thing costs more than exploring three options.\n\n",
+      "zh": "当新交互或架构决策没有成熟先例时，在实现前探索几个具体的替代方案。构建错误方案的成本，比探索三个选项更高。\n\n"
+    },
+    {
+      "en": "**The rule.** When the right answer is not obvious, build 2-3 competing prototypes or sketches. Compare them side by side. Only then commit. Design it twice is this rule by another name. A second flavor of the first shape does not count.\n\n",
+      "zh": "**规则。** 当正确答案不明显时，构建 2 到 3 个竞争性原型或草图，并排比较，之后再确定方案。“设计两次”说的也是这条规则。只给第一个方案换一种外观不算。\n\n"
+    },
+    {
+      "en": "**When it applies:**\n- Novel UI interactions (no prior art in the codebase)\n- Architectural choices with multiple viable approaches\n- Product design decisions where user experience depends on feel, not logic\n\n",
+      "zh": "**适用场景：**\n- 新 UI 交互（代码库中没有先例）\n- 存在多种可行方案的架构选择\n- 用户体验取决于实际感受、而不是纯逻辑的产品设计决策\n\n"
+    },
+    {
+      "en": "**When it doesn't:**\n- Mechanical implementation where the pattern is established\n- Bug fixes or refactors with a clear target state\n- Changes where constraints dictate a single viable approach\n",
+      "zh": "**不适用场景：**\n- 模式已经确定的机械实现\n- 目标状态明确的 Bug 修复或重构\n- 约束条件已限定唯一可行方案的改动\n\n"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "source": "skills/poteto-mode/playbooks/runtime-forensics.md",
+  "sha256": "594f02c40c243a346e1f57b688ecf2ed5e882f21b3d24ed2204d1ac6f1c24a8a",
+  "blocks": [
+    {
+      "en": "### Runtime forensics\n\n",
+      "zh": "### 运行时取证\n\n"
+    },
+    {
+      "en": "**You own the diagnosis. Instrument the live process, don't theorize from source.** The deliverable is a cited diagnosis, not a fix.\n\n",
+      "zh": "**你负责诊断。为运行中的进程添加观测手段，不要仅根据源码猜测。**交付物是有证据引用的诊断，不是修复。\n\n"
+    },
+    {
+      "en": "1. Capture the live signal on the matching surface via the control skill: a CPU profile for a spinning process, a heap snapshot for a leak, a CDP trace for a visual glitch. A real artifact, not a guess.\n2. Reduce the artifact to the smoking gun: the function on the hot path, the retainer chain from the leaked object to a GC root, the loop firing without input. Parse large artifacts in a subagent (the **guard-the-context-window** principle skill), keep the reduced finding in the main thread.\n3. Prove the mechanism before believing it. Inject instrumentation via CDP eval on the running process, or hotfix the live code without reloading, to confirm the hypothesis cheaply.\n4. Map the finding back to source: file, symbol, the line that allocates or schedules.\n5. Throughput checkpoint stays one line: `throughput checkpoint: n/a, read-only forensics`.\n\n",
+      "zh": "1. 通过操作与验证 skill，在对应界面捕获运行时信号：CPU 持续忙碌的进程用 CPU profile，内存泄漏用堆快照，视觉异常用 CDP trace。必须取得真实产物，而非猜测。\n2. 从产物中提取决定性证据：热点路径上的函数、从泄漏对象到 GC root 的保留链，或没有输入却持续触发的循环。使用 subagent 解析大型产物（**guard-the-context-window** 原则 skill），主线程仅保留提炼后的发现。\n3. 先证明机制，再相信它。通过 CDP eval 为正在运行的进程注入观测代码，或不重新加载就热修复运行代码，以较低成本验证假设。\n4. 将发现映射回源码：文件、符号，以及进行分配或调度的那一行。\n5. 吞吐量检查点始终只写一行：`throughput checkpoint: n/a, read-only forensics`。\n\n"
+    },
+    {
+      "en": "**Reply:** the signal captured, the reduced finding, how you proved the mechanism, the source location, artifact paths. No fix unless asked. Hand back to Bug fix or Perf once the cause is known.\n",
+      "zh": "**回复：**捕获到的信号、提炼后的发现、如何证明机制、源码位置和产物路径。除非用户要求，否则不修复。明确根因后，转回 Bug fix 或 Perf 流程。\n"
+    }
+  ]
+}

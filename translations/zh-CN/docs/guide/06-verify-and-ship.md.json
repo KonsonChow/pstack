@@ -1,0 +1,146 @@
+{
+  "source": "docs/guide/06-verify-and-ship.md",
+  "sha256": "c93cd50c0359ce875a82b3f7d64eab102a4b0815dbbecdb8e0e5e910bd2d18e9",
+  "blocks": [
+    {
+      "en": "# Verify the result and open a PR\n\n",
+      "zh": "# 验证结果并创建 PR"
+    },
+    {
+      "en": "\"It compiles\" is not evidence. The [Prove It Works principle](../../skills/principle-prove-it-works/SKILL.md) makes the agent check the real artifact before it reports success, and your job is to make \"the real artifact\" checkable. This page covers stating a finish condition, generating a verification skill for your app, opening the PR, and driving it to merged.\n\n",
+      "zh": "“能编译”不能作为任务完成的证据。[Prove It Works 原则](../../skills/principle-prove-it-works/SKILL.md) 要求 agent 在报告成功前检查真实产物，而你要确保“真实产物”有可执行的检查方式。本页介绍如何说明完成条件、为应用生成验证 skill、创建 PR，以及推动它合入。"
+    },
+    {
+      "en": "![A prototype plane flies a real test course while she times it with a stopwatch and robots film and checklist the run; the terminal reads verify: pass, evidence: captured.](./images/verification.jpg)\n\n",
+      "zh": "![原型飞机飞过真实测试航线，一位测试者用秒表计时，机器人拍摄并逐项检查；终端显示 verify: pass、evidence: captured。](./images/verification.jpg)"
+    },
+    {
+      "en": "## State the finish condition up front\n\n",
+      "zh": "## 一开始就说明完成条件"
+    },
+    {
+      "en": "Put what done means in the first prompt, in whatever words fit:\n\n",
+      "zh": "在第一条提示词里，用适合任务的表达说明什么算完成："
+    },
+    {
+      "en": "```text\n/poteto-mode add json output to this command. text output stays byte-identical, the json parses, both run against the sample project. show me the evidence.\n```\n\n",
+      "zh": "```text\n/poteto-mode 为这个命令增加 JSON 输出。文本输出必须逐字节保持一致，JSON 必须可以解析，两种输出都要在示例项目上实际运行。把证据给我看。\n```"
+    },
+    {
+      "en": "Now the agent has three checks it can run, not a mood to satisfy. When the reply comes back, it should carry the exact commands and outputs. If a check couldn't run, a good reply says \"inconclusive\", and you should treat a confident reply without evidence as a red flag.\n\n",
+      "zh": "这样 agent 就有三项可执行的检查，而不是一个模糊的满意度目标。回复应包含实际运行的命令和输出。如果某项检查无法运行，好的回复会明确说“无法得出结论”。没有证据却信心十足的回复，应引起你的警惕。"
+    },
+    {
+      "en": "Match the check to the change:\n\n",
+      "zh": "检查方式要与改动匹配："
+    },
+    {
+      "en": "- A CLI change runs the real command.\n- A UI change walks the changed flow in the running app.\n- A parser or migration replays a saved input.\n- A perf change compares before and after profiles.\n- A storage change reads back the written value.\n\n",
+      "zh": "- CLI 改动要运行真实命令。\n- UI 改动要在运行中的应用里走完被修改的操作流程。\n- parser 或迁移要重放保存的输入。\n- 性能改动要对比前后的性能分析结果。\n- 存储改动要读回实际写入的值。"
+    },
+    {
+      "en": "For a small diff you don't fully trust, [`/blast-radius`](../../skills/blast-radius/SKILL.md) finds what it could break elsewhere. It picks the one fact the change is safe because of and proves it by running code instead of writing an essay about it.\n\n",
+      "zh": "如果对一个小 diff 还不放心，[`/blast-radius`](../../skills/blast-radius/SKILL.md) 会找出它可能破坏的其他部分。它会选出足以支持改动安全性的关键事实，再实际运行代码证明，而不是写一篇论述代替验证。"
+    },
+    {
+      "en": "## Create a project verification skill\n\n",
+      "zh": "## 创建项目验证 skill"
+    },
+    {
+      "en": "The UI bullet above hides a real requirement. The agent needs a scripted way to drive your app. If your project has one, great. If not, run:\n\n",
+      "zh": "上面的 UI 检查其实有一个前提：agent 需要可脚本化的方式来操作应用。如果项目已有这样的机制，就直接使用；否则运行："
+    },
+    {
+      "en": "```text\n/create-verification-skill\n```\n\n",
+      "zh": "```text\n/create-verification-skill\n```"
+    },
+    {
+      "en": "[`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md) interviews the repository, not you. It works out what a user touches, how the app launches locally, what can drive it (an existing harness first, otherwise browser and CDP, a PTY, or plain HTTP), what evidence proves behavior, and whether two instances can run side by side. It asks you only what the code can't answer.\n\n",
+      "zh": "[`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md) 优先调查仓库，而不是盘问你。它会查明用户操作什么、应用如何在本地启动、什么工具能驱动应用，优先用现有运行环境，否则使用浏览器与 CDP、PTY 或普通 HTTP；还会确定哪些证据能证明行为正确，以及能否并排运行两个实例。只有代码无法回答的问题，才会询问你。"
+    },
+    {
+      "en": "It writes `.cursor/skills/verify-<app>/`, agent-facing instructions with exact Launch, Doctor, Drive, Evidence, and Cleanup sections, plus a feature map under `features/` that indexes what the app does and what result proves each feature works. The skill ships a [worked feature-map example](../../skills/create-verification-skill/references/feature-map-example/) with a README index and one file per feature using the four required H2s. Before handing it over, the generator proves the skill once end to end: launch, doctor check, drive one feature, capture evidence, clean up. If that proof fails, don't use the output.\n\n",
+      "zh": "它会创建 `.cursor/skills/verify-<app>/`，其中的 agent 指令严格包含 Launch、Doctor、Drive、Evidence 和 Cleanup 几个部分。同时在 `features/` 下建立功能验证清单，列出应用功能，以及证明各功能可用的预期结果。skill 附带一个[完整的功能验证清单示例](../../skills/create-verification-skill/references/feature-map-example/)，包含 README 索引，并为每个功能提供使用四个规定二级标题的文件。交付前，生成器必须完成一次端到端验证：启动应用、检查环境、操作一个功能、采集证据、清理现场。如果这次验证失败，就不要使用生成结果。"
+    },
+    {
+      "en": "From then on, \"verify it in the app\" is a step any agent can execute, in this repo, with no setup conversation.\n\n",
+      "zh": "之后，在这个仓库中，任何 agent 都能执行“在应用里验证”这一步，不需要再进行配置对话。"
+    },
+    {
+      "en": "Once the verify skill works, a [`/swarm`](../../skills/swarm/SKILL.md) can split a full pass by feature-map entry and aggregate the results.\n\n",
+      "zh": "验证 skill 可用后，可以用 [`/swarm`](../../skills/swarm/SKILL.md) 按功能验证清单的条目分拆完整检查，再汇总结果。"
+    },
+    {
+      "en": "## Keep the verification skill honest\n\n",
+      "zh": "## 让验证 skill 持续符合实际"
+    },
+    {
+      "en": "Apps change and feature maps rot. When yours drifts, run:\n\n",
+      "zh": "应用会变化，功能验证清单也会逐渐过时。发现偏差时，运行："
+    },
+    {
+      "en": "```text\n/maintain-verification-skill\n```\n\n",
+      "zh": "```text\n/maintain-verification-skill\n```"
+    },
+    {
+      "en": "[`/maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md) audits the generated skill: one read-only source reader per feature in parallel, then one live pass that drives every mapped feature. It ends in exactly one of three outcomes. `clean` means full coverage and nothing to ship. `changed` means one PR of proven corrections, confined to the verification skill's own directory. `blocked` names the blocker. It never edits product code. If the live pass catches a product regression, it reports the regression instead of papering over it in docs.\n\n",
+      "zh": "[`/maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md) 会审计生成的 skill：先为每个功能并行分派一个只读源码检查者，再用一次真实运行检查走完清单中的所有功能。最终只能是三种结果之一。`clean` 表示覆盖完整，无需交付改动。`changed` 表示有一份包含已验证修正的 PR，修改范围仅限验证 skill 自身的目录。`blocked` 则明确说明阻碍。它从不修改产品代码。如果真实运行发现产品回归问题，它会报告问题，而不是通过修改文档将其掩盖。"
+    },
+    {
+      "en": "## Open the PR\n\n",
+      "zh": "## 创建 PR"
+    },
+    {
+      "en": "```text\n/poteto-mode open the pr. small ordered commits, evidence in the description.\n```\n\n",
+      "zh": "```text\n/poteto-mode 创建 PR。拆成小而有序的提交，在描述中附上证据。\n```"
+    },
+    {
+      "en": "The [Opening a PR playbook](../../skills/poteto-mode/playbooks/opening-a-pr.md) works from a worktree, rebases the work into small ordered commits, cleans the diff, unslops the prose, and returns the PR link. Five narrow PRs beat one fat one, and stacked follow-ups beat a growing branch.\n\n",
+      "zh": "[Opening a PR 执行规程](../../skills/poteto-mode/playbooks/opening-a-pr.md) 会在 worktree 中工作，通过 rebase 整理成小而有序的提交，清理 diff 和文字中的 AI 套话，最后返回 PR 链接。五个范围明确的小 PR 优于一个庞大的 PR，按依赖关系叠加后续 PR 也优于让同一个分支持续膨胀。"
+    },
+    {
+      "en": "## Drive the PR to merge-ready with Babysit\n\n",
+      "zh": "## 用 Babysit 推动 PR 达到可合并状态"
+    },
+    {
+      "en": "An open PR starts collecting blockers immediately. Checks fail, reviewers comment, trunk moves. Hand that churn to the [Babysit playbook](../../skills/poteto-mode/playbooks/babysit.md):\n\n",
+      "zh": "PR 一打开，就会开始出现阻碍：检查失败、评审意见、主干更新。把这些反复变化交给 [Babysit 执行规程](../../skills/poteto-mode/playbooks/babysit.md)："
+    },
+    {
+      "en": "```text\n/poteto-mode babysit this pr. get it green.\n```\n\n",
+      "zh": "```text\n/poteto-mode 跟进这个 PR，让检查全部通过。\n```"
+    },
+    {
+      "en": "Babysit watches the PR with a bundled watcher and takes blockers in order: conflicts, then review threads, then CI. Every known fix batches into one push, so the checks restart once instead of after every fix. The comment triage is skeptical, because humans and bots file real catches and noise in the same list. A real finding gets a fix, and noise gets dismissed with the disproof posted on the thread. When all you want is status, ask smaller and Babysit answers without starting the loop:\n\n",
+      "zh": "Babysit 使用仓库附带的监视工具持续查看 PR，并按顺序处理阻碍：先冲突，再评审讨论，最后 CI。所有已知修复集中到一次推送中，让检查只重跑一次，避免每改一项就重新触发。处理评论时会保持审慎，因为人和 bot 都可能把真实问题和噪声放在同一份列表里。真实问题要修复，噪声则在讨论串中贴出反证并驳回。如果只想查状态，缩小要求即可；Babysit 会直接回答，不会启动持续循环："
+    },
+    {
+      "en": "```text\n/poteto-mode check on pr 123. anything outstanding?\n```\n\n",
+      "zh": "```text\n/poteto-mode 看一下 PR 123，还有什么未处理的问题？\n```"
+    },
+    {
+      "en": "Babysit stops at merge-ready. It never merges, even with everything green, because merging is a different decision.\n\n",
+      "zh": "Babysit 到满足合并条件就停止。即使所有检查都通过，它也从不执行合并，因为是否合并是另一项决策。"
+    },
+    {
+      "en": "## Land the stack with Shipping\n\n",
+      "zh": "## 用 Shipping 合入 PR 栈"
+    },
+    {
+      "en": "Green is not the same as safe. When you're ready to land, say so:\n\n",
+      "zh": "检查通过不等于改动安全。准备合入时，明确说明："
+    },
+    {
+      "en": "```text\n/poteto-mode land the stack.\n```\n\n",
+      "zh": "```text\n/poteto-mode 合入这个 PR 栈。\n```"
+    },
+    {
+      "en": "The [Shipping playbook](../../skills/poteto-mode/playbooks/shipping.md) verifies each PR independently before it arms anything. One fresh agent per PR proves the behavior live, and the agent that judges a change is never the one that wrote it. Then Shipping lands only the contiguous verified run from the bottom, one PR at a time through GitHub by default or Origin when its CLI is available, and reports the first PR that breaks the chain. A verified PR sitting above an unverified one waits, because merging it would pull the gap in underneath.\n\n",
+      "zh": "[Shipping 执行规程](../../skills/poteto-mode/playbooks/shipping.md) 会在准备执行任何合并之前，独立验证每个 PR。每个 PR 都由一个新的 agent 在真实运行中证明行为正确，判断改动的 agent 绝不能是编写改动的 agent。随后 Shipping 只从栈底开始，逐个合入连续且已验证的一段 PR；默认通过 GitHub 合入，Origin CLI 可用时也可以使用 Origin。它会报告第一个打断这段连续链条的 PR。位于未验证 PR 之上的已验证 PR 必须等待，因为合并它会连带引入下方未验证的改动。"
+    },
+    {
+      "en": "Next: [Run work while you sleep](./07-overnight.md).\n",
+      "zh": "下一页：[让任务在你休息时继续](./07-overnight.md)。"
+    }
+  ]
+}

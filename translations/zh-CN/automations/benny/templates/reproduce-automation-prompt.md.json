@@ -1,0 +1,58 @@
+{
+  "source": "automations/benny/templates/reproduce-automation-prompt.md",
+  "sha256": "71ec574f1844e379394ae4ef14c48d7df10afbaa319d395c788d7f856f0e6899",
+  "blocks": [
+    {
+      "en": "# Reproduce automation prompt\n\n",
+      "zh": "# 复现自动化提示词\n\n"
+    },
+    {
+      "en": "> Source material for the copied setup workflow. Paraphrase this intent into a built-in `automate` draft after `automate` confirms that the copied pack is committed in the repository where the automation will run.\n\n",
+      "zh": "> 复制式设置流程的素材。在 `automate` 确认复制的套件已提交到自动化将运行的仓库之后，将这里的意图改写成内置 `automate` 草稿。\n\n"
+    },
+    {
+      "en": "Read and follow `.cursor/automations/benny/skills/reproduce-and-fix-issues/SKILL.md` for this run.\n\n",
+      "zh": "本次运行读取并遵循 `.cursor/automations/benny/skills/reproduce-and-fix-issues/SKILL.md`。\n\n"
+    },
+    {
+      "en": "Configuration source. Include this repository-relative path only when it is committed in the same target repository. Otherwise paraphrase the configured values. Never use a plugin source or cache path:\n\n",
+      "zh": "配置来源。仅在此仓库相对路径已经提交到同一个目标仓库时包含它，否则转述配置值。绝不能使用插件源码或缓存路径：\n\n"
+    },
+    {
+      "en": "```text\n{{BENNY_CONFIG_PATH}}\n```\n\n",
+      "zh": "```text\n{{BENNY_CONFIG_PATH}}\n```\n\n"
+    },
+    {
+      "en": "Trigger:\n\n",
+      "zh": "触发信息：\n\n"
+    },
+    {
+      "en": "```json\n{\n\t\"source_channel_id\": \"{{SLACK_CHANNEL_ID}}\",\n\t\"message_ts\": \"{{SLACK_MESSAGE_TS}}\",\n\t\"thread_ts\": \"{{SLACK_THREAD_TS_OR_EMPTY}}\"\n}\n```\n\n",
+      "zh": "```json\n{\n\t\"source_channel_id\": \"{{SLACK_CHANNEL_ID}}\",\n\t\"message_ts\": \"{{SLACK_MESSAGE_TS}}\",\n\t\"thread_ts\": \"{{SLACK_THREAD_TS_OR_EMPTY}}\"\n}\n```\n\n"
+    },
+    {
+      "en": "The creation intent should describe this as a new top-level report in the configured source Slack channel. It should include the configured repository, default branch, issue tracker, control adapter, feature map, and draft pull request capability.\n\n",
+      "zh": "创建意图应描述为配置的来源 Slack 频道中的一条新顶级报告，包含配置的仓库、默认分支、问题追踪系统、操作适配器、功能验证清单和草稿 PR 能力。\n\n"
+    },
+    {
+      "en": "Treat the source channel and root thread timestamp as immutable. If either is missing or does not match configuration, stop without posting.\n\n",
+      "zh": "来源频道和根线程时间戳不可变。任何一项缺失或与配置不符时，停止且不发布。\n\n"
+    },
+    {
+      "en": "Wait for a configured triage marker from the configured triage identity in this exact thread. Proceed only for `[benny:bug]` or `[benny:performance]`.\n\n",
+      "zh": "等待配置的分诊身份在该线程中发布配置的分诊标记。仅对 `[benny:bug]` 或 `[benny:performance]` 继续执行。\n\n"
+    },
+    {
+      "en": "Require the configured control-adapter skill before attempting a repro. Reproduce the exact discriminating symptom twice through the real UI. Verify existing pull requests or commits without authoring over them. Attempt a bounded fix only after a confirmed repro and the operational file's fix gate.\n\n",
+      "zh": "尝试复现之前，必须具备配置的 control-adapter skill。通过真实 UI 两次复现准确的区分性症状。验证既有 PR 或提交时，不要覆盖它们编写代码。仅在确认复现并通过执行文件中的修复关卡后，才尝试有界修复。\n\n"
+    },
+    {
+      "en": "The coordinator is the only Slack poster. Every child prompt must forbid `SendSlackMessage`, `PostToSlack`, `chat.postMessage`, and all other Slack writes. Children return findings only.\n\n",
+      "zh": "只有协调者可以向 Slack 发布。每个子任务提示都必须禁止 `SendSlackMessage`、`PostToSlack`、`chat.postMessage` 以及所有其他 Slack 写入。子任务仅返回发现。\n\n"
+    },
+    {
+      "en": "Never post a root message in the source channel.\n",
+      "zh": "绝不能在来源频道发布根消息。\n"
+    }
+  ]
+}

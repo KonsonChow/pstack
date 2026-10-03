@@ -1,0 +1,102 @@
+{
+  "source": "skills/how/SKILL.md",
+  "sha256": "a3619781188331a3d61136d14abd1386cfe3a76e671aeb03f0c01cbd61434302",
+  "blocks": [
+    {
+      "en": "---\nname: how\ndescription: \"Use for \\\"how does X work\\\", code walkthroughs before changing something, and placement / ownership / layering questions (\\\"where should this live\\\", \\\"which package owns this\\\", \\\"is this the right layer\\\"). Explains subsystem architecture, runtime flow, onboarding mental models. Use why for motivation.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: how\ndescription: \"用于“X 如何工作”、修改前的代码走读，以及位置、职责和分层问题（“这应放在哪里”“哪个包负责它”“这是合适的层吗”）。解释子系统架构、运行流程和帮助新成员理解的心智模型。动机问题使用 why。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# How\n\n",
+      "zh": "# How\n\n"
+    },
+    {
+      "en": "Explore the codebase to answer \"how does X work?\" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.\n\n",
+      "zh": "探索代码库，回答“X 如何工作？”。按资深工程师熟悉新子系统所需的深度解释架构：足以形成可用的心智模型，但不要写成逐行源码注释。\n\n"
+    },
+    {
+      "en": "## Step 1. Assess Complexity\n\n",
+      "zh": "## 步骤 1：评估复杂度\n\n"
+    },
+    {
+      "en": "If the scope is ambiguous, state your interpretation and explore. The user can redirect.\n\n",
+      "zh": "范围不明确时，说明你的理解并开始探索，用户可以调整方向。\n\n"
+    },
+    {
+      "en": "- **Simple** (a single module, a small utility, a narrow question such as \"how does function X work\"): no explorers. One explainer explores and explains in a single pass. Go to Step 2b.\n- **Complex** (a subsystem spanning multiple files or services, a cross-cutting feature, a full architectural overview): spawn parallel explorers first, then hand off to the explainer. Go to Step 2a.\n\n",
+      "zh": "- **简单**（单个模块、小工具，或“函数 X 如何工作”之类的窄问题）：不启动探索者。由一名解释者一次完成探索和解释。转到步骤 2b。\n- **复杂**（跨多个文件或服务的子系统、横切功能、完整架构概览）：先启动并行探索者，再交给解释者。转到步骤 2a。\n\n"
+    },
+    {
+      "en": "When in doubt, take the simple path.\n\n",
+      "zh": "拿不准时，选择简单流程。\n\n"
+    },
+    {
+      "en": "**Other harnesses.** The spawns in this skill use Cursor's `Task` tool. In another harness, use its subagent tool: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Keep the prompt and the model. Drop parameters your tool doesn't have. If your harness has no subagent tool, as in Pi without an extension, run each role yourself, one after another. \"Your configured ... model\" means the matching line in the pstack settings file. Cursor loads `~/.cursor/rules/pstack-models.mdc` automatically. In other harnesses, read `~/.agents/pstack-models.md` if it exists.\n\n",
+      "zh": "**其他 agent 运行环境。**本 skill 的启动步骤使用 Cursor 的 `Task` 工具。其他环境请用对应 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示词和模型不变，去掉工具不支持的参数。环境没有 subagent 工具时，例如无扩展的 Pi，自行依次执行各角色。“你配置的……模型”指 pstack 设置文件中的对应条目。Cursor 会自动加载 `~/.cursor/rules/pstack-models.mdc`；其他环境中，若存在 `~/.agents/pstack-models.md`，请读取它。\n\n"
+    },
+    {
+      "en": "## Step 2a. Explore (complex questions only)\n\n",
+      "zh": "## 步骤 2a：探索（仅复杂问题）\n\n"
+    },
+    {
+      "en": "Decompose the question into 2 to 4 exploration angles, each a distinct slice of the subsystem. Spawn all explorers in a single message:\n\n",
+      "zh": "将问题拆成 2 至 4 个探索角度，每个角度覆盖子系统的不同部分。在同一条消息中启动所有探索者：\n\n"
+    },
+    {
+      "en": "- `subagent_type`: `generalPurpose`\n- `model`: your configured how-explorer model (default `grok-4.6-fast-xhigh`)\n- `readonly`: `true`\n\n",
+      "zh": "- `subagent_type`：`generalPurpose`\n- `model`：你配置的 how-explorer 模型（默认 `grok-4.6-fast-xhigh`）\n- `readonly`：`true`\n\n"
+    },
+    {
+      "en": "Each explorer gets the prompt in `references/explorer-prompt.md` with its angle filled in. Then go to Step 3.\n\n",
+      "zh": "每名探索者收到 `references/explorer-prompt.md` 的提示词，并填入对应角度。然后转到步骤 3。\n\n"
+    },
+    {
+      "en": "## Step 2b. Direct Explain (simple questions)\n\n",
+      "zh": "## 步骤 2b：直接解释（简单问题）\n\n"
+    },
+    {
+      "en": "Spawn one Task subagent that explores and explains in one pass:\n\n",
+      "zh": "启动一名 Task subagent，一次完成探索和解释：\n\n"
+    },
+    {
+      "en": "- `subagent_type`: `generalPurpose`\n- `model`: your configured how-explainer model (default `claude-fable-5-1-thinking-max`)\n- `readonly`: `true`\n\n",
+      "zh": "- `subagent_type`：`generalPurpose`\n- `model`：你配置的 how-explainer 模型（默认 `claude-fable-5-1-thinking-max`）\n- `readonly`：`true`\n\n"
+    },
+    {
+      "en": "Build its prompt from `references/explainer-prompt.md` without the explorer-findings section. Go to Step 4.\n\n",
+      "zh": "基于 `references/explainer-prompt.md` 构建提示词，省略探索者发现章节。转到步骤 4。\n\n"
+    },
+    {
+      "en": "## Step 3. Synthesize (complex questions only)\n\n",
+      "zh": "## 步骤 3：综合（仅复杂问题）\n\n"
+    },
+    {
+      "en": "Once all explorers have returned, spawn one Task subagent to synthesize their findings into one explanation:\n\n",
+      "zh": "所有探索者返回后，启动一名 Task subagent，将发现综合为一份解释：\n\n"
+    },
+    {
+      "en": "- `subagent_type`: `generalPurpose`\n- `model`: your configured how-explainer model (default `claude-fable-5-1-thinking-max`)\n- `readonly`: `true`\n\n",
+      "zh": "- `subagent_type`：`generalPurpose`\n- `model`：你配置的 how-explainer 模型（默认 `claude-fable-5-1-thinking-max`）\n- `readonly`：`true`\n\n"
+    },
+    {
+      "en": "Build its prompt from `references/explainer-prompt.md` with every explorer's findings filled in.\n\n",
+      "zh": "基于 `references/explainer-prompt.md` 构建提示词，填入每名探索者的发现。\n\n"
+    },
+    {
+      "en": "## Step 4. Present\n\n",
+      "zh": "## 步骤 4：呈现\n\n"
+    },
+    {
+      "en": "Present the explainer's output to the user. Light edits for clarity or context from the conversation are fine. Do not substantially rewrite it.\n\n",
+      "zh": "向用户呈现解释者的输出。可以轻微调整以提高清晰度或补充对话上下文，不要大幅重写。\n\n"
+    },
+    {
+      "en": "## Output Format\n\n",
+      "zh": "## 输出格式\n\n"
+    },
+    {
+      "en": "The explanation uses the sections defined in `references/explainer-prompt.md`, dropping any that do not apply: Overview, Key Concepts, How It Works, Where Things Live, Gotchas.\n",
+      "zh": "解释采用 `references/explainer-prompt.md` 定义的章节，删去不适用部分：概览、核心概念、工作原理、代码位置、注意事项。\n"
+    }
+  ]
+}

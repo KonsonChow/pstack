@@ -1,0 +1,74 @@
+{
+  "source": "skills/why/references/sources/code-archaeology.md",
+  "sha256": "8c14aa382f0de40829b2668d43e3f54814480bb93a486c9282ada4003f6b9dbd",
+  "blocks": [
+    {
+      "en": "# Code Archaeology (git + in-repo)\n\n",
+      "zh": "# 代码考古（Git 与仓库内资料）\n\n"
+    },
+    {
+      "en": "## What this source contains\n\n",
+      "zh": "## 该来源包含什么\n\n"
+    },
+    {
+      "en": "- Commit history (messages, dates, authors, diffs)\n- PR descriptions, review comments, and discussion threads (via `gh`)\n- Inline code comments, TODOs, FIXMEs, deprecation notes\n- ADRs (architectural decision records) if the repo keeps them\n- Tests. Names and assertions often encode the edge cases that motivated a change\n- Related files modified in the same commits (co-change signal)\n- CHANGELOG entries, release notes in the repo\n- Issue/ticket IDs mentioned in commit messages and PR bodies\n\n",
+      "zh": "- 提交历史（消息、日期、作者、diff）\n- PR 描述、评审意见和讨论线程（通过 `gh`）\n- 代码内注释、TODO、FIXME、弃用说明\n- 仓库保存的 ADR（架构决策记录）\n- 测试。名称和断言常常编码了促成改动的边界情况\n- 同一提交中修改的相关文件（共同变更信号）\n- 仓库内 CHANGELOG 条目、发行说明\n- 提交消息和 PR 正文中提到的 issue 或工单 ID\n\n"
+    },
+    {
+      "en": "The most trustworthy source, tied directly to the code, and the most complete. Everything that went through the repo should be here.\n\n",
+      "zh": "这是最可信的来源，与代码直接关联，也最完整。所有经过仓库的内容都应在这里。\n\n"
+    },
+    {
+      "en": "## How to search it\n\n",
+      "zh": "## 如何搜索\n\n"
+    },
+    {
+      "en": "Expand the seed commit list:\n\n",
+      "zh": "扩展起始提交列表：\n\n"
+    },
+    {
+      "en": "```bash\n# Full history of the file through renames\ngit log --follow --oneline -- <file>\n\n# Pickaxe: commits that added or removed this exact text\ngit log -S '<exact_string_from_code>' -- <file>\n\n# Or for patterns:\ngit log -G '<regex>' -- <file>\n\n# Who wrote each line and when\ngit blame -L <start>,<end> <file>\n\n# The full diff of a specific commit\ngit show <hash>\n\n# Commits between two points affecting this file\ngit log <old>..<new> -p -- <file>\n```\n\n",
+      "zh": "```bash\n# 跨重命名追踪文件的完整历史\ngit log --follow --oneline -- <file>\n\n# Pickaxe：添加或删除这段准确文本的提交\ngit log -S '<exact_string_from_code>' -- <file>\n\n# 或使用模式：\ngit log -G '<regex>' -- <file>\n\n# 每行由谁、在何时编写\ngit blame -L <start>,<end> <file>\n\n# 某次提交的完整 diff\ngit show <hash>\n\n# 两个时间点之间影响该文件的提交\ngit log <old>..<new> -p -- <file>\n```\n\n"
+    },
+    {
+      "en": "For each substantive commit, pull the PR context:\n\n",
+      "zh": "对每个有实质意义的提交，获取 PR 上下文：\n\n"
+    },
+    {
+      "en": "```bash\n# Find the PR number from the merge commit or branch\ngit log -1 --format=%B <hash>\n\n# Full PR context: body, review comments, linked issues\ngh pr view <number> --json title,body,author,createdAt,mergedAt,labels,closingIssuesReferences,comments,reviews,files\n\n# The --json reviews and comments fields are where the real signal is\n```\n\n",
+      "zh": "```bash\n# 从合并提交或分支中找出 PR 编号\ngit log -1 --format=%B <hash>\n\n# 完整 PR 上下文：正文、评审意见、关联 issue\ngh pr view <number> --json title,body,author,createdAt,mergedAt,labels,closingIssuesReferences,comments,reviews,files\n\n# 真正有价值的线索通常位于 --json 的 reviews 和 comments 字段\n```\n\n"
+    },
+    {
+      "en": "Look for out-of-band docs:\n\n",
+      "zh": "寻找其他文档：\n\n"
+    },
+    {
+      "en": "```bash\n# ADRs often live in docs/adr/ or similar\nrg -l -i 'architecture.decision' --glob '*.md'\n\n# TODOs and FIXMEs near the target\nrg -n -C2 '(TODO|FIXME|HACK|XXX|NOTE)' <target_file>\n\n# Related tests. Names often encode the \"why\"\nrg -l '<symbol>' --glob '*test*'\n```\n\n",
+      "zh": "```bash\n# ADR 常放在 docs/adr/ 或类似目录\nrg -l -i 'architecture.decision' --glob '*.md'\n\n# 目标附近的 TODO 和 FIXME\nrg -n -C2 '(TODO|FIXME|HACK|XXX|NOTE)' <target_file>\n\n# 相关测试；名称常常编码了“为什么”\nrg -l '<symbol>' --glob '*test*'\n```\n\n"
+    },
+    {
+      "en": "## What good evidence looks like here\n\n",
+      "zh": "## 好的证据是什么样\n\n"
+    },
+    {
+      "en": "- A PR description that explains the problem being solved, not just the change (\"This fixes the pagination bug that caused X\")\n- A long review thread where alternatives were debated\n- An inline comment near the target line that explains a non-obvious constraint\n- A test named `test_handles_edge_case_when_X` that reveals an edge case motivating the code\n- A commit message that references a ticket or incident ID\n- A CHANGELOG entry that summarizes the user-visible rationale\n\n",
+      "zh": "- PR 描述解释要解决的问题，而非只描述改动（“修复导致 X 的分页缺陷”）\n- 深入讨论备选方案的长评审线程\n- 目标行附近解释不明显约束的代码内注释\n- 名为 `test_handles_edge_case_when_X` 的测试，揭示促成代码的边界情况\n- 引用工单或事故 ID 的提交消息\n- 总结用户可见改动理由的 CHANGELOG 条目\n\n"
+    },
+    {
+      "en": "## Common pitfalls\n\n",
+      "zh": "## 常见陷阱\n\n"
+    },
+    {
+      "en": "- **Squash-merge flatlands.** If the repo squashes PRs, individual commits in the branch history are lost. Fall back to PR body and comments.\n- **Misleading commit messages.** \"Small refactor\" sometimes hides an intentional behavior change. Look at the diff, not the message.\n- **Cargo-culted patterns.** The author may have copied a pattern without understanding why. Check if the pattern originated earlier in the codebase and investigate *that* commit.\n- **Bot commits and auto-merges.** Dependabot, Renovate, and automated backports usually don't carry motivation. Skip them when trying to find intent.\n- **Treating code as evidence of intent.** The code itself isn't evidence for why it exists. Evidence comes from commit messages, PRs, comments, tests, docs. Don't cite \"the function is named X\" as evidence of intent.\n\n",
+      "zh": "- **Squash 合并抹平历史。**仓库 squash PR 时，分支中的独立提交历史会丢失，改查 PR 正文和评论。\n- **提交消息有误导。**“小重构”有时隐藏着有意的行为改动。看 diff，不只看消息。\n- **照搬模式。**作者可能复制了模式却不理解原因。检查其是否更早出现在代码库中，并调查那个源头提交。\n- **机器人提交和自动合并。**Dependabot、Renovate 和自动回移通常没有动机信息，寻找意图时可跳过。\n- **将代码当作意图证据。**代码本身不能证明存在理由。证据来自提交消息、PR、注释、测试和文档。不要将“函数叫 X”当作意图证据。\n\n"
+    },
+    {
+      "en": "## What to return\n\n",
+      "zh": "## 返回什么\n\n"
+    },
+    {
+      "en": "Every commit/PR/comment that bears on the question, with:\n- The exact text (quoted)\n- The hash / PR number / file:line\n- Author and date\n- Whether it's direct (explicitly addresses the question) or circumstantial\n",
+      "zh": "每个与问题有关的提交、PR 或评论均需提供：\n- 准确原文（引用）\n- hash / PR 编号 / 文件:行号\n- 作者和日期\n- 属于直接证据（明确回答问题）还是旁证\n"
+    }
+  ]
+}

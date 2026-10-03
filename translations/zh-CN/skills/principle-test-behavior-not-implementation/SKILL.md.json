@@ -1,0 +1,42 @@
+{
+  "source": "skills/principle-test-behavior-not-implementation/SKILL.md",
+  "sha256": "87e40efe4e486f7ea639d2ed1fc0abe6c93b8fd0e89a81218086909d2470a52e",
+  "blocks": [
+    {
+      "en": "---\nname: principle-test-behavior-not-implementation\ndescription: \"Apply when you write, change, or keep a test. Call the code the way its users do and assert the result they observe against a literal expected value. If the test would still pass when every imported function returns undefined, rewrite the assertion or delete the test.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-test-behavior-not-implementation\ndescription: \"编写、修改或保留测试时使用。像使用者一样调用代码，并针对可观察到的结果断言字面预期值。如果所有导入函数都返回 `undefined` 时测试仍会通过，就重写断言或删除测试。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Test Behavior, Not Implementation\n\n",
+      "zh": "# 测试行为，而非实现\n\n"
+    },
+    {
+      "en": "A test calls the code the way its users do and asserts the result they observe against a literal expected value. A test that asserts which calls the code made, or restates a constant the code contains, does neither.\n\n",
+      "zh": "测试应像使用者一样调用代码，并针对观察到的结果断言字面预期值。断言代码调用了哪些函数，或复述代码中的常量，都不符合这一点。\n\n"
+    },
+    {
+      "en": "The check: before you keep a test, ask whether it would still pass if every function it imports returned `undefined`. If yes, it observes no behavior and cannot fail for a defect. Rewrite the assertion or delete the test.\n\n",
+      "zh": "检查方法：保留测试前，问自己：如果它导入的每个函数都返回 `undefined`，测试仍会通过吗？如果会，它没有观察任何行为，也不可能因缺陷失败。请重写断言或删除测试。\n\n"
+    },
+    {
+      "en": "**Why:** A test that cannot fail for a defect costs CI time and review attention and catches nothing. A constant pin also fails when someone edits the constant or the prompt it restates, so it prevents that edit.\n\n",
+      "zh": "**原因：**不会因缺陷失败的测试只会消耗 CI 时间和评审注意力，什么也捕获不到。固定常量的断言在有人修改常量或它复述的提示词时也会失败，因此反而阻止这种修改。\n\n"
+    },
+    {
+      "en": "**Five shapes that still pass when every imported function returns `undefined`:**\n\n",
+      "zh": "**所有导入函数都返回 `undefined` 时仍会通过的五种形式：**\n\n"
+    },
+    {
+      "en": "- **Weak or no assertion.** No `expect`, or only `toBeDefined`, `toBeTruthy`, `not.toThrow`, `toBeInstanceOf`, `toBeGreaterThan(0)`.\n- **Mock or absence only.** Only `toHaveBeenCalled`, `not.toHaveBeenCalled`, `toBeUndefined`, `toEqual([])`, `toHaveLength(0)`, `not.toBe(wrongValue)`.\n- **Self-referential.** The expected value comes from the code under test: `expect(f(a)).toBe(f(a))`, `expect(parsed.url).toBe(buildUrl(...))`.\n- **Constant pin.** The assertion restates a hand-maintained constant, config default, table row, or prompt string: `expect(LIMITS.maxTools).toBe(8)`, `expect(PROMPT).toContain(\"You are\")`.\n- **Fixture asserts fixture.** The assertion reads data the test built or a value computed in `beforeEach`, and the subject never runs inside the body.\n\n",
+      "zh": "- **断言很弱或没有断言。**没有 `expect`，或只有 `toBeDefined`、`toBeTruthy`、`not.toThrow`、`toBeInstanceOf`、`toBeGreaterThan(0)`。\n- **只有 mock 或缺失检查。**仅使用 `toHaveBeenCalled`、`not.toHaveBeenCalled`、`toBeUndefined`、`toEqual([])`、`toHaveLength(0)`、`not.toBe(wrongValue)`。\n- **自我引用。**预期值来自被测代码：`expect(f(a)).toBe(f(a))`、`expect(parsed.url).toBe(buildUrl(...))`。\n- **固定常量。**断言复述手工维护的常量、配置默认值、表行或提示词字符串：`expect(LIMITS.maxTools).toBe(8)`、`expect(PROMPT).toContain(\"You are\")`。\n- **夹具断言夹具。**断言读取测试自身构建的数据或在 `beforeEach` 中计算的值，而被测对象从未在测试体内运行。\n\n"
+    },
+    {
+      "en": "**The fix:** call the subject inside the test body with one concrete input and assert the literal output or the observable effect, `expect(slugify(\"Hello, World!\")).toBe(\"hello-world\")`. For an absence, assert the presence on the other input in the same test. For a constant, test the mechanism that reads it with one input instead of restating the value. For a mock, assert the payload it received or the state after the call, not that it was called. When no such assertion exists, delete the test.\n\n",
+      "zh": "**修复方式：**在测试体内用一个具体输入调用被测对象，并断言字面输出或可观察效果，例如 `expect(slugify(\"Hello, World!\")).toBe(\"hello-world\")`。对于不存在的情况，在同一测试中用另一个输入断言其存在。对于常量，使用一个输入测试读取常量的机制，而不是复述数值。对于 mock，断言它收到的负载或调用后的状态，而不是仅断言调用发生。不存在上述断言时，删除测试。\n"
+    },
+    {
+      "en": "**Keep** a test of a relation across a table's rows (a key present in two tables, a parent that exists), and a compile-time check in a `*.test-d.ts` file.\n",
+      "zh": "**保留**跨表行关系的测试（例如某个键同时出现在两张表中、父项确实存在），以及 `*.test-d.ts` 文件中的编译期检查。\n"
+    }
+  ]
+}

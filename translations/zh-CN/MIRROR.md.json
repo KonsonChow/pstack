@@ -1,0 +1,70 @@
+{
+  "source": "MIRROR.md",
+  "sha256": "6850ddca3d6aa13cd9db78859b3dd35e18f9c9eceeb7b1d3ce53564df1066445",
+  "blocks": [
+    {
+      "en": "# Syncing this mirror\n\n",
+      "zh": "# 同步这个镜像仓库"
+    },
+    {
+      "en": "This repo mirrors [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) and adds its own edits: the top of `README.md` and harness-neutral rewrites in some skills.\n\n",
+      "zh": "本仓库是 [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) 的镜像，并包含自己的修改：`README.md` 顶部的说明，以及部分 skill 中不再依赖特定 agent 运行环境的改写。"
+    },
+    {
+      "en": "Two branches keep those edits safe:\n\n",
+      "zh": "通过两个分支保护这些修改："
+    },
+    {
+      "en": "- `upstream` holds Cursor's files exactly, with no local edits.\n- `main` is `upstream` plus this mirror's edits.\n\n",
+      "zh": "- `upstream` 完整保留 Cursor 的文件，不做本地修改。\n- `main` 在 `upstream` 的基础上叠加本镜像的修改。"
+    },
+    {
+      "en": "Never copy Cursor's files onto `main` directly. That erases the edits.\n\n",
+      "zh": "绝不能直接把 Cursor 的文件复制到 `main` 上，否则会覆盖镜像自身的修改。"
+    },
+    {
+      "en": "## Steps\n\n",
+      "zh": "## 操作步骤"
+    },
+    {
+      "en": "1. Copy Cursor's latest `pstack/` folder onto the `upstream` branch:\n\n",
+      "zh": "1. 将 Cursor 最新的 `pstack/` 目录复制到 `upstream` 分支："
+    },
+    {
+      "en": "   ```bash\n   git clone --depth 1 --filter=blob:none --sparse https://github.com/cursor/plugins.git /tmp/cursor-plugins\n   git -C /tmp/cursor-plugins sparse-checkout set pstack\n   git switch upstream\n   rsync -a --delete --exclude .git --exclude MIRROR.md /tmp/cursor-plugins/pstack/ ./\n   git add -A\n   git commit -m \"upstream: cursor/plugins/pstack @ $(git -C /tmp/cursor-plugins rev-parse --short HEAD)\"\n   ```\n\n",
+      "zh": "   ```bash\n   git clone --depth 1 --filter=blob:none --sparse https://github.com/cursor/plugins.git /tmp/cursor-plugins\n   git -C /tmp/cursor-plugins sparse-checkout set pstack\n   git switch upstream\n   rsync -a --delete --exclude .git --exclude MIRROR.md /tmp/cursor-plugins/pstack/ ./\n   git add -A\n   git commit -m \"upstream: cursor/plugins/pstack @ $(git -C /tmp/cursor-plugins rev-parse --short HEAD)\"\n   ```"
+    },
+    {
+      "en": "2. Merge it into `main`. Git applies only what changed upstream and keeps the mirror's edits:\n\n",
+      "zh": "2. 合并到 `main`。Git 只应用上游发生变化的部分，保留镜像自己的修改："
+    },
+    {
+      "en": "   ```bash\n   git switch main\n   git merge upstream\n   ```\n\n",
+      "zh": "   ```bash\n   git switch main\n   git merge upstream\n   ```"
+    },
+    {
+      "en": "   A conflict means Cursor changed a line this mirror also changed. Keep Cursor's new meaning and reapply the harness-neutral wording.\n\n",
+      "zh": "   如果发生冲突，说明 Cursor 和本镜像都修改了同一行。保留 Cursor 更新后的含义，再重新应用不依赖特定运行环境的表达。"
+    },
+    {
+      "en": "3. Refresh the bundled Comment Sicko prompt, then check that no new Cursor-only instructions arrived:\n\n",
+      "zh": "3. 更新仓库内附带的 Comment Sicko 提示词，再检查是否引入了新的 Cursor 专用指令："
+    },
+    {
+      "en": "   ```bash\n   cp agents/comment-sicko.md skills/no-comments/references/comment-sicko.md\n   git diff upstream@{1} upstream -- skills | grep -nE '\\.cursor/|agent-transcripts|cursor-team-kit|create-skill|Task'\n   ```\n\n",
+      "zh": "   ```bash\n   cp agents/comment-sicko.md skills/no-comments/references/comment-sicko.md\n   git diff upstream@{1} upstream -- skills | grep -nE '\\.cursor/|agent-transcripts|cursor-team-kit|create-skill|Task'\n   ```"
+    },
+    {
+      "en": "   Rewrite any new hits the same way as the existing edits. The Harness section in `skills/poteto-mode/SKILL.md` lists the mappings.\n\n",
+      "zh": "   按现有改写方式处理新出现的匹配项。`skills/poteto-mode/SKILL.md` 的 Harness 部分列出了对应关系。"
+    },
+    {
+      "en": "4. Push both branches:\n\n",
+      "zh": "4. 推送两个分支："
+    },
+    {
+      "en": "   ```bash\n   git push origin main upstream\n   ```\n",
+      "zh": "   ```bash\n   git push origin main upstream\n   ```"
+    }
+  ]
+}
