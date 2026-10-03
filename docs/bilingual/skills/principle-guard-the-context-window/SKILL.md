@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-guard-the-context-window
-> description: "大量输出、长文件、重复读取、并行分工规划使上下文吃紧时应用。大批内容交给 subagent，主线程只保留摘要，不放原始载荷。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-guard-the-context-window
+description: "大量输出、长文件、重复读取、并行分工规划使上下文吃紧时应用。大批内容交给 subagent，主线程只保留摘要，不放原始载荷。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Guard the Context Window
 
 <!-- zh:1 -->
-> **中文**
->
-> # 保护上下文窗口
+**保护上下文窗口**
 
 <!-- en:2 -->
 The context window is finite and non-renewable within a session. Every token should be worth its cost.
 
 <!-- zh:2 -->
-> **中文**
->
-> 上下文窗口有限，在一个会话内不可再生。每个 token 都应值得其成本。
+上下文窗口有限，在一个会话内不可再生。每个 token 都应值得其成本。
 
 <!-- en:3 -->
 **Why:** Context overflow degrades reasoning quality, creates compression artifacts, and halts progress.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：** 上下文溢出会降低推理质量，造成压缩失真，并中断进展。
+**原因：** 上下文溢出会降低推理质量，造成压缩失真，并中断进展。
 
 <!-- en:4 -->
 **Pattern:**
@@ -53,10 +45,8 @@ The context window is finite and non-renewable within a session. Every token sho
 - **Size phases and cap scope.** Limit files per phase, set turn budgets, account for mechanism costs.
 
 <!-- zh:4 -->
-> **中文**
->
-> **模式：**
-> - **隔离大载荷。** 冗长输出、截图、大文档交给 subagent；主上下文只接收摘要，不接收原始数据。
-> - **不用的内容不读。** 按相关性选择读取。当前任务不需要的文件就跳过。
-> - **常用内容内联。** 每次调用都用到的模板和参考内容放进 skill 文件，不拆成每次都需另读的文件。
-> - **控制阶段大小和范围。** 限制每阶段文件数，设置轮次预算，考虑机制本身的成本。
+**模式：**
+- **隔离大载荷。** 冗长输出、截图、大文档交给 subagent；主上下文只接收摘要，不接收原始数据。
+- **不用的内容不读。** 按相关性选择读取。当前任务不需要的文件就跳过。
+- **常用内容内联。** 每次调用都用到的模板和参考内容放进 skill 文件，不拆成每次都需另读的文件。
+- **控制阶段大小和范围。** 限制每阶段文件数，设置轮次预算，考虑机制本身的成本。

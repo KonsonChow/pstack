@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: unslop
-> description: 去除任何文字中的 AI 痕迹。必须始终应用。
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: unslop
+description: 去除任何文字中的 AI 痕迹。必须始终应用。
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Unslop
 
 <!-- zh:1 -->
-> **中文**
->
-> # 清理 AI 套话
+**清理 AI 套话**
 
 <!-- en:2 -->
 Edit text to remove AI patterns.
 
 <!-- zh:2 -->
-> **中文**
->
-> 编辑文字，去除 AI 表达模式。
+编辑文字，去除 AI 表达模式。
 
 <!-- en:3 -->
 ## Process
 
 <!-- zh:3 -->
-> **中文**
->
-> ## 流程
+**流程**
 
 <!-- en:4 -->
 1. Scan for the patterns below.
@@ -51,53 +43,41 @@ Edit text to remove AI patterns.
 3. Self-audit: "What makes this obviously AI generated?" Fix remaining tells.
 
 <!-- zh:4 -->
-> **中文**
->
-> 1. 检查下列模式。
-> 2. 改写，保留含义并匹配预期语气。
-> 3. 自查：“哪里让人一眼看出这是 AI 生成的？”修复剩余痕迹。
+1. 检查下列模式。
+2. 改写，保留含义并匹配预期语气。
+3. 自查：“哪里让人一眼看出这是 AI 生成的？”修复剩余痕迹。
 
 <!-- en:5 -->
 ## Patterns to detect and fix
 
 <!-- zh:5 -->
-> **中文**
->
-> ## 需要识别并修复的模式
+**需要识别并修复的模式**
 
 <!-- en:6 -->
 Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 
 <!-- zh:6 -->
-> **中文**
->
-> 规则编号是其他 skill 引用的稳定 ID，删除规则会留下编号空缺。
+规则编号是其他 skill 引用的稳定 ID，删除规则会留下编号空缺。
 
 <!-- en:7 -->
 ### Content
 
 <!-- zh:7 -->
-> **中文**
->
-> ### 内容
+**内容**
 
 <!-- en:8 -->
 3. **Superficial -ing phrases.** "highlighting...", "ensuring...", "reflecting...", "showcasing...", "fostering...". Delete or expand with real sources.
 5. **Vague attributions.** "Experts believe", "Industry reports suggest", "Some critics argue". Name the source or delete.
 
 <!-- zh:8 -->
-> **中文**
->
-> 3. **肤浅的 -ing 短语。** “highlighting…”“ensuring…”“reflecting…”“showcasing…”“fostering…”。删除，或用真实来源补充具体内容。
-> 5. **含糊的归因。** “专家认为”“行业报告表明”“一些批评者指出”。给出来源名称，或删除。
+3. **肤浅的 -ing 短语。** “highlighting…”“ensuring…”“reflecting…”“showcasing…”“fostering…”。删除，或用真实来源补充具体内容。
+5. **含糊的归因。** “专家认为”“行业报告表明”“一些批评者指出”。给出来源名称，或删除。
 
 <!-- en:9 -->
 ### Language
 
 <!-- zh:9 -->
-> **中文**
->
-> ### 语言
+**语言**
 
 <!-- en:10 -->
 7. **AI vocabulary.** Additionally, crucial, delve, enduring, enhance, fostering, garner, interplay, intricate, landscape (abstract), pivotal, showcase, tapestry (abstract), testament, underscore, vibrant. Replace with plain words.
@@ -108,22 +88,18 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 12. **False ranges.** "from X to Y" where X and Y aren't on a meaningful scale. List topics directly.
 
 <!-- zh:10 -->
-> **中文**
->
-> 7. **AI 常用词。** Additionally、crucial、delve、enduring、enhance、fostering、garner、interplay、intricate、landscape（抽象用法）、pivotal、showcase、tapestry（抽象用法）、testament、underscore、vibrant。替换为普通词语。
-> 8. **花式表达“是”。** “serves as”“stands as”“boasts”“features”。直接用“is”或“has”。
-> 9. **“不只是 X，更是 Y”。** 改为直接陈述重点。
-> 10. **凑三项。** 强行将观点分为三组。按实际需要的数量组织。
-> 11. **轮换同义词。** 一段里交替使用 protagonist、main character、central figure、hero。选一个并重复使用。
-> 12. **虚假范围。** X 与 Y 不在有意义的尺度上，却写“从 X 到 Y”。直接列主题。
+7. **AI 常用词。** Additionally、crucial、delve、enduring、enhance、fostering、garner、interplay、intricate、landscape（抽象用法）、pivotal、showcase、tapestry（抽象用法）、testament、underscore、vibrant。替换为普通词语。
+8. **花式表达“是”。** “serves as”“stands as”“boasts”“features”。直接用“is”或“has”。
+9. **“不只是 X，更是 Y”。** 改为直接陈述重点。
+10. **凑三项。** 强行将观点分为三组。按实际需要的数量组织。
+11. **轮换同义词。** 一段里交替使用 protagonist、main character、central figure、hero。选一个并重复使用。
+12. **虚假范围。** X 与 Y 不在有意义的尺度上，却写“从 X 到 Y”。直接列主题。
 
 <!-- en:11 -->
 ### Style
 
 <!-- zh:11 -->
-> **中文**
->
-> ### 风格
+**风格**
 
 <!-- en:12 -->
 13. **Em dash overuse.** Avoid em dashes entirely. Use periods or commas only (no parentheses, no en dashes, no hyphen-as-dash substitutes). If a thought needs separation, end the sentence or use a comma.
@@ -135,41 +111,33 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 19. **Curly quotes.** Replace with straight quotes.
 
 <!-- zh:12 -->
-> **中文**
->
-> 13. **滥用破折号。** 完全避免 em dash，只用句号或逗号（不用括号、en dash 或连字符代替）。想法需要分隔时，结束句子或使用逗号。
-> 14. **滥用冒号。** 列表或例子前可以用冒号，不要用它连接句中内容。“如果你来自传统自动化：不要注册事件处理器，而是描述条件”中的冒号毫无帮助。改为让重点独立成立，去掉比较框架：“用普通英语描述调度器何时触发效果最好。”含义相同，不依赖标点支撑。
-> 15. **滥用粗体。** 不要把每个专有名词或缩写都加粗。
-> 16. **行内标题列表。** 痕迹是重复本行意思的粗体标签加冒号：“**性能：** 性能提升了……”。改为正文。粗体引导语如果以句号结束、指出对象，后面是真正的新细节（“**TypeScript 中的 schema。** 表集中在一个文件。”），则没问题，不算痕迹。
-> 17. **标题式大小写。** 使用句首大写格式。
-> 18. **装饰性 emoji。** 从标题和列表中删除。
-> 19. **弯引号。** 替换为直引号。
+13. **滥用破折号。** 完全避免 em dash，只用句号或逗号（不用括号、en dash 或连字符代替）。想法需要分隔时，结束句子或使用逗号。
+14. **滥用冒号。** 列表或例子前可以用冒号，不要用它连接句中内容。“如果你来自传统自动化：不要注册事件处理器，而是描述条件”中的冒号毫无帮助。改为让重点独立成立，去掉比较框架：“用普通英语描述调度器何时触发效果最好。”含义相同，不依赖标点支撑。
+15. **滥用粗体。** 不要把每个专有名词或缩写都加粗。
+16. **行内标题列表。** 痕迹是重复本行意思的粗体标签加冒号：“**性能：** 性能提升了……”。改为正文。粗体引导语如果以句号结束、指出对象，后面是真正的新细节（“**TypeScript 中的 schema。** 表集中在一个文件。”），则没问题，不算痕迹。
+17. **标题式大小写。** 使用句首大写格式。
+18. **装饰性 emoji。** 从标题和列表中删除。
+19. **弯引号。** 替换为直引号。
 
 <!-- en:13 -->
 ### Communication artifacts
 
 <!-- zh:13 -->
-> **中文**
->
-> ### 对话痕迹
+**对话痕迹**
 
 <!-- en:14 -->
 20. **Chatbot phrases.** "I hope this helps!", "Let me know if...", "Of course!", "Certainly!", "Found the smoking gun!" Remove.
 22. **Sycophantic tone.** "Great question! You're absolutely right!" Respond directly.
 
 <!-- zh:14 -->
-> **中文**
->
-> 20. **聊天机器人套话。** “希望这有帮助！”“如果需要请告诉我……”“当然！”“肯定！”“找到铁证了！”删除。
-> 22. **迎合语气。** “问得太好了！你完全正确！”直接回答。
+20. **聊天机器人套话。** “希望这有帮助！”“如果需要请告诉我……”“当然！”“肯定！”“找到铁证了！”删除。
+22. **迎合语气。** “问得太好了！你完全正确！”直接回答。
 
 <!-- en:15 -->
 ### Filler
 
 <!-- zh:15 -->
-> **中文**
->
-> ### 填充话
+**填充话**
 
 <!-- en:16 -->
 23. **Filler phrases.** "In order to" becomes "To". "Due to the fact that" becomes "Because". "It is important to note that" gets deleted.
@@ -177,35 +145,27 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 25. **Generic conclusions.** "The future looks bright." State specific plans or facts.
 
 <!-- zh:16 -->
-> **中文**
->
-> 23. **冗余短语。** “In order to”改为“To”，“Due to the fact that”改为“Because”，“It is important to note that”直接删除。
-> 24. **过度保留。** “could potentially possibly be argued that it might”改为“may”。
-> 25. **泛泛结论。** “未来一片光明。”改为具体计划或事实。
+23. **冗余短语。** “In order to”改为“To”，“Due to the fact that”改为“Because”，“It is important to note that”直接删除。
+24. **过度保留。** “could potentially possibly be argued that it might”改为“may”。
+25. **泛泛结论。** “未来一片光明。”改为具体计划或事实。
 
 <!-- en:17 -->
 ### Jargon
 
 <!-- zh:17 -->
-> **中文**
->
-> ### 行话
+**行话**
 
 <!-- en:18 -->
 26. **Abstract metaphor nouns.** Substrate, wedge, vector, locus, vantage, nexus, primitive (as noun), harness (as metaphor), surface (as in "API surface"), bedrock, scaffolding (as metaphor), modality, paradigm, gold-plating, ratchet (as metaphor), evacuate (for moving code), endgame, north star, flywheel. These read as technical but usually have a plainer concrete word. "Substrate" becomes "base". "Wedge in" becomes "add". "Vector" becomes "way" or "method". "Gold-plating" becomes "more than the job needs". "Ratchet" becomes the mechanism's real name or "a limit that only tightens". "Evacuate" becomes "move out". "Endgame" becomes "the last phase". Pick the concrete word.
 
 <!-- zh:18 -->
-> **中文**
->
-> 26. **抽象隐喻名词。** Substrate、wedge、vector、locus、vantage、nexus、primitive（名词）、harness（比喻）、surface（如“API surface”）、bedrock、scaffolding（比喻）、modality、paradigm、gold-plating、ratchet（比喻）、evacuate（指移动代码）、endgame、north star、flywheel。这些听起来技术性强，通常却有更平实具体的词。“Substrate”改“base”，“wedge in”改“add”，“vector”改“way”或“method”，“gold-plating”改“超出任务需要的内容”，“ratchet”改真实机制名称或“只会收紧的限制”，“evacuate”改“move out”，“endgame”改“最后阶段”。选择具体词。
+26. **抽象隐喻名词。** Substrate、wedge、vector、locus、vantage、nexus、primitive（名词）、harness（比喻）、surface（如“API surface”）、bedrock、scaffolding（比喻）、modality、paradigm、gold-plating、ratchet（比喻）、evacuate（指移动代码）、endgame、north star、flywheel。这些听起来技术性强，通常却有更平实具体的词。“Substrate”改“base”，“wedge in”改“add”，“vector”改“way”或“method”，“gold-plating”改“超出任务需要的内容”，“ratchet”改真实机制名称或“只会收紧的限制”，“evacuate”改“move out”，“endgame”改“最后阶段”。选择具体词。
 
 <!-- en:19 -->
 ### Plain speech
 
 <!-- zh:19 -->
-> **中文**
->
-> ### 平实表达
+**平实表达**
 
 <!-- en:20 -->
 27. **Say what it does, not how it feels.** "the database stays close at hand", "SQL you can read", "types that follow your schema" name a feeling. The fix names the mechanism or a number: "`.toSQL()` returns the exact string sent to the database", "a column rename fails the build". Ask what the sentence tells the reader to do or know, then write that. If you can't restate it as a concrete instruction, fact, or number, cut it. One more check: if the sentence could appear unchanged in another project's docs, it says nothing about this one. Cut it.
@@ -217,12 +177,10 @@ Rule numbers are stable ids that other skills cite. A removed rule leaves a gap.
 33. **Over-compression.** Dropped articles, verbless fragments, symbol-speak, and abbreviations that make the reader decode instead of read. "Parser rejects bad date → exit 2, no write" becomes "The parser rejects a bad date, exits with code 2, and writes nothing." Write whole sentences with their articles and verbs, and spell out arrows and abbreviations.
 
 <!-- zh:20 -->
-> **中文**
->
-> 27. **说明它做什么，而不是给人什么感觉。** “数据库近在手边”“读得懂的 SQL”“随 schema 变化的类型”说的是感觉。改为机制或数字：“`.toSQL()` 返回实际发送给数据库的字符串”“重命名列会导致构建失败”。问这句话让读者做什么或知道什么，再写出来。如果无法改述为具体指令、事实或数字，就删除。再检查一次：如果这句话可以原封不动出现在另一个项目文档里，它就没说明这个项目的任何特性，删除。
-> 28. **缩短或拆分密集句。** 如果读者必须回头才能读懂，就拆成两句或删除从句。每句一个观点。
-> 29. **主动语态。** 优先使用。识别“is/are/was/were + 过去分词”，明确执行者：“queries are validated”改为“the compiler validates queries”，“the file is parsed by the loader”改为“the loader parses the file”。只有执行者未知或确实无关紧要时才用被动语态。
-> 30. **删除副词，或换成更有力的动词。** “runs quickly”改“is fast”或具体数字，“significantly improves”改为测得的差值。副词支撑弱动词时，问题在动词。
-> 31. **优先普通词。** “utilize”改“use”，“leverage”改“use”，“facilitate”改“help”，“numerous”改“many”，“in the event that”改“if”。华丽同义词很少更清晰。
-> 32. **做作的文字。** 明明有直接表达却用隐喻或修辞：格言（“接上它，否则删除”）、追求效果的碎片句、拟人化代码（“计划掌握它”）、比喻动词（“搭车前进”“立于其上”）、固定框架用语。“值得拨动的旋钮”改“值得调整的参数”。直接表达意思，规则 26 处理隐喻名词。
-> 33. **过度压缩。** 省略冠词、无动词片段、符号语言和缩写，会让读者解码而非阅读。“Parser rejects bad date → exit 2, no write”改为“The parser rejects a bad date, exits with code 2, and writes nothing.” 写完整句子，保留冠词和动词，将箭头与缩写写成完整文字。
+27. **说明它做什么，而不是给人什么感觉。** “数据库近在手边”“读得懂的 SQL”“随 schema 变化的类型”说的是感觉。改为机制或数字：“`.toSQL()` 返回实际发送给数据库的字符串”“重命名列会导致构建失败”。问这句话让读者做什么或知道什么，再写出来。如果无法改述为具体指令、事实或数字，就删除。再检查一次：如果这句话可以原封不动出现在另一个项目文档里，它就没说明这个项目的任何特性，删除。
+28. **缩短或拆分密集句。** 如果读者必须回头才能读懂，就拆成两句或删除从句。每句一个观点。
+29. **主动语态。** 优先使用。识别“is/are/was/were + 过去分词”，明确执行者：“queries are validated”改为“the compiler validates queries”，“the file is parsed by the loader”改为“the loader parses the file”。只有执行者未知或确实无关紧要时才用被动语态。
+30. **删除副词，或换成更有力的动词。** “runs quickly”改“is fast”或具体数字，“significantly improves”改为测得的差值。副词支撑弱动词时，问题在动词。
+31. **优先普通词。** “utilize”改“use”，“leverage”改“use”，“facilitate”改“help”，“numerous”改“many”，“in the event that”改“if”。华丽同义词很少更清晰。
+32. **做作的文字。** 明明有直接表达却用隐喻或修辞：格言（“接上它，否则删除”）、追求效果的碎片句、拟人化代码（“计划掌握它”）、比喻动词（“搭车前进”“立于其上”）、固定框架用语。“值得拨动的旋钮”改“值得调整的参数”。直接表达意思，规则 26 处理隐喻名词。
+33. **过度压缩。** 省略冠词、无动词片段、符号语言和缩写，会让读者解码而非阅读。“Parser rejects bad date → exit 2, no write”改为“The parser rejects a bad date, exits with code 2, and writes nothing.” 写完整句子，保留冠词和动词，将箭头与缩写写成完整文字。

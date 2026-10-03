@@ -12,40 +12,32 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-build-the-lever
-> description: "用于任何非琐碎工作，而不仅是批量工作：编辑、迁移、分析、检查。构建能完成或证明工作的工具（codemod、脚本、生成器，或供 subagent 遵循的 skill），而不是手工处理。工具就是评审者可以重新运行的产物。"
-> disable-model-invocation: true
-> ---
-> # 构建杠杆工具
-> ```
+```yaml
+---
+name: principle-build-the-lever
+description: "用于任何非琐碎工作，而不仅是批量工作：编辑、迁移、分析、检查。构建能完成或证明工作的工具（codemod、脚本、生成器，或供 subagent 遵循的 skill），而不是手工处理。工具就是评审者可以重新运行的产物。"
+disable-model-invocation: true
+---
+# 构建杠杆工具
+```
 
 <!-- en:1 -->
 When the work isn't trivial, build the tool that does it instead of doing it by hand.
 
 <!-- zh:1 -->
-> **中文**
->
-> 工作不琐碎时，构建工具来完成它，而不是手工完成。
+工作不琐碎时，构建工具来完成它，而不是手工完成。
 
 <!-- en:2 -->
 **Why:** Two payoffs. Throughput: a codemod, generator, or script does the work the same way every time and reruns for free. Confidence: the tool is one artifact a reviewer can read and rerun to check the work. Hand-done changes can only be re-verified by redoing them. A deterministic script turns "trust me" into "run this".
 
 <!-- zh:2 -->
-> **中文**
->
-> **原因：** 有两项收益。吞吐量：codemod、生成器或脚本每次都以相同方式工作，可以无额外人工成本地重跑。可信度：工具是评审者能够阅读和重跑、借此检查工作的单一产物。手工改动只能靠重做来重新验证。确定性脚本把“相信我”变成“运行这个”。
+**原因：** 有两项收益。吞吐量：codemod、生成器或脚本每次都以相同方式工作，可以无额外人工成本地重跑。可信度：工具是评审者能够阅读和重跑、借此检查工作的单一产物。手工改动只能靠重做来重新验证。确定性脚本把“相信我”变成“运行这个”。
 
 <!-- en:3 -->
 **Pattern:** Default to building the lever. Skip it only when the task is trivial, a couple of obvious edits you can see at a glance.
 
 <!-- zh:3 -->
-> **中文**
->
-> **模式：** 默认构建杠杆工具。只有任务确实琐碎，只需几个一眼能看明白的编辑时才跳过。
+**模式：** 默认构建杠杆工具。只有任务确实琐碎，只需几个一眼能看明白的编辑时才跳过。
 
 <!-- en:4 -->
 - Do the first unit by hand to learn the recipe, then build the tool. Prove it by rerunning it on that unit and diffing against your hand-done version. Make the lever safe to rerun.
@@ -56,27 +48,21 @@ When the work isn't trivial, build the tool that does it instead of doing it by 
 - Commit the lever when the work outlives the session.
 
 <!-- zh:4 -->
-> **中文**
->
-> - 先手工完成第一个单元，了解步骤，再构建工具。在该单元上重跑工具，并与手工版本做 diff 来证明正确性。让工具可以安全重跑。
-> - 编辑用 codemod 或脚本，重复文件用生成器，分析用导入 sqlite 后查询，验证用可重跑的检查。
-> - 确定性工具胜过并行委派。如果工具能一遍处理所有单元，就自己运行它。不要分派执行者手工做脚本能完成的工作。
-> - 把工作分派给 subagent 时，将杠杆工具写成所有 agent 都要读取的 skill：在一个产物中放入步骤、验证约定和禁止修改的边界。放在委派执行者的可写范围之外，避免他们悄悄修改约定。
-> - 应用这条原则必须产生文件。如果引用了它，但 diff 中没有 codemod、脚本、生成器或委派 skill，就没有真正应用它。
-> - 工作会持续到会话结束之后时，提交这个工具。
+- 先手工完成第一个单元，了解步骤，再构建工具。在该单元上重跑工具，并与手工版本做 diff 来证明正确性。让工具可以安全重跑。
+- 编辑用 codemod 或脚本，重复文件用生成器，分析用导入 sqlite 后查询，验证用可重跑的检查。
+- 确定性工具胜过并行委派。如果工具能一遍处理所有单元，就自己运行它。不要分派执行者手工做脚本能完成的工作。
+- 把工作分派给 subagent 时，将杠杆工具写成所有 agent 都要读取的 skill：在一个产物中放入步骤、验证约定和禁止修改的边界。放在委派执行者的可写范围之外，避免他们悄悄修改约定。
+- 应用这条原则必须产生文件。如果引用了它，但 diff 中没有 codemod、脚本、生成器或委派 skill，就没有真正应用它。
+- 工作会持续到会话结束之后时，提交这个工具。
 
 <!-- en:5 -->
 **Balance:** The bar is triviality, not repetition. A one-off still earns a lever when the lever is what makes the work checkable. Per the [Laziness Protocol](../principle-laziness-protocol/SKILL.md), build the smallest script that does or proves the job, never a framework.
 
 <!-- zh:5 -->
-> **中文**
->
-> **平衡点：** 判断标准是是否琐碎，而不是是否重复。一次性工作如果需要工具才能检查，同样值得构建工具。按照 [Laziness Protocol](../principle-laziness-protocol/SKILL.md)，构建能完成或证明任务的最小脚本，不要构建框架。
+**平衡点：** 判断标准是是否琐碎，而不是是否重复。一次性工作如果需要工具才能检查，同样值得构建工具。按照 [Laziness Protocol](../principle-laziness-protocol/SKILL.md)，构建能完成或证明任务的最小脚本，不要构建框架。
 
 <!-- en:6 -->
 Distinct from [Encode Lessons in Structure](../principle-encode-lessons-in-structure/SKILL.md), which makes a recurring instruction a durable guardrail. This is throughput and reviewability on the work in front of you. For scripting the verification itself, see [Prove It Works](../principle-prove-it-works/SKILL.md).
 
 <!-- zh:6 -->
-> **中文**
->
-> 这不同于 [Encode Lessons in Structure](../principle-encode-lessons-in-structure/SKILL.md)，后者把重复指令变成持久约束。本原则关注当前工作的吞吐量和可评审性。验证本身的脚本化见 [Prove It Works](../principle-prove-it-works/SKILL.md)。
+这不同于 [Encode Lessons in Structure](../principle-encode-lessons-in-structure/SKILL.md)，后者把重复指令变成持久约束。本原则关注当前工作的吞吐量和可评审性。验证本身的脚本化见 [Prove It Works](../principle-prove-it-works/SKILL.md)。

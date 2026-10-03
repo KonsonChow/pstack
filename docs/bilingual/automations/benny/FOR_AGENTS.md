@@ -5,33 +5,25 @@
 # benny automation intent
 
 <!-- zh:0 -->
-> **中文**
->
-> # benny 自动化的意图
+**benny 自动化的意图**
 
 <!-- en:1 -->
 ## what i want to automate
 
 <!-- zh:1 -->
-> **中文**
->
-> ## 我想自动化什么
+**我想自动化什么**
 
 <!-- en:2 -->
 i want two cursor automations that work together in one slack issue channel.
 
 <!-- zh:2 -->
-> **中文**
->
-> 我希望两个 Cursor automation 在同一个 Slack 问题频道协作。
+我希望两个 Cursor automation 在同一个 Slack 问题频道协作。
 
 <!-- en:3 -->
 ### automation 1: triage issue reports
 
 <!-- zh:3 -->
-> **中文**
->
-> ### 自动化 1：分流问题报告
+**自动化 1：分流问题报告**
 
 <!-- en:4 -->
 - trigger: when someone posts a new top-level report in my configured source slack channel, i want this automation to start on that report and keep its original thread coordinates.
@@ -42,22 +34,18 @@ i want two cursor automations that work together in one slack issue channel.
 - boundary: i never want this automation to post a root message in the source channel.
 
 <!-- zh:4 -->
-> **中文**
->
-> - 触发：有人在配置的来源 Slack 频道发布新的顶层报告时，自动化从该报告启动，并保留原始讨论坐标。
-> - 行为：读取讨论与附件，将报告归类为 bug 或性能问题、功能请求、问题或反馈、需要转交，并在路由前追踪可能负责的层。
-> - 工单系统：在配置的 tracker 中查重；明确重复时更新已有工单，只有清晰的新 bug 才新建工单。
-> - 工具：Slack 讨论读取与回复权限、配置的 tracker 集成，以及可选路由表。
-> - 结果：来源讨论中只回复一次，给出简短结论和 `[benny:bug]`、`[benny:performance]` 或 `[benny:other]`。bug 或性能标记可以附 tracker URL。
-> - 边界：自动化绝不能在来源频道发布顶层消息。
+- 触发：有人在配置的来源 Slack 频道发布新的顶层报告时，自动化从该报告启动，并保留原始讨论坐标。
+- 行为：读取讨论与附件，将报告归类为 bug 或性能问题、功能请求、问题或反馈、需要转交，并在路由前追踪可能负责的层。
+- 工单系统：在配置的 tracker 中查重；明确重复时更新已有工单，只有清晰的新 bug 才新建工单。
+- 工具：Slack 讨论读取与回复权限、配置的 tracker 集成，以及可选路由表。
+- 结果：来源讨论中只回复一次，给出简短结论和 `[benny:bug]`、`[benny:performance]` 或 `[benny:other]`。bug 或性能标记可以附 tracker URL。
+- 边界：自动化绝不能在来源频道发布顶层消息。
 
 <!-- en:5 -->
 ### automation 2: reproduce and fix confirmed bugs
 
 <!-- zh:5 -->
-> **中文**
->
-> ### 自动化 2：复现并修复已确认的 bug
+**自动化 2：复现并修复已确认的 bug**
 
 <!-- en:6 -->
 - trigger: i want this automation to start from the same new top-level report, or another supported trigger chosen during setup, then wait for the trusted triage marker in the original thread.
@@ -69,23 +57,19 @@ i want two cursor automations that work together in one slack issue channel.
 - boundary: i never want this automation to post a root message in the source channel.
 
 <!-- zh:6 -->
-> **中文**
->
-> - 触发：从同一个新的顶层报告启动，或使用设置时选择的其他受支持触发方式；随后等待原始讨论中可信的分流标记。
-> - 检查关卡：如果有人明确负责修复，停止。如果已有 PR 或已合并提交可能修复报告，进行验证，而不是另做竞争性改动。
-> - 行为：使用配置的操作适配器和功能验证清单，在真实 UI 上将同一症状复现两次，并收集截图、视频和只读状态交叉核对。
-> - 修复：验证已有 PR，不在其上另行改写。确认复现后，可尝试一次范围受限的根因修复；测试成本低时用 TDD，对影响范围做冒烟验证，只有前后对照证据通过才创建 draft PR。
-> - 工具：Slack 讨论读取与回复权限、仓库和历史访问、draft PR 创建、配置的 tracker 与操作适配器。
-> - 结果：在来源或可选运维讨论中提供证据和经验证的结果，可选创建 draft PR。更新保持简洁。
-> - 边界：自动化绝不能在来源频道发布顶层消息。
+- 触发：从同一个新的顶层报告启动，或使用设置时选择的其他受支持触发方式；随后等待原始讨论中可信的分流标记。
+- 检查关卡：如果有人明确负责修复，停止。如果已有 PR 或已合并提交可能修复报告，进行验证，而不是另做竞争性改动。
+- 行为：使用配置的操作适配器和功能验证清单，在真实 UI 上将同一症状复现两次，并收集截图、视频和只读状态交叉核对。
+- 修复：验证已有 PR，不在其上另行改写。确认复现后，可尝试一次范围受限的根因修复；测试成本低时用 TDD，对影响范围做冒烟验证，只有前后对照证据通过才创建 draft PR。
+- 工具：Slack 讨论读取与回复权限、仓库和历史访问、draft PR 创建、配置的 tracker 与操作适配器。
+- 结果：在来源或可选运维讨论中提供证据和经验证的结果，可选创建 draft PR。更新保持简洁。
+- 边界：自动化绝不能在来源频道发布顶层消息。
 
 <!-- en:7 -->
 ### shared rules
 
 <!-- zh:7 -->
-> **中文**
->
-> ### 共同规则
+**共同规则**
 
 <!-- en:8 -->
 - i want the source channel and root thread coordinates to stay immutable for the whole run.
@@ -99,25 +83,21 @@ i want two cursor automations that work together in one slack issue channel.
 - i want draft pull requests only. do not merge or deploy.
 
 <!-- zh:8 -->
-> **中文**
->
-> - 来源频道及根讨论坐标，在整个执行过程中保持不变。
-> - 工具 bot 和调试 bot 视为证据，不视为委派执行者或修复负责人。
-> - 允许 subagent 协助，但它们不能发 Slack 消息，也不能获得 Slack 凭据。
-> - 整套包提交到目标仓库的 `.cursor/automations/benny/`。其中 `SKILL.md` 是直接供自动化读取的指令，不是注册的插件 skill。
-> - 仅通过目标仓库已提交的 `.cursor/settings.json` 启用 pstack，用来提供 `how`、`why`、`tdd`、`unslop` 及必需原则 skill 等共享依赖。
-> - 每个实际运行的 automation 提示词直接读取其已提交的操作文件，不用插件缓存路径、复制片段或斜线 skill 发现机制。
-> - 用户配置、功能验证清单、路由表和秘密放在 `.cursor/automations/benny/` 外，避免刷新包时覆盖。
-> - 频道坐标、tracker 权限、操作适配器或功能验证清单缺失或不确定时，两个自动化都默认停止，不继续执行。
-> - 只创建 draft PR，不合并、不部署。
+- 来源频道及根讨论坐标，在整个执行过程中保持不变。
+- 工具 bot 和调试 bot 视为证据，不视为委派执行者或修复负责人。
+- 允许 subagent 协助，但它们不能发 Slack 消息，也不能获得 Slack 凭据。
+- 整套包提交到目标仓库的 `.cursor/automations/benny/`。其中 `SKILL.md` 是直接供自动化读取的指令，不是注册的插件 skill。
+- 仅通过目标仓库已提交的 `.cursor/settings.json` 启用 pstack，用来提供 `how`、`why`、`tdd`、`unslop` 及必需原则 skill 等共享依赖。
+- 每个实际运行的 automation 提示词直接读取其已提交的操作文件，不用插件缓存路径、复制片段或斜线 skill 发现机制。
+- 用户配置、功能验证清单、路由表和秘密放在 `.cursor/automations/benny/` 外，避免刷新包时覆盖。
+- 频道坐标、tracker 权限、操作适配器或功能验证清单缺失或不确定时，两个自动化都默认停止，不继续执行。
+- 只创建 draft PR，不合并、不部署。
 
 <!-- en:9 -->
 ### my configuration
 
 <!-- zh:9 -->
-> **中文**
->
-> ### 我的配置
+**我的配置**
 
 <!-- en:10 -->
 - source slack channel: `<channel>`
@@ -134,44 +114,36 @@ i want two cursor automations that work together in one slack issue channel.
 - optional bot token capability: `<none, file download, or editable operations status>`
 
 <!-- zh:10 -->
-> **中文**
->
-> - 来源 Slack 频道：`<channel>`
-> - 可选运维频道：`<channel or none>`
-> - 仓库及默认分支：`<repo>`、`<branch>`
-> - tracker：`<类型、团队、项目、标签、接收状态>`
-> - 路由表：`<路径或无>`
-> - 分流身份：`<Slack 身份>`
-> - 操作与验证 skill：`<已配置的 skill 或适配器>`
-> - 功能验证清单：`<已提交到同一仓库、且在复制包之外的路径，或待转述的行为>`
-> - 模型：`<分流、复现、代码、媒体评审>`
-> - 状态 emoji 字符串：`<已看到、复现中、已复现、阻塞、修复中、失败、已创建 PR>`
-> - 预算：`<轮询、等待结论、后续跟进、复现、拒绝、修复>`
-> - 可选 bot token 能力：`<无、文件下载、可编辑运维状态>`
+- 来源 Slack 频道：`<channel>`
+- 可选运维频道：`<channel or none>`
+- 仓库及默认分支：`<repo>`、`<branch>`
+- tracker：`<类型、团队、项目、标签、接收状态>`
+- 路由表：`<路径或无>`
+- 分流身份：`<Slack 身份>`
+- 操作与验证 skill：`<已配置的 skill 或适配器>`
+- 功能验证清单：`<已提交到同一仓库、且在复制包之外的路径，或待转述的行为>`
+- 模型：`<分流、复现、代码、媒体评审>`
+- 状态 emoji 字符串：`<已看到、复现中、已复现、阻塞、修复中、失败、已创建 PR>`
+- 预算：`<轮询、等待结论、后续跟进、复现、拒绝、修复>`
+- 可选 bot token 能力：`<无、文件下载、可编辑运维状态>`
 
 <!-- en:11 -->
 start from [`configuration.example.yaml`](../../../../automations/benny/templates/configuration.example.yaml) and [`feature-map.example.md`](./skills/reproduce-and-fix-issues/references/feature-map.example.md). copy and fill them outside this pack, for example under `.cursor/benny/`. keep secret values in a secret manager or environment.
 
 <!-- zh:11 -->
-> **中文**
->
-> 从 [`configuration.example.yaml`](../../../../automations/benny/templates/configuration.example.yaml) 和 [`feature-map.example.md`](./skills/reproduce-and-fix-issues/references/feature-map.example.md) 开始。在包之外复制并填写，例如放到 `.cursor/benny/`。秘密值存入秘密管理器或环境变量。
+从 [`configuration.example.yaml`](../../../../automations/benny/templates/configuration.example.yaml) 和 [`feature-map.example.md`](./skills/reproduce-and-fix-issues/references/feature-map.example.md) 开始。在包之外复制并填写，例如放到 `.cursor/benny/`。秘密值存入秘密管理器或环境变量。
 
 <!-- en:12 -->
 ## for the agent
 
 <!-- zh:12 -->
-> **中文**
->
-> ## 给 agent 的要求
+**给 agent 的要求**
 
 <!-- en:13 -->
 the human enters setup by pointing cursor at this file. do not look for or invoke a discovered benny slash skill.
 
 <!-- zh:13 -->
-> **中文**
->
-> 用户通过让 Cursor 指向本文件进入设置流程。不要查找或调用发现的 benny 斜线 skill。
+用户通过让 Cursor 指向本文件进入设置流程。不要查找或调用发现的 benny 斜线 skill。
 
 <!-- en:14 -->
 1. ask which repository will run the automations.
@@ -183,23 +155,19 @@ the human enters setup by pointing cursor at this file. do not look for or invok
 7. read and follow `.cursor/automations/benny/skills/setup-benny/SKILL.md` directly from the target repository.
 
 <!-- zh:14 -->
-> **中文**
->
-> 1. 询问由哪个仓库运行这些自动化。
-> 2. 将本 `FOR_AGENTS.md` 所在目录视为源包。
-> 3. 将整个源包合并到 `<target-repository>/.cursor/automations/benny/`。
-> 4. 保留所有仅存在于目标目录的文件。绝不删除无关文件，也不覆盖用户配置、功能验证清单或路由表。
-> 5. 源包管理的路径在目标中已有不同内容时，评审 diff 并合并，不丢弃本地修改。归属不明时，替换前先停下询问。
-> 6. 确认复制后的 `FOR_AGENTS.md` 和 `skills/setup-benny/SKILL.md` 在目标仓库存在。
-> 7. 直接读取并遵循目标仓库中的 `.cursor/automations/benny/skills/setup-benny/SKILL.md`。
+1. 询问由哪个仓库运行这些自动化。
+2. 将本 `FOR_AGENTS.md` 所在目录视为源包。
+3. 将整个源包合并到 `<target-repository>/.cursor/automations/benny/`。
+4. 保留所有仅存在于目标目录的文件。绝不删除无关文件，也不覆盖用户配置、功能验证清单或路由表。
+5. 源包管理的路径在目标中已有不同内容时，评审 diff 并合并，不丢弃本地修改。归属不明时，替换前先停下询问。
+6. 确认复制后的 `FOR_AGENTS.md` 和 `skills/setup-benny/SKILL.md` 在目标仓库存在。
+7. 直接读取并遵循目标仓库中的 `.cursor/automations/benny/skills/setup-benny/SKILL.md`。
 
 <!-- en:15 -->
 i want you to merge this entry into the target repository's `.cursor/settings.json`:
 
 <!-- zh:15 -->
-> **中文**
->
-> 将以下条目合并进目标仓库的 `.cursor/settings.json`：
+将以下条目合并进目标仓库的 `.cursor/settings.json`：
 
 <!-- en:16 -->
 ```json
@@ -210,69 +178,44 @@ i want you to merge this entry into the target repository's `.cursor/settings.js
 }
 ```
 
-<!-- zh:16 -->
-> **中文**
->
-> ```json
-> {
-> 	"plugins": {
-> 		"pstack": { "enabled": true }
-> 	}
-> }
-> ```
-
 <!-- en:17 -->
 preserve every unrelated setting and plugin. preserve comments and valid jsonc syntax when the existing file uses jsonc.
 
 <!-- zh:17 -->
-> **中文**
->
-> 保留所有无关设置和插件。现有文件用 JSONC 时，保留注释及有效 JSONC 语法。
+保留所有无关设置和插件。现有文件用 JSONC 时，保留注释及有效 JSONC 语法。
 
 <!-- en:18 -->
 i want verification from a fresh agent rooted in the target repository. confirm that pstack's `how`, `why`, `tdd`, `unslop`, and the principle skills used by benny resolve in project scope. do not count skills loaded from the current session or a user-scoped install.
 
 <!-- zh:18 -->
-> **中文**
->
-> 由一个以目标仓库为根的新 agent 验证。确认 pstack 的 `how`、`why`、`tdd`、`unslop` 和 benny 使用的原则 skill，在项目作用域可解析。不能把当前会话已加载或用户级安装的 skill 算进去。
+由一个以目标仓库为根的新 agent 验证。确认 pstack 的 `how`、`why`、`tdd`、`unslop` 和 benny 使用的原则 skill，在项目作用域可解析。不能把当前会话已加载或用户级安装的 skill 算进去。
 
 <!-- en:19 -->
 if project-scoped plugins are unavailable or any shared dependency does not resolve, stop and explain what failed. do not add `.cursor/automations/benny/skills/` to a plugin manifest or expect its files to appear in the slash-skill list.
 
 <!-- zh:19 -->
-> **中文**
->
-> 如果项目级插件不可用，或任意共享依赖无法解析，停下并说明失败项。不要把 `.cursor/automations/benny/skills/` 加入插件 manifest，也不要期待其中的文件出现在斜线 skill 列表。
+如果项目级插件不可用，或任意共享依赖无法解析，停下并说明失败项。不要把 `.cursor/automations/benny/skills/` 加入插件 manifest，也不要期待其中的文件出现在斜线 skill 列表。
 
 <!-- en:20 -->
 tell me that `.cursor/settings.json`, `.cursor/automations/benny/`, and any referenced secret-free configuration must be committed before either automation is enabled. do not create or update an automation until i explicitly ask.
 
 <!-- zh:20 -->
-> **中文**
->
-> 告诉我，启用任何一个自动化前，必须提交 `.cursor/settings.json`、`.cursor/automations/benny/` 和所有引用的不含秘密的配置。我明确要求前，不要创建或更新 automation。
+告诉我，启用任何一个自动化前，必须提交 `.cursor/settings.json`、`.cursor/automations/benny/` 和所有引用的不含秘密的配置。我明确要求前，不要创建或更新 automation。
 
 <!-- en:21 -->
 for first-time creation, use built-in `/automate` once for triage and once for repro and fix. complete the draft review, approval, readiness check, and Automations editor handoff for the first automation before starting the second.
 
 <!-- zh:21 -->
-> **中文**
->
-> 首次创建时，分别为分流和复现修复各调用一次内置 `/automate`。第一个 automation 的草稿评审、批准、就绪检查以及向 Automations 编辑器的交接全部完成后，再开始第二个。
+首次创建时，分别为分流和复现修复各调用一次内置 `/automate`。第一个 automation 的草稿评审、批准、就绪检查以及向 Automations 编辑器的交接全部完成后，再开始第二个。
 
 <!-- en:22 -->
 paraphrase this intent and the finished configuration into each draft. the triage prompt must read and follow `.cursor/automations/benny/skills/triage-issue-reports/SKILL.md`. the repro prompt must read and follow `.cursor/automations/benny/skills/reproduce-and-fix-issues/SKILL.md`. use these repo-relative paths only after `/automate` confirms they are committed in the repository where the automation will run.
 
 <!-- zh:22 -->
-> **中文**
->
-> 将本意图和完成的配置转述到各草稿。分流提示词必须读取并遵循 `.cursor/automations/benny/skills/triage-issue-reports/SKILL.md`；复现提示词必须读取并遵循 `.cursor/automations/benny/skills/reproduce-and-fix-issues/SKILL.md`。只有 `/automate` 确认这些文件已提交到 automation 将运行的仓库后，才使用这些仓库相对路径。
+将本意图和完成的配置转述到各草稿。分流提示词必须读取并遵循 `.cursor/automations/benny/skills/triage-issue-reports/SKILL.md`；复现提示词必须读取并遵循 `.cursor/automations/benny/skills/reproduce-and-fix-issues/SKILL.md`。只有 `/automate` 确认这些文件已提交到 automation 将运行的仓库后，才使用这些仓库相对路径。
 
 <!-- en:23 -->
 for existing automations, do not use `/automate` to inspect or update them. validate the configuration, then use the concise field checklist in the copied setup file so i can edit each automation directly in its editor. do not create duplicates.
 
 <!-- zh:23 -->
-> **中文**
->
-> 对于已有 automation，不要用 `/automate` 检查或更新。先校验配置，再使用复制后的设置文件中的简短字段清单，让我直接在编辑器修改各 automation。不要创建重复项。
+对于已有 automation，不要用 `/automate` 检查或更新。先校验配置，再使用复制后的设置文件中的简短字段清单，让我直接在编辑器修改各 automation。不要创建重复项。

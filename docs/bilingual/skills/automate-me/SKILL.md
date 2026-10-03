@@ -11,81 +11,63 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: automate-me
-> description: "用于‘automate me’、‘创建／更新／刷新我的 -mode skill’、‘把我的偏好或工作风格记录为 skill’，或希望 agent 按用户的方式工作。通过 create-skill + unslop 起草或修改个人 -mode skill，可选从近期会话获取新证据。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: automate-me
+description: "用于‘automate me’、‘创建／更新／刷新我的 -mode skill’、‘把我的偏好或工作风格记录为 skill’，或希望 agent 按用户的方式工作。通过 create-skill + unslop 起草或修改个人 -mode skill，可选从近期会话获取新证据。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Automate me
 
 <!-- zh:1 -->
-> **中文**
->
-> # 将我的工作方式自动化
+**将我的工作方式自动化**
 
 <!-- en:2 -->
 A guided flow for turning the user's working conventions into a skill agents will follow. The output is one `-mode` skill tailored to them (e.g. `jay-mode`, `priya-mode`).
 
 <!-- zh:2 -->
-> **中文**
->
-> 引导式流程，将用户的工作约定变成 agent 会遵循的 skill。输出是为用户量身定制的一个 `-mode` skill（如 `jay-mode`、`priya-mode`）。
+引导式流程，将用户的工作约定变成 agent 会遵循的 skill。输出是为用户量身定制的一个 `-mode` skill（如 `jay-mode`、`priya-mode`）。
 
 <!-- en:3 -->
 This skill orchestrates three others: an inline mining pass (see step 1), your harness's skill-authoring skill (authoring), and the **unslop** skill (prose discipline). It sequences them. It doesn't replace them.
 
 <!-- zh:3 -->
-> **中文**
->
-> 此 skill 协调另外三项能力：内联历史挖掘（见第 1 步）、运行环境中的 skill-authoring skill（编写）、**unslop** skill（文字规范）。它安排执行顺序，不替代这些能力。
+此 skill 协调另外三项能力：内联历史挖掘（见第 1 步）、运行环境中的 skill-authoring skill（编写）、**unslop** skill（文字规范）。它安排执行顺序，不替代这些能力。
 
 <!-- en:4 -->
 The skill-authoring skill is `create-skill` in Cursor (built in) or Anthropic's `skill-creator`. If you have neither, follow the Agent Skills format at agentskills.io. "`create-skill`" below means whichever of these you use.
 
 <!-- zh:4 -->
-> **中文**
->
-> skill-authoring skill 在 Cursor 中是内置 `create-skill`，或使用 Anthropic 的 `skill-creator`。两者都没有时遵循 agentskills.io 的 Agent Skills 格式。下文“`create-skill`”指其中实际使用的一项。
+skill-authoring skill 在 Cursor 中是内置 `create-skill`，或使用 Anthropic 的 `skill-creator`。两者都没有时遵循 agentskills.io 的 Agent Skills 格式。下文“`create-skill`”指其中实际使用的一项。
 
 <!-- en:5 -->
 ## Flow
 
 <!-- zh:5 -->
-> **中文**
->
-> ## 流程
+**流程**
 
 <!-- en:6 -->
 ### 0. Check for an existing skill
 
 <!-- zh:6 -->
-> **中文**
->
-> ### 0. 检查是否已有 skill
+**0. 检查是否已有 skill**
 
 <!-- en:7 -->
 Look recursively for `*-mode/SKILL.md` matching the user's handle in your harness's skill folders. In the project: `.cursor/skills/` (Cursor), `.claude/skills/` (Claude Code), `.pi/skills/` (Pi), or `.agents/skills/` (Codex, OpenCode, and others). For the user: `~/.cursor/skills/`, `~/.claude/skills/`, `~/.pi/agent/skills/`, `~/.codex/skills/`, `~/.config/opencode/skills/`, or `~/.agents/skills/`. Mode skills can live in a personal category directory (`<skills>/<handle>/`), not only at the top level. If one exists, confirm intent with your structured-question tool (`AskQuestion` in Cursor, `AskUserQuestion` in Claude Code, `question` in OpenCode) unless they already said "update my skill" or similar:
 
 <!-- zh:7 -->
-> **中文**
->
-> 在运行环境的 skill 目录中，递归查找与用户账号匹配的 `*-mode/SKILL.md`。项目级目录：`.cursor/skills/`（Cursor）、`.claude/skills/`（Claude Code）、`.pi/skills/`（Pi）或 `.agents/skills/`（Codex、OpenCode 等）。用户级目录：`~/.cursor/skills/`、`~/.claude/skills/`、`~/.pi/agent/skills/`、`~/.codex/skills/`、`~/.config/opencode/skills/` 或 `~/.agents/skills/`。工作模式 skill 也可能放在个人分类目录（`<skills>/<handle>/`），不只在顶层。如果已有，使用结构化提问工具（Cursor 的 `AskQuestion`、Claude Code 的 `AskUserQuestion`、OpenCode 的 `question`）确认意图，除非用户已说“更新我的 skill”等：
+在运行环境的 skill 目录中，递归查找与用户账号匹配的 `*-mode/SKILL.md`。项目级目录：`.cursor/skills/`（Cursor）、`.claude/skills/`（Claude Code）、`.pi/skills/`（Pi）或 `.agents/skills/`（Codex、OpenCode 等）。用户级目录：`~/.cursor/skills/`、`~/.claude/skills/`、`~/.pi/agent/skills/`、`~/.codex/skills/`、`~/.config/opencode/skills/` 或 `~/.agents/skills/`。工作模式 skill 也可能放在个人分类目录（`<skills>/<handle>/`），不只在顶层。如果已有，使用结构化提问工具（Cursor 的 `AskQuestion`、Claude Code 的 `AskUserQuestion`、OpenCode 的 `question`）确认意图，除非用户已说“更新我的 skill”等：
 
 <!-- en:8 -->
 - Update the existing skill (default for repeat runs)
 - Start fresh (rare, ask why before doing it)
 
 <!-- zh:8 -->
-> **中文**
->
-> - 更新既有 skill（重复运行的默认选择）
-> - 重新创建（少见，操作前先问原因）
+- 更新既有 skill（重复运行的默认选择）
+- 重新创建（少见，操作前先问原因）
 
 <!-- en:9 -->
 Update mode changes the rest of the flow:
@@ -94,28 +76,22 @@ Update mode changes the rest of the flow:
 - Step 4 edits the existing file in place. Preserve sections the user hasn't contradicted. Revise ones with new evidence. Add new sections only for genuinely new rules.
 
 <!-- zh:9 -->
-> **中文**
->
-> 更新模式会改变后续流程：
-> - 第 1 步只挖掘上次编辑之后的历史（`git log -1 --format=%cI <path>`）。
-> - 第 2 步询问有哪些变化或遗漏，而不是从零开始收集。
-> - 第 4 步原地编辑现有文件。保留用户未否定的章节，根据新证据修改。仅为真正的新规则添加章节。
+更新模式会改变后续流程：
+- 第 1 步只挖掘上次编辑之后的历史（`git log -1 --format=%cI <path>`）。
+- 第 2 步询问有哪些变化或遗漏，而不是从零开始收集。
+- 第 4 步原地编辑现有文件。保留用户未否定的章节，根据新证据修改。仅为真正的新规则添加章节。
 
 <!-- en:10 -->
 ### 1. Mine their history
 
 <!-- zh:10 -->
-> **中文**
->
-> ### 1. 挖掘历史
+**1. 挖掘历史**
 
 <!-- en:11 -->
 Locate the active workspace's transcripts before fanning out. Use only that workspace's directory. Don't glob across every project's directory. That crosses workspace boundaries and reads private chats from unrelated projects. Where they live depends on your harness:
 
 <!-- zh:11 -->
-> **中文**
->
-> 分派并行任务前，先定位当前工作区的会话记录。仅使用该工作区目录，不要跨所有项目目录 glob，否则会越过工作区边界，读取无关项目的私密聊天。位置取决于运行环境：
+分派并行任务前，先定位当前工作区的会话记录。仅使用该工作区目录，不要跨所有项目目录 glob，否则会越过工作区边界，读取无关项目的私密聊天。位置取决于运行环境：
 
 <!-- en:12 -->
 - **Cursor:** the system prompt names the workspace's `agent-transcripts/` directory under `~/.cursor/projects/`.
@@ -125,21 +101,17 @@ Locate the active workspace's transcripts before fanning out. Use only that work
 - **Other harnesses:** the harness's session directory for this workspace.
 
 <!-- zh:12 -->
-> **中文**
->
-> - **Cursor：** 系统提示指定 `~/.cursor/projects/` 下该工作区的 `agent-transcripts/` 目录。
-> - **Claude Code：** `~/.claude/projects/<slug>/*.jsonl`，`<slug>` 是工作区路径，把每个非字母、非数字字符替换为“-”。
-> - **Pi：** `~/.pi/agent/sessions/--<slug>--/*.jsonl`，`<slug>` 是去掉开头斜杠、把每个“/”换成“-”的工作区路径。
-> - **Codex：** `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl`。只保留首行 `payload.cwd` 等于工作区路径的文件。
-> - **其他运行环境：** 该工作区的会话目录。
+- **Cursor：** 系统提示指定 `~/.cursor/projects/` 下该工作区的 `agent-transcripts/` 目录。
+- **Claude Code：** `~/.claude/projects/<slug>/*.jsonl`，`<slug>` 是工作区路径，把每个非字母、非数字字符替换为“-”。
+- **Pi：** `~/.pi/agent/sessions/--<slug>--/*.jsonl`，`<slug>` 是去掉开头斜杠、把每个“/”换成“-”的工作区路径。
+- **Codex：** `~/.codex/sessions/YYYY/MM/DD/rollout-*.jsonl`。只保留首行 `payload.cwd` 等于工作区路径的文件。
+- **其他运行环境：** 该工作区的会话目录。
 
 <!-- en:13 -->
 Survey recent agent conversations within that scope for recurring patterns. Run multiple parallel subagents across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Each slice mining subagent reads transcripts from the workspace-scoped path the parent provides, looks for the signals below, and returns a short structured list of patterns it saw with evidence pointers. Default signals worth hunting:
 
 <!-- zh:13 -->
-> **中文**
->
-> 在此范围内查看近期 agent 对话，寻找重复模式。将历史切片分派给多个并行 subagent（例如近 2 到 4 周分成 3 片，每片保证材料充足）。每个挖掘 subagent 读取父 agent 给出的工作区限定路径，寻找下列信号，并返回简短结构化模式列表及证据位置。默认值得寻找的信号：
+在此范围内查看近期 agent 对话，寻找重复模式。将历史切片分派给多个并行 subagent（例如近 2 到 4 周分成 3 片，每片保证材料充足）。每个挖掘 subagent 读取父 agent 给出的工作区限定路径，寻找下列信号，并返回简短结构化模式列表及证据位置。默认值得寻找的信号：
 
 <!-- en:14 -->
 - Response preferences (length, tone, format, "dumb it down" corrections)
@@ -150,70 +122,54 @@ Survey recent agent conversations within that scope for recurring patterns. Run 
 - Meta preferences (fixing skills mid-task, proposing new ones)
 
 <!-- zh:14 -->
-> **中文**
->
-> - 回复偏好（长度、语气、格式、“说简单些”的纠正）
-> - 委派习惯（subagent、模型、专用流程、并行）
-> - 验证要求（何谓“完成”、单元测试与真实复现、评审者）
-> - 代码与文字规范（风格、引用原则、lint／format 工具）
-> - 流程约定（worktree、提交、PR、评审／合并工具）
-> - 元偏好（任务中修正 skill、提议新 skill）
+- 回复偏好（长度、语气、格式、“说简单些”的纠正）
+- 委派习惯（subagent、模型、专用流程、并行）
+- 验证要求（何谓“完成”、单元测试与真实复现、评审者）
+- 代码与文字规范（风格、引用原则、lint／format 工具）
+- 流程约定（worktree、提交、PR、评审／合并工具）
+- 元偏好（任务中修正 skill、提议新 skill）
 
 <!-- en:15 -->
 Cross-check across slices before elevating a signal. Patterns seen in 2+ slices are high-confidence. Lone signals are weak and usually get dropped.
 
 <!-- zh:15 -->
-> **中文**
->
-> 提升某个信号前，先跨切片核对。2 个以上切片出现的模式可信度高，孤立信号较弱，通常应丢弃。
+提升某个信号前，先跨切片核对。2 个以上切片出现的模式可信度高，孤立信号较弱，通常应丢弃。
 
 <!-- en:16 -->
 ### 2. Ask the user directly
 
 <!-- zh:16 -->
-> **中文**
->
-> ### 2. 直接询问用户
+**2. 直接询问用户**
 
 <!-- en:17 -->
 Mining misses intent that hasn't come up yet. Use your structured-question tool (structured multi-choice: `AskQuestion` in Cursor, `AskUserQuestion` in Claude Code, `question` in OpenCode) rather than asking the user to type from scratch. If your harness has none, ask in chat with numbered options.
 
 <!-- zh:17 -->
-> **中文**
->
-> 历史挖掘会遗漏尚未出现的意图。使用结构化提问工具（结构化多选：Cursor 的 `AskQuestion`、Claude Code 的 `AskUserQuestion`、OpenCode 的 `question`），不要让用户从头打字。运行环境没有此工具时，在聊天中给出编号选项。
+历史挖掘会遗漏尚未出现的意图。使用结构化提问工具（结构化多选：Cursor 的 `AskQuestion`、Claude Code 的 `AskUserQuestion`、OpenCode 的 `question`），不要让用户从头打字。运行环境没有此工具时，在聊天中给出编号选项。
 
 <!-- en:18 -->
 Shape: one or two questions with 4-6 options each, multi-select (`allow_multiple: true` in Cursor) for category questions. Start broad ("Which areas matter most?"), then follow up on selected areas with specific options. After the structured rounds, one free-form chat question catches anything the options missed.
 
 <!-- zh:18 -->
-> **中文**
->
-> 形式：一两个问题，每个 4 到 6 个选项；类别问题支持多选（Cursor 中 `allow_multiple: true`）。先广泛问“哪些方面最重要？”，再针对选中领域给具体选项。结构化轮次后，再用一个自由回答问题捕捉选项遗漏。
+形式：一两个问题，每个 4 到 6 个选项；类别问题支持多选（Cursor 中 `allow_multiple: true`）。先广泛问“哪些方面最重要？”，再针对选中领域给具体选项。结构化轮次后，再用一个自由回答问题捕捉选项遗漏。
 
 <!-- en:19 -->
 Don't dump 20 questions.
 
 <!-- zh:19 -->
-> **中文**
->
-> 不要一次抛出 20 个问题。
+不要一次抛出 20 个问题。
 
 <!-- en:20 -->
 ### 3. Cluster findings
 
 <!-- zh:20 -->
-> **中文**
->
-> ### 3. 聚类发现
+**3. 聚类发现**
 
 <!-- en:21 -->
 Group the combined signals into sections. Common ones (use only what applies):
 
 <!-- zh:21 -->
-> **中文**
->
-> 把合并后的信号分组为章节。常见章节如下，只使用适用的：
+把合并后的信号分组为章节。常见章节如下，只使用适用的：
 
 <!-- en:22 -->
 - **Response style**: length, tone, format.
@@ -226,40 +182,32 @@ Group the combined signals into sections. Common ones (use only what applies):
 - **Skills**: skill-authoring habits, fix-the-skill-first, proposing new skills.
 
 <!-- zh:22 -->
-> **中文**
->
-> - **回复风格：** 长度、语气、格式。
-> - **自主性：** 不询问时可以做到什么程度、MCP 使用。
-> - **先理解：** 界定范围或调查改动时使用哪些 skill。
-> - **Subagent：** 默认选择、并行、模型与任务匹配、专用流程。
-> - **文字／代码规范：** 原则、lint 工具、风格指南。
-> - **评审与验证：** 复现要求、验证 skill、真实测试工具。
-> - **流程：** Git worktree、提交、PR、评审／合并工具。
-> - **Skill：** 编写习惯、优先修 skill、提议新 skill。
+- **回复风格：** 长度、语气、格式。
+- **自主性：** 不询问时可以做到什么程度、MCP 使用。
+- **先理解：** 界定范围或调查改动时使用哪些 skill。
+- **Subagent：** 默认选择、并行、模型与任务匹配、专用流程。
+- **文字／代码规范：** 原则、lint 工具、风格指南。
+- **评审与验证：** 复现要求、验证 skill、真实测试工具。
+- **流程：** Git worktree、提交、PR、评审／合并工具。
+- **Skill：** 编写习惯、优先修 skill、提议新 skill。
 
 <!-- en:23 -->
 The **poteto-mode** skill shows the shape. Read it for granularity. Don't copy its content. The user's rules are not the same as poteto-mode's.
 
 <!-- zh:23 -->
-> **中文**
->
-> **poteto-mode** skill 展示了结构。阅读它以理解粒度，不要复制内容。用户规则不等于 poteto-mode 规则。
+**poteto-mode** skill 展示了结构。阅读它以理解粒度，不要复制内容。用户规则不等于 poteto-mode 规则。
 
 <!-- en:24 -->
 ### 4. Draft the skill
 
 <!-- zh:24 -->
-> **中文**
->
-> ### 4. 起草 skill
+**4. 起草 skill**
 
 <!-- en:25 -->
 Use your skill-authoring skill (`create-skill`) to author the skill. Placement:
 
 <!-- zh:25 -->
-> **中文**
->
-> 使用 skill-authoring skill（`create-skill`）编写。放置方式：
+使用 skill-authoring skill（`create-skill`）编写。放置方式：
 
 <!-- en:26 -->
 - Path: preserve an existing mode skill's category. For a new mode, use `<skills>/<handle>/<handle>-mode/SKILL.md` when the repo has an established personal category for that handle. Otherwise default to `<skills>/<handle>-mode/SKILL.md` in the project, or the user-level skill folder if the user prefers a personal skill. `<skills>` is your harness's skill folder from step 0.
@@ -269,61 +217,47 @@ Use your skill-authoring skill (`create-skill`) to author the skill. Placement:
 - Frontmatter `disable-model-invocation: true` by default. Opt out only if the user explicitly wants their mode to apply on every turn.
 
 <!-- zh:26 -->
-> **中文**
->
-> - 路径：保持既有工作模式 skill 的分类。新模式如果仓库已经有该账号的个人分类，使用 `<skills>/<handle>/<handle>-mode/SKILL.md`；否则默认放项目的 `<skills>/<handle>-mode/SKILL.md`，若用户偏好个人 skill 则放用户级目录。`<skills>` 是第 0 步中的运行环境 skill 目录。
-> - 账号标识：用户名字或选定标识符。
-> - Frontmatter `description`：通过姓名 + `/<handle>-mode` +“按其风格工作”触发，不使用“写代码”“评审 PR”等通用关键词。
-> - Frontmatter 格式：遵循 `create-skill` 的 YAML 规则。`description` 保持一个 YAML 标量；标点或换行需要时，加引号，或使用 `description: >-` 配合缩进续行。
-> - 默认设置 frontmatter `disable-model-invocation: true`，只有用户明确希望每轮应用此模式时才不设置。
+- 路径：保持既有工作模式 skill 的分类。新模式如果仓库已经有该账号的个人分类，使用 `<skills>/<handle>/<handle>-mode/SKILL.md`；否则默认放项目的 `<skills>/<handle>-mode/SKILL.md`，若用户偏好个人 skill 则放用户级目录。`<skills>` 是第 0 步中的运行环境 skill 目录。
+- 账号标识：用户名字或选定标识符。
+- Frontmatter `description`：通过姓名 + `/<handle>-mode` +“按其风格工作”触发，不使用“写代码”“评审 PR”等通用关键词。
+- Frontmatter 格式：遵循 `create-skill` 的 YAML 规则。`description` 保持一个 YAML 标量；标点或换行需要时，加引号，或使用 `description: >-` 配合缩进续行。
+- 默认设置 frontmatter `disable-model-invocation: true`，只有用户明确希望每轮应用此模式时才不设置。
 
 <!-- en:27 -->
 ### 5. Iterate on prose
 
 <!-- zh:27 -->
-> **中文**
->
-> ### 5. 迭代文字
+**5. 迭代文字**
 
 <!-- en:28 -->
 Apply the **unslop** skill and `create-skill`'s writing guidelines to every line.
 
 <!-- zh:28 -->
-> **中文**
->
-> 对每一行应用 **unslop** skill 和 `create-skill` 的写作指南。
+对每一行应用 **unslop** skill 和 `create-skill` 的写作指南。
 
 <!-- en:29 -->
 Show the draft to the user and take feedback. Expect multiple iterations. Cut ruthlessly. A mode skill is not a manual.
 
 <!-- zh:29 -->
-> **中文**
->
-> 展示草稿并收集反馈。预期多轮迭代，果断删减。工作模式 skill 不是手册。
+展示草稿并收集反馈。预期多轮迭代，果断删减。工作模式 skill 不是手册。
 
 <!-- en:30 -->
 ### 6. Land it
 
 <!-- zh:30 -->
-> **中文**
->
-> ### 6. 合入
+**6. 合入**
 
 <!-- en:31 -->
 Work in a worktree off main. Commit and open a PR. Don't push to main directly.
 
 <!-- zh:31 -->
-> **中文**
->
-> 在基于 main 的 worktree 工作。提交并开启 PR，不直接推送 main。
+在基于 main 的 worktree 工作。提交并开启 PR，不直接推送 main。
 
 <!-- en:32 -->
 ## Guardrails
 
 <!-- zh:32 -->
-> **中文**
->
-> ## 约束
+**约束**
 
 <!-- en:33 -->
 - **Don't overfit to one conversation.** A preference stated once and contradicted another time is noise. Require multiple instances before codifying it.
@@ -334,53 +268,41 @@ Work in a worktree off main. Commit and open a PR. Don't push to main directly.
 - **Don't force symmetry.** If a user has no process rules worth writing down, skip the Process section entirely.
 
 <!-- zh:33 -->
-> **中文**
->
-> - **不要过度拟合单次对话。** 某偏好只说过一次、另一次又相反，就是噪声。多次出现后才编码为规则。
-> - **不要耍聪明。** 复述其他 skill、创造隐喻、给 agent 写“诗意”文字只有成本，没有收益。保持可操作。
-> - **引用，不内联。** 用户依赖的其他 skill 应以路径引用出现，而不是粘贴摘录；他们在其他位置维护的原则文档同样如此。
-> - **章节最少化。** 仅在用户有具体、非默认规则时添加。“清晰沟通”不值得一节，“短段落，比较选项时用表格，只有真正平行的事项才用列表”则可以。
-> - **称呼通用。** 命令式语句中用“用户”或“人类”，不要用作者名字。
-> - **不要强求对称。** 用户没有值得记录的流程规则时，完全跳过 Process 章节。
+- **不要过度拟合单次对话。** 某偏好只说过一次、另一次又相反，就是噪声。多次出现后才编码为规则。
+- **不要耍聪明。** 复述其他 skill、创造隐喻、给 agent 写“诗意”文字只有成本，没有收益。保持可操作。
+- **引用，不内联。** 用户依赖的其他 skill 应以路径引用出现，而不是粘贴摘录；他们在其他位置维护的原则文档同样如此。
+- **章节最少化。** 仅在用户有具体、非默认规则时添加。“清晰沟通”不值得一节，“短段落，比较选项时用表格，只有真正平行的事项才用列表”则可以。
+- **称呼通用。** 命令式语句中用“用户”或“人类”，不要用作者名字。
+- **不要强求对称。** 用户没有值得记录的流程规则时，完全跳过 Process 章节。
 
 <!-- en:34 -->
 ## Evaluation
 
 <!-- zh:34 -->
-> **中文**
->
-> ## 评估
+**评估**
 
 <!-- en:35 -->
 A `-mode` skill is subjective output. A `create-skill`-style test/iterate benchmark loop isn't useful here. Vibe-check with the user: does it read like them? Did it miss anything? Then ship.
 
 <!-- zh:35 -->
-> **中文**
->
-> `-mode` skill 是主观产物，`create-skill` 式的测试／迭代基准循环在这里无用。让用户判断是否像自己的风格、是否遗漏，再交付。
+`-mode` skill 是主观产物，`create-skill` 式的测试／迭代基准循环在这里无用。让用户判断是否像自己的风格、是否遗漏，再交付。
 
 <!-- en:36 -->
 Run a description-optimization loop only if the skill's trigger accuracy turns out to be a problem in practice.
 
 <!-- zh:36 -->
-> **中文**
->
-> 只有实践中触发准确性确实有问题时，才运行 description 优化循环。
+只有实践中触发准确性确实有问题时，才运行 description 优化循环。
 
 <!-- en:37 -->
 ## When not to use
 
 <!-- zh:37 -->
-> **中文**
->
-> ## 不适用情况
+**不适用情况**
 
 <!-- en:38 -->
 - User wants a task-specific skill (not working conventions): `create-skill` alone, no mining required.
 - User wants to capture one narrow workflow (e.g. "how I write commit messages"). That's a regular skill, not a mode skill.
 
 <!-- zh:38 -->
-> **中文**
->
-> - 用户要任务专用 skill（而非工作约定）：只用 `create-skill`，无需挖掘。
-> - 用户只想记录一个窄流程（例如“我如何写提交消息”）：这是普通 skill，不是工作模式 skill。
+- 用户要任务专用 skill（而非工作约定）：只用 `create-skill`，无需挖掘。
+- 用户只想记录一个窄流程（例如“我如何写提交消息”）：这是普通 skill，不是工作模式 skill。

@@ -11,31 +11,25 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-migrate-callers-then-delete-legacy-apis
-> description: "引入新的内部 API，而旧调用方仍存在时应用。同一轮迁移调用方并删除旧 API，不保留兼容层。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-migrate-callers-then-delete-legacy-apis
+description: "引入新的内部 API，而旧调用方仍存在时应用。同一轮迁移调用方并删除旧 API，不保留兼容层。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Migrate Callers Then Delete Legacy APIs
 
 <!-- zh:1 -->
-> **中文**
->
-> # 迁移调用方后删除旧 API
+**迁移调用方后删除旧 API**
 
 <!-- en:2 -->
 When we decide a new API is the right design, migrate callers and remove the old API in the same refactor wave instead of preserving compatibility layers.
 
 <!-- zh:2 -->
-> **中文**
->
-> 确认新 API 是正确设计后，在同一轮重构中迁移调用方、删除旧 API，不保留兼容层。
+确认新 API 是正确设计后，在同一轮重构中迁移调用方、删除旧 API，不保留兼容层。
 
 <!-- en:3 -->
 **Rule:**
@@ -45,13 +39,11 @@ When we decide a new API is the right design, migrate callers and remove the old
 - Update tests to assert the new contract, and delete tests that only protect pre-refactor implementation details
 
 <!-- zh:3 -->
-> **中文**
->
-> **规则：**
-> - 不要仅因内部调用方还存在就保留旧 API 路径。
-> - 清点调用方、迁移，立即删除旧 API。
-> - 临时适配器是有期限的例外，不是默认架构。
-> - 更新测试以断言新契约，删除只保护重构前实现细节的测试。
+**规则：**
+- 不要仅因内部调用方还存在就保留旧 API 路径。
+- 清点调用方、迁移，立即删除旧 API。
+- 临时适配器是有期限的例外，不是默认架构。
+- 更新测试以断言新契约，删除只保护重构前实现细节的测试。
 
 <!-- en:4 -->
 **When this applies:**
@@ -60,17 +52,13 @@ When we decide a new API is the right design, migrate callers and remove the old
 - The new API is part of a simplification or refactor initiative
 
 <!-- zh:4 -->
-> **中文**
->
-> **适用条件：**
-> - 没有外部用户依赖向后兼容。
-> - 项目能接受协调一致的破坏性变更。
-> - 新 API 属于简化或重构工作。
+**适用条件：**
+- 没有外部用户依赖向后兼容。
+- 项目能接受协调一致的破坏性变更。
+- 新 API 属于简化或重构工作。
 
 <!-- en:5 -->
 Keeping both old and new APIs creates dual-path complexity, slows cleanup, and makes the codebase feel append-only.
 
 <!-- zh:5 -->
-> **中文**
->
-> 新旧 API 同时保留会带来双路径复杂性，拖慢清理，让代码库看起来只能追加、不能删除。
+新旧 API 同时保留会带来双路径复杂性，拖慢清理，让代码库看起来只能追加、不能删除。

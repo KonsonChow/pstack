@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-never-block-on-the-human
-> description: "处理可逆工作时，如果想问‘要不要做 X？’，就应用本原则。继续执行，展示结果，让人事后纠正方向；只对不可逆操作请求确认。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-never-block-on-the-human
+description: "处理可逆工作时，如果想问‘要不要做 X？’，就应用本原则。继续执行，展示结果，让人事后纠正方向；只对不可逆操作请求确认。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Never Block on the Human
 
 <!-- zh:1 -->
-> **中文**
->
-> # 不要等待人类而阻塞
+**不要等待人类而阻塞**
 
 <!-- en:2 -->
 The human supervises asynchronously. Agents must stay unblocked. Make reasonable decisions, proceed, and let the human course-correct after the fact.
 
 <!-- zh:2 -->
-> **中文**
->
-> 人类以异步方式监督。agent 必须保持不阻塞：作出合理决定并继续，让人事后纠正方向。
+人类以异步方式监督。agent 必须保持不阻塞：作出合理决定并继续，让人事后纠正方向。
 
 <!-- en:3 -->
 **Why:** Every permission pause stalls the pipeline and makes the human the bottleneck. Since code changes are reversible and reviewable, a wrong decision usually costs less than blocking.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：** 每次等待许可都会停滞流水线，让人成为瓶颈。代码改动可逆且可评审，因此错误决策的成本通常低于阻塞的成本。
+**原因：** 每次等待许可都会停滞流水线，让人成为瓶颈。代码改动可逆且可评审，因此错误决策的成本通常低于阻塞的成本。
 
 <!-- en:4 -->
 **Pattern:**
@@ -53,13 +45,11 @@ The human supervises asynchronously. Agents must stay unblocked. Make reasonable
 - **Supervision is async.** Design workflows for review-after-the-fact.
 
 <!-- zh:4 -->
-> **中文**
->
-> **模式：**
-> - **先执行，再展示。** 完成工作，展示结果。不要问“要不要做 X？”，先做 X，再解释原因。
-> - **只对真正的歧义提问。** 只有无法从上下文推断意图时才问。
-> - **让系统自行修复。** 发现问题时记录下来，在下一轮修复。
-> - **监督是异步的。** 按事后评审设计工作流程。
+**模式：**
+- **先执行，再展示。** 完成工作，展示结果。不要问“要不要做 X？”，先做 X，再解释原因。
+- **只对真正的歧义提问。** 只有无法从上下文推断意图时才问。
+- **让系统自行修复。** 发现问题时记录下来，在下一轮修复。
+- **监督是异步的。** 按事后评审设计工作流程。
 
 <!-- en:5 -->
 **Boundaries:**
@@ -68,9 +58,7 @@ The human supervises asynchronously. Agents must stay unblocked. Make reasonable
 - **Product direction** comes from the human. *Execution* should not block.
 
 <!-- zh:5 -->
-> **中文**
->
-> **边界：**
-> - **不可逆操作**（强制推送、删除生产数据、发送外部消息）仍需确认。
-> - **可逆操作**（编写代码、编辑笔记、拆分任务）应直接执行，不阻塞。
-> - **产品方向**由人确定，*执行*不应阻塞。
+**边界：**
+- **不可逆操作**（强制推送、删除生产数据、发送外部消息）仍需确认。
+- **可逆操作**（编写代码、编辑笔记、拆分任务）应直接执行，不阻塞。
+- **产品方向**由人确定，*执行*不应阻塞。

@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-encode-lessons-in-structure
-> description: "第二次写同一条指令，或注意到反复出现的纠正时应用。将规则编码为 lint、元数据标记、运行时检查或脚本，不再增加文字要求。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-encode-lessons-in-structure
+description: "第二次写同一条指令，或注意到反复出现的纠正时应用。将规则编码为 lint、元数据标记、运行时检查或脚本，不再增加文字要求。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Encode Lessons in Structure
 
 <!-- zh:1 -->
-> **中文**
->
-> # 把经验固化到结构中
+**把经验固化到结构中**
 
 <!-- en:2 -->
 Encode recurring fixes in mechanisms (tools, code, metadata, automation) instead of textual instructions. Every error, human correction, and unexpected outcome is a learning signal. Capture it, route it, and close the loop.
 
 <!-- zh:2 -->
-> **中文**
->
-> 用机制（工具、代码、元数据、自动化）固化反复出现的修复，而不是文字指令。每个错误、用户纠正、意外结果都是学习信号。记录、路由、闭环。
+用机制（工具、代码、元数据、自动化）固化反复出现的修复，而不是文字指令。每个错误、用户纠正、意外结果都是学习信号。记录、路由、闭环。
 
 <!-- en:3 -->
 **Why:** Textual instructions are easy to miss. They require the reader to notice, remember, and comply. Structural mechanisms (lint rules, metadata flags, runtime checks, automation scripts) enforce the rule without cooperation.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：** 文字指令容易漏读，要求读者注意、记住并遵守。结构机制（lint 规则、元数据标记、运行时检查、自动化脚本）不依赖配合就能强制规则。
+**原因：** 文字指令容易漏读，要求读者注意、记住并遵守。结构机制（lint 规则、元数据标记、运行时检查、自动化脚本）不依赖配合就能强制规则。
 
 <!-- en:4 -->
 **Pattern:**
@@ -53,29 +45,23 @@ When you catch yourself writing the same instruction a second time:
 3. If no (requires judgment), make the instruction more prominent and add an example of the failure mode
 
 <!-- zh:4 -->
-> **中文**
->
-> **模式：**
-> 发现自己第二次写同一指令时：
-> 1. 问：能否变成 lint 规则、元数据标记、运行时检查或脚本？
-> 2. 能，就编码实现，删除指令。
-> 3. 不能（需要判断），就让指令更醒目，并补充失败模式的例子。
+**模式：**
+发现自己第二次写同一指令时：
+1. 问：能否变成 lint 规则、元数据标记、运行时检查或脚本？
+2. 能，就编码实现，删除指令。
+3. 不能（需要判断），就让指令更醒目，并补充失败模式的例子。
 
 <!-- en:5 -->
 **Pick the strongest mechanism.** When more than one mechanism would work, choose the strongest the situation allows (an unrepresentable state that cannot compile, then a lint or banned API that fails CI, then a canonical helper, then a runtime check), because agents copy whatever the surrounding code already does and a weaker guard becomes the next template.
 
 <!-- zh:5 -->
-> **中文**
->
-> **选最强的机制。** 多种机制可用时，选情境允许的最强者：先是无法编译的不可表示状态，再是 CI 会失败的 lint 或禁用 API，再是统一辅助函数，最后是运行时检查。agent 会模仿周边代码，较弱防护会成为下一个模板。
+**选最强的机制。** 多种机制可用时，选情境允许的最强者：先是无法编译的不可表示状态，再是 CI 会失败的 lint 或禁用 API，再是统一辅助函数，最后是运行时检查。agent 会模仿周边代码，较弱防护会成为下一个模板。
 
 <!-- en:6 -->
 **Corollary:** If the fix is structural, only use the structural fix. The instruction is the symptom.
 
 <!-- zh:6 -->
-> **中文**
->
-> **推论：** 修复是结构性的，就只用结构修复。文字指令本身是症状。
+**推论：** 修复是结构性的，就只用结构修复。文字指令本身是症状。
 
 <!-- en:7 -->
 **Feedback loop:**
@@ -84,12 +70,10 @@ When you catch yourself writing the same instruction a second time:
 - **Close the loop.** Don't just record. Apply now or create a concrete todo.
 
 <!-- zh:7 -->
-> **中文**
->
-> **反馈循环：**
-> - **记录每次纠正。** 用户干预或测试失败时，判断是个例还是模式。
-> - **路由到正确层。** 个例 -> 记忆笔记。重复修复 -> skill 或 lint。系统性问题 -> 原则。
-> - **完成闭环。** 不只记录，立即应用或创建具体待办。
+**反馈循环：**
+- **记录每次纠正。** 用户干预或测试失败时，判断是个例还是模式。
+- **路由到正确层。** 个例 -> 记忆笔记。重复修复 -> skill 或 lint。系统性问题 -> 原则。
+- **完成闭环。** 不只记录，立即应用或创建具体待办。
 
 <!-- en:8 -->
 **Anti-patterns:**
@@ -98,9 +82,7 @@ When you catch yourself writing the same instruction a second time:
 - Fixing without generalizing (fixing one instance while leaving the recurring pattern intact)
 
 <!-- zh:8 -->
-> **中文**
->
-> **反模式：**
-> - 答应但不记录（“我会记住”不会持久化）。
-> - 记录但不路由（只在记忆中说应有 lint，实际不实现，就没用）。
-> - 修复但不归纳（只修一个实例，重复模式仍在）。
+**反模式：**
+- 答应但不记录（“我会记住”不会持久化）。
+- 记录但不路由（只在记忆中说应有 lint，实际不实现，就没用）。
+- 修复但不归纳（只修一个实例，重复模式仍在）。

@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: teach
-> description: "用通俗方式解释一组工作，让人真正理解。运行 `how` 和 `why`，把它们的发现织成一份清晰解释。用于‘教我理解这个’、‘帮我真正理解 X’、‘解释这个改动或子系统’。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: teach
+description: "用通俗方式解释一组工作，让人真正理解。运行 `how` 和 `why`，把它们的发现织成一份清晰解释。用于‘教我理解这个’、‘帮我真正理解 X’、‘解释这个改动或子系统’。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Teach
 
 <!-- zh:1 -->
-> **中文**
->
-> # 教学
+**教学**
 
 <!-- en:2 -->
 **You explain what a thing is, how it works, and why it's built that way, in one plain account at the person's pace. The goal is that they understand it, not that you change anything.**
 
 <!-- zh:2 -->
-> **中文**
->
-> **按照对方的节奏，用一份通俗的说明解释事物是什么、如何工作、为何这样构建。目标是让他们理解，而不是修改东西。**
+**按照对方的节奏，用一份通俗的说明解释事物是什么、如何工作、为何这样构建。目标是让他们理解，而不是修改东西。**
 
 <!-- en:3 -->
 Teach sits on top of `how` and `why`. Get your bearings on what the work is and what it touches, then run `how` for how it works and `why` for why it's that way. Those are real skill invocations that do their own digging. Blend what they find into one plain explanation, lead with what matters to the person, and go deeper when they ask. Reword freely for teaching, with one exception. Keep `why`'s confidence language intact (its hedges are findings, not style).
 
 <!-- zh:3 -->
-> **中文**
->
-> Teach 建立在 `how` 和 `why` 之上。先了解工作内容及涉及的部分，再运行 `how` 了解工作机制，运行 `why` 了解设计缘由。这些是真实的 skill 调用，会独立调查。把它们的发现整合为通俗解释，从对方关心的内容开始，等对方追问再深入。为教学可以自由改写，但有一项例外：保留 `why` 的可信度措辞不变（其中表达不确定性的词是调查结论，不是风格）。
+Teach 建立在 `how` 和 `why` 之上。先了解工作内容及涉及的部分，再运行 `how` 了解工作机制，运行 `why` 了解设计缘由。这些是真实的 skill 调用，会独立调查。把它们的发现整合为通俗解释，从对方关心的内容开始，等对方追问再深入。为教学可以自由改写，但有一项例外：保留 `why` 的可信度措辞不变（其中表达不确定性的词是调查结论，不是风格）。
 
 <!-- en:4 -->
 1. Decide the few things they should walk away understanding. Choose them from why they're asking (about to change it, reviewing it, debugging it, new to it) and what they already know, both read from the conversation, not quizzed out of them. Skip what they plainly already know. Put the depth where their question is.
@@ -53,26 +45,20 @@ Teach sits on top of `how` and `why`. Get your bearings on what the work is and 
 5. Show, don't only tell, and build the picture up diagram by diagram. Open the diff, the code, or the debugger when that is the fastest way to land it. Draw when a picture lands faster than words. For anything with three or more moving parts, do not draw one diagram with all of them at once. Draw a short series instead, where each diagram redraws the last and adds a single part, so the reader watches the system assemble. A single all-at-once diagram, especially one saved for the end, is a reference, not teaching. Concretely, to teach a flow from A to B to C, draw it three times. First A to B. Then redraw and add C. Then redraw and add the return edge or the next piece. Match the medium to the idea, and use both kinds when both help. A mermaid diagram fits a flow or structure where the labels carry the meaning. When the idea is spatial, like layout, overlap, scroll position, or a before and after, reach for the image-generation tool and draw it marker-on-whiteboard style with a few short labels, since image models garble long text. Generate that picture, don't settle for describing it in words. The build-up rule holds for generated images too. A single simple point needs no figure.
 
 <!-- zh:4 -->
-> **中文**
->
-> 1. 决定对方最终需要理解的少数关键点。根据他们提问的原因（准备修改、正在评审、正在调试、刚接触）以及已知知识选择，两者都从对话判断，不要通过问答考试获取。明显已经知道的内容跳过，把深入解释放在提问所在之处。
-> 2. 让 `how` 和 `why` 做调查，不要重复。先自己读代码获得方向，再分别运行 `how` 和 `why`，并行执行并合并结果。规模匹配问题：子系统需要两者，小改动可能一个就够。`why` 完整扫描很慢，默认缩小范围。直接在请求里写明限制（范围明确的问题、git 加一两个来源），让 `why` 按自身约定记录跳过类别；只有理由本身是重点时才扩大。
-> 3. 先给通俗定义。像资深工程师口头解释一样，用一般术语说明它是什么，有常用名称时用常用名称。然后联系当前场景（“在 X 中，我们用它……”），再逐步说明机制、深层原因和边界情况。每部分要讲清解决什么问题、实际如何工作，使人理解。若沿着用户动作（打开长聊天、向上滚动）讲过程更容易理解，就这样讲。列函数和常量是参考资料，不是教学。不要打印框架标签（“要记住的一个想法”“应带走的内容”“关键见解”“本质上”“TL;DR”）。先用一两句给最小但完整的答案，不要密集长段，然后停下。对方追问再加层次，绝不要文字墙。
-> 4. 保持对话，而不是授课或表演。可以提出深入或继续下一部分，并跟随对方意愿。不要测验，不做节奏表演：不要打印“暂停”，不要让对方复述，不宣布“必须掌握的一句话”，不标榜某部分重要或困难（“这里值得慢下来”“这是棘手之处”“接下来有趣了”）。直接解释。本来会停顿的地方，就停下让对方回应。没有实时用户的一次性执行，则清楚交付，把可继续深入的邀请放结尾。
-> 5. 不只讲述，还要展示，逐张图建立理解。当打开 diff、代码或 debugger 最快时，就这样做。图比文字快时画图。有三个以上动态部分时，不要一次把全部画进一张图；画短系列，每张重画上一张并只增加一个部分，让读者看到系统逐步形成。一张一次性全量图，尤其留到最后的，只是参考而不是教学。具体说，解释 A 到 B 到 C 的流程要画三次：先 A 到 B，再重画并加 C，然后重画并加返回边或下一部分。媒介匹配概念，两种都有帮助时都用。标签承载含义的流程或结构适合 mermaid；空间概念如布局、重叠、滚动位置、前后对比，用图像生成工具画成白板记号笔风格，只加几个短标签，因为图像模型容易弄乱长文字。真正生成图，不要满足于用文字描述。生成图同样遵循逐步建立规则。单个简单观点无须图。
+1. 决定对方最终需要理解的少数关键点。根据他们提问的原因（准备修改、正在评审、正在调试、刚接触）以及已知知识选择，两者都从对话判断，不要通过问答考试获取。明显已经知道的内容跳过，把深入解释放在提问所在之处。
+2. 让 `how` 和 `why` 做调查，不要重复。先自己读代码获得方向，再分别运行 `how` 和 `why`，并行执行并合并结果。规模匹配问题：子系统需要两者，小改动可能一个就够。`why` 完整扫描很慢，默认缩小范围。直接在请求里写明限制（范围明确的问题、git 加一两个来源），让 `why` 按自身约定记录跳过类别；只有理由本身是重点时才扩大。
+3. 先给通俗定义。像资深工程师口头解释一样，用一般术语说明它是什么，有常用名称时用常用名称。然后联系当前场景（“在 X 中，我们用它……”），再逐步说明机制、深层原因和边界情况。每部分要讲清解决什么问题、实际如何工作，使人理解。若沿着用户动作（打开长聊天、向上滚动）讲过程更容易理解，就这样讲。列函数和常量是参考资料，不是教学。不要打印框架标签（“要记住的一个想法”“应带走的内容”“关键见解”“本质上”“TL;DR”）。先用一两句给最小但完整的答案，不要密集长段，然后停下。对方追问再加层次，绝不要文字墙。
+4. 保持对话，而不是授课或表演。可以提出深入或继续下一部分，并跟随对方意愿。不要测验，不做节奏表演：不要打印“暂停”，不要让对方复述，不宣布“必须掌握的一句话”，不标榜某部分重要或困难（“这里值得慢下来”“这是棘手之处”“接下来有趣了”）。直接解释。本来会停顿的地方，就停下让对方回应。没有实时用户的一次性执行，则清楚交付，把可继续深入的邀请放结尾。
+5. 不只讲述，还要展示，逐张图建立理解。当打开 diff、代码或 debugger 最快时，就这样做。图比文字快时画图。有三个以上动态部分时，不要一次把全部画进一张图；画短系列，每张重画上一张并只增加一个部分，让读者看到系统逐步形成。一张一次性全量图，尤其留到最后的，只是参考而不是教学。具体说，解释 A 到 B 到 C 的流程要画三次：先 A 到 B，再重画并加 C，然后重画并加返回边或下一部分。媒介匹配概念，两种都有帮助时都用。标签承载含义的流程或结构适合 mermaid；空间概念如布局、重叠、滚动位置、前后对比，用图像生成工具画成白板记号笔风格，只加几个短标签，因为图像模型容易弄乱长文字。真正生成图，不要满足于用文字描述。生成图同样遵循逐步建立规则。单个简单观点无须图。
 
 <!-- en:5 -->
 Write every response through the **unslop** skill, in plain spoken English, the way you'd explain it to a colleague. Be tight, not terse. Cut filler and hedging, keep the part that makes it click. State the concrete mechanism, not a metaphor, a framing, or a preview of what is coming. This is the target density: "Virtualization runs in two parts, one for rendering and one for loading from disk. When an item scrolls out past the buffer, both its DOM node and its in-memory data are evicted." Normal sentence case, not all-lowercase. No em dashes. Prefer periods over commas. Keep each sentence to one or two commas. If clauses pile up, split them into separate sentences. Give each concept one name and keep it. Avoid mirror sentences ("A without B, or B without A") and tidy closers ("the rest follows", "it all falls out"). The words in these steps are directions to you, not labels to print. Don't echo the structure as headers or stock phrases.
 
 <!-- zh:5 -->
-> **中文**
->
-> 每次回复都通过 **unslop** skill 编辑，用向同事解释的口语化英语。紧凑但不生硬简略。去掉填充话和无谓迟疑，保留帮助理解的部分。陈述具体机制，不要用隐喻、框架化表述或预告。目标密度例如：“虚拟化分两部分，一部分负责渲染，另一部分负责从磁盘加载。项目滚出缓冲区后，其 DOM 节点和内存数据都会被移除。”使用正常句首大小写，不要全小写，不用破折号。优先句号而不是逗号，每句一两个逗号即可；从句过多就拆句。每个概念只用一个固定名称。避免镜像句式（“没有 B 的 A，或没有 A 的 B”）以及整齐的收尾套话（“剩下自然成立”“一切由此推出”）。这些步骤中的文字是给你的指令，不是要打印的标签。不要把其结构回显为标题或套话。
+每次回复都通过 **unslop** skill 编辑，用向同事解释的口语化英语。紧凑但不生硬简略。去掉填充话和无谓迟疑，保留帮助理解的部分。陈述具体机制，不要用隐喻、框架化表述或预告。目标密度例如：“虚拟化分两部分，一部分负责渲染，另一部分负责从磁盘加载。项目滚出缓冲区后，其 DOM 节点和内存数据都会被移除。”使用正常句首大小写，不要全小写，不用破折号。优先句号而不是逗号，每句一两个逗号即可；从句过多就拆句。每个概念只用一个固定名称。避免镜像句式（“没有 B 的 A，或没有 A 的 B”）以及整齐的收尾套话（“剩下自然成立”“一切由此推出”）。这些步骤中的文字是给你的指令，不是要打印的标签。不要把其结构回显为标题或套话。
 
 <!-- en:6 -->
 **Reply:** the explanation itself, never a report about what you did or delivered. Lead with the main point, then the plain account of what it is, how it works, and why, and the threads worth chasing with `how` or `why`.
 
 <!-- zh:6 -->
-> **中文**
->
-> **回复：** 直接给出解释，不报告做过或交付了什么。先讲主旨，再用通俗方式说明它是什么、如何工作、为什么，以及值得用 `how` 或 `why` 继续追查的线索。
+**回复：** 直接给出解释，不报告做过或交付了什么。先讲主旨，再用通俗方式说明它是什么、如何工作、为什么，以及值得用 `how` 或 `why` 继续追查的线索。

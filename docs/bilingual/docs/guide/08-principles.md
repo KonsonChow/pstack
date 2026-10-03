@@ -5,41 +5,31 @@
 # Steer with principle names
 
 <!-- zh:0 -->
-> **中文**
->
-> # 用原则名称调整方向
+**用原则名称调整方向**
 
 <!-- en:1 -->
 pstack ships 23 principles as individual skills. `/poteto-mode` reads their index at the start of every multi-step task, applies the ones the task triggers, and names each applied principle in its reply along with the decision it changed.
 
 <!-- zh:1 -->
-> **中文**
->
-> pstack 将 23 条原则分别发布为独立 skill。`/poteto-mode` 在每个多步骤任务开始时读取索引，应用任务触发的原则，并在回复中说明用了哪条原则，以及它改变了哪项决策。
+pstack 将 23 条原则分别发布为独立 skill。`/poteto-mode` 在每个多步骤任务开始时读取索引，应用任务触发的原则，并在回复中说明用了哪条原则，以及它改变了哪项决策。
 
 <!-- en:2 -->
 You don't invoke principles. You use their names to steer. Each name points at a complete rule the agent has already read, so one phrase redirects the work more precisely than a paragraph of instructions.
 
 <!-- zh:2 -->
-> **中文**
->
-> 你不需要调用原则，而是用原则名称调整执行方向。每个名称都对应 agent 已经读过的一条完整规则，所以一句话就能比一大段指令更准确地纠正做法。
+你不需要调用原则，而是用原则名称调整执行方向。每个名称都对应 agent 已经读过的一条完整规则，所以一句话就能比一大段指令更准确地纠正做法。
 
 <!-- en:3 -->
 ## Steering in practice
 
 <!-- zh:3 -->
-> **中文**
->
-> ## 实际如何纠正方向
+**实际如何纠正方向**
 
 <!-- en:4 -->
 Say the agent is about to bolt a new adapter onto three existing ones:
 
 <!-- zh:4 -->
-> **中文**
->
-> 假设 agent 准备在已有三个 adapter 之上再加一个：
+假设 agent 准备在已有三个 adapter 之上再加一个：
 
 <!-- en:5 -->
 ```text
@@ -47,19 +37,15 @@ use subtract before you add. delete the obsolete adapters first, then design wha
 ```
 
 <!-- zh:5 -->
-> **中文**
->
-> ```text
-> 使用 subtract before you add 原则。先删除过时的 adapter，再设计剩下的部分。
-> ```
+```text
+使用 subtract before you add 原则。先删除过时的 adapter，再设计剩下的部分。
+```
 
 <!-- en:6 -->
 Say it claims success because the build passed:
 
 <!-- zh:6 -->
-> **中文**
->
-> 假设它因为构建通过就宣称成功：
+假设它因为构建通过就宣称成功：
 
 <!-- en:7 -->
 ```text
@@ -67,19 +53,15 @@ apply prove it works. run the real import flow and show me the written records.
 ```
 
 <!-- zh:7 -->
-> **中文**
->
-> ```text
-> 应用 prove it works 原则。运行真实导入流程，把实际写入的记录给我看。
-> ```
+```text
+应用 prove it works 原则。运行真实导入流程，把实际写入的记录给我看。
+```
 
 <!-- en:8 -->
 Say two parallel attempts are about to write to the same branch:
 
 <!-- zh:8 -->
-> **中文**
->
-> 假设两个并行尝试准备写入同一个分支：
+假设两个并行尝试准备写入同一个分支：
 
 <!-- en:9 -->
 ```text
@@ -87,35 +69,27 @@ separate before serializing shared state. give each attempt its own worktree, no
 ```
 
 <!-- zh:9 -->
-> **中文**
->
-> ```text
-> 应用 separate before serializing shared state 原则。每个尝试分配独立 worktree，不要加锁。
-> ```
+```text
+应用 separate before serializing shared state 原则。每个尝试分配独立 worktree，不要加锁。
+```
 
 <!-- en:10 -->
 Each phrase lands because the rule behind it is specific. The agent still has to say, in its reply, which decision the rule changed. A principle citation with no decision behind it is the tell that it name-dropped instead of applying.
 
 <!-- zh:10 -->
-> **中文**
->
-> 这些短语有效，是因为背后的规则足够具体。agent 仍须在回复中说明，规则改变了哪项决策。如果只引用原则却说不出实际决策变化，就说明它只是提了名字，并没有落实。
+这些短语有效，是因为背后的规则足够具体。agent 仍须在回复中说明，规则改变了哪项决策。如果只引用原则却说不出实际决策变化，就说明它只是提了名字，并没有落实。
 
 <!-- en:11 -->
 ## The 23, briefly
 
 <!-- zh:11 -->
-> **中文**
->
-> ## 23 条原则简览
+**23 条原则简览**
 
 <!-- en:12 -->
 The core principles decide how much to build and when to rethink the design:
 
 <!-- zh:12 -->
-> **中文**
->
-> 核心原则决定做多少，以及何时重新考虑设计：
+核心原则决定做多少，以及何时重新考虑设计：
 
 <!-- en:13 -->
 - [Laziness Protocol](../../skills/principle-laziness-protocol/SKILL.md) prefers deletion and the smallest change that solves the problem.
@@ -130,26 +104,22 @@ The core principles decide how much to build and when to rethink the design:
 - [Build the Lever](../../skills/principle-build-the-lever/SKILL.md) builds the script that does or proves the work, so a reviewer can rerun it.
 
 <!-- zh:13 -->
-> **中文**
->
-> - [Laziness Protocol](../../skills/principle-laziness-protocol/SKILL.md)：优先删除，用能解决问题的最小改动。
-> - [Foundational Thinking](../../skills/principle-foundational-thinking/SKILL.md)：先选好核心数据结构，再写逻辑。
-> - [Redesign from First Principles](../../skills/principle-redesign-from-first-principles/SKILL.md)：把新需求当作从第一天就存在的前提来整合设计。
-> - [Attack the Premise](../../skills/principle-attack-the-premise/SKILL.md)：当两个或更多修复因同一前提而失败时，先清点哪些参与者承载了不平衡，再质疑共同前提。
-> - [Subtract Before You Add](../../skills/principle-subtract-before-you-add/SKILL.md)：先清除无用内容，再在此基础上构建。
-> - [Minimize Reader Load](../../skills/principle-minimize-reader-load/SKILL.md)：减少层级和读者必须在脑中维护的隐含状态。
-> - [Outcome-Oriented Execution](../../skills/principle-outcome-oriented-execution/SKILL.md)：让重写收敛到目标设计，不保留最终会丢弃的兼容状态。
-> - [Experience First](../../skills/principle-experience-first/SKILL.md)：优先用户得到的结果，而不是实现上的便利。
-> - [Exhaust the Design Space](../../skills/principle-exhaust-the-design-space/SKILL.md)：没有先例时，做两到三个相互竞争的原型。
-> - [Build the Lever](../../skills/principle-build-the-lever/SKILL.md)：制作完成工作或证明结果的脚本，让评审者可以重跑。
+- [Laziness Protocol](../../skills/principle-laziness-protocol/SKILL.md)：优先删除，用能解决问题的最小改动。
+- [Foundational Thinking](../../skills/principle-foundational-thinking/SKILL.md)：先选好核心数据结构，再写逻辑。
+- [Redesign from First Principles](../../skills/principle-redesign-from-first-principles/SKILL.md)：把新需求当作从第一天就存在的前提来整合设计。
+- [Attack the Premise](../../skills/principle-attack-the-premise/SKILL.md)：当两个或更多修复因同一前提而失败时，先清点哪些参与者承载了不平衡，再质疑共同前提。
+- [Subtract Before You Add](../../skills/principle-subtract-before-you-add/SKILL.md)：先清除无用内容，再在此基础上构建。
+- [Minimize Reader Load](../../skills/principle-minimize-reader-load/SKILL.md)：减少层级和读者必须在脑中维护的隐含状态。
+- [Outcome-Oriented Execution](../../skills/principle-outcome-oriented-execution/SKILL.md)：让重写收敛到目标设计，不保留最终会丢弃的兼容状态。
+- [Experience First](../../skills/principle-experience-first/SKILL.md)：优先用户得到的结果，而不是实现上的便利。
+- [Exhaust the Design Space](../../skills/principle-exhaust-the-design-space/SKILL.md)：没有先例时，做两到三个相互竞争的原型。
+- [Build the Lever](../../skills/principle-build-the-lever/SKILL.md)：制作完成工作或证明结果的脚本，让评审者可以重跑。
 
 <!-- en:14 -->
 The architecture principles decide where state, validation, and compatibility live:
 
 <!-- zh:14 -->
-> **中文**
->
-> 架构原则决定状态、校验和兼容逻辑放在哪里：
+架构原则决定状态、校验和兼容逻辑放在哪里：
 
 <!-- en:15 -->
 - [Model the Domain](../../skills/principle-model-the-domain/SKILL.md) encodes repeated rules in one structure, not scattered conditionals.
@@ -160,22 +130,18 @@ The architecture principles decide where state, validation, and compatibility li
 - [Separate Before Serializing Shared State](../../skills/principle-separate-before-serializing-shared-state/SKILL.md) removes the sharing before adding coordination.
 
 <!-- zh:15 -->
-> **中文**
->
-> - [Model the Domain](../../skills/principle-model-the-domain/SKILL.md)：把重复规则编码到一个结构中，而不是散落在条件分支里。
-> - [Boundary Discipline](../../skills/principle-boundary-discipline/SKILL.md)：在边界校验，信任内部类型。
-> - [Type System Discipline](../../skills/principle-type-system-discipline/SKILL.md)：让非法状态无法表示。
-> - [Make Operations Idempotent](../../skills/principle-make-operations-idempotent/SKILL.md)：让重试收敛到同一最终状态。
-> - [Migrate Callers Then Delete Legacy APIs](../../skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md)：在同一轮完成调用方迁移并删除旧 API。
-> - [Separate Before Serializing Shared State](../../skills/principle-separate-before-serializing-shared-state/SKILL.md)：先消除共享，再考虑协调机制。
+- [Model the Domain](../../skills/principle-model-the-domain/SKILL.md)：把重复规则编码到一个结构中，而不是散落在条件分支里。
+- [Boundary Discipline](../../skills/principle-boundary-discipline/SKILL.md)：在边界校验，信任内部类型。
+- [Type System Discipline](../../skills/principle-type-system-discipline/SKILL.md)：让非法状态无法表示。
+- [Make Operations Idempotent](../../skills/principle-make-operations-idempotent/SKILL.md)：让重试收敛到同一最终状态。
+- [Migrate Callers Then Delete Legacy APIs](../../skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md)：在同一轮完成调用方迁移并删除旧 API。
+- [Separate Before Serializing Shared State](../../skills/principle-separate-before-serializing-shared-state/SKILL.md)：先消除共享，再考虑协调机制。
 
 <!-- en:16 -->
 The verification principles define what counts as proof:
 
 <!-- zh:16 -->
-> **中文**
->
-> 验证原则规定什么算证据：
+验证原则规定什么算证据：
 
 <!-- en:17 -->
 - [Prove It Works](../../skills/principle-prove-it-works/SKILL.md) verifies the real artifact, not a proxy.
@@ -184,59 +150,45 @@ The verification principles define what counts as proof:
 - [Test Behavior, Not Implementation](../../skills/principle-test-behavior-not-implementation/SKILL.md) calls the code the way its users do and asserts a literal expected value, and deletes a test that would still pass if every imported function returned `undefined`.
 
 <!-- zh:17 -->
-> **中文**
->
-> - [Prove It Works](../../skills/principle-prove-it-works/SKILL.md)：验证真实产物，而不是替代指标。
-> - [Fix Root Causes](../../skills/principle-fix-root-causes/SKILL.md)：改代码前，先复现并追踪到根因。
-> - [Sequence Work into Verifiable Units](../../skills/principle-sequence-verifiable-units/SKILL.md)：每个小单元都以检查结束，确认后再进入下一个。
-> - [Test Behavior, Not Implementation](../../skills/principle-test-behavior-not-implementation/SKILL.md)：按使用者的方式调用代码，并以字面预期值作断言；如果所有导入函数都返回 `undefined` 时测试仍通过，就删除这个测试。
+- [Prove It Works](../../skills/principle-prove-it-works/SKILL.md)：验证真实产物，而不是替代指标。
+- [Fix Root Causes](../../skills/principle-fix-root-causes/SKILL.md)：改代码前，先复现并追踪到根因。
+- [Sequence Work into Verifiable Units](../../skills/principle-sequence-verifiable-units/SKILL.md)：每个小单元都以检查结束，确认后再进入下一个。
+- [Test Behavior, Not Implementation](../../skills/principle-test-behavior-not-implementation/SKILL.md)：按使用者的方式调用代码，并以字面预期值作断言；如果所有导入函数都返回 `undefined` 时测试仍通过，就删除这个测试。
 
 <!-- en:18 -->
 The delegation principles keep parallel work sane:
 
 <!-- zh:18 -->
-> **中文**
->
-> 委派原则保证并行工作有序进行：
+委派原则保证并行工作有序进行：
 
 <!-- en:19 -->
 - [Guard the Context Window](../../skills/principle-guard-the-context-window/SKILL.md) routes bulk reading to subagents and keeps findings in the main chat.
 - [Never Block on the Human](../../skills/principle-never-block-on-the-human/SKILL.md) proceeds on reversible work and presents the result.
 
 <!-- zh:19 -->
-> **中文**
->
-> - [Guard the Context Window](../../skills/principle-guard-the-context-window/SKILL.md)：把大量阅读分派给 subagent，只把结论留在主对话中。
-> - [Never Block on the Human](../../skills/principle-never-block-on-the-human/SKILL.md)：可逆工作直接推进，再展示结果。
+- [Guard the Context Window](../../skills/principle-guard-the-context-window/SKILL.md)：把大量阅读分派给 subagent，只把结论留在主对话中。
+- [Never Block on the Human](../../skills/principle-never-block-on-the-human/SKILL.md)：可逆工作直接推进，再展示结果。
 
 <!-- en:20 -->
 And one meta principle:
 
 <!-- zh:20 -->
-> **中文**
->
-> 还有一条元原则：
+还有一条元原则：
 
 <!-- en:21 -->
 - [Encode Lessons in Structure](../../skills/principle-encode-lessons-in-structure/SKILL.md) turns advice you've repeated twice into a lint, check, or script.
 
 <!-- zh:21 -->
-> **中文**
->
-> - [Encode Lessons in Structure](../../skills/principle-encode-lessons-in-structure/SKILL.md)：把已重复两次的建议转成 lint、检查或脚本。
+- [Encode Lessons in Structure](../../skills/principle-encode-lessons-in-structure/SKILL.md)：把已重复两次的建议转成 lint、检查或脚本。
 
 <!-- en:22 -->
 Don't memorize the list. Skim it now, then come back when you catch the agent doing something a name here would have prevented. That's how the vocabulary sticks.
 
 <!-- zh:22 -->
-> **中文**
->
-> 不必背下清单。先浏览一遍，等发现 agent 的做法本可以由某条原则避免时，再回来查。通过实际使用，这些词才会成为你的工作语言。
+不必背下清单。先浏览一遍，等发现 agent 的做法本可以由某条原则避免时，再回来查。通过实际使用，这些词才会成为你的工作语言。
 
 <!-- en:23 -->
 Next: [Make it yours](./09-make-it-yours.md).
 
 <!-- zh:23 -->
-> **中文**
->
-> 下一页：[形成自己的工作方式](./09-make-it-yours.md)。
+下一页：[形成自己的工作方式](./09-make-it-yours.md)。

@@ -5,17 +5,13 @@
 ### Autopilot-stack
 
 <!-- zh:0 -->
-> **中文**
->
-> ### Autopilot-stack（自主构建 PR 栈）
+**Autopilot-stack（自主构建 PR 栈）**
 
 <!-- en:1 -->
 **You own the stack, never the landing. Build and verify the queue with full autonomy, then hand the operator one linear base-branch stack to review and land.** The sibling of **Autopilot-full**.
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责 PR 栈，绝不负责合入。完全自主地构建并验证队列，再交给操作者一个线性的基线分支栈供评审和合入。** 它是 **Autopilot-full** 的姊妹模式。
+**你负责 PR 栈，绝不负责合入。完全自主地构建并验证队列，再交给操作者一个线性的基线分支栈供评审和合入。** 它是 **Autopilot-full** 的姊妹模式。
 
 <!-- en:2 -->
 1. **Run the owner loop unchanged.** Resolve the forge once for the program. GitHub CLI (`gh`) is the default. If `command -v origin` succeeds and Origin can resolve the repository, use `origin pr ...` for PR create, edit, view, watch, and merge operations. Otherwise stay on `gh` and record the fallback. Never require Graphite (`gt`). One Cursor cloud agent per PR owns its change end to end: build, first push, a ready PR opened before self-proof, self-proof (gates, CI, receipts), skeptical Bugbot triage per `../references/bugbot-triage.md`, a slop-strip (the `deslop` skill from the `cursor-team-kit` plugin (`/deslop`)), `/no-comments` (the **no-comments** skill), and babysit to green per `playbooks/babysit.md`. Owners parallelize when the work is self-contained. Within about 15 minutes, every owner starts a `decisions.tsv` trail per the **show-me-your-work** skill, pushes its first branch snapshot, and opens the PR ready, never draft. Keep the trail uncommitted and return it in the report.
@@ -28,29 +24,23 @@
 8. **Deliver the chain.** The deliverable is one linear chain of verified PRs, reviewable bottom-up in the resolved forge, every link carrying its verifier verdict in the PR body or a comment. The operator reviews and lands it, with their own clicks or by arming merge-when-ready.
 
 <!-- zh:2 -->
-> **中文**
->
-> 1. **保持负责人循环不变。** 整个项目只解析一次代码托管平台。默认使用 GitHub CLI（`gh`）。如果 `command -v origin` 成功且 Origin 能解析仓库，则 PR 创建、编辑、查看、观察和合并操作使用 `origin pr ...`；否则继续用 `gh` 并记录回退。绝不要求 Graphite（`gt`）。每个 PR 由一个 Cursor 云端 agent 端到端负责：构建、首次推送、在自证之前开启非草稿 PR、自证（关卡、CI、证据记录）、按 `../references/bugbot-triage.md` 审慎处理 Bugbot、清理低质产物（`cursor-team-kit` 插件的 `deslop` skill，`/deslop`）、`/no-comments`（**no-comments** skill），以及按 `playbooks/babysit.md` 持续照看直到检查通过。工作独立时，负责人可以并行。约 15 分钟内，每位负责人都要按 **show-me-your-work** 开始 `decisions.tsv` 记录、推送首个分支快照，并以 ready 状态开启 PR，绝不设为 draft。记录不提交，在报告中返回。
-> 2. **在唤醒链上审计。** 根协调者约每 30 分钟执行一次审计。 本地根协调者以真实终端 `/loop` 安排每次审计，循环使用受监控 shell 睡眠 30 分钟，并输出通知哨兵；云端根协调者则使用既有 cloud-sleeper 唤醒链。绝不能靠记忆或可能丢失的完成通知维持节奏。每次审计用 `git show origin/main:pstack/skills/poteto-mode/playbooks/autopilot-stack.md` 从主干重读此 playbook，再重读启用的 `/goal`，对照两者审计执行，当次纠正偏移。对每位负责人做通用存活性或状态检查。只有副作用算进展：提交、推送、PR 或检查变化、存储报告。某条工作线超过预期运行时间仍无副作用，就视为卡住，立即停止并派替代者，不等礼貌返回。
-> 3. **保持操作者关卡。** 先陈述再等待，因此“说明计划”不等于允许执行。操作者明确同意后，以完整项目目标启用 `/goal`，跨轮次持续到整条链完成。操作者要求停止时，所有负责人立即停止一切写入。
-> 4. **在 STACK-READY 验证。** 负责人报告 STACK-READY 并给出完整 head SHA。根协调者按 **swarm** 分派并行任务验证该 SHA：独立验证者重跑该提交的关卡、对关键行为达到真实运行时验证的最低要求，以及不信任 PR 正文的证据记录和 diff 审计。Swarm 汇总为一个结论。发现交回负责人，任何未经验证内容不得进入栈。
-> 5. **结论通过才追加，绝不合入。** 负责人不得合并、启用自动合并或关闭 PR。无问题的结论允许将 PR 追加到唯一线性基线分支栈，按已验证顺序或操作者指定顺序排列。
-> 6. **拓扑单写者，构建并行写。** 负责人只推自己的分支，并报告 tip、当前 base 和预期 parent。根协调者是唯一拓扑写入者。追加 PR 时，fetch 预期 parent，将 child rebase 到该 parent 的准确 tip，仅在 `ls-remote` 检查后用 `--force-with-lease` 推送，再把 PR base 设为 parent 分支。按已解析平台，用 `origin pr create --status open --base <parent-branch>` 或 `gh pr create --base <parent-branch>` 创建；现有 PR 用 `origin pr edit <pr> --base <parent-branch>` 或 `gh pr edit <pr> --base <parent-branch>` 改目标。只有根 PR 指向主干。绝不通过 `gt` 提交或注册链。
-> 7. **根协调者吸收漂移，再重新验证变化部分。** 根协调者 fetch 当前主干，自下而上 rebase 整条链。若 rebase 在负责人文件中产生冲突，由该负责人修复自己的部分，再由根协调者推送结果。Rebase 会改写其上所有 SHA，使旧 SHA 上的结论失效。比较每个 PR 在判定 SHA 时 base-to-head diff 的稳定 `git patch-id` 与新 base-to-head diff。Patch-id 不变时可保留代码结论；任何补丁变化都必须重新经过第 4 步才能交付。每次改写推送后，即使 patch-id 不变，也重跑可合并性检查和 CI。联署规则与 Autopilot-full 一致。真正的新固定值要触发停止，等待根协调者重新联署；吸收已落地值的漂移不算新请求。
-> 8. **交付整条链。** 交付物是一条已验证的线性 PR 链，可在已解析的平台自下而上评审；每个链接都在 PR 正文或评论中携带验证者结论。操作者评审并合入，可自行点击或启用满足条件后合并。
+1. **保持负责人循环不变。** 整个项目只解析一次代码托管平台。默认使用 GitHub CLI（`gh`）。如果 `command -v origin` 成功且 Origin 能解析仓库，则 PR 创建、编辑、查看、观察和合并操作使用 `origin pr ...`；否则继续用 `gh` 并记录回退。绝不要求 Graphite（`gt`）。每个 PR 由一个 Cursor 云端 agent 端到端负责：构建、首次推送、在自证之前开启非草稿 PR、自证（关卡、CI、证据记录）、按 `../references/bugbot-triage.md` 审慎处理 Bugbot、清理低质产物（`cursor-team-kit` 插件的 `deslop` skill，`/deslop`）、`/no-comments`（**no-comments** skill），以及按 `playbooks/babysit.md` 持续照看直到检查通过。工作独立时，负责人可以并行。约 15 分钟内，每位负责人都要按 **show-me-your-work** 开始 `decisions.tsv` 记录、推送首个分支快照，并以 ready 状态开启 PR，绝不设为 draft。记录不提交，在报告中返回。
+2. **在唤醒链上审计。** 根协调者约每 30 分钟执行一次审计。 本地根协调者以真实终端 `/loop` 安排每次审计，循环使用受监控 shell 睡眠 30 分钟，并输出通知哨兵；云端根协调者则使用既有 cloud-sleeper 唤醒链。绝不能靠记忆或可能丢失的完成通知维持节奏。每次审计用 `git show origin/main:pstack/skills/poteto-mode/playbooks/autopilot-stack.md` 从主干重读此 playbook，再重读启用的 `/goal`，对照两者审计执行，当次纠正偏移。对每位负责人做通用存活性或状态检查。只有副作用算进展：提交、推送、PR 或检查变化、存储报告。某条工作线超过预期运行时间仍无副作用，就视为卡住，立即停止并派替代者，不等礼貌返回。
+3. **保持操作者关卡。** 先陈述再等待，因此“说明计划”不等于允许执行。操作者明确同意后，以完整项目目标启用 `/goal`，跨轮次持续到整条链完成。操作者要求停止时，所有负责人立即停止一切写入。
+4. **在 STACK-READY 验证。** 负责人报告 STACK-READY 并给出完整 head SHA。根协调者按 **swarm** 分派并行任务验证该 SHA：独立验证者重跑该提交的关卡、对关键行为达到真实运行时验证的最低要求，以及不信任 PR 正文的证据记录和 diff 审计。Swarm 汇总为一个结论。发现交回负责人，任何未经验证内容不得进入栈。
+5. **结论通过才追加，绝不合入。** 负责人不得合并、启用自动合并或关闭 PR。无问题的结论允许将 PR 追加到唯一线性基线分支栈，按已验证顺序或操作者指定顺序排列。
+6. **拓扑单写者，构建并行写。** 负责人只推自己的分支，并报告 tip、当前 base 和预期 parent。根协调者是唯一拓扑写入者。追加 PR 时，fetch 预期 parent，将 child rebase 到该 parent 的准确 tip，仅在 `ls-remote` 检查后用 `--force-with-lease` 推送，再把 PR base 设为 parent 分支。按已解析平台，用 `origin pr create --status open --base <parent-branch>` 或 `gh pr create --base <parent-branch>` 创建；现有 PR 用 `origin pr edit <pr> --base <parent-branch>` 或 `gh pr edit <pr> --base <parent-branch>` 改目标。只有根 PR 指向主干。绝不通过 `gt` 提交或注册链。
+7. **根协调者吸收漂移，再重新验证变化部分。** 根协调者 fetch 当前主干，自下而上 rebase 整条链。若 rebase 在负责人文件中产生冲突，由该负责人修复自己的部分，再由根协调者推送结果。Rebase 会改写其上所有 SHA，使旧 SHA 上的结论失效。比较每个 PR 在判定 SHA 时 base-to-head diff 的稳定 `git patch-id` 与新 base-to-head diff。Patch-id 不变时可保留代码结论；任何补丁变化都必须重新经过第 4 步才能交付。每次改写推送后，即使 patch-id 不变，也重跑可合并性检查和 CI。联署规则与 Autopilot-full 一致。真正的新固定值要触发停止，等待根协调者重新联署；吸收已落地值的漂移不算新请求。
+8. **交付整条链。** 交付物是一条已验证的线性 PR 链，可在已解析的平台自下而上评审；每个链接都在 PR 正文或评论中携带验证者结论。操作者评审并合入，可自行点击或启用满足条件后合并。
 
 <!-- en:3 -->
 **Choosing between the autopilots.** Autopilot-full when the PRs are independent and landing authority is granted. Autopilot-stack when the operator wants review before landing, the work is sequenced or coupled, or merge authority is withheld.
 
 <!-- zh:3 -->
-> **中文**
->
-> **如何选择两种 autopilot。** PR 相互独立且已授予合入权限时用 Autopilot-full；操作者希望合入前评审、工作有顺序或耦合关系，或未授予合并权限时用 Autopilot-stack。
+**如何选择两种 autopilot。** PR 相互独立且已授予合入权限时用 Autopilot-full；操作者希望合入前评审、工作有顺序或耦合关系，或未授予合并权限时用 Autopilot-stack。
 
 <!-- en:4 -->
 **Reply:** links to the stack root and tip, a one-line verdict summary per link, and anything parked or excluded with the reason.
 
 <!-- zh:4 -->
-> **中文**
->
-> **回复：** 栈根和栈顶链接、每个 PR 一行结论摘要，以及暂存或排除的事项和原因。
+**回复：** 栈根和栈顶链接、每个 PR 一行结论摘要，以及暂存或排除的事项和原因。

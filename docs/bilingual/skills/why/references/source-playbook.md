@@ -5,17 +5,13 @@
 # Source playbooks
 
 <!-- zh:0 -->
-> **中文**
->
-> # 按来源分类的执行规程
+**按来源分类的执行规程**
 
 <!-- en:1 -->
 The why skill spawns one investigator per available evidence category, each reading a single source-specific playbook below. The playbooks are concrete examples for common MCPs. Adapt them for a different MCP in the same category.
 
 <!-- zh:1 -->
-> **中文**
->
-> why skill 为每个可用证据类别启动一名 investigator，各自只读下列一份对应来源的规程。这些是常见 MCP 的具体示例；同类别使用不同 MCP 时，按其能力调整。
+why skill 为每个可用证据类别启动一名 investigator，各自只读下列一份对应来源的规程。这些是常见 MCP 的具体示例；同类别使用不同 MCP 时，按其能力调整。
 
 <!-- en:2 -->
 | Category | Playbook | Example MCP it documents |
@@ -29,30 +25,24 @@ The why skill spawns one investigator per available evidence category, each read
 | Product analytics warehouse | [`databricks.md`](./sources/databricks.md) | Databricks SQL (adapt for Snowflake, BigQuery, ClickHouse, dbt) |
 
 <!-- zh:2 -->
-> **中文**
->
-> | 类别 | 执行规程 | 文中使用的 MCP 示例 |
-> |---|---|---|
-> | 版本控制历史 | [`code-archaeology.md`](./sources/code-archaeology.md) | git、`gh` |
-> | issue / 工单系统 | [`linear.md`](./sources/linear.md) | Linear（可调整为 Jira、GitHub Issues、Plane、Shortcut） |
-> | 长篇文档 | [`notion.md`](./sources/notion.md) | Notion（可调整为 Confluence、Google Docs、Coda） |
-> | 团队实时聊天 | [`slack.md`](./sources/slack.md) | Slack（可调整为 Discord、Microsoft Teams、Mattermost） |
-> | 基础设施可观测性 | [`datadog.md`](./sources/datadog.md) | Datadog（可调整为 New Relic、Honeycomb、Grafana、Splunk） |
-> | 错误 / 异常追踪 | [`sentry.md`](./sources/sentry.md) | Sentry（可调整为 Rollbar、Bugsnag、Airbrake） |
-> | 产品分析数仓 | [`databricks.md`](./sources/databricks.md) | Databricks SQL（可调整为 Snowflake、BigQuery、ClickHouse、dbt） |
+| 类别 | 执行规程 | 文中使用的 MCP 示例 |
+|---|---|---|
+| 版本控制历史 | [`code-archaeology.md`](./sources/code-archaeology.md) | git、`gh` |
+| issue / 工单系统 | [`linear.md`](./sources/linear.md) | Linear（可调整为 Jira、GitHub Issues、Plane、Shortcut） |
+| 长篇文档 | [`notion.md`](./sources/notion.md) | Notion（可调整为 Confluence、Google Docs、Coda） |
+| 团队实时聊天 | [`slack.md`](./sources/slack.md) | Slack（可调整为 Discord、Microsoft Teams、Mattermost） |
+| 基础设施可观测性 | [`datadog.md`](./sources/datadog.md) | Datadog（可调整为 New Relic、Honeycomb、Grafana、Splunk） |
+| 错误 / 异常追踪 | [`sentry.md`](./sources/sentry.md) | Sentry（可调整为 Rollbar、Bugsnag、Airbrake） |
+| 产品分析数仓 | [`databricks.md`](./sources/databricks.md) | Databricks SQL（可调整为 Snowflake、BigQuery、ClickHouse、dbt） |
 
 <!-- en:3 -->
 Cross-cutting:
 
 <!-- zh:3 -->
-> **中文**
->
-> 跨类别规程：
+跨类别规程：
 
 <!-- en:4 -->
 - [`incident-postmortem.md`](./sources/incident-postmortem.md). Add this if the target code looks defensive (null checks, retry, timeout, rate limit, feature flag, egress guard, OOM handler).
 
 <!-- zh:4 -->
-> **中文**
->
-> - [`incident-postmortem.md`](./sources/incident-postmortem.md)。目标代码呈现防御性设计（null 检查、重试、超时、限流、feature flag、出站访问防护、OOM 处理）时，额外加入此规程。
+- [`incident-postmortem.md`](./sources/incident-postmortem.md)。目标代码呈现防御性设计（null 检查、重试、超时、限流、feature flag、出站访问防护、OOM 处理）时，额外加入此规程。

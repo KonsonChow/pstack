@@ -4,26 +4,17 @@
 <!-- en:0 -->
 ### Eval
 
-<!-- zh:0 -->
-> **中文**
->
-> ### Eval（中文）
-
 <!-- en:1 -->
 **You own the experiment design. Plan, blind, run, synthesize.**
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责实验设计。规划、盲化、运行、综合。**
+**你负责实验设计。规划、盲化、运行、综合。**
 
 <!-- en:2 -->
 **Non-negotiables for blinding:**
 
 <!-- zh:2 -->
-> **中文**
->
-> **盲化的不可妥协要求：**
+**盲化的不可妥协要求：**
 
 <!-- en:3 -->
 - No `eval`, `test`, `judge`, `experiment`, `rubric`, `score`, `compare`, `benchmark`, `candidate`, or `arena` in any directory, file, or prompt the candidate sees.
@@ -35,23 +26,19 @@
 - Comparing two variants: one judge scores both sets in a single pass on one scale, blind to which set each came from.
 
 <!-- zh:3 -->
-> **中文**
->
-> - 候选能看到的目录、文件、提示词中，不出现 `eval`、`test`、`judge`、`experiment`、`rubric`、`score`、`compare`、`benchmark`、`candidate` 或 `arena`。
-> - 候选提示词看起来是自然的用户请求。陈述目标，不透露评测背景。
-> - 不用诱导调用链的提示。不要求候选列出应用了哪些 skill、原则或文件，只泛泛要求设计说明；根据代码形态评价流程遵循，而非自述。
-> - 清理目录与 slug 名，采用用户可能选择的项目式名称。
-> - 不告诉候选还有其他候选。
-> - judge 可以知道自己在评审，但输出只用清理后的标签呈现，不给模型名。
-> - 比较两个变体时，一个 judge 一次性用同一尺度评分两组，并不知道各组来源。
+- 候选能看到的目录、文件、提示词中，不出现 `eval`、`test`、`judge`、`experiment`、`rubric`、`score`、`compare`、`benchmark`、`candidate` 或 `arena`。
+- 候选提示词看起来是自然的用户请求。陈述目标，不透露评测背景。
+- 不用诱导调用链的提示。不要求候选列出应用了哪些 skill、原则或文件，只泛泛要求设计说明；根据代码形态评价流程遵循，而非自述。
+- 清理目录与 slug 名，采用用户可能选择的项目式名称。
+- 不告诉候选还有其他候选。
+- judge 可以知道自己在评审，但输出只用清理后的标签呈现，不给模型名。
+- 比较两个变体时，一个 judge 一次性用同一尺度评分两组，并不知道各组来源。
 
 <!-- en:4 -->
 **Steps:**
 
 <!-- zh:4 -->
-> **中文**
->
-> **步骤：**
+**步骤：**
 
 <!-- en:5 -->
 1. **Frame.** State what variant is under test and what behavior counts as success. Write the rubric (3-6 concrete criteria) for the judge only. Hold it back from candidates.
@@ -63,20 +50,16 @@
 7. **Read every candidate output yourself** end to end. Compare to the judge's verdict. Disagreement means a model is biased or the rubric is ambiguous. Synthesize.
 
 <!-- zh:5 -->
-> **中文**
->
-> 1. **界定。** 说明测试哪个变体，什么行为算成功。为 judge 写 3–6 项具体标准，不给候选。
-> 2. **设置清理过的环境。** 每个候选独立目录，放好变体。提供自然任务本应具备的上下文：项目骨架、候选自然会阅读的 skill。
-> 3. **写一个自然提示词。** 就像用户会输入的内容，不泄漏测量目标。
-> 4. **并行启动 N 个候选**，按 **arena** skill 的 Phase B 使用不同模型。各在清理过的独立目录，用同一提示词。
-> 5. **启动一个盲评 judge**，按 **arena** Phase C 使用不同模型系列。judge 只看清理后标签的输出和标准，不看模型名。
-> 6. **从记录验证调用链，不信自述。** 读取当前工作区会话目录中每个候选的本地记录（Cursor 用系统提示词指定的 `agent-transcripts/`；其他环境见 SKILL.md 的 Harness）。不要 glob 所有项目目录，这会越过工作区边界，读到无关私密聊天。检查候选实际打开哪些文件。根据真实阅读文件和代码形态评价流程遵循，绝不信候选自称。
-> 7. **亲自完整阅读所有候选输出**，与 judge 结论比较。分歧意味着模型偏见或标准含糊，进行综合判断。
+1. **界定。** 说明测试哪个变体，什么行为算成功。为 judge 写 3–6 项具体标准，不给候选。
+2. **设置清理过的环境。** 每个候选独立目录，放好变体。提供自然任务本应具备的上下文：项目骨架、候选自然会阅读的 skill。
+3. **写一个自然提示词。** 就像用户会输入的内容，不泄漏测量目标。
+4. **并行启动 N 个候选**，按 **arena** skill 的 Phase B 使用不同模型。各在清理过的独立目录，用同一提示词。
+5. **启动一个盲评 judge**，按 **arena** Phase C 使用不同模型系列。judge 只看清理后标签的输出和标准，不看模型名。
+6. **从记录验证调用链，不信自述。** 读取当前工作区会话目录中每个候选的本地记录（Cursor 用系统提示词指定的 `agent-transcripts/`；其他环境见 SKILL.md 的 Harness）。不要 glob 所有项目目录，这会越过工作区边界，读到无关私密聊天。检查候选实际打开哪些文件。根据真实阅读文件和代码形态评价流程遵循，绝不信候选自称。
+7. **亲自完整阅读所有候选输出**，与 judge 结论比较。分歧意味着模型偏见或标准含糊，进行综合判断。
 
 <!-- en:6 -->
 **Reply:** variant under test, rubric, per-candidate notes, judge's verdict, your synthesis, and a recommendation for whether to promote the variant.
 
 <!-- zh:6 -->
-> **中文**
->
-> **回复：** 被测变体、标准、各候选说明、judge 结论、你的综合判断，以及是否正式采用变体的建议。
+**回复：** 被测变体、标准、各候选说明、judge 结论、你的综合判断，以及是否正式采用变体的建议。

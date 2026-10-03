@@ -5,25 +5,19 @@
 ### Trace forensics
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 追踪文件取证
+**追踪文件取证**
 
 <!-- en:1 -->
 **You own the diagnosis from the artifact. Load it, shape it, narrow to the cause, attribute to source.**
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责根据产物诊断。加载、转成可分析形态、收敛到原因、关联源码。**
+**你负责根据产物诊断。加载、转成可分析形态、收敛到原因、关联源码。**
 
 <!-- en:2 -->
 Distinct from **Runtime forensics**, which instruments the live process. Here the capture already exists. The artifact is a fixed dataset, read it, don't re-run it. Keep tooling generic so the playbook stays portable: a DevTools or trace parser for cpuprofile and `.json.gz`, a text editor for a spindump, your heap tooling for a heapsnapshot.
 
 <!-- zh:2 -->
-> **中文**
->
-> 与对实时进程加观测的 **Runtime forensics** 不同，这里已经有采集结果。产物是固定数据集，读取它，不重新运行。工具保持通用，让规程可移植：cpuprofile 和 `.json.gz` 用 DevTools 或 trace parser，spindump 用文本编辑器，heapsnapshot 用堆分析工具。
+与对实时进程加观测的 **Runtime forensics** 不同，这里已经有采集结果。产物是固定数据集，读取它，不重新运行。工具保持通用，让规程可移植：cpuprofile 和 `.json.gz` 用 DevTools 或 trace parser，spindump 用文本编辑器，heapsnapshot 用堆分析工具。
 
 <!-- en:3 -->
 1. Identify the format and load it with the right tool. Parse large artifacts in a subagent (the **principle-guard-the-context-window** skill) and keep the reduced finding in the main thread.
@@ -34,19 +28,15 @@ Distinct from **Runtime forensics**, which instruments the live process. Here th
 6. Hand back a cited diagnosis, no fix unless asked. Route to Bug fix or Perf issue once the cause is known. Throughput checkpoint stays one line: `throughput checkpoint: n/a, read-only forensics`.
 
 <!-- zh:3 -->
-> **中文**
->
-> 1. 识别格式，用正确工具加载。大型产物由 subagent 解析（**principle-guard-the-context-window** skill），主线程只保留提炼结果。
-> 2. 把原始产物转成可查询形式。trace 或 heap snapshot 导入 SQLite，每个 sample、frame 或 node 一行。先得到可查询结构，再阅读。
-> 3. 收敛到原因。查询耗时最多的栈帧，沿调用树到热点路径。泄漏则从泄漏对象沿 retainer chain 追到 GC root。spindump 则找持续占 CPU 或阻塞的线程及等待原因。
-> 4. 关联源码。通过产物自带符号将热点帧映射到文件、符号和行。没有源码映射的帧还不构成诊断。解析符号，或明确说产物不含符号。
-> 5. 有成对采集时交叉确认，比较改动前后产物。没有时，标为产物支持的最强假设，而非已确认根因。
-> 6. 交回带引用诊断，未被要求时不修复。原因明确后路由 Bug fix 或 Perf issue。吞吐量检查点只写一行：`throughput checkpoint: n/a, read-only forensics`。
+1. 识别格式，用正确工具加载。大型产物由 subagent 解析（**principle-guard-the-context-window** skill），主线程只保留提炼结果。
+2. 把原始产物转成可查询形式。trace 或 heap snapshot 导入 SQLite，每个 sample、frame 或 node 一行。先得到可查询结构，再阅读。
+3. 收敛到原因。查询耗时最多的栈帧，沿调用树到热点路径。泄漏则从泄漏对象沿 retainer chain 追到 GC root。spindump 则找持续占 CPU 或阻塞的线程及等待原因。
+4. 关联源码。通过产物自带符号将热点帧映射到文件、符号和行。没有源码映射的帧还不构成诊断。解析符号，或明确说产物不含符号。
+5. 有成对采集时交叉确认，比较改动前后产物。没有时，标为产物支持的最强假设，而非已确认根因。
+6. 交回带引用诊断，未被要求时不修复。原因明确后路由 Bug fix 或 Perf issue。吞吐量检查点只写一行：`throughput checkpoint: n/a, read-only forensics`。
 
 <!-- en:4 -->
 **Reply:** the artifact and format, the reduced finding, the source location, the artifact paths, and whether a paired capture confirmed it.
 
 <!-- zh:4 -->
-> **中文**
->
-> **回复：** 产物及格式、提炼发现、源码位置、产物路径，以及是否由成对采集确认。
+**回复：** 产物及格式、提炼发现、源码位置、产物路径，以及是否由成对采集确认。

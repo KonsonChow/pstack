@@ -11,47 +11,37 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-subtract-before-you-add
-> description: "安排新增、重构或重写的步骤时使用。先删除死代码、冗余校验器和空壳引用，再在更简单的基础上构建。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-subtract-before-you-add
+description: "安排新增、重构或重写的步骤时使用。先删除死代码、冗余校验器和空壳引用，再在更简单的基础上构建。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Subtract Before You Add
 
 <!-- zh:1 -->
-> **中文**
->
-> # 先做减法，再做加法
+**先做减法，再做加法**
 
 <!-- en:2 -->
 When evolving a system, remove complexity first, then build.
 
 <!-- zh:2 -->
-> **中文**
->
-> 演进系统时，先消除复杂性，再构建。
+演进系统时，先消除复杂性，再构建。
 
 <!-- en:3 -->
 **Why:** Adding to a complex system compounds complexity. Removing first leaves less code, reveals the essential structure, and usually makes the next design obvious. Default to subtraction.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：**在复杂系统中继续添加会使复杂性叠加。先删除能减少代码、显露本质结构，通常也会让下一步设计变得明显。默认先做减法。
+**原因：**在复杂系统中继续添加会使复杂性叠加。先删除能减少代码、显露本质结构，通常也会让下一步设计变得明显。默认先做减法。
 
 <!-- en:4 -->
 Make simplification a continual investment. Leave the design slightly simpler and more capable behind the same or smaller surface than you found it.
 
 <!-- zh:4 -->
-> **中文**
->
-> 持续投入简化工作。在相同或更小的对外接口之下，让设计比接手时更简单、更有能力。
+持续投入简化工作。在相同或更小的对外接口之下，让设计比接手时更简单、更有能力。
 
 <!-- en:5 -->
 **The pattern:**
@@ -63,12 +53,10 @@ Make simplification a continual investment. Leave the design slightly simpler an
 - When a reference has no novel content, delete it rather than leaving a stub
 
 <!-- zh:5 -->
-> **中文**
->
-> **模式：**
-> - 先删除，再构建
-> - 先删减，再打磨（达到最小范围后再投入质量）
-> - 面向观察到的用法设计，不为臆测的边界情况设计
-> - 不添加超出规范要求的臆测性校验器、解析器或防护逻辑
-> - 简化提示词（删除冗余指令和过多模板）
-> - 引用资料没有新内容时，直接删除，不要留下空壳
+**模式：**
+- 先删除，再构建
+- 先删减，再打磨（达到最小范围后再投入质量）
+- 面向观察到的用法设计，不为臆测的边界情况设计
+- 不添加超出规范要求的臆测性校验器、解析器或防护逻辑
+- 简化提示词（删除冗余指令和过多模板）
+- 引用资料没有新内容时，直接删除，不要留下空壳

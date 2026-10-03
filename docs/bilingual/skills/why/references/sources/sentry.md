@@ -5,25 +5,19 @@
 # Sentry Error History
 
 <!-- zh:0 -->
-> **中文**
->
-> # Sentry 错误历史
+**Sentry 错误历史**
 
 <!-- en:1 -->
 ## What this source contains
 
 <!-- zh:1 -->
-> **中文**
->
-> ## 这个来源包含什么
+**这个来源包含什么**
 
 <!-- en:2 -->
 Sentry is the archive of things that went wrong. For defensive, corrective, or error-handling code, it often holds the direct motivation: the specific exceptions, stack traces, and frequencies that pushed someone to add a check, catch, retry, or fallback.
 
 <!-- zh:2 -->
-> **中文**
->
-> Sentry 是错误的档案库。对于防御、纠正或错误处理代码，它常保存直接动机：哪些具体异常、堆栈和频率促使作者添加检查、catch、重试或回退。
+Sentry 是错误的档案库。对于防御、纠正或错误处理代码，它常保存直接动机：哪些具体异常、堆栈和频率促使作者添加检查、catch、重试或回退。
 
 <!-- en:3 -->
 - **Issues.** Grouped errors with counts, first/last seen timestamps, affected releases, and comments
@@ -34,46 +28,36 @@ Sentry is the archive of things that went wrong. For defensive, corrective, or e
 - **Issue comments & assignments.** Sometimes contain engineer notes on root cause
 
 <!-- zh:3 -->
-> **中文**
->
-> - **Issue。** 分组错误，含数量、首次／最后出现时间、受影响版本及评论。
-> - **Event。** Issue 中的单个错误实例（堆栈、tag、用户上下文）。
-> - **Release。** 带关联 issue 的部署记录（适合回答“哪个版本修复了它？”）。
-> - **Replay。** 用户可见错误的会话录制（启用时）。
-> - **Profile。** 性能剖析数据（对“为什么”用途较少，对“多慢”更有用）。
-> - **Issue 评论及分配。** 有时包含工程师对根因的记录。
+- **Issue。** 分组错误，含数量、首次／最后出现时间、受影响版本及评论。
+- **Event。** Issue 中的单个错误实例（堆栈、tag、用户上下文）。
+- **Release。** 带关联 issue 的部署记录（适合回答“哪个版本修复了它？”）。
+- **Replay。** 用户可见错误的会话录制（启用时）。
+- **Profile。** 性能剖析数据（对“为什么”用途较少，对“多慢”更有用）。
+- **Issue 评论及分配。** 有时包含工程师对根因的记录。
 
 <!-- en:4 -->
 The most valuable thing Sentry provides is **temporal correlation**: "issue X was created 2024-01-02, peaked at 500 events/day, stopped appearing after release v2.14.0 on 2024-01-15, the release that shipped the defensive check."
 
 <!-- zh:4 -->
-> **中文**
->
-> Sentry 最有价值的是**时间关联**：“issue X 在 2024-01-02 创建，峰值每日 500 事件；2024-01-15 的 v2.14.0 发布后不再出现，该版本交付了防御检查。”
+Sentry 最有价值的是**时间关联**：“issue X 在 2024-01-02 创建，峰值每日 500 事件；2024-01-15 的 v2.14.0 发布后不再出现，该版本交付了防御检查。”
 
 <!-- en:5 -->
 ## How to search it
 
 <!-- zh:5 -->
-> **中文**
->
-> ## 如何搜索
+**如何搜索**
 
 <!-- en:6 -->
 Use the Sentry MCP.
 
 <!-- zh:6 -->
-> **中文**
->
-> 使用 Sentry MCP。
+使用 Sentry MCP。
 
 <!-- en:7 -->
 1. **Orient.** If you don't know the project slug and organization:
 
 <!-- zh:7 -->
-> **中文**
->
-> 1. **确定范围。** 不知道 project slug 和 organization 时：
+1. **确定范围。** 不知道 project slug 和 organization 时：
 
 <!-- en:8 -->
    ```
@@ -81,21 +65,11 @@ Use the Sentry MCP.
    find_projects
    ```
 
-<!-- zh:8 -->
-> **中文**
->
->    ```
->    find_organizations
->    find_projects
->    ```
-
 <!-- en:9 -->
 2. **Search for issues related to the target.**
 
 <!-- zh:9 -->
-> **中文**
->
-> 2. **搜索与目标相关的 issue。**
+2. **搜索与目标相关的 issue。**
 
 <!-- en:10 -->
    ```
@@ -103,27 +77,21 @@ Use the Sentry MCP.
    ```
 
 <!-- zh:10 -->
-> **中文**
->
->    ```
->    search_issues（自然语言，例如“PaymentService timeout 中的错误”“uploadFile 中未处理的异常”）
->    ```
+   ```
+   search_issues（自然语言，例如“PaymentService timeout 中的错误”“uploadFile 中未处理的异常”）
+   ```
 
 <!-- en:11 -->
    Good query components: exception class names the target handles, the function or class name of the target, error message strings the target checks for, the file path of the target.
 
 <!-- zh:11 -->
-> **中文**
->
->    有效查询内容：目标处理的异常类名、目标函数或类名、目标检查的错误消息字符串、目标文件路径。
+   有效查询内容：目标处理的异常类名、目标函数或类名、目标检查的错误消息字符串、目标文件路径。
 
 <!-- en:12 -->
 3. **Narrow by release and time window.**
 
 <!-- zh:12 -->
-> **中文**
->
-> 3. **按 release 和时间窗缩小范围。**
+3. **按 release 和时间窗缩小范围。**
 
 <!-- en:13 -->
    ```
@@ -132,12 +100,10 @@ Use the Sentry MCP.
    ```
 
 <!-- zh:13 -->
-> **中文**
->
->    ```
->    search_issue_events（按 release、时间、环境、trace ID、tag 过滤）
->    get_issue_tag_values（对某个 issue 查看版本、用户、环境的分布）
->    ```
+   ```
+   search_issue_events（按 release、时间、环境、trace ID、tag 过滤）
+   get_issue_tag_values（对某个 issue 查看版本、用户、环境的分布）
+   ```
 
 <!-- en:14 -->
    For a suspected issue, check:
@@ -147,21 +113,17 @@ Use the Sentry MCP.
    - **Frequency trajectory.** Did it spike, then get resolved?
 
 <!-- zh:14 -->
-> **中文**
->
->    对疑似 issue 检查：
->    - **首次出现。** 错误何时开始？
->    - **最后出现。** 何时停止？是否与目标交付日期对应？
->    - **受影响版本。** 哪些版本出现？哪个版本修复？
->    - **频率趋势。** 是否骤增后解决？
+   对疑似 issue 检查：
+   - **首次出现。** 错误何时开始？
+   - **最后出现。** 何时停止？是否与目标交付日期对应？
+   - **受影响版本。** 哪些版本出现？哪个版本修复？
+   - **频率趋势。** 是否骤增后解决？
 
 <!-- en:15 -->
 4. **Pull the full event for context.**
 
 <!-- zh:15 -->
-> **中文**
->
-> 4. **获取完整 event 以了解上下文。**
+4. **获取完整 event 以了解上下文。**
 
 <!-- en:16 -->
    ```
@@ -169,27 +131,21 @@ Use the Sentry MCP.
    ```
 
 <!-- zh:16 -->
-> **中文**
->
->    ```
->    get_sentry_resource（传入 Sentry URL 或 type+ID）
->    ```
+   ```
+   get_sentry_resource（传入 Sentry URL 或 type+ID）
+   ```
 
 <!-- en:17 -->
    Does the stack trace pass through the target code? Do the tags and breadcrumbs match the conditions the target defends against?
 
 <!-- zh:17 -->
-> **中文**
->
->    堆栈是否经过目标代码？tag 和 breadcrumb 是否匹配目标防御的条件？
+   堆栈是否经过目标代码？tag 和 breadcrumb 是否匹配目标防御的条件？
 
 <!-- en:18 -->
 5. **Check releases that landed near the target.**
 
 <!-- zh:18 -->
-> **中文**
->
-> 5. **检查目标附近发布的 release。**
+5. **检查目标附近发布的 release。**
 
 <!-- en:19 -->
    ```
@@ -197,55 +153,38 @@ Use the Sentry MCP.
    ```
 
 <!-- zh:19 -->
-> **中文**
->
->    ```
->    find_releases（目标提交日期附近）
->    ```
+   ```
+   find_releases（目标提交日期附近）
+   ```
 
 <!-- en:20 -->
    Cross-reference release version with the PR's merge date.
 
 <!-- zh:20 -->
-> **中文**
->
->    将 release 版本与 PR 合并日期交叉核对。
+   将 release 版本与 PR 合并日期交叉核对。
 
 <!-- en:21 -->
 6. **Use Seer sparingly.**
 
 <!-- zh:21 -->
-> **中文**
->
-> 6. **节制使用 Seer。**
+6. **节制使用 Seer。**
 
 <!-- en:22 -->
    ```
    analyze_issue_with_seer
    ```
 
-<!-- zh:22 -->
-> **中文**
->
->    ```
->    analyze_issue_with_seer
->    ```
-
 <!-- en:23 -->
    Seer produces AI root-cause analyses. Useful as a hypothesis generator, but treat them as inference, not authoritative. The actual events and stack traces are the primary evidence. Seer's narrative is secondary.
 
 <!-- zh:23 -->
-> **中文**
->
->    Seer 生成 AI 根因分析，适合生成假设，但应视为推断，不是权威结论。真实事件和堆栈才是主要证据，Seer 叙述是次要证据。
+   Seer 生成 AI 根因分析，适合生成假设，但应视为推断，不是权威结论。真实事件和堆栈才是主要证据，Seer 叙述是次要证据。
 
 <!-- en:24 -->
 ## What good evidence looks like here
 
 <!-- zh:24 -->
-> **中文**
->
-> ## 这里的可靠证据是什么样的
+**这里的可靠证据是什么样的**
 
 <!-- en:25 -->
 - An issue whose **first seen** is shortly before the target's PR and **last seen** shortly after, suggesting the target addressed this error
@@ -255,21 +194,17 @@ Use the Sentry MCP.
 - An issue with high event counts that stops after the release containing the target
 
 <!-- zh:25 -->
-> **中文**
->
-> - **首次出现**略早于目标 PR，**最后出现**略晚于 PR 的 issue，暗示目标处理了该错误。
-> - 堆栈经过或落在目标函数，揭示被防御的准确失败模式。
-> - PR 作者在 issue 评论中描述修复。
-> - 目标 PR description 或提交消息引用 Sentry issue URL 或 ID。
-> - 高事件数 issue 在包含目标的 release 后停止。
+- **首次出现**略早于目标 PR，**最后出现**略晚于 PR 的 issue，暗示目标处理了该错误。
+- 堆栈经过或落在目标函数，揭示被防御的准确失败模式。
+- PR 作者在 issue 评论中描述修复。
+- 目标 PR description 或提交消息引用 Sentry issue URL 或 ID。
+- 高事件数 issue 在包含目标的 release 后停止。
 
 <!-- en:26 -->
 ## Common pitfalls
 
 <!-- zh:26 -->
-> **中文**
->
-> ## 常见陷阱
+**常见陷阱**
 
 <!-- en:27 -->
 - **Grouping drift.** Sentry groups errors by fingerprint. Refactors or renames can track the "same" error under a new issue ID. If an issue ends abruptly, the error may have just been regrouped. Check for new issues immediately after.
@@ -280,22 +215,18 @@ Use the Sentry MCP.
 - **Sampling.** Some projects sample events aggressively. A low event count may just mean high sampling, not a rare error. If in doubt, note the gap.
 
 <!-- zh:27 -->
-> **中文**
->
-> - **分组漂移。** Sentry 按 fingerprint 分组。重构或重命名可能让“同一”错误归入新 issue ID。突然停止时，可能只是重新分组，检查紧接着出现的新 issue。
-> - **Release 关联有噪声。** 一个 release 含很多提交。issue 在 v2.14.0 停止不能证明目标修复了它，也可能是同 release 的另一改动。核对目标的准确提交。
-> - **无声修复。** 错误有时因上游改变而停止，而非防御代码。关联暗示修复，但不能证明是谁修的。
-> - **Resolved 不等于 fixed。** Issue 可以没有代码改动就手动标为“resolved”。把它当成人的标记，不是代码已修复的证据。
-> - **Seer 幻觉。** Seer 会生成听起来笃定却不正确的解释。提出主张时回到实际 event、堆栈和时间戳。
-> - **采样。** 一些项目大量采样。低事件量可能只是采样率高，而非错误少。无法确定时，标明缺口。
+- **分组漂移。** Sentry 按 fingerprint 分组。重构或重命名可能让“同一”错误归入新 issue ID。突然停止时，可能只是重新分组，检查紧接着出现的新 issue。
+- **Release 关联有噪声。** 一个 release 含很多提交。issue 在 v2.14.0 停止不能证明目标修复了它，也可能是同 release 的另一改动。核对目标的准确提交。
+- **无声修复。** 错误有时因上游改变而停止，而非防御代码。关联暗示修复，但不能证明是谁修的。
+- **Resolved 不等于 fixed。** Issue 可以没有代码改动就手动标为“resolved”。把它当成人的标记，不是代码已修复的证据。
+- **Seer 幻觉。** Seer 会生成听起来笃定却不正确的解释。提出主张时回到实际 event、堆栈和时间戳。
+- **采样。** 一些项目大量采样。低事件量可能只是采样率高，而非错误少。无法确定时，标明缺口。
 
 <!-- en:28 -->
 ## What to return
 
 <!-- zh:28 -->
-> **中文**
->
-> ## 返回什么
+**返回什么**
 
 <!-- en:29 -->
 For each relevant issue:
@@ -310,15 +241,13 @@ For each relevant issue:
 - Any author comments or resolution notes
 
 <!-- zh:29 -->
-> **中文**
->
-> 每个相关 issue 包括：
-> - Issue ID 和标题
-> - Project 和 organization
-> - 首次／最后出现时间戳
-> - 事件数（以及已知的采样率）
-> - 受影响 release
-> - 展示与目标相关性的代表性堆栈片段（原文摘录，不是摘要）
-> - 首次／最后出现与目标交付日的关联
-> - Issue 链接
-> - 作者评论或解决记录
+每个相关 issue 包括：
+- Issue ID 和标题
+- Project 和 organization
+- 首次／最后出现时间戳
+- 事件数（以及已知的采样率）
+- 受影响 release
+- 展示与目标相关性的代表性堆栈片段（原文摘录，不是摘要）
+- 首次／最后出现与目标交付日的关联
+- Issue 链接
+- 作者评论或解决记录

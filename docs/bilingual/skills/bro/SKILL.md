@@ -11,20 +11,16 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: bro
-> description: 用没有术语的普通人话，重新表述上一条消息。
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: bro
+description: 用没有术语的普通人话，重新表述上一条消息。
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 Restate your last message. Stop using jargon and speak coherently. State it more simply and concisely, like one human talking to another.
 
 <!-- zh:1 -->
-> **中文**
->
-> 重新说一遍你上一条消息。别再用术语，连贯地说人话。更简单、更简洁，就像一个人对另一个人说话。
+重新说一遍你上一条消息。别再用术语，连贯地说人话。更简单、更简洁，就像一个人对另一个人说话。

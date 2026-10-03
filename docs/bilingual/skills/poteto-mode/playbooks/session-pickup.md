@@ -5,17 +5,13 @@
 ### Session pickup
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 接续会话
+**接续会话**
 
 <!-- en:1 -->
 **You own the resume point. Read the prior trail, don't redo it.**
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责确定恢复点。阅读既有记录，不要重做。**
+**你负责确定恢复点。阅读既有记录，不要重做。**
 
 <!-- en:2 -->
 1. Locate the prior trail. A local transcript in the active workspace's session directory (in Cursor, the `agent-transcripts/` directory the system prompt names. Other harnesses: see **Harness** in SKILL.md. Do not glob across every project's directory, that crosses workspace boundaries and reads private chats from unrelated projects), a cloud-agent URL, or a pushed branch. Read the metadata overview and last messages first, then scan back for the decision points. Parse a long transcript in a subagent and keep the reduced timeline in the main thread (the **principle-guard-the-context-window** skill).
@@ -25,18 +21,14 @@
 5. Verify the inherited claims against the original goal on the real artifact (the **principle-prove-it-works** skill). A passing prior self-report is not the proof.
 
 <!-- zh:2 -->
-> **中文**
->
-> 1. 找到既有记录：当前工作区会话目录中的本地对话记录（Cursor 中是系统提示指定的 `agent-transcripts/` 目录；其他 agent 运行环境见 SKILL.md 的 **Harness**）、云端 agent URL，或已推送分支。不要跨所有项目目录使用 glob，这会越过工作区边界，读取无关项目的私密聊天。先阅读元数据概览与最后几条消息，再向前查找决策点。长对话交给 subagent 解析，主线程只保留精简时间线（**principle-guard-the-context-window** skill）。
-> 2. 重建执行状态：分支与 worktree、已经合入的内容（`git log`、相对基线的 `git diff`）、未完成事项及既有决策。既有记录是权威输入，克制重新推导的倾向。
-> 3. 对照已完成与待完成。比较交付内容和计划，明确恢复点，不重新运行先前复现，也不重做已完成工作。“让我从头验证”意味着你把权威记录当成不可信内容。
-> 4. 将剩余工作交给匹配的 playbook，并选择结论：继续执行、交付已完成的建议、认可或推翻既有结论，或复盘失败运行。接续 playbook 到此结束，后续归目标 playbook 负责。
-> 5. 在真实产物上，根据原始目标验证继承的结论（**principle-prove-it-works** skill）。此前的自报通过不是证据。
+1. 找到既有记录：当前工作区会话目录中的本地对话记录（Cursor 中是系统提示指定的 `agent-transcripts/` 目录；其他 agent 运行环境见 SKILL.md 的 **Harness**）、云端 agent URL，或已推送分支。不要跨所有项目目录使用 glob，这会越过工作区边界，读取无关项目的私密聊天。先阅读元数据概览与最后几条消息，再向前查找决策点。长对话交给 subagent 解析，主线程只保留精简时间线（**principle-guard-the-context-window** skill）。
+2. 重建执行状态：分支与 worktree、已经合入的内容（`git log`、相对基线的 `git diff`）、未完成事项及既有决策。既有记录是权威输入，克制重新推导的倾向。
+3. 对照已完成与待完成。比较交付内容和计划，明确恢复点，不重新运行先前复现，也不重做已完成工作。“让我从头验证”意味着你把权威记录当成不可信内容。
+4. 将剩余工作交给匹配的 playbook，并选择结论：继续执行、交付已完成的建议、认可或推翻既有结论，或复盘失败运行。接续 playbook 到此结束，后续归目标 playbook 负责。
+5. 在真实产物上，根据原始目标验证继承的结论（**principle-prove-it-works** skill）。此前的自报通过不是证据。
 
 <!-- en:3 -->
 **Reply:** where the prior agent stopped, what you inherited vs redid (ideally nothing redone), the resume point, and the outcome.
 
 <!-- zh:3 -->
-> **中文**
->
-> **回复：** 上一个 agent 停在哪里、哪些内容直接继承及哪些重做（最好没有重做）、恢复点和结果。
+**回复：** 上一个 agent 停在哪里、哪些内容直接继承及哪些重做（最好没有重做）、恢复点和结果。

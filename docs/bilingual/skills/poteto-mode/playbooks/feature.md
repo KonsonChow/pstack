@@ -5,17 +5,13 @@
 ### Feature
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 功能开发
+**功能开发**
 
 <!-- en:1 -->
 **You own the design. Plan, review, verify.** Delegate implementation. Stay in the lead.
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责设计。规划、评审、验证。**委派实现，始终主导工作。
+**你负责设计。规划、评审、验证。**委派实现，始终主导工作。
 
 <!-- en:2 -->
 1. `how` over the affected subsystem.
@@ -33,34 +29,28 @@
 8. Run **Opening a PR**.
 
 <!-- zh:2 -->
-> **中文**
->
-> 1. 对受影响子系统运行 `how`。
-> 2. 用 `architect` 并行探索设计。若跳过，必须留下 `architect skipped: <reason>`。不要默默把设计决策并入实现。
-> 3. 将吞吐量检查点写成四项待办。确实不适用的维度（单文件、无需并行分派）仍保留该项，写 `n/a: <reason>`，不要删掉：
->    - **阻塞性前置步骤。**并行分派前完成检查关卡。
->    - **独立工作流。**互不重叠的文件、服务或层可以并行，共享写入必须串行。
->    - **共享可变状态。**默认拆分目标（**separate-before-serializing-shared-state** 原则 skill）。只有真实不变量要求时才串行。
->    - **最小安全拆分。**如果一个执行者最合适，说明原因。
-> 4. 将代码编写委派给使用已配置 feature 模型（默认 `grok-4.6-fast-xhigh`）的 subagent，给出明确范围（文件路径、依据 **principle-model-the-domain** 确定的数据形态及组织结构：用状态机代替分散布尔值、用表或注册表代替分支、用类型模型代替重复的数据形态假设；必须在委派者编写逻辑前选定，并说明成功标准）。亲自评审其 diff。如果实现存在多种合理结构（错误处理、抽象层、测试结构），改用 **arena** skill 委派，让参赛者给出备选方案，再由交叉评审者把关。强制执行：不允许用说明理由来跳过，Laziness Protocol 也不能覆盖此要求（收益是实现与评审分离，而非节省代码行数）。即便你自己是 subagent，也可以再启动 subagent。“应用很小”和“subagent 不能再启动 subagent”都不是正确理由。若 subagent 被禁止继续启动，则它直接负责 diff，并保持同样的评审分离。不要回复“待命”并等待嵌套 agent。注释遵循 **Comments**。保持局部精确修改；对来自上游的文件，重新对照来源确认。将共享基础组件的改进移植到所有调用方，并逐一验证。经常提交。
-> 5. 在对应界面验证。“无法确定”或用错界面都不算通过，必须指出。
-> 6. rebase 为小而有序的提交。后续改动组成 PR 栈。
->    使用 **sequence-verifiable-units** 原则 skill，每个小单元都先构建、验证、提交，再做下一个。
-> 7. 设计存在争议时，交付前运行 `interrogate`。
-> 8. 执行 **Opening a PR**。
+1. 对受影响子系统运行 `how`。
+2. 用 `architect` 并行探索设计。若跳过，必须留下 `architect skipped: <reason>`。不要默默把设计决策并入实现。
+3. 将吞吐量检查点写成四项待办。确实不适用的维度（单文件、无需并行分派）仍保留该项，写 `n/a: <reason>`，不要删掉：
+   - **阻塞性前置步骤。**并行分派前完成检查关卡。
+   - **独立工作流。**互不重叠的文件、服务或层可以并行，共享写入必须串行。
+   - **共享可变状态。**默认拆分目标（**separate-before-serializing-shared-state** 原则 skill）。只有真实不变量要求时才串行。
+   - **最小安全拆分。**如果一个执行者最合适，说明原因。
+4. 将代码编写委派给使用已配置 feature 模型（默认 `grok-4.6-fast-xhigh`）的 subagent，给出明确范围（文件路径、依据 **principle-model-the-domain** 确定的数据形态及组织结构：用状态机代替分散布尔值、用表或注册表代替分支、用类型模型代替重复的数据形态假设；必须在委派者编写逻辑前选定，并说明成功标准）。亲自评审其 diff。如果实现存在多种合理结构（错误处理、抽象层、测试结构），改用 **arena** skill 委派，让参赛者给出备选方案，再由交叉评审者把关。强制执行：不允许用说明理由来跳过，Laziness Protocol 也不能覆盖此要求（收益是实现与评审分离，而非节省代码行数）。即便你自己是 subagent，也可以再启动 subagent。“应用很小”和“subagent 不能再启动 subagent”都不是正确理由。若 subagent 被禁止继续启动，则它直接负责 diff，并保持同样的评审分离。不要回复“待命”并等待嵌套 agent。注释遵循 **Comments**。保持局部精确修改；对来自上游的文件，重新对照来源确认。将共享基础组件的改进移植到所有调用方，并逐一验证。经常提交。
+5. 在对应界面验证。“无法确定”或用错界面都不算通过，必须指出。
+6. rebase 为小而有序的提交。后续改动组成 PR 栈。
+   使用 **sequence-verifiable-units** 原则 skill，每个小单元都先构建、验证、提交，再做下一个。
+7. 设计存在争议时，交付前运行 `interrogate`。
+8. 执行 **Opening a PR**。
 
 <!-- en:3 -->
 Code-coupled work (one feature, one migration) goes to a single owner with the checkpoint inline. That owner fans out internally after the blocking phase. Parent-level fan-out is for slices that produce independent artifacts (audits, cross-subsystem investigations, competing experiments). Rewrite the checkpoint at phase boundaries. Spawn a fresh owner rather than chaining interrupts.
 
 <!-- zh:3 -->
-> **中文**
->
-> 代码强耦合的工作（一项功能、一次迁移）交给单一负责人，并在其任务中包含检查点。负责人在阻塞阶段后内部并行分派。父级并行分派适用于产出独立产物的工作切片（审计、跨子系统调查、竞争实验）。在阶段边界重写检查点。启动新的负责人，不要连续打断同一个负责人。
+代码强耦合的工作（一项功能、一次迁移）交给单一负责人，并在其任务中包含检查点。负责人在阻塞阶段后内部并行分派。父级并行分派适用于产出独立产物的工作切片（审计、跨子系统调查、竞争实验）。在阶段边界重写检查点。启动新的负责人，不要连续打断同一个负责人。
 
 <!-- en:4 -->
 **Reply:** what you built, what you chose and why, the throughput checkpoint, open decisions. Tables for design alternatives.
 
 <!-- zh:4 -->
-> **中文**
->
-> **回复：**构建了什么、选择了什么以及原因、吞吐量检查点、尚未定案的决策。设计备选方案用表格呈现。
+**回复：**构建了什么、选择了什么以及原因、吞吐量检查点、尚未定案的决策。设计备选方案用表格呈现。

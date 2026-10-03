@@ -5,25 +5,19 @@
 # The pstack guide
 
 <!-- zh:0 -->
-> **中文**
->
-> # pstack 使用指南
+**pstack 使用指南**
 
 <!-- en:1 -->
 pstack works best when you stop micromanaging the agent. You describe what you want and how you'll know it's done. `/poteto-mode` picks the playbook, runs the other skills as the steps need them, and shows you the evidence. This guide teaches that habit with realistic prompts.
 
 <!-- zh:1 -->
-> **中文**
->
-> pstack 的使用效果，取决于你能否把具体执行交给 agent，而不是逐步指挥。你说明想要的结果，以及如何判断任务完成。`/poteto-mode` 选择执行规程，在各步骤需要时调用其他 skill，并向你展示证据。本指南用贴近实际工作的提示词，帮助你形成这种协作习惯。
+pstack 的使用效果，取决于你能否把具体执行交给 agent，而不是逐步指挥。你说明想要的结果，以及如何判断任务完成。`/poteto-mode` 选择执行规程，在各步骤需要时调用其他 skill，并向你展示证据。本指南用贴近实际工作的提示词，帮助你形成这种协作习惯。
 
 <!-- en:2 -->
 Here's what you'll learn:
 
 <!-- zh:2 -->
-> **中文**
->
-> 本指南涵盖以下内容：
+本指南涵盖以下内容：
 
 <!-- en:3 -->
 1. [Set up pstack](./01-setup.md). Install the plugin and pick your models.
@@ -38,42 +32,34 @@ Here's what you'll learn:
 10. [Recipes and pitfalls](./10-recipes-and-pitfalls.md). Prompts to copy and mistakes to skip.
 
 <!-- zh:3 -->
-> **中文**
->
-> 1. [配置 pstack](./01-setup.md)。安装插件并选择模型。
-> 2. [通过 `/poteto-mode` 分派工作](./02-poteto-mode.md)。给出目标，观察它如何选择执行规程。
-> 3. [理解代码](./03-understand.md)。修改之前先用 `/how`、`/why`、`/teach` 和 `/recall`。
-> 4. [设计改动](./04-design.md)。在代码把设计固化之前，使用 `/architect`、`/arena`、`/swarm` 和 `/interrogate`。
-> 5. [实现并整理改动](./05-build-and-clean.md)。使用实现类执行规程、`/tdd`、`/unslop` 和 `/no-comments`。
-> 6. [验证并交付](./06-verify-and-ship.md)。在真实应用中证明行为正确，再创建范围明确的 PR，并推动它合入。
-> 7. [让任务在你休息时继续](./07-overnight.md)。约定夜间执行条件，留下可复核的决策记录，使用支持多 agent 的执行规程。
-> 8. [用原则名称调整方向](./08-principles.md)。通过 23 个原则名称，在执行过程中纠正 agent 的做法。
-> 9. [形成自己的工作方式](./09-make-it-yours.md)。创建个人工作模式，并验证 skill 改动的效果。
-> 10. [常用做法与易错点](./10-recipes-and-pitfalls.md)。可直接借用的提示词，以及应避免的错误。
+1. [配置 pstack](./01-setup.md)。安装插件并选择模型。
+2. [通过 `/poteto-mode` 分派工作](./02-poteto-mode.md)。给出目标，观察它如何选择执行规程。
+3. [理解代码](./03-understand.md)。修改之前先用 `/how`、`/why`、`/teach` 和 `/recall`。
+4. [设计改动](./04-design.md)。在代码把设计固化之前，使用 `/architect`、`/arena`、`/swarm` 和 `/interrogate`。
+5. [实现并整理改动](./05-build-and-clean.md)。使用实现类执行规程、`/tdd`、`/unslop` 和 `/no-comments`。
+6. [验证并交付](./06-verify-and-ship.md)。在真实应用中证明行为正确，再创建范围明确的 PR，并推动它合入。
+7. [让任务在你休息时继续](./07-overnight.md)。约定夜间执行条件，留下可复核的决策记录，使用支持多 agent 的执行规程。
+8. [用原则名称调整方向](./08-principles.md)。通过 23 个原则名称，在执行过程中纠正 agent 的做法。
+9. [形成自己的工作方式](./09-make-it-yours.md)。创建个人工作模式，并验证 skill 改动的效果。
+10. [常用做法与易错点](./10-recipes-and-pitfalls.md)。可直接借用的提示词，以及应避免的错误。
 
 <!-- en:4 -->
 Read the pages in order the first time. After that, each page stands alone.
 
 <!-- zh:4 -->
-> **中文**
->
-> 第一次建议按顺序阅读。之后每一页都可以独立查阅。
+第一次建议按顺序阅读。之后每一页都可以独立查阅。
 
 <!-- en:5 -->
 ## If you only remember one thing
 
 <!-- zh:5 -->
-> **中文**
->
-> ## 如果只记住一件事
+**如果只记住一件事**
 
 <!-- en:6 -->
 Give the agent a goal and a way to check it, in your own words:
 
 <!-- zh:6 -->
-> **中文**
->
-> 用自己的话，给 agent 一个目标和检验结果的方法：
+用自己的话，给 agent 一个目标和检验结果的方法：
 
 <!-- en:7 -->
 ```text
@@ -81,24 +67,18 @@ Give the agent a goal and a way to check it, in your own words:
 ```
 
 <!-- zh:7 -->
-> **中文**
->
-> ```text
-> /poteto-mode 导出过程中触发重试时，会写入重复行。先复现，再修复并验证。
-> ```
+```text
+/poteto-mode 导出过程中触发重试时，会写入重复行。先复现，再修复并验证。
+```
 
 <!-- en:8 -->
 You don't need to name a playbook or list skills. "repro first" and a checkable outcome are all the routing signal `/poteto-mode` needs. It matches the Bug fix playbook, copies the steps into a todo list, and calls the right skills as each step fires.
 
 <!-- zh:8 -->
-> **中文**
->
-> 你不必指定执行规程，也不必列出 skill。只要说清“先复现”和可检验的结果，`/poteto-mode` 就有足够的信息做任务分派。它会匹配 Bug fix 执行规程，把步骤复制到待办列表，并在执行各步骤时调用相应的 skill。
+你不必指定执行规程，也不必列出 skill。只要说清“先复现”和可检验的结果，`/poteto-mode` 就有足够的信息做任务分派。它会匹配 Bug fix 执行规程，把步骤复制到待办列表，并在执行各步骤时调用相应的 skill。
 
 <!-- en:9 -->
 Next: [Set up pstack](./01-setup.md).
 
 <!-- zh:9 -->
-> **中文**
->
-> 下一页：[配置 pstack](./01-setup.md)。
+下一页：[配置 pstack](./01-setup.md)。

@@ -11,55 +11,43 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: interrogate
-> description: "用于‘interrogate’、‘对抗性评审’、‘多模型评审’、‘挑战这个方案’、‘给代码做压力审查’、‘找盲点’或‘彻底挑毛病’。多位 LLM 评审者从独立角度挑战改动。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: interrogate
+description: "用于‘interrogate’、‘对抗性评审’、‘多模型评审’、‘挑战这个方案’、‘给代码做压力审查’、‘找盲点’或‘彻底挑毛病’。多位 LLM 评审者从独立角度挑战改动。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Interrogate
 
 <!-- zh:1 -->
-> **中文**
->
-> # 交叉质询
+**交叉质询**
 
 <!-- en:2 -->
 Spawn one reviewer per configured model to adversarially review code changes. Each model gets the same prompt and rubric. The adversarial signal comes from model diversity, not assigned personas.
 
 <!-- zh:2 -->
-> **中文**
->
-> 每个配置模型启动一位评审者，对代码改动进行对抗性评审。所有模型收到相同提示和评分标准。对抗性信号来自模型多样性，而不是分配的人设。
+每个配置模型启动一位评审者，对代码改动进行对抗性评审。所有模型收到相同提示和评分标准。对抗性信号来自模型多样性，而不是分配的人设。
 
 <!-- en:3 -->
 The deliverable is a synthesized verdict. Do NOT auto-apply changes.
 
 <!-- zh:3 -->
-> **中文**
->
-> 交付物是综合评审结论。**不要**自动应用改动。
+交付物是综合评审结论。**不要**自动应用改动。
 
 <!-- en:4 -->
 ## Step 1, Determine Scope
 
 <!-- zh:4 -->
-> **中文**
->
-> ## 第 1 步：确定范围
+**第 1 步：确定范围**
 
 <!-- en:5 -->
 Identify what to review from context:
 
 <!-- zh:5 -->
-> **中文**
->
-> 从上下文识别评审内容：
+从上下文识别评审内容：
 
 <!-- en:6 -->
 - If the user points at specific files or a diff, use that
@@ -67,35 +55,27 @@ Identify what to review from context:
 - If the user's message references recent work, gather the relevant files
 
 <!-- zh:6 -->
-> **中文**
->
-> - 用户指向具体文件或 diff 时，使用它。
-> - 位于功能分支时，运行 `git diff main...HEAD`（或适当基线分支）获取完整变更集。
-> - 用户消息提到近期工作时，收集相关文件。
+- 用户指向具体文件或 diff 时，使用它。
+- 位于功能分支时，运行 `git diff main...HEAD`（或适当基线分支）获取完整变更集。
+- 用户消息提到近期工作时，收集相关文件。
 
 <!-- en:7 -->
 Package the diff (or file contents) plus any surrounding context files the reviewers need to understand the code.
 
 <!-- zh:7 -->
-> **中文**
->
-> 打包 diff（或文件内容）以及评审者理解代码所需的周边上下文文件。
+打包 diff（或文件内容）以及评审者理解代码所需的周边上下文文件。
 
 <!-- en:8 -->
 ## Step 2, State the Intent
 
 <!-- zh:8 -->
-> **中文**
->
-> ## 第 2 步：陈述意图
+**第 2 步：陈述意图**
 
 <!-- en:9 -->
 Before spawning reviewers, state the intent explicitly. Derive this from:
 
 <!-- zh:9 -->
-> **中文**
->
-> 启动评审者前，明确陈述意图。依据来自：
+启动评审者前，明确陈述意图。依据来自：
 
 <!-- en:10 -->
 - The user's message
@@ -104,52 +84,40 @@ Before spawning reviewers, state the intent explicitly. Derive this from:
 - The code itself
 
 <!-- zh:10 -->
-> **中文**
->
-> - 用户消息
-> - 提交消息
-> - 已存在的 PR description
-> - 代码本身
+- 用户消息
+- 提交消息
+- 已存在的 PR description
+- 代码本身
 
 <!-- en:11 -->
 Write one clear paragraph. If you're unsure about the intent, ask the user before proceeding.
 
 <!-- zh:11 -->
-> **中文**
->
-> 写成一段清楚的文字。意图不确定时，先询问用户再继续。
+写成一段清楚的文字。意图不确定时，先询问用户再继续。
 
 <!-- en:12 -->
 ## Step 3, Spawn Reviewers
 
 <!-- zh:12 -->
-> **中文**
->
-> ## 第 3 步：启动评审者
+**第 3 步：启动评审者**
 
 <!-- en:13 -->
 Launch all reviewers in a single message using the Task tool.
 
 <!-- zh:13 -->
-> **中文**
->
-> 使用 Task 工具，在一条消息中启动所有评审者。
+使用 Task 工具，在一条消息中启动所有评审者。
 
 <!-- en:14 -->
 **Other harnesses.** The spawns in this skill use Cursor's `Task` tool. In another harness, use its subagent tool: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Keep the prompt and the model. Drop parameters your tool doesn't have. If your harness has no subagent tool, as in Pi without an extension, run each reviewer yourself, one after another.
 
 <!-- zh:14 -->
-> **中文**
->
-> **其他运行环境。** 此 skill 使用 Cursor 的 `Task`。其他环境使用自身 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示和模型，删除工具不支持的参数。没有 subagent 工具（例如未装扩展的 Pi）时，自己依次执行每位评审者。
+**其他运行环境。** 此 skill 使用 Cursor 的 `Task`。其他环境使用自身 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示和模型，删除工具不支持的参数。没有 subagent 工具（例如未装扩展的 Pi）时，自己依次执行每位评审者。
 
 <!-- en:15 -->
 Use the `interrogate reviewers` list from the pstack settings file when present (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.agents/pstack-models.md` in other harnesses), one reviewer per entry, extending or shrinking the Reviewer A/B/C/D labels below to the configured entry count. Otherwise use the table defaults.
 
 <!-- zh:15 -->
-> **中文**
->
-> 有 pstack 配置文件时，使用其 `interrogate reviewers` 列表（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他环境为 `~/.agents/pstack-models.md`），每项一位评审者。根据配置数量扩展或缩减下方 Reviewer A/B/C/D 标签。没有时使用表格默认值。
+有 pstack 配置文件时，使用其 `interrogate reviewers` 列表（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他环境为 `~/.agents/pstack-models.md`），每项一位评审者。根据配置数量扩展或缩减下方 Reviewer A/B/C/D 标签。没有时使用表格默认值。
 
 <!-- en:16 -->
 | Subagent | Default model |
@@ -160,14 +128,12 @@ Use the `interrogate reviewers` list from the pstack settings file when present 
 | Reviewer D | `claude-opus-5-thinking-xhigh` |
 
 <!-- zh:16 -->
-> **中文**
->
-> | Subagent | 默认模型 |
-> |----------|---------------|
-> | 评审者 A | `claude-fable-5-1-thinking-max` |
-> | 评审者 B | `gpt-5.6-sol-max` |
-> | 评审者 C | `grok-4.6-fast-xhigh` |
-> | 评审者 D | `claude-opus-5-thinking-xhigh` |
+| Subagent | 默认模型 |
+|----------|---------------|
+| 评审者 A | `claude-fable-5-1-thinking-max` |
+| 评审者 B | `gpt-5.6-sol-max` |
+| 评审者 C | `grok-4.6-fast-xhigh` |
+| 评审者 D | `claude-opus-5-thinking-xhigh` |
 
 <!-- en:17 -->
 For each reviewer:
@@ -176,20 +142,16 @@ For each reviewer:
 - `readonly`: `true`
 
 <!-- zh:17 -->
-> **中文**
->
-> 每位评审者：
-> - `subagent_type`：`generalPurpose`
-> - `model`：配置的 `interrogate reviewers` 项；没有配置则用表格默认值。
-> - `readonly`：`true`
+每位评审者：
+- `subagent_type`：`generalPurpose`
+- `model`：配置的 `interrogate reviewers` 项；没有配置则用表格默认值。
+- `readonly`：`true`
 
 <!-- en:18 -->
 If a model slug is rejected as unresolvable when you try to spawn the subagent, check the valid slugs in the subagent tool's error message or your harness's model list, pick the closest equivalent (prefer the highest-reasoning tier of the same family), spawn with the valid slug, and open a separate PR to update the configured value or default table. Do not block the review on the slug issue. If the configured value is `inherit-parent` or `auto`, omit `model` instead. Never treat those aliases as broken slugs or enter this fallback for them.
 
 <!-- zh:18 -->
-> **中文**
->
-> 启动时模型 slug 无法解析而被拒绝，检查 subagent 错误消息或运行环境模型列表中的有效 slug，选择最接近者（优先同模型家族最高推理等级），使用有效 slug 启动，并另开 PR 更新配置值或默认表。不要因 slug 问题阻塞评审。配置为 `inherit-parent` 或 `auto` 时，省略 `model`。这些别名不是损坏 slug，不应进入上述回退。
+启动时模型 slug 无法解析而被拒绝，检查 subagent 错误消息或运行环境模型列表中的有效 slug，选择最接近者（优先同模型家族最高推理等级），使用有效 slug 启动，并另开 PR 更新配置值或默认表。不要因 slug 问题阻塞评审。配置为 `inherit-parent` 或 `auto` 时，省略 `model`。这些别名不是损坏 slug，不应进入上述回退。
 
 <!-- en:19 -->
 Read `references/reviewer-prompt.md` and fill in the template with:
@@ -199,37 +161,29 @@ Read `references/reviewer-prompt.md` and fill in the template with:
 4. The code-quality lens from `references/code-quality-review.md`
 
 <!-- zh:19 -->
-> **中文**
->
-> 读取 `references/reviewer-prompt.md`，填写模板：
-> 1. 已陈述意图
-> 2. Diff 或文件内容
-> 3. `references/rubric.md` 的评审标准
-> 4. `references/code-quality-review.md` 的代码质量视角
+读取 `references/reviewer-prompt.md`，填写模板：
+1. 已陈述意图
+2. Diff 或文件内容
+3. `references/rubric.md` 的评审标准
+4. `references/code-quality-review.md` 的代码质量视角
 
 <!-- en:20 -->
 The same filled template goes to all reviewers, so every model applies the code-quality lens.
 
 <!-- zh:20 -->
-> **中文**
->
-> 相同填写模板发给所有评审者，让每个模型都应用代码质量视角。
+相同填写模板发给所有评审者，让每个模型都应用代码质量视角。
 
 <!-- en:21 -->
 ## Step 4, Synthesize
 
 <!-- zh:21 -->
-> **中文**
->
-> ## 第 4 步：综合分析
+**第 4 步：综合分析**
 
 <!-- en:22 -->
 As results come back, build a unified picture:
 
 <!-- zh:22 -->
-> **中文**
->
-> 结果陆续返回时，建立统一认识：
+结果陆续返回时，建立统一认识：
 
 <!-- en:23 -->
 1. **Parse all findings** from the reviewers
@@ -239,45 +193,35 @@ As results come back, build a unified picture:
 5. **Note disagreements**. If one model flags something and another explicitly says the opposite, that's useful context for the verdict.
 
 <!-- zh:23 -->
-> **中文**
->
-> 1. **解析全部发现。**
-> 2. **识别共识。** 2 位以上模型独立指出的发现信号最强。
-> 3. **识别单模型发现。** 仍值得读，但给予适当权重。
-> 4. **去重。** 不同模型可能用不同方式描述同一问题，合并并注明哪些模型提出。
-> 5. **记录分歧。** 一个模型指出问题、另一个明确反对时，这是结论的有用上下文。
+1. **解析全部发现。**
+2. **识别共识。** 2 位以上模型独立指出的发现信号最强。
+3. **识别单模型发现。** 仍值得读，但给予适当权重。
+4. **去重。** 不同模型可能用不同方式描述同一问题，合并并注明哪些模型提出。
+5. **记录分歧。** 一个模型指出问题、另一个明确反对时，这是结论的有用上下文。
 
 <!-- en:24 -->
 ## Step 5, Lead Judgment
 
 <!-- zh:24 -->
-> **中文**
->
-> ## 第 5 步：主评审判断
+**第 5 步：主评审判断**
 
 <!-- en:25 -->
 You are the lead reviewer, a pragmatic senior engineer, not a neutral aggregator.
 
 <!-- zh:25 -->
-> **中文**
->
-> 你是主评审者、一位务实的资深工程师，不是中立汇总器。
+你是主评审者、一位务实的资深工程师，不是中立汇总器。
 
 <!-- en:26 -->
 Read `references/lead-judgment.md` for the full framework.
 
 <!-- zh:26 -->
-> **中文**
->
-> 完整框架见 `references/lead-judgment.md`。
+完整框架见 `references/lead-judgment.md`。
 
 <!-- en:27 -->
 Categorize every finding using these buckets:
 
 <!-- zh:27 -->
-> **中文**
->
-> 每条发现分入以下类别：
+每条发现分入以下类别：
 
 <!-- en:28 -->
 - **Act on**. Real issues affecting correctness, security, or maintainability given the actual goals. These would block a real PR.
@@ -286,12 +230,10 @@ Categorize every finding using these buckets:
 - **Dismissed**. Wrong, nitpicky, or missing context. Brief explanation why.
 
 <!-- zh:28 -->
-> **中文**
->
-> - **需要处理。** 根据实际目标影响正确性、安全或可维护性的真实问题，足以阻塞真实 PR。
-> - **值得考虑。** 合理观点，但不确定当前处理收益是否大于成本。值得用户关注。
-> - **已记录。** 技术上有效，但无须行动。依赖上下文、过早优化或当前阶段影响低。
-> - **已驳回。** 错误、吹毛求疵或缺少上下文，简要解释理由。
+- **需要处理。** 根据实际目标影响正确性、安全或可维护性的真实问题，足以阻塞真实 PR。
+- **值得考虑。** 合理观点，但不确定当前处理收益是否大于成本。值得用户关注。
+- **已记录。** 技术上有效，但无须行动。依赖上下文、过早优化或当前阶段影响低。
+- **已驳回。** 错误、吹毛求疵或缺少上下文，简要解释理由。
 
 <!-- en:29 -->
 For each finding, include:
@@ -300,95 +242,75 @@ For each finding, include:
 - A one-line rationale for the categorization
 
 <!-- zh:29 -->
-> **中文**
->
-> 每条发现包括：
-> - 提出它的模型
-> - 分类（需要处理／值得考虑／已记录／已驳回）
-> - 分类理由，一行
+每条发现包括：
+- 提出它的模型
+- 分类（需要处理／值得考虑／已记录／已驳回）
+- 分类理由，一行
 
 <!-- en:30 -->
 ## Output Format
 
 <!-- zh:30 -->
-> **中文**
->
-> ## 输出格式
+**输出格式**
 
 <!-- en:31 -->
 Present the verdict in this structure:
 
 <!-- zh:31 -->
-> **中文**
->
-> 按以下结构呈现结论：
+按以下结构呈现结论：
 
 <!-- en:32 -->
 ### Intent
 > [The stated intent paragraph from Step 2]
 
 <!-- zh:32 -->
-> **中文**
->
-> ### 意图
-> > [第 2 步的意图段落]
+**意图**
+> [第 2 步的意图段落]
 
 <!-- en:33 -->
 ### Reviewers
 - Reviewer [label]: [model name], [N findings] (one bullet per reviewer)
 
 <!-- zh:33 -->
-> **中文**
->
-> ### 评审者
-> - 评审者 [标签]：[模型名称]，[N 条发现]（每位一项）
+**评审者**
+- 评审者 [标签]：[模型名称]，[N 条发现]（每位一项）
 
 <!-- en:34 -->
 ### Act On
 [Findings that should be addressed. For each: description, which models raised it, why it matters.]
 
 <!-- zh:34 -->
-> **中文**
->
-> ### 需要处理
-> [应解决的发现。每项：描述、提出的模型、重要性。]
+**需要处理**
+[应解决的发现。每项：描述、提出的模型、重要性。]
 
 <!-- en:35 -->
 ### Consider
 [Findings worth thinking about. For each: description, which models raised it, tradeoff involved.]
 
 <!-- zh:35 -->
-> **中文**
->
-> ### 值得考虑
-> [值得思考的发现。每项：描述、提出的模型、涉及取舍。]
+**值得考虑**
+[值得思考的发现。每项：描述、提出的模型、涉及取舍。]
 
 <!-- en:36 -->
 ### Noted
 [Valid but low-priority. Brief list.]
 
 <!-- zh:36 -->
-> **中文**
->
-> ### 已记录
-> [有效但优先级低，简短列表。]
+**已记录**
+[有效但优先级低，简短列表。]
 
 <!-- en:37 -->
 ### Dismissed
 [Rejected findings with brief rationale.]
 
 <!-- zh:37 -->
-> **中文**
->
-> ### 已驳回
-> [被驳回的发现及简要理由。]
+**已驳回**
+[被驳回的发现及简要理由。]
 
 <!-- en:38 -->
 ### Agreement Map
 [Where did models agree, where did they diverge, and what does the pattern of agreement/disagreement tell us?]
 
 <!-- zh:38 -->
-> **中文**
->
-> ### 共识图
-> [模型在哪些方面一致、哪些方面分歧；一致／分歧模式说明什么？]
+**共识图**
+[模型在哪些方面一致、哪些方面分歧；一致／分歧模式说明什么？]

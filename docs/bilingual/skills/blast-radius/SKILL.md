@@ -11,79 +11,61 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: blast-radius
-> description: "交付前调查改动在 diff 之外可能破坏什么，并通过运行真实代码，证明它为何安全所依赖的关键事实，而不是只写报告。用于‘X 的影响范围’、‘这可能破坏什么’，或评审尚不放心的小 diff。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: blast-radius
+description: "交付前调查改动在 diff 之外可能破坏什么，并通过运行真实代码，证明它为何安全所依赖的关键事实，而不是只写报告。用于‘X 的影响范围’、‘这可能破坏什么’，或评审尚不放心的小 diff。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Blast radius
 
 <!-- zh:1 -->
-> **中文**
->
-> # 影响范围
+**影响范围**
 
 <!-- en:2 -->
 Find what a change breaks somewhere else, before it ships. Use for "blast radius of X", "what could this break", or reviewing a small diff you don't trust yet.
 
 <!-- zh:2 -->
-> **中文**
->
-> 交付前，找出改动会在其他地方破坏什么。用于“X 的影响范围”“这可能破坏什么”，或评审尚不放心的小 diff。
+交付前，找出改动会在其他地方破坏什么。用于“X 的影响范围”“这可能破坏什么”，或评审尚不放心的小 diff。
 
 <!-- en:3 -->
 Companion to `how` and `why`. `how` tells you what the code does. `why` tells you why it's shaped that way. Blast radius tells you what it breaks somewhere else.
 
 <!-- zh:3 -->
-> **中文**
->
-> 与 `how` 和 `why` 配合。`how` 告诉你代码做什么，`why` 解释为何这样设计，Blast radius 则告诉你它会在其他地方破坏什么。
+与 `how` 和 `why` 配合。`how` 告诉你代码做什么，`why` 解释为何这样设计，Blast radius 则告诉你它会在其他地方破坏什么。
 
 <!-- en:4 -->
 Listing the callers is not the job. The agent can grep those in a second. The job is the breakage grep won't show you.
 
 <!-- zh:4 -->
-> **中文**
->
-> 列出调用方不是任务本身，agent 一秒就能 grep 出来。任务是找出 grep 看不到的破坏。
+列出调用方不是任务本身，agent 一秒就能 grep 出来。任务是找出 grep 看不到的破坏。
 
 <!-- en:5 -->
 ## Don't trust your own writeup
 
 <!-- zh:5 -->
-> **中文**
->
-> ## 不要相信自己写的报告
+**不要相信自己写的报告**
 
 <!-- en:6 -->
 A blast-radius writeup that sounds right is worthless. It reads as convincing whether or not it's true. So don't hand back the writeup. Find the one or two facts the whole thing depends on and prove them by running code.
 
 <!-- zh:6 -->
-> **中文**
->
-> 听起来正确的影响范围报告毫无价值。无论真假，它都能写得有说服力。因此不要只交报告，找出整个判断依赖的一两个事实，通过运行代码来证明。
+听起来正确的影响范围报告毫无价值。无论真假，它都能写得有说服力。因此不要只交报告，找出整个判断依赖的一两个事实，通过运行代码来证明。
 
 <!-- en:7 -->
 ### How sure are you
 
 <!-- zh:7 -->
-> **中文**
->
-> ### 你有多确定
+**你有多确定**
 
 <!-- en:8 -->
 For each fact the change's safety depends on, get it as far down this list as is cheap, and say where it stopped.
 
 <!-- zh:8 -->
-> **中文**
->
-> 对于改动安全性所依赖的每个事实，以低成本尽量推进到以下列表更靠后的层级，并说明停在哪里。
+对于改动安全性所依赖的每个事实，以低成本尽量推进到以下列表更靠后的层级，并说明停在哪里。
 
 <!-- en:9 -->
 1. You said so. Worthless on its own.
@@ -93,29 +75,23 @@ For each fact the change's safety depends on, get it as far down this list as is
 5. You reproduced it in the running app.
 
 <!-- zh:9 -->
-> **中文**
->
-> 1. 你说它成立。单独来看毫无价值。
-> 2. 你指出了具体代码行。真实的 `file:line`，或库自身的源码。
-> 3. 你证明坏情况不可能发生。逐步追踪失败路径，确认无法到达。
-> 4. 你运行过。脚本或测试调用真实代码，如果你判断错误会明确失败。
-> 5. 你在运行中的应用里复现过。
+1. 你说它成立。单独来看毫无价值。
+2. 你指出了具体代码行。真实的 `file:line`，或库自身的源码。
+3. 你证明坏情况不可能发生。逐步追踪失败路径，确认无法到达。
+4. 你运行过。脚本或测试调用真实代码，如果你判断错误会明确失败。
+5. 你在运行中的应用里复现过。
 
 <!-- en:10 -->
 Any safety fact you can't get to step 4, say so. Don't write it up as settled. Step 4 is usually one small script that imports the same library the app ships and calls the exact function you're worried about.
 
 <!-- zh:10 -->
-> **中文**
->
-> 任何无法推进到第 4 步的安全事实，都要明确说明，不要写成定论。第 4 步通常只需要一个小脚本：导入应用实际交付的同一个库，并调用你担忧的具体函数。
+任何无法推进到第 4 步的安全事实，都要明确说明，不要写成定论。第 4 步通常只需要一个小脚本：导入应用实际交付的同一个库，并调用你担忧的具体函数。
 
 <!-- en:11 -->
 ## Steps
 
 <!-- zh:11 -->
-> **中文**
->
-> ## 步骤
+**步骤**
 
 <!-- en:12 -->
 1. Read the change. The diff, the symbols it adds, changes, and deletes, and what it now does differently, including the part the diff doesn't spell out. Use `why` step 2 to pull the PR and commits.
@@ -126,22 +102,18 @@ Any safety fact you can't get to step 4, say so. Don't write it up as settled. S
 6. For a big or wide change, run it as an `arena`. Ask several models the same question and merge the answers. Different models catch different real bugs.
 
 <!-- zh:12 -->
-> **中文**
->
-> 1. 阅读改动。查看 diff、新增／修改／删除的符号，以及行为变更，包括 diff 没明确写出的部分。用 `why` 第 2 步获取 PR 和提交。
-> 2. 找到保证它安全的关键事实。大多数看起来危险的改动之所以安全，都依赖单个事实，例如“此调用只删除已经失效的缓存条目，不做其他事”。找到它；如果成立，大多数风险情况就会一起排除。把时间花在这里，而不是列一长串“可能”。
-> 3. 调查 grep 到不了的地方。阅读所调用库的源码，检查固定版本及本地补丁。理清何时执行：微任务、卸载和清理、Solid 与 React 的差别。跟踪符号搜索遗漏的内容：API 返回的 JSON、数据库列、wire 格式、用另一种语言读取相同字节的代码、功能开关、下游三跳的代码。
-> 4. 诚实描述每项风险。说明真实发生概率及发生后的真实成本。保留确认过的风险，将检查并排除的风险另列。规则与 `why` 相同。引用真实 `file:line`；搜索无结果同样是答案；绝不能编造调用方或 API。
-> 5. 证明关键事实。写脚本或测试运行真实代码，执行并粘贴结果。无法低成本证明时，标为未经证明。不要夸大。
-> 6. 对大型或范围广的改动，用 `arena` 运行。让多个模型回答同一个问题并汇总。不同模型会发现不同的真实 Bug。
+1. 阅读改动。查看 diff、新增／修改／删除的符号，以及行为变更，包括 diff 没明确写出的部分。用 `why` 第 2 步获取 PR 和提交。
+2. 找到保证它安全的关键事实。大多数看起来危险的改动之所以安全，都依赖单个事实，例如“此调用只删除已经失效的缓存条目，不做其他事”。找到它；如果成立，大多数风险情况就会一起排除。把时间花在这里，而不是列一长串“可能”。
+3. 调查 grep 到不了的地方。阅读所调用库的源码，检查固定版本及本地补丁。理清何时执行：微任务、卸载和清理、Solid 与 React 的差别。跟踪符号搜索遗漏的内容：API 返回的 JSON、数据库列、wire 格式、用另一种语言读取相同字节的代码、功能开关、下游三跳的代码。
+4. 诚实描述每项风险。说明真实发生概率及发生后的真实成本。保留确认过的风险，将检查并排除的风险另列。规则与 `why` 相同。引用真实 `file:line`；搜索无结果同样是答案；绝不能编造调用方或 API。
+5. 证明关键事实。写脚本或测试运行真实代码，执行并粘贴结果。无法低成本证明时，标为未经证明。不要夸大。
+6. 对大型或范围广的改动，用 `arena` 运行。让多个模型回答同一个问题并汇总。不同模型会发现不同的真实 Bug。
 
 <!-- en:13 -->
 ## What to hand back
 
 <!-- zh:13 -->
-> **中文**
->
-> ## 交回什么
+**交回什么**
 
 <!-- en:14 -->
 - **What it does.** What changed, including the part that isn't obvious.
@@ -151,26 +123,20 @@ Any safety fact you can't get to step 4, say so. Don't write it up as settled. S
 - **Before you merge.** The cheapest test or repro that catches the real bug, including the script you wrote.
 
 <!-- zh:14 -->
-> **中文**
->
-> - **它做什么。** 改了什么，包括不明显的部分。
-> - **保证安全的关键事实。** 陈述事实，说明达到哪一步，展示证据。如果无法证明，写明未经证明。
-> - **风险。** 只列真实风险。每项说明如何破坏、`file:line`、概率和严重程度，以及如何检查。重要风险粘贴证明。
-> - **已排除。** 检查了什么，为什么没问题。
-> - **合并之前。** 能捕捉真实 Bug 的最低成本测试或复现，包括你写的脚本。
+- **它做什么。** 改了什么，包括不明显的部分。
+- **保证安全的关键事实。** 陈述事实，说明达到哪一步，展示证据。如果无法证明，写明未经证明。
+- **风险。** 只列真实风险。每项说明如何破坏、`file:line`、概率和严重程度，以及如何检查。重要风险粘贴证明。
+- **已排除。** 检查了什么，为什么没问题。
+- **合并之前。** 能捕捉真实 Bug 的最低成本测试或复现，包括你写的脚本。
 
 <!-- en:15 -->
 Write it through `unslop`, cite real code, and strip anything private before it goes anywhere public.
 
 <!-- zh:15 -->
-> **中文**
->
-> 使用 `unslop` 编辑，引用真实代码，公开发布前去除所有私密内容。
+使用 `unslop` 编辑，引用真实代码，公开发布前去除所有私密内容。
 
 <!-- en:16 -->
 **Reply:** the writeup above, with the one safety fact either proven or marked unproven.
 
 <!-- zh:16 -->
-> **中文**
->
-> **回复：** 按上述格式给出报告，关键安全事实必须已证明或明确标为未经证明。
+**回复：** 按上述格式给出报告，关键安全事实必须已证明或明确标为未经证明。

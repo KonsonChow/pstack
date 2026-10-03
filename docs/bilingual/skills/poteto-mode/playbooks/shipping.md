@@ -5,25 +5,19 @@
 ### Shipping
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 交付（Shipping）
+**交付（Shipping）**
 
 <!-- en:1 -->
 **You own what lands. Verify each PR independently, land only the verified run from the root, then keep your hands off the queue.**
 
 <!-- zh:1 -->
-> **中文**
->
-> **你对合入内容负责。独立验证每个 PR，只合入从栈底起连续验证通过的一段，随后不要再动队列。**
+**你对合入内容负责。独立验证每个 PR，只合入从栈底起连续验证通过的一段，随后不要再动队列。**
 
 <!-- en:2 -->
 This is the half after `playbooks/babysit.md`.
 
 <!-- zh:2 -->
-> **中文**
->
-> 这是 `playbooks/babysit.md` 之后的半程。
+这是 `playbooks/babysit.md` 之后的半程。
 
 <!-- en:3 -->
 1. **Resolve the forge, then verify every PR independently.** GitHub CLI (`gh`) is the default. If `command -v origin` succeeds and Origin can resolve the repository, use `origin pr ...` for PR view, watch, edit, and merge operations. Otherwise stay on `gh` and record the fallback. Never require Graphite (`gt`). One subagent per PR, not batched, each a Cursor cloud agent, each exercising the real surface (`control-ui` or `control-cli` from `cursor-team-kit` as the change demands) against parent versus head. Each returns `PASS`, `PASS+NOTES` or `FAIL` and posts that verdict on its own PR. Safe means a verdict from an agent that did not write the code. CI green is not a verdict, and an approving bot review is not a verdict.
@@ -37,22 +31,18 @@ This is the half after `playbooks/babysit.md`.
 9. **Stop at the ceiling.** When the verified run is merged, report what landed, what the next unverified PR is, and what verifying it would take. Extending the run is a new pass through step 1.
 
 <!-- zh:3 -->
-> **中文**
->
-> 1. **确定代码托管平台，再逐个独立验证 PR。** 默认 GitHub CLI（`gh`）。如果 `command -v origin` 成功且 Origin 能识别仓库，PR 查看、监听、编辑和合并都用 `origin pr ...`；否则用 `gh` 并记录回退。不要求 Graphite（`gt`）。每个 PR 一个 subagent，不批量分组，且每个都是 Cursor cloud agent，针对父版本和 HEAD 操作真实界面（根据改动用 `cursor-team-kit` 的 `control-ui` 或 `control-cli`）。各自返回 `PASS`、`PASS+NOTES` 或 `FAIL`，并将结论发到自己的 PR。安全意味着由没写代码的 agent 给出验证结论。CI 通过不是结论，bot 批准也不是。
-> 2. **只合入从栈底起连续验证通过的一段。** 从最底部未合并 PR 向上，到第一个没有通过结论的 PR 为止；`PASS` 和 `PASS+NOTES` 都算通过。已验证 PR 下方存在未验证 PR 时，不能合入。用 PR 编号报告上限，并说明哪里断了链。
-> 3. **重新确认结论仍对应当前补丁。** 记录该结论的 head SHA、base SHA，以及 PR 从 base 到 head diff 的稳定 `git patch-id`。rebase 或重设 base 会改写 SHA，即使检查没变，也可能悄悄使结论失效。合入前比较记录与当前 base-to-head 的 patch-id。补丁变了就重新验证；没变就保留代码结论，但在当前 HEAD 重新检查可合并性和 CI。不能用相同提交信息或旧 SHA 的全绿检查代替。
-> 4. **只准备栈底 PR。** 获取当前 trunk。必要时将最底部已验证分支 rebase 到精确的 trunk 最新提交，推送，再仅将该 PR 的 base 设为 trunk：`origin pr edit <pr> --base <trunk>` 或 `gh pr edit <pr> --base <trunk>`。推送后重跑第 3 步。此时不要重设后继 PR、启用它们的自动合并或合并它们。
-> 5. **一次合入一个 PR。** 栈底 PR 当前可合并时，用 `origin pr merge <pr> --squash` 或 `gh pr merge <pr> --squash` 压缩合并。如果必需检查还在跑，且用户要求就绪后合并，只对该 PR 用 `origin pr merge <pr> --squash --auto` 或 `gh pr merge <pr> --squash --auto`。Origin 的 `--auto` 是 Origin merge-when-ready，GitHub 的 `--auto` 是 GitHub auto-merge。等该 PR 合并后，才准备下一个。
-> 6. **不要把 GitHub `autoMergeRequest` 当成全栈就绪。** 它最多说明某个 GitHub PR 请求了自动合并，不能证明 Origin 已开启就绪后合并、后继 PR 已排队、补丁验证结论仍有效，或连续栈是安全的。确认当前平台中栈底 PR 状态；平台无法报告时，明确说未知。
-> 7. **每次合并后重新计算。** 获取 trunk，确认已合并 SHA 存在，从冻结的栈底到栈顶列表移除该 PR，检查新栈底的 base、head、checks 和 patch-id。平台可能自动重设子 PR 的 base，但不能假定它做了。对该单个 PR 重复第 3 至 6 步。独立工作不进入此链，自行交付。
-> 8. **监听当前前沿直到合并或失败，不要修改周围队列。** Origin 用 `origin pr view <pr> --checks --comments` 和 `origin pr checks <pr> --watch`，再重复读取 PR，直到显示 merged 或 blocked。GitHub 用 `scripts/watch-pr/watch-pr --queued-stack --stack-prs <bottom>` 仅作事件唤醒，每次唤醒后轮询 `gh pr view <pr> --json state,mergedAt,mergeStateStatus,statusCheckRollup,autoMergeRequest`；在 `mergedAt` 非 null 或 `state` 为 `MERGED` 之前忽略 `READY`。只有确认合并后才执行第 7 步。以下情况才判定硬失败：`state` 为 `CLOSED` 且无 `mergedAt`；required check 为 `FAILURE` 或 `CANCELLED`，并在自动合并不再待处理后阻塞合并；或 `mergeStateStatus` 为 `UNSTABLE` / `DIRTY`，且无待处理自动合并。检查未完或自动合并已开启时，`BLOCKED` 不算失败。这里不用 Babysit 的队列 `WAITING`/`merge-queue` 停止条件。监听放在 `/loop` 的 dynamic 模式。每次合并都报告，并报告新上限。队列停滞时，先诊断再修改。
-> 9. **到上限停下。** 已验证的连续段全部合并后，报告合入了什么、下一个未验证 PR，以及验证它需要什么。延长连续段要重新从第 1 步开始。
+1. **确定代码托管平台，再逐个独立验证 PR。** 默认 GitHub CLI（`gh`）。如果 `command -v origin` 成功且 Origin 能识别仓库，PR 查看、监听、编辑和合并都用 `origin pr ...`；否则用 `gh` 并记录回退。不要求 Graphite（`gt`）。每个 PR 一个 subagent，不批量分组，且每个都是 Cursor cloud agent，针对父版本和 HEAD 操作真实界面（根据改动用 `cursor-team-kit` 的 `control-ui` 或 `control-cli`）。各自返回 `PASS`、`PASS+NOTES` 或 `FAIL`，并将结论发到自己的 PR。安全意味着由没写代码的 agent 给出验证结论。CI 通过不是结论，bot 批准也不是。
+2. **只合入从栈底起连续验证通过的一段。** 从最底部未合并 PR 向上，到第一个没有通过结论的 PR 为止；`PASS` 和 `PASS+NOTES` 都算通过。已验证 PR 下方存在未验证 PR 时，不能合入。用 PR 编号报告上限，并说明哪里断了链。
+3. **重新确认结论仍对应当前补丁。** 记录该结论的 head SHA、base SHA，以及 PR 从 base 到 head diff 的稳定 `git patch-id`。rebase 或重设 base 会改写 SHA，即使检查没变，也可能悄悄使结论失效。合入前比较记录与当前 base-to-head 的 patch-id。补丁变了就重新验证；没变就保留代码结论，但在当前 HEAD 重新检查可合并性和 CI。不能用相同提交信息或旧 SHA 的全绿检查代替。
+4. **只准备栈底 PR。** 获取当前 trunk。必要时将最底部已验证分支 rebase 到精确的 trunk 最新提交，推送，再仅将该 PR 的 base 设为 trunk：`origin pr edit <pr> --base <trunk>` 或 `gh pr edit <pr> --base <trunk>`。推送后重跑第 3 步。此时不要重设后继 PR、启用它们的自动合并或合并它们。
+5. **一次合入一个 PR。** 栈底 PR 当前可合并时，用 `origin pr merge <pr> --squash` 或 `gh pr merge <pr> --squash` 压缩合并。如果必需检查还在跑，且用户要求就绪后合并，只对该 PR 用 `origin pr merge <pr> --squash --auto` 或 `gh pr merge <pr> --squash --auto`。Origin 的 `--auto` 是 Origin merge-when-ready，GitHub 的 `--auto` 是 GitHub auto-merge。等该 PR 合并后，才准备下一个。
+6. **不要把 GitHub `autoMergeRequest` 当成全栈就绪。** 它最多说明某个 GitHub PR 请求了自动合并，不能证明 Origin 已开启就绪后合并、后继 PR 已排队、补丁验证结论仍有效，或连续栈是安全的。确认当前平台中栈底 PR 状态；平台无法报告时，明确说未知。
+7. **每次合并后重新计算。** 获取 trunk，确认已合并 SHA 存在，从冻结的栈底到栈顶列表移除该 PR，检查新栈底的 base、head、checks 和 patch-id。平台可能自动重设子 PR 的 base，但不能假定它做了。对该单个 PR 重复第 3 至 6 步。独立工作不进入此链，自行交付。
+8. **监听当前前沿直到合并或失败，不要修改周围队列。** Origin 用 `origin pr view <pr> --checks --comments` 和 `origin pr checks <pr> --watch`，再重复读取 PR，直到显示 merged 或 blocked。GitHub 用 `scripts/watch-pr/watch-pr --queued-stack --stack-prs <bottom>` 仅作事件唤醒，每次唤醒后轮询 `gh pr view <pr> --json state,mergedAt,mergeStateStatus,statusCheckRollup,autoMergeRequest`；在 `mergedAt` 非 null 或 `state` 为 `MERGED` 之前忽略 `READY`。只有确认合并后才执行第 7 步。以下情况才判定硬失败：`state` 为 `CLOSED` 且无 `mergedAt`；required check 为 `FAILURE` 或 `CANCELLED`，并在自动合并不再待处理后阻塞合并；或 `mergeStateStatus` 为 `UNSTABLE` / `DIRTY`，且无待处理自动合并。检查未完或自动合并已开启时，`BLOCKED` 不算失败。这里不用 Babysit 的队列 `WAITING`/`merge-queue` 停止条件。监听放在 `/loop` 的 dynamic 模式。每次合并都报告，并报告新上限。队列停滞时，先诊断再修改。
+9. **到上限停下。** 已验证的连续段全部合并后，报告合入了什么、下一个未验证 PR，以及验证它需要什么。延长连续段要重新从第 1 步开始。
 
 <!-- en:4 -->
 **Reply:** the verified run and its ceiling, each PR's verdict and who produced it, what you armed and how you confirmed it, what landed, and what the next gap needs.
 
 <!-- zh:4 -->
-> **中文**
->
-> **回复：** 已验证连续段和上限、每个 PR 的结论及出具者、启用了什么及如何确认、哪些已合入、下一个缺口需要什么。
+**回复：** 已验证连续段和上限、每个 PR 的结论及出具者、启用了什么及如何确认、哪些已合入、下一个缺口需要什么。

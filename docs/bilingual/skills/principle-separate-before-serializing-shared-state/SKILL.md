@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-separate-before-serializing-shared-state
-> description: "并发参与者可能写同一文件、分支、键或状态对象时应用。先消除共享；只有共享写目标确实是不变量时，才用结构保证串行访问。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-separate-before-serializing-shared-state
+description: "并发参与者可能写同一文件、分支、键或状态对象时应用。先消除共享；只有共享写目标确实是不变量时，才用结构保证串行访问。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Separate Before Serializing Shared State
 
 <!-- zh:1 -->
-> **中文**
->
-> # 共享状态先分离，再考虑串行化
+**共享状态先分离，再考虑串行化**
 
 <!-- en:2 -->
 When concurrent actors might share mutable state, first ask whether they need the same mutable object. If not, eliminate the sharing. When sharing is real, enforce serialization structurally: lockfiles, sequential phases, exclusive ownership. Instructions and conventions are not concurrency control.
 
 <!-- zh:2 -->
-> **中文**
->
-> 并发参与者可能共享可变状态时，先问是否真的需要同一个可变对象。不需要，就消除共享。确有共享时，通过锁文件、顺序阶段、独占归属等结构强制串行化。指令和约定不是并发控制。
+并发参与者可能共享可变状态时，先问是否真的需要同一个可变对象。不需要，就消除共享。确有共享时，通过锁文件、顺序阶段、独占归属等结构强制串行化。指令和约定不是并发控制。
 
 <!-- en:3 -->
 **Why:** Concurrent writes to shared state create race conditions that are intermittent, hard to reproduce, and expensive to debug.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：** 对共享状态并发写会产生间歇性竞态，难复现、调试成本高。
+**原因：** 对共享状态并发写会产生间歇性竞态，难复现、调试成本高。
 
 <!-- en:4 -->
 **Pattern:**
@@ -52,9 +44,7 @@ When concurrent actors might share mutable state, first ask whether they need th
 3. **Only when one shared write target is a real invariant, serialize access structurally** (lockfiles, sequential phases, single-writer actor, or atomic compare-and-swap). Treat "we need a lock" as a design smell to check, not as the default answer.
 
 <!-- zh:4 -->
-> **中文**
->
-> **模式：**
-> 1. **识别共享可变状态**（双方都读写的文件、都推送的分支、共同定义和消费的 API）。
-> 2. **默认消除共享写目标。** 问这些参与者需要一个权威对象，还是只在发布彼此独立的事实？各自分配拥有的文件、键、分支或状态目录，只在读取和报告边界汇总。两个 worker 向同一个 `state.json` 写各自的 `lastX` 字段，仍是共享修改；`indexer-state.json` + `metrics-state.json` 则不是。
-> 3. **只有单一共享写目标确为不变量时，才用结构串行化访问**（锁文件、顺序阶段、单写者 actor、原子 compare-and-swap）。把“需要一把锁”当作须检查的设计异味，而非默认答案。
+**模式：**
+1. **识别共享可变状态**（双方都读写的文件、都推送的分支、共同定义和消费的 API）。
+2. **默认消除共享写目标。** 问这些参与者需要一个权威对象，还是只在发布彼此独立的事实？各自分配拥有的文件、键、分支或状态目录，只在读取和报告边界汇总。两个 worker 向同一个 `state.json` 写各自的 `lastX` 字段，仍是共享修改；`indexer-state.json` + `metrics-state.json` 则不是。
+3. **只有单一共享写目标确为不变量时，才用结构串行化访问**（锁文件、顺序阶段、单写者 actor、原子 compare-and-swap）。把“需要一把锁”当作须检查的设计异味，而非默认答案。

@@ -5,33 +5,25 @@
 ### Orchestrate
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 项目级协调（Orchestrate）
+**项目级协调（Orchestrate）**
 
 <!-- en:1 -->
 **You own the program, never the code. Author briefs, drain the queue, keep the frontier green, decide.** For a whole project handed to one standing coordinator chat: multi-day, many stacked PRs, dozens to hundreds of subagents, the human checking in twice a day instead of every five minutes. One task driven to a predicate is Autonomous run. One ambitious run needing a bespoke workflow is figure-it-out. Route here when the work outlives any single agent. Work one agent could finish inside the session's budget is not a program.
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责项目，绝不负责写代码。编写任务说明、收齐队列结果、让合并前沿保持检查通过，并作出判断。** 用于把整个项目交给一个长期协调对话的场景：持续多天、包含许多相互依赖的 PR、有几十到几百个 subagent，用户每天查看两次，而不是每五分钟查看一次。单个任务推进到可判定的完成条件，用 Autonomous run；一次较复杂、需要定制流程的执行，用 figure-it-out。只有工作持续时间超过任一单独 agent 时，才进入本规程。一个 agent 能在会话预算内完成的工作，不算项目级协调任务。
+**你负责项目，绝不负责写代码。编写任务说明、收齐队列结果、让合并前沿保持检查通过，并作出判断。** 用于把整个项目交给一个长期协调对话的场景：持续多天、包含许多相互依赖的 PR、有几十到几百个 subagent，用户每天查看两次，而不是每五分钟查看一次。单个任务推进到可判定的完成条件，用 Autonomous run；一次较复杂、需要定制流程的执行，用 figure-it-out。只有工作持续时间超过任一单独 agent 时，才进入本规程。一个 agent 能在会话预算内完成的工作，不算项目级协调任务。
 
 <!-- en:2 -->
 Ceremony must scale with the program. On cheap near-identical units, collapse it as each section directs.
 
 <!-- zh:2 -->
-> **中文**
->
-> 流程开销必须与项目规模匹配。成本低、几乎相同的工作单元，按各节要求简化。
+流程开销必须与项目规模匹配。成本低、几乎相同的工作单元，按各节要求简化。
 
 <!-- en:3 -->
 Three rules carry the rest.
 
 <!-- zh:3 -->
-> **中文**
->
-> 以下三条规则贯穿其余内容。
+以下三条规则贯穿其余内容。
 
 <!-- en:4 -->
 - Completions are queue events, not interrupts.
@@ -39,19 +31,15 @@ Three rules carry the rest.
 - The brief is the product. A vague brief fails quietly, because a worker cannot ask you a question.
 
 <!-- zh:4 -->
-> **中文**
->
-> - 完成通知是队列事件，不是中断。
-> - 每次启动和恢复 agent，都逐字携带长期指令。
-> - 任务说明就是交付物。说明模糊会悄悄导致失败，因为 worker 无法向你提问。
+- 完成通知是队列事件，不是中断。
+- 每次启动和恢复 agent，都逐字携带长期指令。
+- 任务说明就是交付物。说明模糊会悄悄导致失败，因为 worker 无法向你提问。
 
 <!-- en:5 -->
 #### Roles and placement
 
 <!-- zh:5 -->
-> **中文**
->
-> #### 角色与运行位置
+**角色与运行位置**
 
 <!-- en:6 -->
 - **Coordinator (this chat).** Local. Frames, authors briefs, drains the inbox, owns the human report, makes judgment calls. It never authors or edits code. Conflicted merges, restacks, and code changes are always tasks. Mechanically landing a verified unit (fast-forward or clean cherry-pick of a worker's commit, then push) is bookkeeping the coordinator may do itself on repos where local git is cheap. Queueing finished work behind an idle stacker is how a deadline harvests nothing. The loop is agentic end to end. Agents are spawned, resumed, and drained only through the Task tool. State reads and writes go through `scripts/orch/orch.ts` at drain points, one command in and one line out. The CLI never spawns, waits, or wakes anything.
@@ -59,35 +47,27 @@ Three rules carry the rest.
 - **Worker / verifier.** Always `environment: "cloud"` unless the task needs this machine: `control-ui` or `control-cli` runtime verification (from `cursor-team-kit`). Reading local transcripts under `agent-transcripts/`. Simulators and local IDE state. Auth that exists only here. Cloud agents cannot read the local store, so their briefs inline what they need or point at repo paths. Prefer fewer, broader workers. One writer per worktree or branch (principle-separate-before-serializing-shared-state). Run a unit's verifier on a different model family from its worker.
 
 <!-- zh:6 -->
-> **中文**
->
-> - **协调者，本对话。** 在本地运行。明确任务、编写说明、处理收件箱、负责向用户汇报，并作出判断。绝不编写或编辑代码。冲突合并、重新组织 PR 栈和代码改动，都必须交给任务处理。在本地 Git 操作成本低的仓库，机械地合入已验证单元，例如 fast-forward 或无冲突地 cherry-pick worker 的提交后推送，属于协调者可以自行完成的记账操作。把完成的工作排在空闲的 stacker 后面，会导致期限到了却没有交付。整个循环由 agent 执行，启动、恢复和收齐 agent 结果，只通过 Task 工具。状态读取与写入在收齐结果时通过 `scripts/orch/orch.ts` 完成，一条命令输入、一行结果输出。CLI 绝不启动 agent、等待 agent 或唤醒任何任务。
-> - **子协调者。** 始终在本地运行，并持续保留状态。每条工作线一个，只有一个协调者无法管理结果收集时才需要。主协调者能够自行收齐结果的工作线，不要增加中间层。每增加一层，都重新付出完整的上下文说明成本；阻塞的子协调者还会让其子任务不可见，主协调者只能空等。它负责本工作线的单元及状态板，编写 worker 说明，启动 worker 和验证者。嵌套最多三层，嵌套启动支持完整 Task schema，包括 `environment`。在每轮边界汇总结果，绝不转发原始子任务报告。活跃子任务数限制在一次结果收集可处理的范围，大约十个，采用滚动窗口；绝不能使用阻塞批次，否则每批都要等待最慢的子任务。
-> - **Worker / 验证者。** 默认始终使用 `environment: "cloud"`，除非任务必须用本机，例如通过 `cursor-team-kit` 的 `control-ui` 或 `control-cli` 做运行时验证、读取 `agent-transcripts/` 下的本地对话、使用模拟器或本地 IDE 状态，或者只能在本机获取的身份认证。云端 agent 无法读取本地存储，因此任务说明必须内嵌所需信息，或指向仓库路径。优先使用更少、职责更宽的 worker。每个 worktree 或分支只有一个写入者，遵循 principle-separate-before-serializing-shared-state。单元的验证者应使用不同于实现 worker 的模型系列。
+- **协调者，本对话。** 在本地运行。明确任务、编写说明、处理收件箱、负责向用户汇报，并作出判断。绝不编写或编辑代码。冲突合并、重新组织 PR 栈和代码改动，都必须交给任务处理。在本地 Git 操作成本低的仓库，机械地合入已验证单元，例如 fast-forward 或无冲突地 cherry-pick worker 的提交后推送，属于协调者可以自行完成的记账操作。把完成的工作排在空闲的 stacker 后面，会导致期限到了却没有交付。整个循环由 agent 执行，启动、恢复和收齐 agent 结果，只通过 Task 工具。状态读取与写入在收齐结果时通过 `scripts/orch/orch.ts` 完成，一条命令输入、一行结果输出。CLI 绝不启动 agent、等待 agent 或唤醒任何任务。
+- **子协调者。** 始终在本地运行，并持续保留状态。每条工作线一个，只有一个协调者无法管理结果收集时才需要。主协调者能够自行收齐结果的工作线，不要增加中间层。每增加一层，都重新付出完整的上下文说明成本；阻塞的子协调者还会让其子任务不可见，主协调者只能空等。它负责本工作线的单元及状态板，编写 worker 说明，启动 worker 和验证者。嵌套最多三层，嵌套启动支持完整 Task schema，包括 `environment`。在每轮边界汇总结果，绝不转发原始子任务报告。活跃子任务数限制在一次结果收集可处理的范围，大约十个，采用滚动窗口；绝不能使用阻塞批次，否则每批都要等待最慢的子任务。
+- **Worker / 验证者。** 默认始终使用 `environment: "cloud"`，除非任务必须用本机，例如通过 `cursor-team-kit` 的 `control-ui` 或 `control-cli` 做运行时验证、读取 `agent-transcripts/` 下的本地对话、使用模拟器或本地 IDE 状态，或者只能在本机获取的身份认证。云端 agent 无法读取本地存储，因此任务说明必须内嵌所需信息，或指向仓库路径。优先使用更少、职责更宽的 worker。每个 worktree 或分支只有一个写入者，遵循 principle-separate-before-serializing-shared-state。单元的验证者应使用不同于实现 worker 的模型系列。
 
 <!-- en:7 -->
 Depth stays at coordinator, track, worker. Author the track decomposition per project (build, landing, and verification are common cuts, not a required shape). Hard-coded swarm trees were tried and parked as too rigid.
 
 <!-- zh:7 -->
-> **中文**
->
-> 层级保持为协调者、工作线、worker。按项目设计工作线划分。实现、合入和验证是常见划分，但不是规定形态。固定的 swarm 树曾尝试过，因过于僵化而搁置。
+层级保持为协调者、工作线、worker。按项目设计工作线划分。实现、合入和验证是常见划分，但不是规定形态。固定的 swarm 树曾尝试过，因过于僵化而搁置。
 
 <!-- en:8 -->
 #### Store layout
 
 <!-- zh:8 -->
-> **中文**
->
-> #### 存储布局
+**存储布局**
 
 <!-- en:9 -->
 Create `orchestrate/<project-slug>/` in the current agent's store (path in the system prompt). Every file has exactly one writer. Owners publish facts, readers aggregate at read time. Use `bun scripts/orch/orch.ts` for bookkeeping, written below as `orch`, while its canonical plain TSV and JSON stay readable without the CLI.
 
 <!-- zh:9 -->
-> **中文**
->
-> 在当前 agent 的存储目录下创建 `orchestrate/<project-slug>/`，路径见系统提示词。每个文件严格只有一个写入者。负责者发布事实，读取者在读取时汇总。记账使用 `bun scripts/orch/orch.ts`，下文简称 `orch`；它维护的规范 TSV 和 JSON 即使没有 CLI 也能直接阅读。
+在当前 agent 的存储目录下创建 `orchestrate/<project-slug>/`，路径见系统提示词。每个文件严格只有一个写入者。负责者发布事实，读取者在读取时汇总。记账使用 `bun scripts/orch/orch.ts`，下文简称 `orch`；它维护的规范 TSV 和 JSON 即使没有 CLI 也能直接阅读。
 
 <!-- en:10 -->
 - `preferences.md` is the standing-orders register: numbered lines, one constraint each (model policy, stack shape and count, verification bar, forbidden paths, escalation policy). Paste it verbatim into every spawn and every resume. Directives decay across resumes, and each dropped one costs a human turn. When you catch yourself restating an instruction, append the line before you act (principle-encode-lessons-in-structure).
@@ -100,32 +80,26 @@ Create `orchestrate/<project-slug>/` in the current agent's store (path in the s
 - `status.md` is derived from `units.tsv` and `ledger.tsv` at each drain, never hand-maintained. Regenerate it from the tables instead of narrating events into it.
 
 <!-- zh:10 -->
-> **中文**
->
-> - `preferences.md` 是长期指令登记表，每条约束一行，带编号，包括模型策略、PR 栈形态与数量、验证标准、禁止路径及升级处理策略。每次启动和恢复 agent，都逐字粘贴。指令在恢复过程中容易丢失，每丢一条都可能增加一次用户纠正。发现自己在重复说明某条指令时，行动前先追加到表中，遵循 principle-encode-lessons-in-structure。
-> - `overview.md` 是持久的 PR 与 issue 记录库，只追加，不要每次事件后整体重写。
-> - `units.tsv` 每个单元一行，包含 ID、工作线、状态、分支、PR、head SHA 和任务说明路径，原位更新行。
-> - `frontier.json` 是计算出的合并前沿，见“PR 栈安全”。
-> - `ledger.tsv` 是验证台账，见“验证”。
-> - `inbox/` 保存完成结果的指针。`gates.md` 暂存需要用户决定的检查关卡，包括问题、选项及无答复时的默认处理。
-> - `decisions.tsv` 通过 show-me-your-work skill 留下过程记录。
-> - `status.md` 每次收齐结果时从 `units.tsv` 和 `ledger.tsv` 派生，不手工维护。根据表格重新生成，不往里面不断叙述事件。
+- `preferences.md` 是长期指令登记表，每条约束一行，带编号，包括模型策略、PR 栈形态与数量、验证标准、禁止路径及升级处理策略。每次启动和恢复 agent，都逐字粘贴。指令在恢复过程中容易丢失，每丢一条都可能增加一次用户纠正。发现自己在重复说明某条指令时，行动前先追加到表中，遵循 principle-encode-lessons-in-structure。
+- `overview.md` 是持久的 PR 与 issue 记录库，只追加，不要每次事件后整体重写。
+- `units.tsv` 每个单元一行，包含 ID、工作线、状态、分支、PR、head SHA 和任务说明路径，原位更新行。
+- `frontier.json` 是计算出的合并前沿，见“PR 栈安全”。
+- `ledger.tsv` 是验证台账，见“验证”。
+- `inbox/` 保存完成结果的指针。`gates.md` 暂存需要用户决定的检查关卡，包括问题、选项及无答复时的默认处理。
+- `decisions.tsv` 通过 show-me-your-work skill 留下过程记录。
+- `status.md` 每次收齐结果时从 `units.tsv` 和 `ledger.tsv` 派生，不手工维护。根据表格重新生成，不往里面不断叙述事件。
 
 <!-- en:11 -->
 #### The brief
 
 <!-- zh:11 -->
-> **中文**
->
-> #### 任务说明
+**任务说明**
 
 <!-- en:12 -->
 Your prompts to agents are your only product, and a sloppy brief compounds into slop across the whole tree. Every spawn carries all of it. A field you cannot fill is a unit you have not scoped yet.
 
 <!-- zh:12 -->
-> **中文**
->
-> 发给 agent 的提示词是你唯一的交付物。说明粗糙，会让整棵任务树的产物都变差。每次启动都要携带完整说明。任何字段填不出来，都表示该单元的范围还没定清。
+发给 agent 的提示词是你唯一的交付物。说明粗糙，会让整棵任务树的产物都变差。每次启动都要携带完整说明。任何字段填不出来，都表示该单元的范围还没定清。
 
 <!-- en:13 -->
 ```
@@ -143,52 +117,42 @@ STANDING     <preferences.md pasted verbatim>
 ```
 
 <!-- zh:13 -->
-> **中文**
->
-> ```
-> GOAL         一句话说明结果，没有对话访问权限的陌生执行者也能据此行动
-> SCOPE        本单元允许写入和禁止写入的路径，以及专属 worktree 或分支
-> CONTEXT      文件和 PR 位置；依赖上游结果时，完整粘贴上游报告，
->              因为 worker 看不到同级任务
-> ACCEPTANCE   可检验条件，每行一项
-> VERIFY       准确命令或操作与验证 skill 路径，以及已知注意事项
-> TIMEBOX      大致运行时长上限；到期返回已有发现并停止，不要继续拖延
-> FORBIDDEN    禁止 gt、rebase、force-push、范围外修复，以及本单元的专有禁令
-> REPORT       状态、分支、head SHA、PR、判断、实际运行内容、偏离事项及建议后续
-> STANDING     <逐字粘贴 preferences.md>
-> ```
+```
+GOAL         一句话说明结果，没有对话访问权限的陌生执行者也能据此行动
+SCOPE        本单元允许写入和禁止写入的路径，以及专属 worktree 或分支
+CONTEXT      文件和 PR 位置；依赖上游结果时，完整粘贴上游报告，
+             因为 worker 看不到同级任务
+ACCEPTANCE   可检验条件，每行一项
+VERIFY       准确命令或操作与验证 skill 路径，以及已知注意事项
+TIMEBOX      大致运行时长上限；到期返回已有发现并停止，不要继续拖延
+FORBIDDEN    禁止 gt、rebase、force-push、范围外修复，以及本单元的专有禁令
+REPORT       状态、分支、head SHA、PR、判断、实际运行内容、偏离事项及建议后续
+STANDING     <逐字粘贴 preferences.md>
+```
 
 <!-- en:14 -->
 Size the brief to the unit. A one-command unit gets the template collapsed to a paragraph that still names goal, scope, the verify command, and the report shape. A 4KB scaffold around a two-line edit costs more to write and obey than the edit. Local spawns may reference the standing-orders file by store path. Verbatim paste is for cloud spawns and every resume.
 
 <!-- zh:14 -->
-> **中文**
->
-> 说明篇幅要与单元匹配。只有一条命令的任务，可以把模板缩成一段，但仍需明确目标、范围、验证命令和报告格式。给两行编辑套上 4KB 的说明框架，编写和遵循它的成本比改动本身还高。本地启动可以通过存储路径引用长期指令文件；云端启动和所有恢复都必须逐字粘贴。
+说明篇幅要与单元匹配。只有一条命令的任务，可以把模板缩成一段，但仍需明确目标、范围、验证命令和报告格式。给两行编辑套上 4KB 的说明框架，编写和遵循它的成本比改动本身还高。本地启动可以通过存储路径引用长期指令文件；云端启动和所有恢复都必须逐字粘贴。
 
 <!-- en:15 -->
 A sub-coordinator brief adds its track boundary and unit list, its spawn budget with the cloud default and the local exception list, the drain protocol, and the rollup format (per child: name, status, PR, head SHA, verdict, one line, plus track status and frontier delta).
 
 <!-- zh:15 -->
-> **中文**
->
-> 子协调者说明还要包含工作线边界与单元列表、启动预算及默认云端和本地例外清单、结果收集协议，以及汇总格式。每个子任务包含名称、状态、PR、head SHA、判断和一行摘要，再附工作线状态与前沿变化。
+子协调者说明还要包含工作线边界与单元列表、启动预算及默认云端和本地例外清单、结果收集协议，以及汇总格式。每个子任务包含名称、状态、PR、head SHA、判断和一行摘要，再附工作线状态与前沿变化。
 
 <!-- en:16 -->
 A dependency is a context relay, not just ordering. Undeclared upstream context makes the worker guess. Missing fields are a refuse-to-spawn condition. Audit one sampled worker brief per sub-coordinator per wave, concurrently with the wave it samples, never as a gate in front of it. A failing brief stops that track and fixes the sub-coordinator's instructions, not just the worker, because brief quality decays late in a run. Never resume-chain a brief. Respawn fresh with consolidated scope.
 
 <!-- zh:16 -->
-> **中文**
->
-> 依赖不仅是先后顺序，也是上下文传递。上游上下文没有声明，worker 就只能猜。缺少字段时，拒绝启动。每轮为每个子协调者抽查一个 worker 说明，抽查与该轮并行运行，绝不能成为开始前的检查关卡。说明不合格时，停止该工作线，修正子协调者的指令，而不只是修正 worker，因为执行后期说明质量容易下降。不要通过不断恢复 agent 来串联说明，应整合范围后重新启动新的 agent。
+依赖不仅是先后顺序，也是上下文传递。上游上下文没有声明，worker 就只能猜。缺少字段时，拒绝启动。每轮为每个子协调者抽查一个 worker 说明，抽查与该轮并行运行，绝不能成为开始前的检查关卡。说明不合格时，停止该工作线，修正子协调者的指令，而不只是修正 worker，因为执行后期说明质量容易下降。不要通过不断恢复 agent 来串联说明，应整合范围后重新启动新的 agent。
 
 <!-- en:17 -->
 #### Steps
 
 <!-- zh:17 -->
-> **中文**
->
-> #### 步骤
+**步骤**
 
 <!-- en:18 -->
 1. **Frame.** State the done predicate as something countable ("all 126 units merged, each ledger-verified `unit-test-verified` or better"). Quantify scope: units, rough effort, expected stacks, and the wall-clock budget. If one agent could finish inside that budget, stop here and run Autonomous run instead. Collapsing must not depend on another document being present. It means do the work directly in this session, plain workers where they help, verification inline, landing as you go, and none of the store, register, or pilot machinery below. Schedule landing against the budget. By roughly 70% of it, stop spawning and land what is verified. Name the tracks per project. A contested decomposition or one-way door goes through the arena skill before the pilot. Present the framing once. Reversible prep proceeds without waiting.
@@ -200,23 +164,19 @@ A dependency is a context relay, not just ordering. Undeclared upstream context 
 7. **Close.** Drain the final inbox, reconcile every spawned agent to a terminal row (done, abandoned, zombie-reconciled), confirm the predicate on the real artifact, confirm every landed PR has a verdict for its current head SHA, audit the trail per show-me-your-work including its cross-model review, encode recurring corrections into `preferences.md` or the brief template. Leave the store intact. It is the postmortem.
 
 <!-- zh:18 -->
-> **中文**
->
-> 1. **明确任务。** 把完成条件写成可计数的要求，例如“全部 126 个单元已合并，每个都在台账中达到 `unit-test-verified` 或更高验证级别”。量化范围，包括单元数、大致工作投入、预计 PR 栈，以及实际时间预算。如果一个 agent 能在该预算内完成，到这里停止，改用 Autonomous run。简化不能依赖另一份文档是否存在，而是直接在当前会话中工作，必要时使用普通 worker，随任务验证，边做边合入，不采用后续存储、登记表或试运行机制。按时间预算安排合入，约用完 70% 时间时停止启动新任务，合入已验证成果。按项目命名工作线。存在争议的拆分或难以撤销的决策，先通过 arena skill，再试运行。只展示一次整体安排；可逆的准备工作无需等待。
-> 2. **建立运行机制。** 运行 `orch init`。通过 show-me-your-work skill 建立过程记录，启动任何 agent 之前先写长期指令，再用 `orch frontier set --repo <repo-dir>` 根据现有 PR 初始化 `frontier.json`。
-> 3. **试运行。** 让一个单元走完说明、worker、验证、进入 PR 栈、台账记录和合并的完整路径。试运行用于在只投入一个 agent 而非五十个时，检验说明模板、验证步骤和单元粒度是否有问题。并行分派前，根据试运行证据修正约定。试运行开销与单元匹配。大量低成本、近乎相同的单元，把第一个作为试运行，按普通单元执行并在其中运行验证命令，它一合入就开始并行。专门的试运行流水线，包括独立验证 agent 和审计关卡，只用于昂贵或新的单元形态；重复单元无需串行试运行，因为没有新的假设可检验。
-> 4. **扩展并行。** 用滚动窗口启动 worker，不超过活跃任务上限，子任务结束就补充。阻塞批次会让每批都等待最慢任务。只有超过“角色”部分的一次结果收集管理阈值，才启动工作线子协调者。每次收齐结果后，重新计算可以开始的工作。把上游报告传入下游说明，同级任务沟通只向上汇报。抽样审计与被抽查轮次并行，失败时阻止下一次补充，不中断当前轮次。
-> 5. **收齐结果。** 每个结果收集时点，都执行下方队列规则。
-> 6. **合入。** 合入持续进行，绝不是最后才开始的阶段。第一个单元验证通过就开始集成，与余下任务轮次并行。Git 操作开销大的仓库，从第一轮就设长期 stacker 角色，单元验证通过即集成。本地 Git 成本低时，协调者按“角色”部分自行合入。先让合并前沿保持检查通过，再处理 PR 栈上层工作。遵循 PR 栈安全规则，只有合并发生或报告新的 head SHA 时，才推进 `frontier.json`。
-> 7. **收尾。** 收齐最终收件箱，把每个启动过的 agent 对应到一个终态行，包括 done、abandoned、zombie-reconciled。对真实产物确认完成条件，确认每个已合入 PR 的当前 head SHA 都有验证判断。按 show-me-your-work 审计过程记录，包括跨模型评审。将反复发生的纠正编码进 `preferences.md` 或说明模板。保留存储目录，它就是复盘材料。
+1. **明确任务。** 把完成条件写成可计数的要求，例如“全部 126 个单元已合并，每个都在台账中达到 `unit-test-verified` 或更高验证级别”。量化范围，包括单元数、大致工作投入、预计 PR 栈，以及实际时间预算。如果一个 agent 能在该预算内完成，到这里停止，改用 Autonomous run。简化不能依赖另一份文档是否存在，而是直接在当前会话中工作，必要时使用普通 worker，随任务验证，边做边合入，不采用后续存储、登记表或试运行机制。按时间预算安排合入，约用完 70% 时间时停止启动新任务，合入已验证成果。按项目命名工作线。存在争议的拆分或难以撤销的决策，先通过 arena skill，再试运行。只展示一次整体安排；可逆的准备工作无需等待。
+2. **建立运行机制。** 运行 `orch init`。通过 show-me-your-work skill 建立过程记录，启动任何 agent 之前先写长期指令，再用 `orch frontier set --repo <repo-dir>` 根据现有 PR 初始化 `frontier.json`。
+3. **试运行。** 让一个单元走完说明、worker、验证、进入 PR 栈、台账记录和合并的完整路径。试运行用于在只投入一个 agent 而非五十个时，检验说明模板、验证步骤和单元粒度是否有问题。并行分派前，根据试运行证据修正约定。试运行开销与单元匹配。大量低成本、近乎相同的单元，把第一个作为试运行，按普通单元执行并在其中运行验证命令，它一合入就开始并行。专门的试运行流水线，包括独立验证 agent 和审计关卡，只用于昂贵或新的单元形态；重复单元无需串行试运行，因为没有新的假设可检验。
+4. **扩展并行。** 用滚动窗口启动 worker，不超过活跃任务上限，子任务结束就补充。阻塞批次会让每批都等待最慢任务。只有超过“角色”部分的一次结果收集管理阈值，才启动工作线子协调者。每次收齐结果后，重新计算可以开始的工作。把上游报告传入下游说明，同级任务沟通只向上汇报。抽样审计与被抽查轮次并行，失败时阻止下一次补充，不中断当前轮次。
+5. **收齐结果。** 每个结果收集时点，都执行下方队列规则。
+6. **合入。** 合入持续进行，绝不是最后才开始的阶段。第一个单元验证通过就开始集成，与余下任务轮次并行。Git 操作开销大的仓库，从第一轮就设长期 stacker 角色，单元验证通过即集成。本地 Git 成本低时，协调者按“角色”部分自行合入。先让合并前沿保持检查通过，再处理 PR 栈上层工作。遵循 PR 栈安全规则，只有合并发生或报告新的 head SHA 时，才推进 `frontier.json`。
+7. **收尾。** 收齐最终收件箱，把每个启动过的 agent 对应到一个终态行，包括 done、abandoned、zombie-reconciled。对真实产物确认完成条件，确认每个已合入 PR 的当前 head SHA 都有验证判断。按 show-me-your-work 审计过程记录，包括跨模型评审。将反复发生的纠正编码进 `preferences.md` 或说明模板。保留存储目录，它就是复盘材料。
 
 <!-- en:19 -->
 #### Queue and drain
 
 <!-- zh:19 -->
-> **中文**
->
-> #### 队列与结果收集
+**队列与结果收集**
 
 <!-- en:20 -->
 - On a completion notification, run `orch inbox push <agent> <unit> <status> [--report PATH]` and return to what you were doing. Never deep-review inline. A completion that needs review becomes a verifier unit. Never review a diff inside a drain.
@@ -227,22 +187,18 @@ A dependency is a context relay, not just ordering. Undeclared upstream context 
 - A drain turn ends with the three lines from `orch status`: counts against the states, what changed, gates open. Detail lives in `status.md`. The full reply contract applies at checkpoints and close.
 
 <!-- zh:20 -->
-> **中文**
->
-> - 收到完成通知时，运行 `orch inbox push <agent> <unit> <status> [--report PATH]`，然后继续原来的工作。不要当场深入评审。需要评审的完成结果转为验证单元，绝不在结果收集过程中审查 diff。
-> - 在四个时点批量收齐结果：临界区结束、工作线汇总、前沿监视器唤醒，以及向用户汇报之前。监视器通过 loop skill 设置，并用长周期心跳兜底。每批以 `orch inbox drain` 开始；处理期间到达的结果留到下一批。
-> - 以下临界区必须先完成：编写任务说明、PR 栈操作、冲突决策、写入人工检查关卡、更新台账或前沿。
-> - 每次结果收集都为每个指针分类，包括 landed、needs-verify、failed、zombie、noise。通过 `orch unit add`、`orch unit set` 和 `orch ledger record` 写入相应行，运行 `orch status`，再在一条消息中启动下一轮。
-> - 每条工作线汇总时，交代所有启动过的子任务：已收到结果、已重新启动，或其范围已明确由其他任务接管。悄悄重做失联子任务的工作，会同时掩盖浪费的投入和该任务原本要补齐的覆盖缺口。
-> - 结果收集轮次以 `orch status` 的三行结束：各状态数量、变化内容、未关闭的人工检查关卡。细节保存在 `status.md`。检查点和收尾时仍需遵守完整回复约定。
+- 收到完成通知时，运行 `orch inbox push <agent> <unit> <status> [--report PATH]`，然后继续原来的工作。不要当场深入评审。需要评审的完成结果转为验证单元，绝不在结果收集过程中审查 diff。
+- 在四个时点批量收齐结果：临界区结束、工作线汇总、前沿监视器唤醒，以及向用户汇报之前。监视器通过 loop skill 设置，并用长周期心跳兜底。每批以 `orch inbox drain` 开始；处理期间到达的结果留到下一批。
+- 以下临界区必须先完成：编写任务说明、PR 栈操作、冲突决策、写入人工检查关卡、更新台账或前沿。
+- 每次结果收集都为每个指针分类，包括 landed、needs-verify、failed、zombie、noise。通过 `orch unit add`、`orch unit set` 和 `orch ledger record` 写入相应行，运行 `orch status`，再在一条消息中启动下一轮。
+- 每条工作线汇总时，交代所有启动过的子任务：已收到结果、已重新启动，或其范围已明确由其他任务接管。悄悄重做失联子任务的工作，会同时掩盖浪费的投入和该任务原本要补齐的覆盖缺口。
+- 结果收集轮次以 `orch status` 的三行结束：各状态数量、变化内容、未关闭的人工检查关卡。细节保存在 `status.md`。检查点和收尾时仍需遵守完整回复约定。
 
 <!-- en:21 -->
 #### Stack safety
 
 <!-- zh:21 -->
-> **中文**
->
-> #### PR 栈安全
+**PR 栈安全**
 
 <!-- en:22 -->
 - The frontier is a computed object, never narrative. Recompute `frontier.json` from `gt` after every merge and stack mutation because GitHub base refs drift mid-restack while gt tracking is authoritative: ordered PR list, branch names, head SHAs, a generation number, the lowest unmerged PR. Resolve it where gt knows the stack, normally the stacker's clone. A checkout whose gt metadata never saw the submits reports no PRs and the command errors rather than guessing.
@@ -252,53 +208,41 @@ A dependency is a context relay, not just ordering. Undeclared upstream context 
 - One retro watcher follows merged PRs for reverts, post-merge CI breaks, and orphaned follow-ups.
 
 <!-- zh:22 -->
-> **中文**
->
-> - 前沿是计算出的对象，绝不是文字叙述。每次合并和 PR 栈变更后，都从 `gt` 重新计算 `frontier.json`，因为重新组织栈时 GitHub 基线引用可能漂移，而 gt 跟踪信息才是权威依据。记录有序 PR 列表、分支名、head SHA、代次编号，以及最底层未合并 PR。应在 gt 知道该 PR 栈的位置计算，通常是 stacker 的 clone。若 checkout 的 gt 元数据从未见过这些提交，它会报告没有 PR；命令应报错，不能猜。
-> - 每个 PR 栈严格只有一个 stacker 可以运行 `gt`，在该栈内串行执行。在长期指令中记录负责者。重新组织栈在云端运行，这种规模的本地操作会拖垮笔记本。
-> - Worker 绝不 rebase，也绝不运行 `gt`。每个 PR 栈只设一个跟进者，遵循 `playbooks/babysit.md`，范围限定到某个不可变的前沿代次；冲突交给 stacker，不自行重新组织栈。
-> - PR 关闭和修改目标分支只能通过 stacker。关闭基线 PR 会使其上所有依赖链失去承接。合并和 PR 栈结构调整也像其他任务一样，需要任务说明。
-> - 一个回溯监视器持续检查已合并 PR 的 revert、合并后 CI 失败，以及失去承接的后续 PR。
+- 前沿是计算出的对象，绝不是文字叙述。每次合并和 PR 栈变更后，都从 `gt` 重新计算 `frontier.json`，因为重新组织栈时 GitHub 基线引用可能漂移，而 gt 跟踪信息才是权威依据。记录有序 PR 列表、分支名、head SHA、代次编号，以及最底层未合并 PR。应在 gt 知道该 PR 栈的位置计算，通常是 stacker 的 clone。若 checkout 的 gt 元数据从未见过这些提交，它会报告没有 PR；命令应报错，不能猜。
+- 每个 PR 栈严格只有一个 stacker 可以运行 `gt`，在该栈内串行执行。在长期指令中记录负责者。重新组织栈在云端运行，这种规模的本地操作会拖垮笔记本。
+- Worker 绝不 rebase，也绝不运行 `gt`。每个 PR 栈只设一个跟进者，遵循 `playbooks/babysit.md`，范围限定到某个不可变的前沿代次；冲突交给 stacker，不自行重新组织栈。
+- PR 关闭和修改目标分支只能通过 stacker。关闭基线 PR 会使其上所有依赖链失去承接。合并和 PR 栈结构调整也像其他任务一样，需要任务说明。
+- 一个回溯监视器持续检查已合并 PR 的 revert、合并后 CI 失败，以及失去承接的后续 PR。
 
 <!-- en:23 -->
 #### Verification
 
 <!-- zh:23 -->
-> **中文**
->
-> #### 验证
+**验证**
 
 <!-- en:24 -->
 Scale verification to the unit. When VERIFY is a single cheap command, the worker runs it and reports the output, and the coordinator spot-checks receipts. A dedicated verifier agent (on a different model family than the worker) is for units whose verification is expensive, judgment-laden, or high-blast-radius. A verifier agent whose entire product would be rerunning one command is ceremony, not verification.
 
 <!-- zh:24 -->
-> **中文**
->
-> 验证开销与单元匹配。VERIFY 只有一条低成本命令时，由 worker 运行并报告输出，协调者抽查执行证据。专门的验证 agent 使用不同于 worker 的模型系列，仅用于验证成本高、需要大量判断或影响范围大的单元。如果验证 agent 的全部产物只是重跑一条命令，那只是流程开销，不是更有力的验证。
+验证开销与单元匹配。VERIFY 只有一条低成本命令时，由 worker 运行并报告输出，协调者抽查执行证据。专门的验证 agent 使用不同于 worker 的模型系列，仅用于验证成本高、需要大量判断或影响范围大的单元。如果验证 agent 的全部产物只是重跑一条命令，那只是流程开销，不是更有力的验证。
 
 <!-- en:25 -->
 Write ledger rows with `orch ledger record`. Check the current PR and head SHA with `orch ledger check`. `ledger.tsv`, one row per verdict, keyed by PR number plus head SHA: `live-ui-verified | unit-test-verified | type-check-only | verifier-blocked | verifier-failed`. CI green is an input to a verdict, not a verdict. Behavioral work needs better than `type-check-only`. `verifier-blocked` is not a pass. Respawn when the environment heals. `verifier-failed` gets a fix unit, not a re-verify. A worker may self-report. A verifier overrides it on the same key. A new head SHA voids the row, so re-verify after restack. The ledger answers "was this verified", not memory and not the transcript.
 
 <!-- zh:25 -->
-> **中文**
->
-> 用 `orch ledger record` 写台账，用 `orch ledger check` 检查当前 PR 和 head SHA。`ledger.tsv` 每个判断一行，以 PR 编号加 head SHA 为键，状态为 `live-ui-verified | unit-test-verified | type-check-only | verifier-blocked | verifier-failed`。CI 通过只是判断的输入，不是判断本身。行为改动要求高于 `type-check-only` 的验证级别。`verifier-blocked` 不算通过，环境恢复后重新启动。`verifier-failed` 应创建修复单元，不是简单重跑验证。worker 可以自行报告，验证者在相同键上的判断覆盖它。新 head SHA 会使旧记录失效，因此重新组织 PR 栈后要重新验证。是否经过验证，由台账回答，不能依赖记忆或对话。
+用 `orch ledger record` 写台账，用 `orch ledger check` 检查当前 PR 和 head SHA。`ledger.tsv` 每个判断一行，以 PR 编号加 head SHA 为键，状态为 `live-ui-verified | unit-test-verified | type-check-only | verifier-blocked | verifier-failed`。CI 通过只是判断的输入，不是判断本身。行为改动要求高于 `type-check-only` 的验证级别。`verifier-blocked` 不算通过，环境恢复后重新启动。`verifier-failed` 应创建修复单元，不是简单重跑验证。worker 可以自行报告，验证者在相同键上的判断覆盖它。新 head SHA 会使旧记录失效，因此重新组织 PR 栈后要重新验证。是否经过验证，由台账回答，不能依赖记忆或对话。
 
 <!-- en:26 -->
 A unit is not done until its output is externalized the moment it lands, never batched to the end of the run. A worker pushes its branch, a verifier writes its ledger row, receipts land in the store. Work that exists only on one VM when that VM dies was never done.
 
 <!-- zh:26 -->
-> **中文**
->
-> 单元合入时，产出必须立即保存到执行环境之外，不能等整次执行结束再批量处理，否则不算完成。worker 推送分支，验证者写台账，证据记录存入存储目录。如果工作只存在于某台 VM 上，VM 消失就丢失，那就从未真正完成。
+单元合入时，产出必须立即保存到执行环境之外，不能等整次执行结束再批量处理，否则不算完成。worker 推送分支，验证者写台账，证据记录存入存储目录。如果工作只存在于某台 VM 上，VM 消失就丢失，那就从未真正完成。
 
 <!-- en:27 -->
 #### Liveness and failure
 
 <!-- zh:27 -->
-> **中文**
->
-> #### 活跃性与失败处理
+**活跃性与失败处理**
 
 <!-- en:28 -->
 - Never resume an agent to check on it. A resume restarts an idle agent. Probe read-only: the ledger, `units.tsv`, `gh`, pushed branches, the cloud agent's status in the Cursor dashboard. Transcript mtime is not liveness.
@@ -310,52 +254,40 @@ A unit is not done until its output is externalized the moment it lands, never b
 - After a Cursor restart: local agents are dead, cloud work is not. Re-read the standing orders and `units.tsv`, recompute the frontier, reattach cloud work by PR and branch rather than agent id, respawn one sub-coordinator per track from its stored brief plus current state, drain, resume. The dead session's store lock clears itself on the next write. `orch` replaces a lock whose holder pid is gone.
 
 <!-- zh:28 -->
-> **中文**
->
-> - 不要通过恢复 agent 来查询状态，恢复会重新启动空闲 agent。只能只读探测台账、`units.tsv`、`gh`、已推送分支，以及 Cursor dashboard 中的云端 agent 状态。对话文件的 mtime 不能证明活跃性。
-> - 静默退出的任务，在收件箱写入一条补充复盘记录，包含单元、失败类型、最后证据和可选处理。证据到达就重新规划，不等待所有任务完全静止。
-> - 按失败类型重试：达到上限或 OOM，缩小范围重新启动；网络中断，按原任务重试；工具错误，换模型重试；未知原因，重试一次。重试两次后放弃该单元，重新规划其他路径。
-> - 几小时后才返回的僵尸任务，任何结果被接受前都要先对照当前前沿和台账核对。独有发现可通过新的单元挽救，不能盲目合并。
-> - 继续启动任务会让整棵任务树产生错误产物时，例如上游输出不合格、验收条件有问题或基础设施失效，在长期指令顶部写停止指令，让正在执行的任务结束，修复原因后再移除。
-> - 自己的基础设施重试也要像子任务一样有上限。连续几次工具调用中止后，就停止重试，把终态交接写入持久存储，说明完成了什么、在哪里、准确的恢复命令，然后结束执行。
-> - Cursor 重启后，本地 agent 已终止，云端工作不会因此终止。重读长期指令和 `units.tsv`，重新计算前沿，通过 PR 和分支而非 agent ID 重新关联云端工作。为每条工作线根据已存说明及当前状态重启一个子协调者，收齐结果，再继续。旧会话的存储锁会在下一次写入时自动解除；持锁进程 PID 已不存在时，`orch` 会替换该锁。
+- 不要通过恢复 agent 来查询状态，恢复会重新启动空闲 agent。只能只读探测台账、`units.tsv`、`gh`、已推送分支，以及 Cursor dashboard 中的云端 agent 状态。对话文件的 mtime 不能证明活跃性。
+- 静默退出的任务，在收件箱写入一条补充复盘记录，包含单元、失败类型、最后证据和可选处理。证据到达就重新规划，不等待所有任务完全静止。
+- 按失败类型重试：达到上限或 OOM，缩小范围重新启动；网络中断，按原任务重试；工具错误，换模型重试；未知原因，重试一次。重试两次后放弃该单元，重新规划其他路径。
+- 几小时后才返回的僵尸任务，任何结果被接受前都要先对照当前前沿和台账核对。独有发现可通过新的单元挽救，不能盲目合并。
+- 继续启动任务会让整棵任务树产生错误产物时，例如上游输出不合格、验收条件有问题或基础设施失效，在长期指令顶部写停止指令，让正在执行的任务结束，修复原因后再移除。
+- 自己的基础设施重试也要像子任务一样有上限。连续几次工具调用中止后，就停止重试，把终态交接写入持久存储，说明完成了什么、在哪里、准确的恢复命令，然后结束执行。
+- Cursor 重启后，本地 agent 已终止，云端工作不会因此终止。重读长期指令和 `units.tsv`，重新计算前沿，通过 PR 和分支而非 agent ID 重新关联云端工作。为每条工作线根据已存说明及当前状态重启一个子协调者，收齐结果，再继续。旧会话的存储锁会在下一次写入时自动解除；持锁进程 PID 已不存在时，`orch` 会替换该锁。
 
 <!-- en:29 -->
 #### Escalation
 
 <!-- zh:29 -->
-> **中文**
->
-> #### 需要用户决定的事项
+**需要用户决定的事项**
 
 <!-- en:30 -->
 Reaches the human, batched into the status page rather than per item: irreversible actions (force-push to shared branches, deploys, deletions, closing someone else's PR), genuine product or preference calls no experiment settles, a standing order that contradicts observed reality, a program-level dead end that survived a replan. Park each as a `gates.md` entry before asking, and route work around it.
 
 <!-- zh:30 -->
-> **中文**
->
-> 以下事项集中列入状态页，不要逐项打断用户：不可逆动作，例如共享分支 force-push、部署、删除、关闭他人的 PR；实验无法决定的产品或偏好选择；长期指令与实际观察矛盾；重新规划后仍无法解决的项目级死路。询问前先把每项写入 `gates.md`，并让其他工作绕过它继续。
+以下事项集中列入状态页，不要逐项打断用户：不可逆动作，例如共享分支 force-push、部署、删除、关闭他人的 PR；实验无法决定的产品或偏好选择；长期指令与实际观察矛盾；重新规划后仍无法解决的项目级死路。询问前先把每项写入 `gates.md`，并让其他工作绕过它继续。
 
 <!-- en:31 -->
 Never reaches the human: frontier nudges, restack mechanics, retries, CI flake triage, review-thread triage, format fixes, scope the brief already forbids (refuse and continue), and "should I keep going". When in doubt, act and log.
 
 <!-- zh:31 -->
-> **中文**
->
-> 以下事项绝不交给用户：推进合并前沿、重新组织栈的机械操作、重试、CI 偶发失败分诊、评审讨论分诊、格式修复、任务说明已禁止的范围，拒绝后继续即可，以及“我要不要继续”。无法确定时，先行动并记录。
+以下事项绝不交给用户：推进合并前沿、重新组织栈的机械操作、重试、CI 偶发失败分诊、评审讨论分诊、格式修复、任务说明已禁止的范围，拒绝后继续即可，以及“我要不要继续”。无法确定时，先行动并记录。
 
 <!-- en:32 -->
 Mid-run discoveries fix only what blocks the frontier. Everything else parks in follow-ups. At this fan-out a small scope leak multiplies into PRs nobody asked for.
 
 <!-- zh:32 -->
-> **中文**
->
-> 执行中发现的新问题，只修阻碍合并前沿的部分，其余记入后续事项。这样的并行规模下，小小的范围扩张会倍增为一批无人要求的 PR。
+执行中发现的新问题，只修阻碍合并前沿的部分，其余记入后续事项。这样的并行规模下，小小的范围扩张会倍增为一批无人要求的 PR。
 
 <!-- en:33 -->
 **Reply:** at checkpoints and close: the predicate and the count against it from `units.tsv` and `ledger.tsv`, tracks and what each landed, the frontier (PR list plus SHAs), verdicts summary, what was abandoned and why, gates awaiting the human (the only asks), the store path, and the trail path. Numbers from the tables, not narrative. Include PR links.
 
 <!-- zh:33 -->
-> **中文**
->
-> **回复：** 检查点和收尾时，说明完成条件，以及根据 `units.tsv` 和 `ledger.tsv` 统计的完成数量；各工作线与各自合入成果；前沿的 PR 列表及 SHA；验证判断汇总；放弃了什么及原因；等待用户决定的关卡，这些是唯一需要询问的事项；存储路径和过程记录路径。数字必须来自表格，不是叙述估计。附上 PR 链接。
+**回复：** 检查点和收尾时，说明完成条件，以及根据 `units.tsv` 和 `ledger.tsv` 统计的完成数量；各工作线与各自合入成果；前沿的 PR 列表及 SHA；验证判断汇总；放弃了什么及原因；等待用户决定的关卡，这些是唯一需要询问的事项；存储路径和过程记录路径。数字必须来自表格，不是叙述估计。附上 PR 链接。

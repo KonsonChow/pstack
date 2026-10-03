@@ -5,33 +5,25 @@
 # Review Rubric
 
 <!-- zh:0 -->
-> **中文**
->
-> # 评审标准
+**评审标准**
 
 <!-- en:1 -->
 Review through whichever lenses are relevant. Not every lens applies to every change. Use judgment.
 
 <!-- zh:1 -->
-> **中文**
->
-> 采用相关的评审视角。并非每个视角适用于每个改动，要自行判断。
+采用相关的评审视角。并非每个视角适用于每个改动，要自行判断。
 
 <!-- en:2 -->
 ## Correctness
 
 <!-- zh:2 -->
-> **中文**
->
-> ## 正确性
+**正确性**
 
 <!-- en:3 -->
 Does the code actually do what the intent says it should?
 
 <!-- zh:3 -->
-> **中文**
->
-> 代码真的实现了意图要求的行为吗？
+代码真的实现了意图要求的行为吗？
 
 <!-- en:4 -->
 - Edge cases: empty inputs, nil/undefined, boundary values, concurrent access
@@ -43,47 +35,37 @@ Does the code actually do what the intent says it should?
 - Concurrency: if multiple actors can touch the same mutable state (files, branches, shared data), is access serialized structurally (locks, sequential phases, exclusive ownership), or by conventions that won't hold?
 
 <!-- zh:4 -->
-> **中文**
->
-> - 边界情况：空输入、nil/undefined、边界值、并发访问。
-> - 错误处理：错误被捕获、传播，还是悄悄吞掉？
-> - 差一位错误、类型强制转换、整数溢出、字符串编码。
-> - 状态管理：竞态、过期闭包、悬空引用。
-> - 正常路径能工作吗？失败路径呢？
-> - 幂等：操作执行两次，或上次执行中途崩溃，会怎样？如果答案是“看留下什么状态”，就缺少状态协调步骤。
-> - 并发：多个参与者能修改同一可变状态（文件、分支、共享数据）时，访问由结构（锁、顺序阶段、独占归属）串行化，还是依赖无法保证的约定？
+- 边界情况：空输入、nil/undefined、边界值、并发访问。
+- 错误处理：错误被捕获、传播，还是悄悄吞掉？
+- 差一位错误、类型强制转换、整数溢出、字符串编码。
+- 状态管理：竞态、过期闭包、悬空引用。
+- 正常路径能工作吗？失败路径呢？
+- 幂等：操作执行两次，或上次执行中途崩溃，会怎样？如果答案是“看留下什么状态”，就缺少状态协调步骤。
+- 并发：多个参与者能修改同一可变状态（文件、分支、共享数据）时，访问由结构（锁、顺序阶段、独占归属）串行化，还是依赖无法保证的约定？
 
 <!-- en:5 -->
 When you find a potential bug, trace the execution path. Don't just flag "this could be nil". Show the call chain that makes it nil.
 
 <!-- zh:5 -->
-> **中文**
->
-> 发现潜在 bug 时，追踪执行路径。不要只说“这里可能 nil”，要展示导致 nil 的调用链。
+发现潜在 bug 时，追踪执行路径。不要只说“这里可能 nil”，要展示导致 nil 的调用链。
 
 <!-- en:6 -->
 ## Root Causes vs. Symptoms
 
 <!-- zh:6 -->
-> **中文**
->
-> ## 根因与症状
+**根因与症状**
 
 <!-- en:7 -->
 Is the code fixing the actual problem or papering over a symptom?
 
 <!-- zh:7 -->
-> **中文**
->
-> 代码修的是实际问题，还是掩盖症状？
+代码修的是实际问题，还是掩盖症状？
 
 <!-- en:8 -->
 Answering this often requires looking beyond the changed files. Read the surrounding code (callers, callees, type definitions, sibling modules) and understand the architecture the change lives in. Use the tools available to you (Read, Grep, Glob) to explore. Follow the call chain. Read the types. Understand why the code exists before judging whether the change addresses the right layer.
 
 <!-- zh:8 -->
-> **中文**
->
-> 回答通常要看改动文件之外。阅读周边代码（调用方、被调用方、类型定义、相邻模块），理解改动所在架构。用现有工具（Read、Grep、Glob）探索，沿调用链追踪，阅读类型，先理解代码存在的原因，再判断改动是否落在正确层。
+回答通常要看改动文件之外。阅读周边代码（调用方、被调用方、类型定义、相邻模块），理解改动所在架构。用现有工具（Read、Grep、Glob）探索，沿调用链追踪，阅读类型，先理解代码存在的原因，再判断改动是否落在正确层。
 
 <!-- en:9 -->
 - Guard clauses that mask a deeper invariant violation
@@ -94,30 +76,24 @@ Answering this often requires looking beyond the changed files. Read the surroun
 - Instructions where structure would be better: if the fix is a comment saying "don't do X" or a convention someone has to remember, ask whether it could instead be a type constraint, a lint rule, or a runtime check that makes the wrong thing impossible
 
 <!-- zh:9 -->
-> **中文**
->
-> - 掩盖更深不变量违例的 guard clause。
-> - 隐藏破损契约的重试逻辑。
-> - 压住建模错误的类型 cast。
-> - 发现 workaround 时，问为什么需要它，正确修复应是什么样。
-> - 放在模块 A 的修复，实际应改模块 B 的契约。
-> - 用结构比写指令更好：修复若是“不要做 X”的注释，或必须靠人记住的约定，询问能否改成类型约束、lint 规则或运行时检查，让错误做法无法发生。
+- 掩盖更深不变量违例的 guard clause。
+- 隐藏破损契约的重试逻辑。
+- 压住建模错误的类型 cast。
+- 发现 workaround 时，问为什么需要它，正确修复应是什么样。
+- 放在模块 A 的修复，实际应改模块 B 的契约。
+- 用结构比写指令更好：修复若是“不要做 X”的注释，或必须靠人记住的约定，询问能否改成类型约束、lint 规则或运行时检查，让错误做法无法发生。
 
 <!-- en:10 -->
 ## Structural Integrity
 
 <!-- zh:10 -->
-> **中文**
->
-> ## 结构完整性
+**结构完整性**
 
 <!-- en:11 -->
 Does the code fit well into the system it's part of?
 
 <!-- zh:11 -->
-> **中文**
->
-> 代码是否合理融入所属系统？
+代码是否合理融入所属系统？
 
 <!-- en:12 -->
 - Boundary discipline: is validation at system boundaries, or scattered through business logic? Validate data once where it enters the system, then trust it internally.
@@ -128,38 +104,30 @@ Does the code fit well into the system it's part of?
 - Legacy dual-paths: does the change introduce a new API while keeping the old one alive? If there are no external consumers, migrate callers and delete the old path in the same wave. Don't leave compatibility layers that will become permanent.
 
 <!-- zh:12 -->
-> **中文**
->
-> - 边界纪律：校验集中在系统边界，还是散在业务逻辑中？数据进入系统时校验一次，内部随后信任它。
-> - 抽象层次：是否混合高层协调与低层细节？
-> - 耦合：是否新增让未来改动更难的依赖？
-> - 数据模型匹配：数据结构是否符合真实访问模式？正确结构让后续代码自然明确，错误结构处处掣肘。
-> - 拼接还是融合：是在旧设计上打补丁，还是读来像设计一直考虑了它？如果一开始知道新需求，代码会这样写吗？
-> - 新旧双路径：是否引入新 API 却保留旧 API？没有外部使用者时，同一轮迁移调用方并删除旧路径。别留下最终变永久的兼容层。
+- 边界纪律：校验集中在系统边界，还是散在业务逻辑中？数据进入系统时校验一次，内部随后信任它。
+- 抽象层次：是否混合高层协调与低层细节？
+- 耦合：是否新增让未来改动更难的依赖？
+- 数据模型匹配：数据结构是否符合真实访问模式？正确结构让后续代码自然明确，错误结构处处掣肘。
+- 拼接还是融合：是在旧设计上打补丁，还是读来像设计一直考虑了它？如果一开始知道新需求，代码会这样写吗？
+- 新旧双路径：是否引入新 API 却保留旧 API？没有外部使用者时，同一轮迁移调用方并删除旧路径。别留下最终变永久的兼容层。
 
 <!-- en:13 -->
 Don't penalize simple code for lacking abstraction. Premature abstraction is worse than duplication.
 
 <!-- zh:13 -->
-> **中文**
->
-> 不要因简单代码缺少抽象而扣分。过早抽象比重复更糟。
+不要因简单代码缺少抽象而扣分。过早抽象比重复更糟。
 
 <!-- en:14 -->
 ## Verification
 
 <!-- zh:14 -->
-> **中文**
->
-> ## 验证
+**验证**
 
 <!-- en:15 -->
 Can you tell that this code works from reading it?
 
 <!-- zh:15 -->
-> **中文**
->
-> 阅读代码能判断它能工作吗？
+阅读代码能判断它能工作吗？
 
 <!-- en:16 -->
 - Are there tests? Do they test behavior or implementation details?
@@ -170,30 +138,24 @@ Can you tell that this code works from reading it?
 - For delegated or async work: does the code verify actual output artifacts, or does it trust self-reports and summaries?
 
 <!-- zh:16 -->
-> **中文**
->
-> - 有测试吗？测的是行为还是实现细节？
-> - 有能捕获回归的断言或不变量吗？
-> - Bug 修复有针对该 bug 的测试吗？
-> - 涉及集成边界时，完整路径测试了吗？
-> - 检查真实对象，不看替代指标。用文件 mtime 或缓存状态判断存活，而不读实际值，就是验证缺口。
-> - 委派或异步工作：是否验证实际输出产物，还是相信自述与摘要？
+- 有测试吗？测的是行为还是实现细节？
+- 有能捕获回归的断言或不变量吗？
+- Bug 修复有针对该 bug 的测试吗？
+- 涉及集成边界时，完整路径测试了吗？
+- 检查真实对象，不看替代指标。用文件 mtime 或缓存状态判断存活，而不读实际值，就是验证缺口。
+- 委派或异步工作：是否验证实际输出产物，还是相信自述与摘要？
 
 <!-- en:17 -->
 ## Complexity Budget
 
 <!-- zh:17 -->
-> **中文**
->
-> ## 复杂性预算
+**复杂性预算**
 
 <!-- en:18 -->
 Is the complexity justified by what the code accomplishes?
 
 <!-- zh:18 -->
-> **中文**
->
-> 代码带来的价值足以支撑这些复杂性吗？
+代码带来的价值足以支撑这些复杂性吗？
 
 <!-- en:19 -->
 - Code that could be simpler without losing correctness or clarity
@@ -205,39 +167,31 @@ Is the complexity justified by what the code accomplishes?
 - Does the user experience justify the complexity? Every feature, control, and option should earn its place. Half-finished features are worse than missing ones.
 
 <!-- zh:19 -->
-> **中文**
->
-> - 不损失正确性或清晰性就能简化的代码。
-> - 只服务一个调用点的抽象。
-> - 为尚不存在的情况设计的配置或参数化。
-> - 死代码、未用导入、残留参数。
-> - 过度设计：没有当前调用方的“以防万一”路径。
-> - 为已不需要的过渡稳定性保留旧兼容路径。迁移完成就删掉基础支架。
-> - 用户体验是否值得这些复杂性？每个功能、控件、选项都要证明价值。半成品功能比没有更糟。
+- 不损失正确性或清晰性就能简化的代码。
+- 只服务一个调用点的抽象。
+- 为尚不存在的情况设计的配置或参数化。
+- 死代码、未用导入、残留参数。
+- 过度设计：没有当前调用方的“以防万一”路径。
+- 为已不需要的过渡稳定性保留旧兼容路径。迁移完成就删掉基础支架。
+- 用户体验是否值得这些复杂性？每个功能、控件、选项都要证明价值。半成品功能比没有更糟。
 
 <!-- en:20 -->
 Simpler is better unless simpler is wrong. Three lines of duplication beat a premature abstraction.
 
 <!-- zh:20 -->
-> **中文**
->
-> 只要不导致错误，越简单越好。重复三行好过过早抽象。
+只要不导致错误，越简单越好。重复三行好过过早抽象。
 
 <!-- en:21 -->
 ## Security
 
 <!-- zh:21 -->
-> **中文**
->
-> ## 安全
+**安全**
 
 <!-- en:22 -->
 Only flag security issues you can actually trace through the code. "This could be an injection vector" without showing the input path is not useful.
 
 <!-- zh:22 -->
-> **中文**
->
-> 只报告能实际沿代码追踪的安全问题。说“可能是注入入口”却不给输入路径，没有用。
+只报告能实际沿代码追踪的安全问题。说“可能是注入入口”却不给输入路径，没有用。
 
 <!-- en:23 -->
 - User input flowing to dangerous sinks (SQL, shell, eval, innerHTML) without sanitization
@@ -246,9 +200,7 @@ Only flag security issues you can actually trace through the code. "This could b
 - TOCTOU (time-of-check-time-of-use) in security-critical paths
 
 <!-- zh:23 -->
-> **中文**
->
-> - 用户输入未净化就进入危险出口（SQL、shell、eval、innerHTML）。
-> - 新 endpoint 的认证或授权缺口。
-> - 代码、日志、错误消息中的秘密。
-> - 安全关键路径中的 TOCTOU（检查与使用之间的时序竞态）。
+- 用户输入未净化就进入危险出口（SQL、shell、eval、innerHTML）。
+- 新 endpoint 的认证或授权缺口。
+- 代码、日志、错误消息中的秘密。
+- 安全关键路径中的 TOCTOU（检查与使用之间的时序竞态）。

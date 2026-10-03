@@ -11,47 +11,37 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-prove-it-works
-> description: "完成任务后、宣布完成前使用。针对真实产物进行验证（运行功能、读取实际值、检查 diff），不要依赖代理指标、自报结果或‘能编译’。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-prove-it-works
+description: "完成任务后、宣布完成前使用。针对真实产物进行验证（运行功能、读取实际值、检查 diff），不要依赖代理指标、自报结果或‘能编译’。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Prove It Works
 
 <!-- zh:1 -->
-> **中文**
->
-> # 证明它能工作
+**证明它能工作**
 
 <!-- en:2 -->
 Verify every task output by checking the real thing directly. Do not infer from proxies, self-reports, or "it compiles."
 
 <!-- zh:2 -->
-> **中文**
->
-> 直接检查真实对象，验证每个任务输出。不要从代理指标、自报结果或“能编译”推断。
+直接检查真实对象，验证每个任务输出。不要从代理指标、自报结果或“能编译”推断。
 
 <!-- en:3 -->
 **Why:** Unverified work has unknown correctness. Indirect verification (file mtimes, output freshness, agent self-reports, cached screenshots) feels cheaper than direct observation. Acting on a wrong inference costs far more than checking the source.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：**未经验证的工作，正确性未知。间接验证（文件修改时间、输出新鲜度、agent 自报、缓存截图）看似省事，但直接观察成本更低；依据错误推断行动，代价远高于检查源头。
+**原因：**未经验证的工作，正确性未知。间接验证（文件修改时间、输出新鲜度、agent 自报、缓存截图）看似省事，但直接观察成本更低；依据错误推断行动，代价远高于检查源头。
 
 <!-- en:4 -->
 **Pattern:** After completing any task, ask: "how do I prove this actually works?"
 
 <!-- zh:4 -->
-> **中文**
->
-> **模式：**完成任何任务后都问：“如何证明它真的有效？”
+**模式：**完成任何任务后都问：“如何证明它真的有效？”
 
 <!-- en:5 -->
 Check the real thing, not a proxy:
@@ -60,12 +50,10 @@ Check the real thing, not a proxy:
 - When verification fails, suspect the observation method before suspecting the system
 
 <!-- zh:5 -->
-> **中文**
->
-> 检查真实对象，而非代理指标：
-> - 直接检查进程是否存活，不要通过派生状态间接判断
-> - 读取实际值，不要读取缓存或派生表示
-> - 验证失败时，先怀疑观察方法，再怀疑系统
+检查真实对象，而非代理指标：
+- 直接检查进程是否存活，不要通过派生状态间接判断
+- 读取实际值，不要读取缓存或派生表示
+- 验证失败时，先怀疑观察方法，再怀疑系统
 
 <!-- en:6 -->
 Code and features:
@@ -75,44 +63,34 @@ Code and features:
 4. For integrations, test the full communication path end-to-end
 
 <!-- zh:6 -->
-> **中文**
->
-> 代码和功能：
-> 1. 构建（必要但不充分）
-> 2. 运行并执行真实功能路径
-> 3. 检查完整链路：数据是否从输入流到输出？
-> 4. 对集成进行端到端的完整通信路径测试
+代码和功能：
+1. 构建（必要但不充分）
+2. 运行并执行真实功能路径
+3. 检查完整链路：数据是否从输入流到输出？
+4. 对集成进行端到端的完整通信路径测试
 
 <!-- en:7 -->
 Delegation: trust artifacts, not self-reports.
 When verifying delegated work, inspect the actual output artifact (git diff, file contents, runtime behavior), not the delegate's summary.
 
 <!-- zh:7 -->
-> **中文**
->
-> 委派：相信产物，不相信自报。
-> 验证委派工作时，检查实际输出产物（git diff、文件内容、运行行为），不要只看委派者的总结。
+委派：相信产物，不相信自报。
+验证委派工作时，检查实际输出产物（git diff、文件内容、运行行为），不要只看委派者的总结。
 
 <!-- en:8 -->
 ## Script the check when you can
 
 <!-- zh:8 -->
-> **中文**
->
-> ## 能脚本化就脚本化检查
+**能脚本化就脚本化检查**
 
 <!-- en:9 -->
 The strongest proof is a deterministic script that re-runs the same comparison, not a one-time eyeball. Write the script, run it, and keep its output as an artifact a reviewer can re-run instead of trusting your word.
 
 <!-- zh:9 -->
-> **中文**
->
-> 最有力的证明是可重复运行同一比较的确定性脚本，而不是一次性目测。编写并运行脚本，保留其输出作为评审者可以重新运行的产物，不要让人只相信你的话。
+最有力的证明是可重复运行同一比较的确定性脚本，而不是一次性目测。编写并运行脚本，保留其输出作为评审者可以重新运行的产物，不要让人只相信你的话。
 
 <!-- en:10 -->
 Keep the artifact visible for the human. Commit it only for large or complex work where the trail has to be auditable later, like a big port or migration (the **show-me-your-work** skill).
 
 <!-- zh:10 -->
-> **中文**
->
-> 让产物对人可见。只有大型或复杂工作（例如大规模移植或迁移）需要日后审计轨迹时，才提交它（使用 **show-me-your-work** skill）。
+让产物对人可见。只有大型或复杂工作（例如大规模移植或迁移）需要日后审计轨迹时，才提交它（使用 **show-me-your-work** skill）。

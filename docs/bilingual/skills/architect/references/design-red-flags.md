@@ -5,49 +5,37 @@
 # Design red flags
 
 <!-- zh:0 -->
-> **中文**
->
-> # 设计警示信号
+**设计警示信号**
 
 <!-- en:1 -->
 Screen every candidate before synthesis. A red flag is a reason to revise or reject the shape.
 
 <!-- zh:1 -->
-> **中文**
->
-> 综合候选方案前，筛查每一个方案。警示信号是修改或拒绝当前结构的理由。
+综合候选方案前，筛查每一个方案。警示信号是修改或拒绝当前结构的理由。
 
 <!-- en:2 -->
 ## Shallow module
 
 <!-- zh:2 -->
-> **中文**
->
-> ## 浅模块
+**浅模块**
 
 <!-- en:3 -->
 A shallow module exposes a large interface while hiding little complexity. Judge depth by the capability and policy hidden behind the public surface relative to the size of that surface. Prefer a simple interface backed by substantial behavior.
 
 <!-- zh:3 -->
-> **中文**
->
-> 浅模块暴露很大的接口，却只隐藏少量复杂度。判断模块深度时，比较公开接口背后封装的能力和策略与接口自身的大小。优先选择由丰富行为支撑的简单接口。
+浅模块暴露很大的接口，却只隐藏少量复杂度。判断模块深度时，比较公开接口背后封装的能力和策略与接口自身的大小。优先选择由丰富行为支撑的简单接口。
 
 <!-- en:4 -->
 Do not confuse a deep module with a deep call chain. A deep call chain scatters understanding across layers. A deep module concentrates capability behind one interface.
 
 <!-- zh:4 -->
-> **中文**
->
-> 不要把深模块与深调用链混淆。深调用链让理解分散在各层；深模块则将能力集中在一个接口之后。
+不要把深模块与深调用链混淆。深调用链让理解分散在各层；深模块则将能力集中在一个接口之后。
 
 <!-- en:5 -->
 Look for these signs:
 
 <!-- zh:5 -->
-> **中文**
->
-> 留意这些信号：
+留意这些信号：
 
 <!-- en:6 -->
 - Callers coordinate several methods to complete one operation.
@@ -55,80 +43,60 @@ Look for these signs:
 - Learning the interface does not save the caller from learning the implementation.
 
 <!-- zh:6 -->
-> **中文**
->
-> - 调用方需要协调多个方法才能完成一个操作。
-> - 公开选项暴露内部阶段或实现选择。
-> - 学会接口之后，调用方仍需要学习实现。
+- 调用方需要协调多个方法才能完成一个操作。
+- 公开选项暴露内部阶段或实现选择。
+- 学会接口之后，调用方仍需要学习实现。
 
 <!-- en:7 -->
 ## Information leakage
 
 <!-- zh:7 -->
-> **中文**
->
-> ## 信息泄漏
+**信息泄漏**
 
 <!-- en:8 -->
 Information leakage makes multiple modules depend on the same internal decision. A representation, policy, or protocol detail appears in more than one place, so changing it requires coordinated edits.
 
 <!-- zh:8 -->
-> **中文**
->
-> 信息泄漏会让多个模块依赖同一个内部决策。某种表示、策略或协议细节出现在多个地方，因此修改时需要同步调整。
+信息泄漏会让多个模块依赖同一个内部决策。某种表示、策略或协议细节出现在多个地方，因此修改时需要同步调整。
 
 <!-- en:9 -->
 Public re-exports of transport or wire types are leakage. Parse external data into domain types behind the interface. Keep storage schemas, framework objects, and protocol details private.
 
 <!-- zh:9 -->
-> **中文**
->
-> 通过公开接口重新导出传输或 wire 类型也是泄漏。在接口之后将外部数据解析为领域类型。让存储 schema、框架对象和协议细节保持私有。
+通过公开接口重新导出传输或 wire 类型也是泄漏。在接口之后将外部数据解析为领域类型。让存储 schema、框架对象和协议细节保持私有。
 
 <!-- en:10 -->
 ## Temporal decomposition
 
 <!-- zh:10 -->
-> **中文**
->
-> ## 按执行时序拆分
+**按执行时序拆分**
 
 <!-- en:11 -->
 Temporal decomposition organizes modules by execution order instead of the knowledge they own. Separate load, validate, transform, and save stages often repeat one representation and its invariants across several boundaries.
 
 <!-- zh:11 -->
-> **中文**
->
-> 按执行时序拆分，是根据执行顺序而不是模块拥有的知识来组织模块。分开的加载、校验、转换和保存阶段，常常在多个边界重复同一种表示及其不变量。
+按执行时序拆分，是根据执行顺序而不是模块拥有的知识来组织模块。分开的加载、校验、转换和保存阶段，常常在多个边界重复同一种表示及其不变量。
 
 <!-- en:12 -->
 Group code around domain knowledge and ownership. Methods that run at different times can still belong to one module when they protect the same decisions.
 
 <!-- zh:12 -->
-> **中文**
->
-> 围绕领域知识和职责归属组织代码。在不同时刻运行的方法，如果保护的是同一组决策，仍可以属于同一个模块。
+围绕领域知识和职责归属组织代码。在不同时刻运行的方法，如果保护的是同一组决策，仍可以属于同一个模块。
 
 <!-- en:13 -->
 ## Pass-through method
 
 <!-- zh:13 -->
-> **中文**
->
-> ## 透传方法
+**透传方法**
 
 <!-- en:14 -->
 A pass-through method forwards the same arguments to another method with the same shape. It adds a layer without hiding complexity.
 
 <!-- zh:14 -->
-> **中文**
->
-> 透传方法将同一组参数转发给形状相同的另一个方法。它增加一层，却没有隐藏复杂度。
+透传方法将同一组参数转发给形状相同的另一个方法。它增加一层，却没有隐藏复杂度。
 
 <!-- en:15 -->
 Remove it or move responsibility to the module that can complete the operation. Keep a forwarding boundary only when it adds policy, adaptation, or a distinct abstraction.
 
 <!-- zh:15 -->
-> **中文**
->
-> 删除它，或把职责移到能完整执行操作的模块。只有转发边界增加了策略、适配或独立抽象时才保留。
+删除它，或把职责移到能完整执行操作的模块。只有转发边界增加了策略、适配或独立抽象时才保留。

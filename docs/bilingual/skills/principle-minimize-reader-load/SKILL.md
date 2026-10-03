@@ -11,23 +11,19 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-minimize-reader-load
-> description: "评审或设计难以追踪的代码时使用。统计问题与答案之间的层数，以及读者脑中必须保留的隐藏状态；合并只有一个调用方的封装并缩小可变作用域。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-minimize-reader-load
+description: "评审或设计难以追踪的代码时使用。统计问题与答案之间的层数，以及读者脑中必须保留的隐藏状态；合并只有一个调用方的封装并缩小可变作用域。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Minimize Reader Load
 
 <!-- zh:1 -->
-> **中文**
->
-> # 降低读者负担
+**降低读者负担**
 
 <!-- en:2 -->
 Maintainability is the work a reader must do to understand code. Track two axes:
@@ -35,19 +31,15 @@ Maintainability is the work a reader must do to understand code. Track two axes:
 2. **State to hold.** How much hidden or mutable context the reader must keep in their head.
 
 <!-- zh:2 -->
-> **中文**
->
-> 可维护性就是读者为理解代码所需付出的工作量。关注两个维度：
-> 1. **追踪层数。**问题与答案之间有多少间接层。
-> 2. **需记忆的状态。**读者必须在脑中保留多少隐藏或可变上下文。
+可维护性就是读者为理解代码所需付出的工作量。关注两个维度：
+1. **追踪层数。**问题与答案之间有多少间接层。
+2. **需记忆的状态。**读者必须在脑中保留多少隐藏或可变上下文。
 
 <!-- en:3 -->
 **Why:** Code is read far more than it is written. LOC, cyclomatic complexity, and "clean architecture" are proxies. Reader load is the thing that matters. The two axes are independent. A flat file with 50 globals can be as hard to reason about as a 6-layer adapter stack. Guard both. This is the human analog of [Guard the Context Window](../principle-guard-the-context-window/SKILL.md). Working memory is finite for readers too.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：**代码被阅读的次数远多于编写次数。代码行数、圈复杂度和“整洁架构”只是代理指标，真正重要的是读者负担。这两个维度彼此独立。一个包含 50 个全局变量的扁平文件，可能和六层适配器堆栈一样难以推理。两者都要控制。这相当于面向人的 [守护上下文窗口](../principle-guard-the-context-window/SKILL.md)。读者的工作记忆同样有限。
+**原因：**代码被阅读的次数远多于编写次数。代码行数、圈复杂度和“整洁架构”只是代理指标，真正重要的是读者负担。这两个维度彼此独立。一个包含 50 个全局变量的扁平文件，可能和六层适配器堆栈一样难以推理。两者都要控制。这相当于面向人的 [守护上下文窗口](../principle-guard-the-context-window/SKILL.md)。读者的工作记忆同样有限。
 
 <!-- en:4 -->
 **The pattern:**
@@ -59,20 +51,16 @@ Maintainability is the work a reader must do to understand code. Track two axes:
 - Before adding a layer or a piece of state, ask: does this reduce reader load somewhere else by at least as much?
 
 <!-- zh:4 -->
-> **中文**
->
-> **模式：**
-> - **合并代价大于收益的层：**只有一个调用方的封装、没有第二种实现的适配器、从未真正需要的臆测性间接层。将它们内联。
-> - **让相邻层改变抽象。**重复相同方法和参数的层没有压缩信息，却增加阅读负担。合并透传层。
-> - **要求接口压缩。**几乎没有隐藏复杂度的宽接口，会让读者同时学习表面和实现。优先采用能隐藏实质性决策的边界。
-> - **缩小状态作用域：**优先使用纯函数（返回值优于修改状态）、局部变量优于字段、字段优于模块状态、模块状态优于全局变量。能推导就不要同步维护。
-> - **在边界处命名不变量，**不要在每个调用方重复，让读者只需学一次。
-> - 增加一层或一项状态前，先问：这能否在其他地方至少减少同等程度的阅读负担？
+**模式：**
+- **合并代价大于收益的层：**只有一个调用方的封装、没有第二种实现的适配器、从未真正需要的臆测性间接层。将它们内联。
+- **让相邻层改变抽象。**重复相同方法和参数的层没有压缩信息，却增加阅读负担。合并透传层。
+- **要求接口压缩。**几乎没有隐藏复杂度的宽接口，会让读者同时学习表面和实现。优先采用能隐藏实质性决策的边界。
+- **缩小状态作用域：**优先使用纯函数（返回值优于修改状态）、局部变量优于字段、字段优于模块状态、模块状态优于全局变量。能推导就不要同步维护。
+- **在边界处命名不变量，**不要在每个调用方重复，让读者只需学一次。
+- 增加一层或一项状态前，先问：这能否在其他地方至少减少同等程度的阅读负担？
 
 <!-- en:5 -->
 **The test:** Can a new reader answer "where does X come from?" and "what can change X?" in under 30 seconds? If not, cut layers or cut state.
 
 <!-- zh:5 -->
-> **中文**
->
-> **检验：**新读者能在 30 秒内回答“X 从哪里来？”和“什么能改变 X？”吗？如果不能，就减少层或减少状态。
+**检验：**新读者能在 30 秒内回答“X 从哪里来？”和“什么能改变 X？”吗？如果不能，就减少层或减少状态。

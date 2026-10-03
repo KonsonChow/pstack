@@ -11,31 +11,25 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-redesign-from-first-principles
-> description: "将新需求融入已有设计时使用。把需求当作从第一天就存在的基础假设重新设计，不要只在原设计上外挂功能。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-redesign-from-first-principles
+description: "将新需求融入已有设计时使用。把需求当作从第一天就存在的基础假设重新设计，不要只在原设计上外挂功能。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Redesign From First Principles
 
 <!-- zh:1 -->
-> **中文**
->
-> # 从第一性原理重新设计
+**从第一性原理重新设计**
 
 <!-- en:2 -->
 When integrating a change, don't bolt it onto the existing design. Redesign as if the requirement had been there from the start.
 
 <!-- zh:2 -->
-> **中文**
->
-> 融入改动时，不要只把它外挂到已有设计上。应重新设计，仿佛这个需求从一开始就存在。
+融入改动时，不要只把它外挂到已有设计上。应重新设计，仿佛这个需求从一开始就存在。
 
 <!-- en:3 -->
 - Read all affected files and understand the current design
@@ -44,17 +38,13 @@ When integrating a change, don't bolt it onto the existing design. Redesign as i
 - Think about the whole redesign, then deliver it incrementally
 
 <!-- zh:3 -->
-> **中文**
->
-> - 阅读所有受影响文件，理解当前设计
-> - 问：“如果带着这个新需求从零开始，我们会构建什么？”
-> - 将改动传播到每一处相关引用：类型、文档、示例和设计理由章节
-> - 先思考整体重设计，再逐步交付
+- 阅读所有受影响文件，理解当前设计
+- 问：“如果带着这个新需求从零开始，我们会构建什么？”
+- 将改动传播到每一处相关引用：类型、文档、示例和设计理由章节
+- 先思考整体重设计，再逐步交付
 
 <!-- en:4 -->
 This is the method for preserving option value when integrating changes into an existing design.
 
 <!-- zh:4 -->
-> **中文**
->
-> 这是在将改动融入已有设计时保留未来选择余地的方法。
+这是在将改动融入已有设计时保留未来选择余地的方法。

@@ -5,17 +5,13 @@
 ### Autopilot-full
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 全自动执行
+**全自动执行**
 
 <!-- en:1 -->
 **You own the verdicts, never the PRs. One owner runs each PR from build to merge, and nothing merges without your clean swarm verdict.** For "autopilot this queue", "full autopilot", and one-owner-per-PR programs. Orchestrate runs a standing program whose coordinator lands verified work itself and whose workers never merge. Here each PR's owner carries the whole lifecycle through the merge, and the root keeps only verification, countersigns, and audits.
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责评审结论，从不负责 PR。每个 PR 由一名负责人从构建一直做到合并，没有你确认 swarm 无问题的结论，任何 PR 都不能合并。**用于“自动处理这个队列”“完全自动执行”以及每个 PR 一名负责人的任务计划。Orchestrate 是持续执行的计划，协调者亲自合入已验证工作，执行者从不合并；这里则由每个 PR 的负责人承担直到合并的完整生命周期，根 agent 只保留验证、复核签署与审计职责。
+**你负责评审结论，从不负责 PR。每个 PR 由一名负责人从构建一直做到合并，没有你确认 swarm 无问题的结论，任何 PR 都不能合并。**用于“自动处理这个队列”“完全自动执行”以及每个 PR 一名负责人的任务计划。Orchestrate 是持续执行的计划，协调者亲自合入已验证工作，执行者从不合并；这里则由每个 PR 的负责人承担直到合并的完整生命周期，根 agent 只保留验证、复核签署与审计职责。
 
 <!-- en:2 -->
 1. **Mark the operator's items and honor state-then-wait.** Items the operator names stay with the operator. The operator reviews and clicks, and no owner merges one. When the operator asks for the protocol or the plan to be stated, deliver the statement and stop. Execution starts only on the operator's explicit go. On that go, arm a `/goal` with the full program objective. The goal continues across turns until the queue is done.
@@ -27,20 +23,16 @@
 7. **Stand down instantly on the operator's stop.** The operator's hold or stand-down reaches every owner as a zero-writes order immediately. Owners hold their briefs until the operator releases them.
 
 <!-- zh:2 -->
-> **中文**
->
-> 1. **标记操作者保留的任务，并遵循“先陈述、后等待”。**操作者点名的任务留给操作者。由操作者评审并点击合并，没有负责人可以代为合并。操作者要求陈述协议或计划时，给出说明后停止；只有明确发出开始指令，才执行。开始后，为完整计划目标启用 `/goal`，跨轮次持续执行，直到队列完成。
-> 2. **每个 PR 启动一名负责人，承担完整生命周期并尽早留下记录。**整个计划只确定一次代码托管操作工具。默认 GitHub CLI（`gh`）；若 `command -v origin` 成功且 Origin 能解析仓库，PR 创建、编辑、查看、监控和合并使用 `origin pr ...`，否则继续 `gh` 并记录回退。绝不要求 Graphite（`gt`）。每个 PR 由一名 Cursor 云端 agent 负责构建、首次推送、创建可评审 PR、针对真实产物自行证明（**prove-it-works** 原则 skill）、按 `../references/bugbot-triage.md` 谨慎审查 Bugbot 发现、清理低质代码（`cursor-team-kit` 插件的 `deslop` skill，`/deslop`）、`/no-comments`（**no-comments** skill）、rebase 到当前主干、跟进直至检查通过（`playbooks/babysit.md`），以及最终合并。约 15 分钟内，每位负责人按 **show-me-your-work** skill 开始 `decisions.tsv` 记录，推送首个分支快照，并创建可评审而非草稿 PR。先建 PR 再自行证明，让 URL、决策和检查形成持久记录。`decisions.tsv` 不提交，随报告返回。rebase 始终在跟进检查之前，不等分支偏移或冲突发生。只有合并这一步负责人不能独自决定，由步骤 4 把关。
-> 3. **负责人真正并行执行，不组成 PR 栈。**PR 自成一体时，同时运行多位负责人：每分支一个写入者、文件互不重叠、跨 PR 的偏移通过 rebase 吸收。只有真正重叠的工作才串行。独立 PR 直接从 main 建分支；有先后顺序的工作，先合并再建下一分支。唯一例外：必须拆分真正依赖改动的负责人，可以持有一个短的私有基线分支栈。
-> 4. **每次合并前，对满足合并条件的指定提交执行 swarm 验证。**在负责人报告的 merge-ready head SHA 上，按 **swarm** skill 分派并行、独立验证者，汇总成一个结论。验证任务包括：在该 SHA 重跑关卡；在改动实际涉及的界面上，真实证明支撑设计成立的关键行为（按需使用 `cursor-team-kit` 的 `control-cli` 或 `control-ui`）；审计证据与 diff，不信任 PR 正文。**针对主干的回归验证。**在当前主干运行同一关键场景。主干没有该功能时，记录事实，验证 diff 新增行为及用户期待的终态，不假装主干能产生该结果。实际运行验证是最低要求，没有它就不能判定无问题。根 agent 未给无问题结论前，不合并。发现交回负责人向前修复，新的提交必须重新 swarm 验证、重新给结论。
-> 5. **获得无问题结论后，负责人合并并领取下一项。**只从刚 rebase 到主干的提交合并。merge-ready 报告基于与当前主干对齐的提交，swarm 结论绑定该 SHA。合并前主干再次移动时，按 `playbooks/shipping.md` 的 patch-id 规则重新验证。新提交使结论失效，除非 patch-id 不变。负责人通过已选工具 squash 合并自己的 PR，再领取下一项独立任务。操作者给予的完全自主授权，加上根 agent 的无问题结论，才构成合并授权；单纯跟进检查不具备此授权。操作者点名保留的任务在 merge-ready 时停止，等待操作者点击。
-> 6. **执行根 agent 层职责。**真正上调固定关卡或预算值（CI 只允许收紧的限值）时，需要你重新复核签署，且只能在验证者证明后批准。吸收已合入 main 的值属于分支偏移，不算上调。约每 30 分钟对全部负责人进行一次审计。本地根 agent 将每次审计设置为真实终端 `/loop`，循环使用可监控 shell 等待 30 分钟，并输出通知标记。云端根 agent 则使用已有 cloud-sleeper 唤醒链。绝不靠记忆或可能丢失的完成通知维持频率。每次审计，先用 `git show origin/main:pstack/skills/poteto-mode/playbooks/autopilot-full.md` 从主干重新读本执行规程，再重新读已启用的 `/goal`，依据两者审计操作，并在本次审计中纠偏。用通用存活或状态检查探查每位负责人，并收集决策记录。只有副作用才算进度：提交、推送、PR 或检查变化，以及存储报告。某任务超过预期运行时间却无副作用，就视为卡住，立即停止并派替代者，不等待礼貌返回。批量合并后，做一次回顾及合并后机器人评论检查。
-> 7. **操作者要求停止时立即停下。**操作者的暂停或停止指令应立即作为“零写入”命令传达每名负责人。负责人保留任务说明，直到操作者解除暂停。
+1. **标记操作者保留的任务，并遵循“先陈述、后等待”。**操作者点名的任务留给操作者。由操作者评审并点击合并，没有负责人可以代为合并。操作者要求陈述协议或计划时，给出说明后停止；只有明确发出开始指令，才执行。开始后，为完整计划目标启用 `/goal`，跨轮次持续执行，直到队列完成。
+2. **每个 PR 启动一名负责人，承担完整生命周期并尽早留下记录。**整个计划只确定一次代码托管操作工具。默认 GitHub CLI（`gh`）；若 `command -v origin` 成功且 Origin 能解析仓库，PR 创建、编辑、查看、监控和合并使用 `origin pr ...`，否则继续 `gh` 并记录回退。绝不要求 Graphite（`gt`）。每个 PR 由一名 Cursor 云端 agent 负责构建、首次推送、创建可评审 PR、针对真实产物自行证明（**prove-it-works** 原则 skill）、按 `../references/bugbot-triage.md` 谨慎审查 Bugbot 发现、清理低质代码（`cursor-team-kit` 插件的 `deslop` skill，`/deslop`）、`/no-comments`（**no-comments** skill）、rebase 到当前主干、跟进直至检查通过（`playbooks/babysit.md`），以及最终合并。约 15 分钟内，每位负责人按 **show-me-your-work** skill 开始 `decisions.tsv` 记录，推送首个分支快照，并创建可评审而非草稿 PR。先建 PR 再自行证明，让 URL、决策和检查形成持久记录。`decisions.tsv` 不提交，随报告返回。rebase 始终在跟进检查之前，不等分支偏移或冲突发生。只有合并这一步负责人不能独自决定，由步骤 4 把关。
+3. **负责人真正并行执行，不组成 PR 栈。**PR 自成一体时，同时运行多位负责人：每分支一个写入者、文件互不重叠、跨 PR 的偏移通过 rebase 吸收。只有真正重叠的工作才串行。独立 PR 直接从 main 建分支；有先后顺序的工作，先合并再建下一分支。唯一例外：必须拆分真正依赖改动的负责人，可以持有一个短的私有基线分支栈。
+4. **每次合并前，对满足合并条件的指定提交执行 swarm 验证。**在负责人报告的 merge-ready head SHA 上，按 **swarm** skill 分派并行、独立验证者，汇总成一个结论。验证任务包括：在该 SHA 重跑关卡；在改动实际涉及的界面上，真实证明支撑设计成立的关键行为（按需使用 `cursor-team-kit` 的 `control-cli` 或 `control-ui`）；审计证据与 diff，不信任 PR 正文。**针对主干的回归验证。**在当前主干运行同一关键场景。主干没有该功能时，记录事实，验证 diff 新增行为及用户期待的终态，不假装主干能产生该结果。实际运行验证是最低要求，没有它就不能判定无问题。根 agent 未给无问题结论前，不合并。发现交回负责人向前修复，新的提交必须重新 swarm 验证、重新给结论。
+5. **获得无问题结论后，负责人合并并领取下一项。**只从刚 rebase 到主干的提交合并。merge-ready 报告基于与当前主干对齐的提交，swarm 结论绑定该 SHA。合并前主干再次移动时，按 `playbooks/shipping.md` 的 patch-id 规则重新验证。新提交使结论失效，除非 patch-id 不变。负责人通过已选工具 squash 合并自己的 PR，再领取下一项独立任务。操作者给予的完全自主授权，加上根 agent 的无问题结论，才构成合并授权；单纯跟进检查不具备此授权。操作者点名保留的任务在 merge-ready 时停止，等待操作者点击。
+6. **执行根 agent 层职责。**真正上调固定关卡或预算值（CI 只允许收紧的限值）时，需要你重新复核签署，且只能在验证者证明后批准。吸收已合入 main 的值属于分支偏移，不算上调。约每 30 分钟对全部负责人进行一次审计。本地根 agent 将每次审计设置为真实终端 `/loop`，循环使用可监控 shell 等待 30 分钟，并输出通知标记。云端根 agent 则使用已有 cloud-sleeper 唤醒链。绝不靠记忆或可能丢失的完成通知维持频率。每次审计，先用 `git show origin/main:pstack/skills/poteto-mode/playbooks/autopilot-full.md` 从主干重新读本执行规程，再重新读已启用的 `/goal`，依据两者审计操作，并在本次审计中纠偏。用通用存活或状态检查探查每位负责人，并收集决策记录。只有副作用才算进度：提交、推送、PR 或检查变化，以及存储报告。某任务超过预期运行时间却无副作用，就视为卡住，立即停止并派替代者，不等待礼貌返回。批量合并后，做一次回顾及合并后机器人评论检查。
+7. **操作者要求停止时立即停下。**操作者的暂停或停止指令应立即作为“零写入”命令传达每名负责人。负责人保留任务说明，直到操作者解除暂停。
 
 <!-- en:3 -->
 **Reply:** the queue with each PR's owner, state, and head SHA. Each verdict and the swarm that produced it. What merged and what each owner took next. Countersigns granted and why. Open operator gates. Where the collected decision trails live.
 
 <!-- zh:3 -->
-> **中文**
->
-> **回复：**队列中每个 PR 的负责人、状态及 head SHA；每项结论及生成它的 swarm；合并了什么、每位负责人接着领取什么；批准的复核签署及理由；尚未通过的操作者关卡；收集的决策记录位置。
+**回复：**队列中每个 PR 的负责人、状态及 head SHA；每项结论及生成它的 swarm；合并了什么、每位负责人接着领取什么；批准的复核签署及理由；尚未通过的操作者关卡；收集的决策记录位置。

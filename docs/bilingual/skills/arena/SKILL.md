@@ -11,47 +11,34 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: arena
-> description: "为同一任务启动 N 个并行候选者，选一个为基础，再将其他候选者最强的部分融入它。用于 /arena、“让它进 arena”“把它放进竞技场”，或只尝试一次可能锁定错误结构的非简单产物。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: arena
+description: "为同一任务启动 N 个并行候选者，选一个为基础，再将其他候选者最强的部分融入它。用于 /arena、“让它进 arena”“把它放进竞技场”，或只尝试一次可能锁定错误结构的非简单产物。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Arena
-
-<!-- zh:1 -->
-> **中文**
->
-> # Arena（中文）
 
 <!-- en:2 -->
 Fan out N parallel attempts at the same task. Read every candidate end to end. Pick the strongest as the base. Graft the best ideas from the others into it. Verify the synthesized result.
 
 <!-- zh:2 -->
-> **中文**
->
-> 为同一任务分派 N 次并行尝试。从头到尾阅读每个候选产物。选最强的为基础，将其他方案的最佳想法融入其中，再验证综合结果。
+为同一任务分派 N 次并行尝试。从头到尾阅读每个候选产物。选最强的为基础，将其他方案的最佳想法融入其中，再验证综合结果。
 
 <!-- en:3 -->
 ## Start
 
 <!-- zh:3 -->
-> **中文**
->
-> ## 开始
+**开始**
 
 <!-- en:4 -->
 Open a todolist with one entry per phase before launching anything.
 
 <!-- zh:4 -->
-> **中文**
->
-> 启动任何工作前，建立待办列表，每阶段一项。
+启动任何工作前，建立待办列表，每阶段一项。
 
 <!-- en:5 -->
 1. Frame
@@ -62,30 +49,24 @@ Open a todolist with one entry per phase before launching anything.
 6. Verify
 
 <!-- zh:5 -->
-> **中文**
->
-> 1. 定义任务
-> 2. 并行分派
-> 3. 交叉评审
-> 4. 选择
-> 5. 融合
-> 6. 验证
+1. 定义任务
+2. 并行分派
+3. 交叉评审
+4. 选择
+5. 融合
+6. 验证
 
 <!-- en:6 -->
 ## Phase A: Frame
 
 <!-- zh:6 -->
-> **中文**
->
-> ## 阶段 A：定义任务
+**阶段 A：定义任务**
 
 <!-- en:7 -->
 The N candidates will receive the same prompt, so the prompt is the contract.
 
 <!-- zh:7 -->
-> **中文**
->
-> N 个候选者会收到相同提示词，因此提示词就是约定。
+N 个候选者会收到相同提示词，因此提示词就是约定。
 
 <!-- en:8 -->
 1. State the artifact each candidate is producing.
@@ -94,177 +75,133 @@ The N candidates will receive the same prompt, so the prompt is the contract.
 4. Assign output paths. Each candidate writes to its own location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`), per the **separate-before-serializing-shared-state** principle skill.
 
 <!-- zh:8 -->
-> **中文**
->
-> 1. 说明每个候选者要产出什么。
-> 2. 推导评审标准。说明本任务怎样才算成功，再转成 3 至 6 条具体、可评分的标准。标准供阶段 D 选择者使用，候选者只看到任务。
-> 3. 选择执行模型。pstack 设置文件中有 `arena runners` 时使用它（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他环境为 `~/.agents/pstack-models.md`）。否则默认各用一名 `claude-fable-5-1-thinking-max`、`gpt-5.6-sol-max`、`grok-4.6-fast-xhigh`、`claude-opus-5-thinking-xhigh`。涵盖多个设计方向时启动更多执行者。工作瓶颈在生成而非判断时，可以同一模型运行 N 次。
-> 4. 指定输出路径。按 **separate-before-serializing-shared-state** 原则 skill，每个候选者写入自己的位置（尽可能用 Git worktree，否则用 `/tmp/arena-<slug>/candidate-<n>/`）。
+1. 说明每个候选者要产出什么。
+2. 推导评审标准。说明本任务怎样才算成功，再转成 3 至 6 条具体、可评分的标准。标准供阶段 D 选择者使用，候选者只看到任务。
+3. 选择执行模型。pstack 设置文件中有 `arena runners` 时使用它（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他环境为 `~/.agents/pstack-models.md`）。否则默认各用一名 `claude-fable-5-1-thinking-max`、`gpt-5.6-sol-max`、`grok-4.6-fast-xhigh`、`claude-opus-5-thinking-xhigh`。涵盖多个设计方向时启动更多执行者。工作瓶颈在生成而非判断时，可以同一模型运行 N 次。
+4. 指定输出路径。按 **separate-before-serializing-shared-state** 原则 skill，每个候选者写入自己的位置（尽可能用 Git worktree，否则用 `/tmp/arena-<slug>/candidate-<n>/`）。
 
 <!-- en:9 -->
 ## Phase B: Fan out
 
 <!-- zh:9 -->
-> **中文**
->
-> ## 阶段 B：并行分派
+**阶段 B：并行分派**
 
 <!-- en:10 -->
 Spawn all N subagents in one message with `run_in_background: true`, each with the task, the path to the shared grounding, its own output path, and instructions to produce both the artifact and a short rationale.
 
 <!-- zh:10 -->
-> **中文**
->
-> 在同一条消息中启动全部 N 个 subagent，设置 `run_in_background: true`。每个都收到任务、共享问题理解资料的路径、自己的输出路径，并被要求生成产物及简短理由。
+在同一条消息中启动全部 N 个 subagent，设置 `run_in_background: true`。每个都收到任务、共享问题理解资料的路径、自己的输出路径，并被要求生成产物及简短理由。
 
 <!-- en:11 -->
 Each rationale names the alternatives the candidate considered and what it rejected.
 
 <!-- zh:11 -->
-> **中文**
->
-> 每份理由说明考虑了哪些方案，以及否决了什么。
+每份理由说明考虑了哪些方案，以及否决了什么。
 
 <!-- en:12 -->
 If a candidate fails to produce output, proceed with N-1 and note the dropout in the synthesis record.
 
 <!-- zh:12 -->
-> **中文**
->
-> 某个候选者未产出时，以 N-1 个继续，并在综合记录中注明退出者。
+某个候选者未产出时，以 N-1 个继续，并在综合记录中注明退出者。
 
 <!-- en:13 -->
 ## Phase C: Cross-judge
 
 <!-- zh:13 -->
-> **中文**
->
-> ## 阶段 C：交叉评审
+**阶段 C：交叉评审**
 
 <!-- en:14 -->
 After all Phase B candidates complete, choose one model from the `arena cross-judge pool` in the pstack settings file when present. Otherwise use `claude-fable-5-1-thinking-max`, `gpt-5.6-sol-max`, `grok-4.6-fast-xhigh`, `claude-opus-5-thinking-xhigh`. Prefer a different model family from the parent's. Spawn one readonly judge subagent on that model. It sees the rubric and the candidates by path label, scores each criterion, and recommends a base with rationale. It runs in parallel with the parent's reading in Phase D, not with the candidates themselves. Don't spawn the judge while candidates are still writing.
 
 <!-- zh:14 -->
-> **中文**
->
-> 阶段 B 全部候选者完成后，从 pstack 设置文件的 `arena cross-judge pool` 选择一个模型；若未配置，使用 `claude-fable-5-1-thinking-max`、`gpt-5.6-sol-max`、`grok-4.6-fast-xhigh`、`claude-opus-5-thinking-xhigh`。优先选择与父 agent 不同的模型家族。用它启动一名只读评审 subagent。它查看评审标准和以路径标识的候选产物，逐项评分，并给出推荐基础方案及理由。它与阶段 D 中父 agent 的阅读并行，不与候选者的生成并行。候选者还在写时，不要启动评审者。
+阶段 B 全部候选者完成后，从 pstack 设置文件的 `arena cross-judge pool` 选择一个模型；若未配置，使用 `claude-fable-5-1-thinking-max`、`gpt-5.6-sol-max`、`grok-4.6-fast-xhigh`、`claude-opus-5-thinking-xhigh`。优先选择与父 agent 不同的模型家族。用它启动一名只读评审 subagent。它查看评审标准和以路径标识的候选产物，逐项评分，并给出推荐基础方案及理由。它与阶段 D 中父 agent 的阅读并行，不与候选者的生成并行。候选者还在写时，不要启动评审者。
 
 <!-- en:15 -->
 ## Phase D: Pick a base
 
 <!-- zh:15 -->
-> **中文**
->
-> ## 阶段 D：选定基础方案
+**阶段 D：选定基础方案**
 
 <!-- en:16 -->
 Read every candidate end to end before picking.
 
 <!-- zh:16 -->
-> **中文**
->
-> 选择前，从头到尾读完每个候选产物。
+选择前，从头到尾读完每个候选产物。
 
 <!-- en:17 -->
 Score each candidate against the rubric criterion by criterion, not on holistic feel. Compare against the cross-judge. Agreement on the base confirms the pick. Disagreement means one of you is biased or the rubric was ambiguous. Read both rationales before deciding.
 
 <!-- zh:17 -->
-> **中文**
->
-> 按评审标准逐项评分，不凭整体感觉。与交叉评审者比较。双方认同基础方案能确认选择；若不一致，说明一方有偏差或标准有歧义。决定前阅读双方理由。
+按评审标准逐项评分，不凭整体感觉。与交叉评审者比较。双方认同基础方案能确认选择；若不一致，说明一方有偏差或标准有歧义。决定前阅读双方理由。
 
 <!-- en:18 -->
 Pick the base on which candidate a future maintainer can extend most easily without breaking invariants. Prefer the cleaner boundary or smaller API when two feel tied, per the Laziness Protocol.
 
 <!-- zh:18 -->
-> **中文**
->
-> 选择未来维护者最容易扩展、又不会破坏不变量的方案。两个方案看似相当时，按 Laziness Protocol 优先选边界更清楚或 API 更小的。
+选择未来维护者最容易扩展、又不会破坏不变量的方案。两个方案看似相当时，按 Laziness Protocol 优先选边界更清楚或 API 更小的。
 
 <!-- en:19 -->
 Record the pick and the reason in a short synthesis note alongside the base artifact, including the cross-judge's verdict.
 
 <!-- zh:19 -->
-> **中文**
->
-> 在基础产物旁写一份简短综合说明，记录选择和原因，包括交叉评审者结论。
+在基础产物旁写一份简短综合说明，记录选择和原因，包括交叉评审者结论。
 
 <!-- en:20 -->
 ## Phase E: Graft
 
 <!-- zh:20 -->
-> **中文**
->
-> ## 阶段 E：融合
+**阶段 E：融合**
 
 <!-- en:21 -->
 Walk each losing candidate once more and identify what is worth porting into the base. The signal is usually one or two things per candidate, not most of it.
 
 <!-- zh:21 -->
-> **中文**
->
-> 再逐一查看未选中的方案，识别值得移植到基础方案的内容。通常每个候选者只有一两点值得采用，而非大部分。
+再逐一查看未选中的方案，识别值得移植到基础方案的内容。通常每个候选者只有一两点值得采用，而非大部分。
 
 <!-- en:22 -->
 Fold each graft in by hand, per the **redesign-from-first-principles** principle skill. Don't paste mechanically. The result has to remain coherent under one mental model.
 
 <!-- zh:22 -->
-> **中文**
->
-> 按 **redesign-from-first-principles** 原则 skill，手动整合每项移植，不机械粘贴。结果必须保持统一心智模型下的一致性。
+按 **redesign-from-first-principles** 原则 skill，手动整合每项移植，不机械粘贴。结果必须保持统一心智模型下的一致性。
 
 <!-- en:23 -->
 Record what was grafted, from which candidate, and what was rejected and why.
 
 <!-- zh:23 -->
-> **中文**
->
-> 记录移植了什么、来自哪个候选者，以及拒绝了什么和原因。
+记录移植了什么、来自哪个候选者，以及拒绝了什么和原因。
 
 <!-- en:24 -->
 When N candidates converge on the same shape, that is a strong agreement signal. Note the convergence in the record and ship the consensus shape. No graft is needed. When N candidates wildly diverge, Phase A was under-specified. Reframe and re-run rather than averaging the divergence.
 
 <!-- zh:24 -->
-> **中文**
->
-> N 个候选者收敛到同一结构，是很强的一致性信号。记录收敛并交付共识结构，无需移植。N 个候选者差异极大，说明阶段 A 定义不足；应重新定义并重跑，而不是把分歧平均起来。
+N 个候选者收敛到同一结构，是很强的一致性信号。记录收敛并交付共识结构，无需移植。N 个候选者差异极大，说明阶段 A 定义不足；应重新定义并重跑，而不是把分歧平均起来。
 
 <!-- en:25 -->
 ## Phase F: Verify
 
 <!-- zh:25 -->
-> **中文**
->
-> ## 阶段 F：验证
+**阶段 F：验证**
 
 <!-- en:26 -->
 The synthesized artifact has to hold up under the same scrutiny as any other output, per the **prove-it-works** principle skill.
 
 <!-- zh:26 -->
-> **中文**
->
-> 按 **prove-it-works** 原则 skill，综合产物必须接受与其他输出同样严格的检查。
+按 **prove-it-works** 原则 skill，综合产物必须接受与其他输出同样严格的检查。
 
 <!-- en:27 -->
 If verification surfaces a problem the arena did not catch, either Phase A was wrong (re-frame and re-run) or one candidate caught it and you missed the graft (go back to Phase E). Don't paper over.
 
 <!-- zh:27 -->
-> **中文**
->
-> 验证暴露 arena 未发现的问题时，要么阶段 A 有误（重新定义并重跑），要么某个候选者已发现、你却漏掉了移植（返回阶段 E）。不要掩盖。
+验证暴露 arena 未发现的问题时，要么阶段 A 有误（重新定义并重跑），要么某个候选者已发现、你却漏掉了移植（返回阶段 E）。不要掩盖。
 
 <!-- en:28 -->
 ## Outputs
 
 <!-- zh:28 -->
-> **中文**
->
-> ## 输出
+**输出**
 
 <!-- en:29 -->
 One synthesized artifact. One short synthesis note alongside, naming the base, the grafts (with source candidate), the rejections, the dropouts if any, and the verification result.
 
 <!-- zh:29 -->
-> **中文**
->
-> 一个综合产物，旁边附一份简短综合说明：基础方案、移植内容及来源候选者、拒绝项、退出者（如有）和验证结果。
+一个综合产物，旁边附一份简短综合说明：基础方案、移植内容及来源候选者、拒绝项、退出者（如有）和验证结果。

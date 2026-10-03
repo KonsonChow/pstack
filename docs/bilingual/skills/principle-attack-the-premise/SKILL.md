@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-attack-the-premise
-> description: "两个或更多共享同一前提的修复在同一个关卡失败时使用。下一次修复前先统计哪些参与者持有不平衡，再质疑前提，不要继续写假定该前提的修复。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-attack-the-premise
+description: "两个或更多共享同一前提的修复在同一个关卡失败时使用。下一次修复前先统计哪些参与者持有不平衡，再质疑前提，不要继续写假定该前提的修复。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Attack the Premise
 
 <!-- zh:1 -->
-> **中文**
->
-> # 质疑前提
+**质疑前提**
 
 <!-- en:2 -->
 When two or more fixes that share one premise have failed the same gate, suspect the premise, not the fixes.
 
 <!-- zh:2 -->
-> **中文**
->
-> 当两个或更多共享同一前提的修复在同一个关卡失败时，应怀疑前提，而不是修复。
+当两个或更多共享同一前提的修复在同一个关卡失败时，应怀疑前提，而不是修复。
 
 <!-- en:3 -->
 **Why:** Each failure under a shared premise is evidence about the premise.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：**共享前提下的每次失败，都是关于该前提的证据。
+**原因：**共享前提下的每次失败，都是关于该前提的证据。
 
 <!-- en:4 -->
 **Pattern:**
@@ -53,13 +45,11 @@ When two or more fixes that share one premise have failed the same gate, suspect
 - **Remove the asymmetry instead of compensating for it**, per the [Laziness Protocol](../principle-laziness-protocol/SKILL.md). Rotate the role between actors, randomize the assignment, or move the role, so that no actor holds it on every run. A return path, a shared pool, a batched hand-off, or a periodic rebalance leaves the assignment in place and adds work on every run.
 
 <!-- zh:4 -->
-> **中文**
->
-> **模式：**
-> - **写下前提。**前提就是每个失败修复都假定的那句话。
-> - **下一次修复前先统计。**按参与者统计不平衡。统计显示哪些参与者持有不平衡，而不是不平衡有多大。按照 [构建杠杆](../principle-build-the-lever/SKILL.md) 将统计写成可重复运行的脚本。
-> - **读取偏斜。**如果每次运行都是同几位参与者持有大部分不平衡，说明某处赋予了他们这一角色。找到赋予角色的地方。按 [修复根因](../principle-fix-root-causes/SKILL.md)，下一次应追问为什么会这样分配。
-> - 按 [Laziness Protocol](../principle-laziness-protocol/SKILL.md)，**消除不对称，而不是补偿它。**在参与者之间轮换角色、随机分配，或迁移角色，使任何参与者都不会每次运行都承担它。回传路径、共享池、批量移交或周期性再平衡，都会保留原来的分配方式，并在每次运行时增加工作。
+**模式：**
+- **写下前提。**前提就是每个失败修复都假定的那句话。
+- **下一次修复前先统计。**按参与者统计不平衡。统计显示哪些参与者持有不平衡，而不是不平衡有多大。按照 [构建杠杆](../principle-build-the-lever/SKILL.md) 将统计写成可重复运行的脚本。
+- **读取偏斜。**如果每次运行都是同几位参与者持有大部分不平衡，说明某处赋予了他们这一角色。找到赋予角色的地方。按 [修复根因](../principle-fix-root-causes/SKILL.md)，下一次应追问为什么会这样分配。
+- 按 [Laziness Protocol](../principle-laziness-protocol/SKILL.md)，**消除不对称，而不是补偿它。**在参与者之间轮换角色、随机分配，或迁移角色，使任何参与者都不会每次运行都承担它。回传路径、共享池、批量移交或周期性再平衡，都会保留原来的分配方式，并在每次运行时增加工作。
 
 <!-- en:5 -->
 **Stop:**
@@ -67,16 +57,12 @@ When two or more fixes that share one premise have failed the same gate, suspect
 - If the census is even across actors, the premise is not the cause. Look for the cause elsewhere and keep the census as evidence.
 
 <!-- zh:5 -->
-> **中文**
->
-> **停止条件：**
-> - 在写下前提并完成统计前，不要开始下一次修复。
-> - 如果各参与者之间分布均匀，前提就不是原因。去别处寻找原因，并保留统计作为证据。
+**停止条件：**
+- 在写下前提并完成统计前，不要开始下一次修复。
+- 如果各参与者之间分布均匀，前提就不是原因。去别处寻找原因，并保留统计作为证据。
 
 <!-- en:6 -->
 This principle is distinct from [Redesign from First Principles](../principle-redesign-from-first-principles/SKILL.md), which rebuilds a design around a new requirement. It questions a fact the current design assumes.
 
 <!-- zh:6 -->
-> **中文**
->
-> 这一原则不同于[从第一性原理重新设计](../principle-redesign-from-first-principles/SKILL.md)：后者围绕新需求重建设计，而本原则质疑当前设计所假定的事实。
+这一原则不同于[从第一性原理重新设计](../principle-redesign-from-first-principles/SKILL.md)：后者围绕新需求重建设计，而本原则质疑当前设计所假定的事实。

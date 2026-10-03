@@ -5,41 +5,31 @@
 # Code Quality Review
 
 <!-- zh:0 -->
-> **中文**
->
-> # 代码质量评审
+**代码质量评审**
 
 <!-- en:1 -->
 Each reviewer applies this code-quality lens in addition to the rubric. It is a strict standard focused on implementation quality, maintainability, abstraction quality, and codebase health.
 
 <!-- zh:1 -->
-> **中文**
->
-> 各评审者除评审标准外，还要用这一代码质量视角检查。它严格关注实现质量、可维护性、抽象质量和代码库健康度。
+各评审者除评审标准外，还要用这一代码质量视角检查。它严格关注实现质量、可维护性、抽象质量和代码库健康度。
 
 <!-- en:2 -->
 Above all, be ambitious about code structure. Do not merely identify local cleanup. Actively search for "code judo" moves, restructurings that preserve behavior while making the implementation dramatically simpler, smaller, more direct, and more elegant.
 
 <!-- zh:2 -->
-> **中文**
->
-> 尤其要敢于简化代码结构。不要只找局部清理项，要主动寻找“code judo”式的重构机会：保持行为，却让实现明显更简单、更小、更直接、更优雅。
+尤其要敢于简化代码结构。不要只找局部清理项，要主动寻找“code judo”式的重构机会：保持行为，却让实现明显更简单、更小、更直接、更优雅。
 
 <!-- en:3 -->
 ## Core Prompt
 
 <!-- zh:3 -->
-> **中文**
->
-> ## 核心提示词
+**核心提示词**
 
 <!-- en:4 -->
 Start from this baseline:
 
 <!-- zh:4 -->
-> **中文**
->
-> 从以下基准提示开始：
+从以下基准提示开始：
 
 <!-- en:5 -->
 > Perform a deep code quality audit of the current branch's changes.
@@ -49,138 +39,104 @@ Start from this baseline:
 > Be extremely thorough and rigorous. Measure twice, cut once.
 
 <!-- zh:5 -->
-> **中文**
->
-> > 深入审计当前分支改动的代码质量。
-> > 重新思考这些改动如何组织和实现，在不影响行为的前提下显著改善代码质量。
-> > 改善抽象和模块化，减少纠缠代码，让实现更简洁、可读。
-> > 敢于调整。如果重构部分代码库能明显改善实现，就采用这条路径。
-> > 必须全面、严谨。先反复核实，再动手。
+> 深入审计当前分支改动的代码质量。
+> 重新思考这些改动如何组织和实现，在不影响行为的前提下显著改善代码质量。
+> 改善抽象和模块化，减少纠缠代码，让实现更简洁、可读。
+> 敢于调整。如果重构部分代码库能明显改善实现，就采用这条路径。
+> 必须全面、严谨。先反复核实，再动手。
 
 <!-- en:6 -->
 ## Dimensions
 
 <!-- zh:6 -->
-> **中文**
->
-> ## 评审维度
+**评审维度**
 
 <!-- en:7 -->
 Each dimension is stated once. Apply the ones that are relevant.
 
 <!-- zh:7 -->
-> **中文**
->
-> 每个维度只陈述一次，应用相关项。
+每个维度只陈述一次，应用相关项。
 
 <!-- en:8 -->
 0. **Be ambitious about structural simplification.** Do not stop at "this could be a bit cleaner." Look for reframings that make whole branches, helpers, modes, conditionals, or layers disappear. Assume a "code judo" move is often available. It uses the existing architecture more effectively and makes the change dramatically simpler. If you can delete complexity rather than rearrange it, push hard for that.
 
 <!-- zh:8 -->
-> **中文**
->
-> 0. **敢于做结构性简化。** 不止于“这里可以更整洁”。寻找能让整段分支、辅助函数、模式、条件或层次消失的重新组织方式。假定常能找到“code judo”机会，用现有架构更有效地解决问题，大幅简化改动。能删除复杂性而不只是挪位置时，积极推动。
+0. **敢于做结构性简化。** 不止于“这里可以更整洁”。寻找能让整段分支、辅助函数、模式、条件或层次消失的重新组织方式。假定常能找到“code judo”机会，用现有架构更有效地解决问题，大幅简化改动。能删除复杂性而不只是挪位置时，积极推动。
 
 <!-- en:9 -->
 1. **Do not let a PR push a file from under 1k lines to over 1k lines without a very strong reason.** Treat this as a strong smell. Prefer extracting helpers, subcomponents, or modules. If the diff crosses that threshold, ask whether the code should be decomposed first. Waive only for a compelling structural reason where the resulting file stays clearly organized.
 
 <!-- zh:9 -->
-> **中文**
->
-> 1. **没有非常充分的理由，不允许 PR 将不足 1k 行的文件推到超过 1k 行。** 这是强烈的设计异味。优先提取辅助函数、子组件或模块。diff 跨过此阈值时，询问是否应先拆分。只有结构理由有说服力，且最终文件仍组织清晰，才可豁免。
+1. **没有非常充分的理由，不允许 PR 将不足 1k 行的文件推到超过 1k 行。** 这是强烈的设计异味。优先提取辅助函数、子组件或模块。diff 跨过此阈值时，询问是否应先拆分。只有结构理由有说服力，且最终文件仍组织清晰，才可豁免。
 
 <!-- en:10 -->
 2. **Do not allow spaghetti growth in existing code.** Be suspicious of new ad-hoc conditionals, scattered special cases, or one-off branches inserted into unrelated flows. Treat "weird if statements in random places" as a design problem, not a style nit. Prefer pushing the logic into a dedicated helper, state machine, or module instead of tangling an existing path.
 
 <!-- zh:10 -->
-> **中文**
->
-> 2. **不允许现有代码继续纠缠。** 警惕新增临时条件、散落的特例或插入无关流程的一次性分支。“随机位置的奇怪 if”是设计问题，不是风格小节。优先把逻辑放入专门辅助函数、状态机或模块，别缠住已有路径。
+2. **不允许现有代码继续纠缠。** 警惕新增临时条件、散落的特例或插入无关流程的一次性分支。“随机位置的奇怪 if”是设计问题，不是风格小节。优先把逻辑放入专门辅助函数、状态机或模块，别缠住已有路径。
 
 <!-- en:11 -->
 3. **Bias toward cleaning the design, not just accepting working code.** If behavior can stay the same while the structure becomes meaningfully cleaner, push for the cleaner version. Prefer simplifications that remove moving pieces over refactors that spread the same complexity around.
 
 <!-- zh:11 -->
-> **中文**
->
-> 3. **倾向改善设计，而非只接受能工作的代码。** 保持行为不变而结构能明显清晰时，推动更清晰的版本。优先移除活动部件的简化，而不是把同样复杂性分散到别处。
+3. **倾向改善设计，而非只接受能工作的代码。** 保持行为不变而结构能明显清晰时，推动更清晰的版本。优先移除活动部件的简化，而不是把同样复杂性分散到别处。
 
 <!-- en:12 -->
 4. **Prefer direct, boring, maintainable code over hacky or magical code.** Treat brittle, ad-hoc, or "magic" behavior as a problem. Be skeptical of generic mechanisms that hide simple data-shape assumptions. Flag thin abstractions, identity wrappers, or pass-through helpers that add indirection without buying clarity.
 
 <!-- zh:12 -->
-> **中文**
->
-> 4. **优先直接、朴素、可维护的代码，不用取巧或魔法代码。** 脆弱、临时拼凑或“魔法”行为都应视为问题。警惕隐藏简单数据形态假设的通用机制。指出没带来清晰性却增加间接性的薄抽象、原样返回的封装、纯转发辅助函数。
+4. **优先直接、朴素、可维护的代码，不用取巧或魔法代码。** 脆弱、临时拼凑或“魔法”行为都应视为问题。警惕隐藏简单数据形态假设的通用机制。指出没带来清晰性却增加间接性的薄抽象、原样返回的封装、纯转发辅助函数。
 
 <!-- en:13 -->
 5. **Push on type and boundary cleanliness when it affects maintainability.** Question unnecessary optionality, `unknown`, `any`, or cast-heavy code when a clearer type boundary could exist. Prefer explicit typed models over loosely-shaped ad-hoc objects. If a branch leans on a silent fallback to paper over an unclear invariant, ask whether the boundary should be made explicit.
 
 <!-- zh:13 -->
-> **中文**
->
-> 5. **类型和边界不清影响维护时，必须追问。** 本可建立清晰类型边界，却有不必要的可选性、`unknown`、`any` 或大量 cast 时，提出质疑。优先明确类型模型，而不是形态松散的临时对象。分支靠静默回退掩盖不明确不变量时，询问是否应显式建立边界。
+5. **类型和边界不清影响维护时，必须追问。** 本可建立清晰类型边界，却有不必要的可选性、`unknown`、`any` 或大量 cast 时，提出质疑。优先明确类型模型，而不是形态松散的临时对象。分支靠静默回退掩盖不明确不变量时，询问是否应显式建立边界。
 
 <!-- en:14 -->
 6. **Keep logic in the canonical layer and reuse existing helpers.** Call out feature logic leaking into shared paths or implementation details leaking through APIs. Prefer existing canonical utilities over bespoke one-offs. Push code toward the right package, service, or module instead of normalizing drift.
 
 <!-- zh:14 -->
-> **中文**
->
-> 6. **逻辑放在应属的层，复用已有辅助函数。** 指出功能逻辑泄漏到共享路径，或实现细节泄漏到 API。优先权威的现有工具函数，避免定制一次性实现。推动代码进入正确 package、service 或 module，不把职责漂移视为常态。
+6. **逻辑放在应属的层，复用已有辅助函数。** 指出功能逻辑泄漏到共享路径，或实现细节泄漏到 API。优先权威的现有工具函数，避免定制一次性实现。推动代码进入正确 package、service 或 module，不把职责漂移视为常态。
 
 <!-- en:15 -->
 7. **Treat unnecessary sequential orchestration and non-atomic updates as design smells when the cleaner structure is obvious.** If independent work is serialized for no reason, ask whether it should run in parallel. If related updates can leave state half-applied, push for a more atomic structure. Do not over-index on micro-optimizations, but do flag avoidable orchestration complexity that makes the code more brittle.
 
 <!-- zh:15 -->
-> **中文**
->
-> 7. **更清晰结构显而易见时，把不必要的串行协调和非原子更新视为设计异味。** 独立工作无故串行时，询问是否应并行。关联更新可能留下半完成状态时，推动更原子的结构。不纠结微优化，但要指出令代码脆弱的可避免协调复杂性。
+7. **更清晰结构显而易见时，把不必要的串行协调和非原子更新视为设计异味。** 独立工作无故串行时，询问是否应并行。关联更新可能留下半完成状态时，推动更原子的结构。不纠结微优化，但要指出令代码脆弱的可避免协调复杂性。
 
 <!-- en:16 -->
 ## Output Expectations
 
 <!-- zh:16 -->
-> **中文**
->
-> ## 输出要求
+**输出要求**
 
 <!-- en:17 -->
 Prioritize structural code-quality regressions and missed simplifications first, then spaghetti and branching complexity, then boundary, type, and file-size concerns, then smaller modularity and legibility issues. Do not flood the review with low-value nits when larger structural issues exist. Prefer a few high-conviction comments over a long list of cosmetic notes.
 
 <!-- zh:17 -->
-> **中文**
->
-> 优先结构性的代码质量退步和错失的简化，再是纠缠代码与分支复杂性，随后是边界、类型、文件大小，最后才是较小的模块化和可读性问题。有大结构问题时，不要用低价值小节淹没评审。宁可几条判断明确的评论，也不要一长串表面建议。
+优先结构性的代码质量退步和错失的简化，再是纠缠代码与分支复杂性，随后是边界、类型、文件大小，最后才是较小的模块化和可读性问题。有大结构问题时，不要用低价值小节淹没评审。宁可几条判断明确的评论，也不要一长串表面建议。
 
 <!-- en:18 -->
 ## Approval Bar
 
 <!-- zh:18 -->
-> **中文**
->
-> ## 批准门槛
+**批准门槛**
 
 <!-- en:19 -->
 Do not approve merely because behavior seems correct. Treat these as presumptive blockers unless the author can justify them: the PR keeps a lot of incidental complexity when a code-judo move would delete it. Pushes a file from below 1000 lines to above 1000 lines. Adds ad-hoc branching that tangles an existing flow. Scatters feature checks across shared code. Adds an unnecessary abstraction, wrapper, or cast-heavy contract, or duplicates an existing helper or puts logic in the wrong layer when there is a clear canonical home. If those conditions are not met, leave explicit, actionable feedback and push for a cleaner decomposition.
 
 <!-- zh:19 -->
-> **中文**
->
-> 不能仅因行为看似正确就批准。以下情况默认阻塞，除非作者有充分理由：明明可通过 code judo 删除，却保留大量偶然复杂性；将不足 1000 行文件推到超过 1000 行；增加临时分支搅乱已有流程；共享代码各处散落功能判断；增加多余抽象、封装或大量 cast 的契约；重复现有辅助函数；已有明确归属层却把逻辑放错位置。达不到质量要求时，给出明确、可执行反馈，推动更清晰拆分。
+不能仅因行为看似正确就批准。以下情况默认阻塞，除非作者有充分理由：明明可通过 code judo 删除，却保留大量偶然复杂性；将不足 1000 行文件推到超过 1000 行；增加临时分支搅乱已有流程；共享代码各处散落功能判断；增加多余抽象、封装或大量 cast 的契约；重复现有辅助函数；已有明确归属层却把逻辑放错位置。达不到质量要求时，给出明确、可执行反馈，推动更清晰拆分。
 
 <!-- en:20 -->
 ## Review Tone
 
 <!-- zh:20 -->
-> **中文**
->
-> ## 评审语气
+**评审语气**
 
 <!-- en:21 -->
 Be direct, serious, and demanding about quality. Do not be rude, but do not soften major maintainability issues into mild suggestions. If the code is making the codebase messier, say so. If the implementation missed an obvious dramatic simplification, say that too. Do not be satisfied with "maybe rename this" when the real issue is structural.
 
 <!-- zh:21 -->
-> **中文**
->
-> 直接、认真，对质量要求严格。不粗鲁，也不把重大维护问题弱化成温和建议。代码使代码库更乱，就直说；错过显而易见的大幅简化，也直说。真正问题在结构时，不能满足于“也许改个名”。
+直接、认真，对质量要求严格。不粗鲁，也不把重大维护问题弱化成温和建议。代码使代码库更乱，就直说；错过显而易见的大幅简化，也直说。真正问题在结构时，不能满足于“也许改个名”。

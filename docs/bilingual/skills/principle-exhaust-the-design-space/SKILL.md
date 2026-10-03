@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-exhaust-the-design-space
-> description: "面对代码库中没有先例的新 UI 交互或架构决策时使用。构建 2 到 3 个竞争性原型，并在确定方案前并排比较。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-exhaust-the-design-space
+description: "面对代码库中没有先例的新 UI 交互或架构决策时使用。构建 2 到 3 个竞争性原型，并在确定方案前并排比较。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Exhaust the Design Space
 
 <!-- zh:1 -->
-> **中文**
->
-> # 充分探索设计空间
+**充分探索设计空间**
 
 <!-- en:2 -->
 When a novel interaction or architectural decision has no established precedent, explore several concrete alternatives before implementation. Building the wrong thing costs more than exploring three options.
 
 <!-- zh:2 -->
-> **中文**
->
-> 当新交互或架构决策没有成熟先例时，在实现前探索几个具体的替代方案。构建错误方案的成本，比探索三个选项更高。
+当新交互或架构决策没有成熟先例时，在实现前探索几个具体的替代方案。构建错误方案的成本，比探索三个选项更高。
 
 <!-- en:3 -->
 **The rule.** When the right answer is not obvious, build 2-3 competing prototypes or sketches. Compare them side by side. Only then commit. Design it twice is this rule by another name. A second flavor of the first shape does not count.
 
 <!-- zh:3 -->
-> **中文**
->
-> **规则。** 当正确答案不明显时，构建 2 到 3 个竞争性原型或草图，并排比较，之后再确定方案。“设计两次”说的也是这条规则。只给第一个方案换一种外观不算。
+**规则。** 当正确答案不明显时，构建 2 到 3 个竞争性原型或草图，并排比较，之后再确定方案。“设计两次”说的也是这条规则。只给第一个方案换一种外观不算。
 
 <!-- en:4 -->
 **When it applies:**
@@ -52,12 +44,10 @@ When a novel interaction or architectural decision has no established precedent,
 - Product design decisions where user experience depends on feel, not logic
 
 <!-- zh:4 -->
-> **中文**
->
-> **适用场景：**
-> - 新 UI 交互（代码库中没有先例）
-> - 存在多种可行方案的架构选择
-> - 用户体验取决于实际感受、而不是纯逻辑的产品设计决策
+**适用场景：**
+- 新 UI 交互（代码库中没有先例）
+- 存在多种可行方案的架构选择
+- 用户体验取决于实际感受、而不是纯逻辑的产品设计决策
 
 <!-- en:5 -->
 **When it doesn't:**
@@ -66,9 +56,7 @@ When a novel interaction or architectural decision has no established precedent,
 - Changes where constraints dictate a single viable approach
 
 <!-- zh:5 -->
-> **中文**
->
-> **不适用场景：**
-> - 模式已经确定的机械实现
-> - 目标状态明确的 Bug 修复或重构
-> - 约束条件已限定唯一可行方案的改动
+**不适用场景：**
+- 模式已经确定的机械实现
+- 目标状态明确的 Bug 修复或重构
+- 约束条件已限定唯一可行方案的改动

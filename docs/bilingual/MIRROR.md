@@ -5,59 +5,45 @@
 # Syncing this mirror
 
 <!-- zh:0 -->
-> **中文**
->
-> # 同步这个镜像仓库
+**同步这个镜像仓库**
 
 <!-- en:1 -->
 This repo mirrors [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) and adds its own edits: the top of `README.md` and harness-neutral rewrites in some skills.
 
 <!-- zh:1 -->
-> **中文**
->
-> 本仓库是 [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) 的镜像，并包含自己的修改：`README.md` 顶部的说明，以及部分 skill 中不再依赖特定 agent 运行环境的改写。
+本仓库是 [`cursor/plugins/pstack`](https://github.com/cursor/plugins/tree/main/pstack) 的镜像，并包含自己的修改：`README.md` 顶部的说明，以及部分 skill 中不再依赖特定 agent 运行环境的改写。
 
 <!-- en:2 -->
 Two branches keep those edits safe:
 
 <!-- zh:2 -->
-> **中文**
->
-> 通过两个分支保护这些修改：
+通过两个分支保护这些修改：
 
 <!-- en:3 -->
 - `upstream` holds Cursor's files exactly, with no local edits.
 - `main` is `upstream` plus this mirror's edits.
 
 <!-- zh:3 -->
-> **中文**
->
-> - `upstream` 完整保留 Cursor 的文件，不做本地修改。
-> - `main` 在 `upstream` 的基础上叠加本镜像的修改。
+- `upstream` 完整保留 Cursor 的文件，不做本地修改。
+- `main` 在 `upstream` 的基础上叠加本镜像的修改。
 
 <!-- en:4 -->
 Never copy Cursor's files onto `main` directly. That erases the edits.
 
 <!-- zh:4 -->
-> **中文**
->
-> 绝不能直接把 Cursor 的文件复制到 `main` 上，否则会覆盖镜像自身的修改。
+绝不能直接把 Cursor 的文件复制到 `main` 上，否则会覆盖镜像自身的修改。
 
 <!-- en:5 -->
 ## Steps
 
 <!-- zh:5 -->
-> **中文**
->
-> ## 操作步骤
+**操作步骤**
 
 <!-- en:6 -->
 1. Copy Cursor's latest `pstack/` folder onto the `upstream` branch:
 
 <!-- zh:6 -->
-> **中文**
->
-> 1. 将 Cursor 最新的 `pstack/` 目录复制到 `upstream` 分支：
+1. 将 Cursor 最新的 `pstack/` 目录复制到 `upstream` 分支：
 
 <!-- en:7 -->
    ```bash
@@ -69,25 +55,11 @@ Never copy Cursor's files onto `main` directly. That erases the edits.
    git commit -m "upstream: cursor/plugins/pstack @ $(git -C /tmp/cursor-plugins rev-parse --short HEAD)"
    ```
 
-<!-- zh:7 -->
-> **中文**
->
->    ```bash
->    git clone --depth 1 --filter=blob:none --sparse https://github.com/cursor/plugins.git /tmp/cursor-plugins
->    git -C /tmp/cursor-plugins sparse-checkout set pstack
->    git switch upstream
->    rsync -a --delete --exclude .git --exclude MIRROR.md /tmp/cursor-plugins/pstack/ ./
->    git add -A
->    git commit -m "upstream: cursor/plugins/pstack @ $(git -C /tmp/cursor-plugins rev-parse --short HEAD)"
->    ```
-
 <!-- en:8 -->
 2. Merge it into `main`. Git applies only what changed upstream and keeps the mirror's edits:
 
 <!-- zh:8 -->
-> **中文**
->
-> 2. 合并到 `main`。Git 只应用上游发生变化的部分，保留镜像自己的修改：
+2. 合并到 `main`。Git 只应用上游发生变化的部分，保留镜像自己的修改：
 
 <!-- en:9 -->
    ```bash
@@ -95,29 +67,17 @@ Never copy Cursor's files onto `main` directly. That erases the edits.
    git merge upstream
    ```
 
-<!-- zh:9 -->
-> **中文**
->
->    ```bash
->    git switch main
->    git merge upstream
->    ```
-
 <!-- en:10 -->
    A conflict means Cursor changed a line this mirror also changed. Keep Cursor's new meaning and reapply the harness-neutral wording.
 
 <!-- zh:10 -->
-> **中文**
->
->    如果发生冲突，说明 Cursor 和本镜像都修改了同一行。保留 Cursor 更新后的含义，再重新应用不依赖特定运行环境的表达。
+   如果发生冲突，说明 Cursor 和本镜像都修改了同一行。保留 Cursor 更新后的含义，再重新应用不依赖特定运行环境的表达。
 
 <!-- en:11 -->
 3. Refresh the bundled Comment Sicko prompt, then check that no new Cursor-only instructions arrived:
 
 <!-- zh:11 -->
-> **中文**
->
-> 3. 更新仓库内附带的 Comment Sicko 提示词，再检查是否引入了新的 Cursor 专用指令：
+3. 更新仓库内附带的 Comment Sicko 提示词，再检查是否引入了新的 Cursor 专用指令：
 
 <!-- en:12 -->
    ```bash
@@ -125,38 +85,19 @@ Never copy Cursor's files onto `main` directly. That erases the edits.
    git diff upstream@{1} upstream -- skills | grep -nE '\.cursor/|agent-transcripts|cursor-team-kit|create-skill|Task'
    ```
 
-<!-- zh:12 -->
-> **中文**
->
->    ```bash
->    cp agents/comment-sicko.md skills/no-comments/references/comment-sicko.md
->    git diff upstream@{1} upstream -- skills | grep -nE '\.cursor/|agent-transcripts|cursor-team-kit|create-skill|Task'
->    ```
-
 <!-- en:13 -->
    Rewrite any new hits the same way as the existing edits. The Harness section in `skills/poteto-mode/SKILL.md` lists the mappings.
 
 <!-- zh:13 -->
-> **中文**
->
->    按现有改写方式处理新出现的匹配项。`skills/poteto-mode/SKILL.md` 的 Harness 部分列出了对应关系。
+   按现有改写方式处理新出现的匹配项。`skills/poteto-mode/SKILL.md` 的 Harness 部分列出了对应关系。
 
 <!-- en:14 -->
 4. Push both branches:
 
 <!-- zh:14 -->
-> **中文**
->
-> 4. 推送两个分支：
+4. 推送两个分支：
 
 <!-- en:15 -->
    ```bash
    git push origin main upstream
    ```
-
-<!-- zh:15 -->
-> **中文**
->
->    ```bash
->    git push origin main upstream
->    ```

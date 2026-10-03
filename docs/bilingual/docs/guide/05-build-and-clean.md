@@ -5,33 +5,25 @@
 # Build the change and clean the diff
 
 <!-- zh:0 -->
-> **中文**
->
-> # 实现改动并整理 diff
+**实现改动并整理 diff**
 
 <!-- en:1 -->
 The build playbooks share one discipline. Say what you observed, let the playbook demand the evidence. This page shows what to put in the prompt for each common build task, then the cleanup habit that keeps diffs reviewable.
 
 <!-- zh:1 -->
-> **中文**
->
-> 实现类执行规程遵循同一个要求：说明你观察到什么，再让执行规程明确需要哪些证据。本页展示常见实现任务应如何写提示词，以及怎样整理改动，让 diff 易于评审。
+实现类执行规程遵循同一个要求：说明你观察到什么，再让执行规程明确需要哪些证据。本页展示常见实现任务应如何写提示词，以及怎样整理改动，让 diff 易于评审。
 
 <!-- en:2 -->
 ## Prompt each build playbook with what you know
 
 <!-- zh:2 -->
-> **中文**
->
-> ## 把已知信息交给对应的实现规程
+**把已知信息交给对应的实现规程**
 
 <!-- en:3 -->
 A bug prompt states the symptom and asks for a reproduction first:
 
 <!-- zh:3 -->
-> **中文**
->
-> 修复 bug 的提示词要说明症状，并要求先复现：
+修复 bug 的提示词要说明症状，并要求先复现：
 
 <!-- en:4 -->
 ```text
@@ -39,19 +31,15 @@ A bug prompt states the symptom and asks for a reproduction first:
 ```
 
 <!-- zh:4 -->
-> **中文**
->
-> ```text
-> /poteto-mode 重试后，这个命令输出两条记录。先复现，再修复并验证。
-> ```
+```text
+/poteto-mode 重试后，这个命令输出两条记录。先复现，再修复并验证。
+```
 
 <!-- en:5 -->
 A feature prompt states the behavior and what must not change:
 
 <!-- zh:5 -->
-> **中文**
->
-> 实现功能的提示词要说明目标行为，以及哪些行为必须保持不变：
+实现功能的提示词要说明目标行为，以及哪些行为必须保持不变：
 
 <!-- en:6 -->
 ```text
@@ -59,19 +47,15 @@ A feature prompt states the behavior and what must not change:
 ```
 
 <!-- zh:6 -->
-> **中文**
->
-> ```text
-> /poteto-mode 增加 --json 参数。文本输出必须逐字节保持一致。验证这两种输出形式。
-> ```
+```text
+/poteto-mode 增加 --json 参数。文本输出必须逐字节保持一致。验证这两种输出形式。
+```
 
 <!-- en:7 -->
 A refactoring prompt pins behavior before structure moves:
 
 <!-- zh:7 -->
-> **中文**
->
-> 重构提示词要在调整结构之前固定行为基准：
+重构提示词要在调整结构之前固定行为基准：
 
 <!-- en:8 -->
 ```text
@@ -79,19 +63,15 @@ A refactoring prompt pins behavior before structure moves:
 ```
 
 <!-- zh:8 -->
-> **中文**
->
-> ```text
-> /poteto-mode 把解析逻辑移到一个模块中，行为完全不变。先记录当前输出，再证明改动后的输出没有变化。
-> ```
+```text
+/poteto-mode 把解析逻辑移到一个模块中，行为完全不变。先记录当前输出，再证明改动后的输出没有变化。
+```
 
 <!-- en:9 -->
 A perf prompt states the measurement, not a vibe:
 
 <!-- zh:9 -->
-> **中文**
->
-> 性能提示词要给出测量结果，而不是主观感受：
+性能提示词要给出测量结果，而不是主观感受：
 
 <!-- en:10 -->
 ```text
@@ -99,43 +79,33 @@ A perf prompt states the measurement, not a vibe:
 ```
 
 <!-- zh:10 -->
-> **中文**
->
-> ```text
-> /poteto-mode 在这个测试样本上，启动耗时 1.8 秒。采集 trace，修复测量确认的原因，展示前后对比。
-> ```
+```text
+/poteto-mode 在这个测试样本上，启动耗时 1.8 秒。采集 trace，修复测量确认的原因，展示前后对比。
+```
 
 <!-- en:11 -->
 Each of these routes to its playbook ([Bug fix](../../skills/poteto-mode/playbooks/bug-fix.md), [Feature](../../skills/poteto-mode/playbooks/feature.md), [Refactoring](../../skills/poteto-mode/playbooks/refactoring.md), [Perf issue](../../skills/poteto-mode/playbooks/perf-issue.md)), and the playbook supplies the steps you didn't type: reproduce before fixing, name the data shape before implementing, pin behavior before restructuring, profile before optimizing.
 
 <!-- zh:11 -->
-> **中文**
->
-> 这些提示词分别对应各自的执行规程：[Bug fix](../../skills/poteto-mode/playbooks/bug-fix.md)、[Feature](../../skills/poteto-mode/playbooks/feature.md)、[Refactoring](../../skills/poteto-mode/playbooks/refactoring.md) 和 [Perf issue](../../skills/poteto-mode/playbooks/perf-issue.md)。执行规程会补全你没写出的步骤：修复前先复现，实现前先明确数据结构，重构前先固定行为，优化前先做性能分析。
+这些提示词分别对应各自的执行规程：[Bug fix](../../skills/poteto-mode/playbooks/bug-fix.md)、[Feature](../../skills/poteto-mode/playbooks/feature.md)、[Refactoring](../../skills/poteto-mode/playbooks/refactoring.md) 和 [Perf issue](../../skills/poteto-mode/playbooks/perf-issue.md)。执行规程会补全你没写出的步骤：修复前先复现，实现前先明确数据结构，重构前先固定行为，优化前先做性能分析。
 
 <!-- en:12 -->
 For sustained improvement of one number, there's the [Hillclimb playbook](../../skills/poteto-mode/playbooks/hillclimb.md). Give it the metric, a target, and a floor on attempts, and it loops one hypothesis at a time with a frozen measurement harness. It keeps wins and reverts everything else.
 
 <!-- zh:12 -->
-> **中文**
->
-> 如果要持续改善某个数值指标，可以使用 [Hillclimb 执行规程](../../skills/poteto-mode/playbooks/hillclimb.md)。给出指标、目标和最低尝试次数，它就会在固定不变的测量环境中，一次验证一个假设，持续迭代。有效改进会保留，其余改动全部撤回。
+如果要持续改善某个数值指标，可以使用 [Hillclimb 执行规程](../../skills/poteto-mode/playbooks/hillclimb.md)。给出指标、目标和最低尝试次数，它就会在固定不变的测量环境中，一次验证一个假设，持续迭代。有效改进会保留，其余改动全部撤回。
 
 <!-- en:13 -->
 ## Write the failing test first with `/tdd`
 
 <!-- zh:13 -->
-> **中文**
->
-> ## 用 `/tdd` 先写会失败的测试
+**用 `/tdd` 先写会失败的测试**
 
 <!-- en:14 -->
 When a bug has a cheap local test path, the whole prompt can be two words:
 
 <!-- zh:14 -->
-> **中文**
->
-> 如果 bug 有成本低的本地测试路径，提示词可以只有两个词：
+如果 bug 有成本低的本地测试路径，提示词可以只有两个词：
 
 <!-- en:15 -->
 ```text
@@ -143,59 +113,45 @@ When a bug has a cheap local test path, the whole prompt can be two words:
 ```
 
 <!-- zh:15 -->
-> **中文**
->
-> ```text
-> /tdd 实现
-> ```
+```text
+/tdd 实现
+```
 
 <!-- en:16 -->
 In context, that's enough. [`/tdd`](../../skills/tdd/SKILL.md) writes the smallest test that fails for the intended reason, then the fix, then reruns the test. If a test would need broad harness setup or brittle mocks, the skill says so and uses the closest executable check instead. Don't force a test where a real command is stronger evidence.
 
 <!-- zh:16 -->
-> **中文**
->
-> 在已有上下文中，这就足够了。[`/tdd`](../../skills/tdd/SKILL.md) 会先写一个最小测试，确保它因目标问题而失败，再修复问题并重新运行测试。如果测试需要大范围搭建运行环境或使用脆弱的 mock，它会说明情况，改用最接近目标行为的可执行检查。当真实命令能提供更有力的证据时，不必强行写测试。
+在已有上下文中，这就足够了。[`/tdd`](../../skills/tdd/SKILL.md) 会先写一个最小测试，确保它因目标问题而失败，再修复问题并重新运行测试。如果测试需要大范围搭建运行环境或使用脆弱的 mock，它会说明情况，改用最接近目标行为的可执行检查。当真实命令能提供更有力的证据时，不必强行写测试。
 
 <!-- en:17 -->
 ## Let the TypeScript rules load themselves
 
 <!-- zh:17 -->
-> **中文**
->
-> ## 让 TypeScript 规则自动加载
+**让 TypeScript 规则自动加载**
 
 <!-- en:18 -->
 [`typescript-best-practices`](../../skills/typescript-best-practices/SKILL.md) has no slash command in your workflow. It loads whenever the agent touches a `.ts` or `.tsx` file and turns the type-system principles into concrete rules: discriminated unions, `unknown` at boundaries, exhaustive variants, schema-derived types.
 
 <!-- zh:18 -->
-> **中文**
->
-> [`typescript-best-practices`](../../skills/typescript-best-practices/SKILL.md) 不需要你在工作流程中显式调用斜杠命令。agent 处理 `.ts` 或 `.tsx` 文件时，它会自动加载，把类型系统原则落实为具体规则，包括可辨识联合类型、边界处使用 `unknown`、穷尽处理所有变体，以及由 schema 派生类型。
+[`typescript-best-practices`](../../skills/typescript-best-practices/SKILL.md) 不需要你在工作流程中显式调用斜杠命令。agent 处理 `.ts` 或 `.tsx` 文件时，它会自动加载，把类型系统原则落实为具体规则，包括可辨识联合类型、边界处使用 `unknown`、穷尽处理所有变体，以及由 schema 派生类型。
 
 <!-- en:19 -->
 ## Clean before you commit
 
 <!-- zh:19 -->
-> **中文**
->
-> ## 提交前先整理
+**提交前先整理**
 
 <!-- en:20 -->
 The [Opening a PR playbook](../../skills/poteto-mode/playbooks/opening-a-pr.md) runs `/deslop` on the diff before each commit and applies [`/unslop`](../../skills/unslop/SKILL.md) to the PR description and commit bodies. `/deslop` ships in the `cursor-team-kit` plugin, not in pstack. If you don't have it, ask for the same outcome in plain words: remove narrating comments, unsupported guards, dead compatibility paths, and unrelated edits.
 
 <!-- zh:20 -->
-> **中文**
->
-> [Opening a PR 执行规程](../../skills/poteto-mode/playbooks/opening-a-pr.md) 会在每次提交前对 diff 运行 `/deslop`，并用 [`/unslop`](../../skills/unslop/SKILL.md) 整理 PR 描述和 commit 正文。`/deslop` 属于 `cursor-team-kit` 插件，不包含在 pstack 中。如果没有安装，可以用普通语言要求相同的结果：删除复述代码的注释、没有依据的防御性检查、已无用途的兼容逻辑，以及无关改动。
+[Opening a PR 执行规程](../../skills/poteto-mode/playbooks/opening-a-pr.md) 会在每次提交前对 diff 运行 `/deslop`，并用 [`/unslop`](../../skills/unslop/SKILL.md) 整理 PR 描述和 commit 正文。`/deslop` 属于 `cursor-team-kit` 插件，不包含在 pstack 中。如果没有安装，可以用普通语言要求相同的结果：删除复述代码的注释、没有依据的防御性检查、已无用途的兼容逻辑，以及无关改动。
 
 <!-- en:21 -->
 For prose, `/unslop` takes a target and any extra rules you have:
 
 <!-- zh:21 -->
-> **中文**
->
-> 整理文字时，给 `/unslop` 一个目标，并补充你的要求：
+整理文字时，给 `/unslop` 一个目标，并补充你的要求：
 
 <!-- en:22 -->
 ```text
@@ -203,35 +159,27 @@ For prose, `/unslop` takes a target and any extra rules you have:
 ```
 
 <!-- zh:22 -->
-> **中文**
->
-> ```text
-> /unslop 整理 README 的改动，不要用破折号
-> ```
+```text
+/unslop 整理 README 的改动，不要用破折号
+```
 
 <!-- en:23 -->
 You'll develop your own shorthand. The skill reads intent fine from terse prompts like `unslop that, tighten it`.
 
 <!-- zh:23 -->
-> **中文**
->
-> 你会逐渐形成自己的简短表达。即使提示词只是 `去掉那段 AI 套话，写紧凑些`，skill 也能理解意图。
+你会逐渐形成自己的简短表达。即使提示词只是 `去掉那段 AI 套话，写紧凑些`，skill 也能理解意图。
 
 <!-- en:24 -->
 ## Strip the comments with `/no-comments`
 
 <!-- zh:24 -->
-> **中文**
->
-> ## 用 `/no-comments` 清理注释
+**用 `/no-comments` 清理注释**
 
 <!-- en:25 -->
 Comments need their own pass, and not from the agent that wrote them. An author defends its comments the way you'd defend yours. So before review, hand them to fresh eyes:
 
 <!-- zh:25 -->
-> **中文**
->
-> 注释需要单独审查，而且不应由写注释的 agent 自己审。作者会维护自己的注释，就像你会维护自己的文字。因此在正式评审前，让一个新的评审者检查：
+注释需要单独审查，而且不应由写注释的 agent 自己审。作者会维护自己的注释，就像你会维护自己的文字。因此在正式评审前，让一个新的评审者检查：
 
 <!-- en:26 -->
 ```text
@@ -239,40 +187,30 @@ Comments need their own pass, and not from the agent that wrote them. An author 
 ```
 
 <!-- zh:26 -->
-> **中文**
->
-> ```text
-> /no-comments 检查这个 diff
-> ```
+```text
+/no-comments 检查这个 diff
+```
 
 <!-- en:27 -->
 [`/no-comments`](../../skills/no-comments/SKILL.md) spawns [Comment Sicko](../../agents/comment-sicko.md), a read-only reviewer with a short keep list: license headers, doc comments on a public API, links that explain what code can't, behavior forced by an external dependency you can't reshape. Everything else goes. A surprise in your own code gets no such pass. The comment comes back as a refactor flag, and `/no-comments` fixes the flags it accepts at the root cause. When a comment claims a constraint, "do not remove", the skill offers to encode the claim as a type, test, or lint. Either way, the comment comes out.
 
 <!-- zh:27 -->
-> **中文**
->
-> [`/no-comments`](../../skills/no-comments/SKILL.md) 会启动 [Comment Sicko](../../agents/comment-sicko.md)，一个只读评审者。它只保留少数几类注释：许可证声明、公共 API 的文档注释、用于解释代码无法表达内容的链接，以及无法改造的外部依赖所强制要求的行为。其余注释都删除。你自己代码中的意外行为不享受这种豁免，相应注释会被标记为重构信号；`/no-comments` 会从根因修复它认可的问题。对于声称某种约束的注释，例如“不要删除”，skill 会建议把约束编码为类型、测试或 lint 规则。无论采用哪种方式，最终都会移除该注释。
+[`/no-comments`](../../skills/no-comments/SKILL.md) 会启动 [Comment Sicko](../../agents/comment-sicko.md)，一个只读评审者。它只保留少数几类注释：许可证声明、公共 API 的文档注释、用于解释代码无法表达内容的链接，以及无法改造的外部依赖所强制要求的行为。其余注释都删除。你自己代码中的意外行为不享受这种豁免，相应注释会被标记为重构信号；`/no-comments` 会从根因修复它认可的问题。对于声称某种约束的注释，例如“不要删除”，skill 会建议把约束编码为类型、测试或 lint 规则。无论采用哪种方式，最终都会移除该注释。
 
 <!-- en:28 -->
 The division of labor is worth keeping straight. `/deslop` cleans slop out of the code, `/unslop` cleans it out of prose, and `/no-comments` hands the comments to a reviewer who didn't write them.
 
 <!-- zh:28 -->
-> **中文**
->
-> 要分清它们的职责：`/deslop` 清理低质代码，`/unslop` 清理文字中的 AI 套话，`/no-comments` 则把注释交给未参与编写的评审者检查。
+要分清它们的职责：`/deslop` 清理低质代码，`/unslop` 清理文字中的 AI 套话，`/no-comments` 则把注释交给未参与编写的评审者检查。
 
 <!-- en:29 -->
 **Pitfall:** cleanup is not optional polish. A diff with narrating comments and defensive dead weight reads as unfinished to reviewers, and the extra code is where the next bug hides. If the diff feels padded, say `deslop it` before you commit, not after review calls it out.
 
 <!-- zh:29 -->
-> **中文**
->
-> **易错点：** 整理不是可有可无的润色。充满复述性注释和无效防御逻辑的 diff，在评审者看来还没完成；下一次 bug 往往就藏在这些额外代码里。如果 diff 显得臃肿，应在提交前说 `deslop it`，而不是等评审指出后再处理。
+**易错点：** 整理不是可有可无的润色。充满复述性注释和无效防御逻辑的 diff，在评审者看来还没完成；下一次 bug 往往就藏在这些额外代码里。如果 diff 显得臃肿，应在提交前说 `deslop it`，而不是等评审指出后再处理。
 
 <!-- en:30 -->
 Next: [Verify and ship](./06-verify-and-ship.md).
 
 <!-- zh:30 -->
-> **中文**
->
-> 下一页：[验证并交付](./06-verify-and-ship.md)。
+下一页：[验证并交付](./06-verify-and-ship.md)。

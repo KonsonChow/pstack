@@ -5,17 +5,13 @@
 ### Multi-phase or multi-PR plan
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 多阶段或多 PR 计划
+**多阶段或多 PR 计划**
 
 <!-- en:1 -->
 **You own the plan, not the code. The plan is a checklist an owner runs box by box and the operator audits from the evidence.** The plan is the deliverable. Do not implement.
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责计划，不负责代码。计划是一份由负责者逐项执行、操作者根据证据复核的检查清单。** 计划本身就是交付物，不要实现。
+**你负责计划，不负责代码。计划是一份由负责者逐项执行、操作者根据证据复核的检查清单。** 计划本身就是交付物，不要实现。
 
 <!-- en:2 -->
 1. When the change is one or two files with an obvious approach, skip the plan. Say so and stop.
@@ -27,31 +23,25 @@
 7. Hand back. Post the plan path and the script's output, then stop. Execution starts on the operator's explicit go, under the execution playbook the plan names.
 
 <!-- zh:2 -->
-> **中文**
->
-> 1. 如果改动只涉及一两个文件，做法又明确，就跳过计划，说明情况后停止。
-> 2. 写计划前，通过原型解决未定问题。对每个问题运行 `playbooks/prototype.md`，保留分支、SHA 和截图，放入附录 A。只有运行无法决定的产品或偏好选择才询问操作者，并给出选项，遵循 **never-block-on-the-human** 原则 skill。
-> 3. 用 `subagent_type: "poteto-agent"` 分派探索，按 Subagents 部分明确指定模型，遵循 **guard-the-context-window** 原则 skill。每个 subagent 返回文件位置、惯例、测试命令和入口，不内嵌大段原始内容。
-> 4. 把下方框架复制到计划文件，填写每个占位符。操作者没有指定路径时，写到 agent 存储目录的 `docs/` 下。保留所有标题和子块，并保持所示顺序。每个 PR 一节，每个 PR 是一项拥有独立证据的改动，遵循 **sequence-verifiable-units** 原则 skill。在 **How to read this** 中指明执行规程，按 `playbooks/autopilot-stack.md` 末尾的规则，在 `playbooks/autopilot-full.md` 与 `playbooks/autopilot-stack.md` 间选择。长期项目使用 `playbooks/orchestrate.md`。
-> 5. 完整遵循 `/technical-writing`，再用 `/unslop` 整理。正文只使用一种 Diátaxis 类型，即操作指南；解释和参考放入附录。每个标题说明任务或发现，不使用长破折号，不在句中用冒号连接意思。
-> 6. 运行 `node pstack/skills/poteto-mode/scripts/check-plan.mjs <plan.md>`，修复输出指出的每一项，遵循 **encode-lessons-in-structure** 原则 skill。
-> 7. 交付计划，提供计划路径和脚本输出，然后停止。只有操作者明确要求开始，才按计划指定的执行规程进入执行。
+1. 如果改动只涉及一两个文件，做法又明确，就跳过计划，说明情况后停止。
+2. 写计划前，通过原型解决未定问题。对每个问题运行 `playbooks/prototype.md`，保留分支、SHA 和截图，放入附录 A。只有运行无法决定的产品或偏好选择才询问操作者，并给出选项，遵循 **never-block-on-the-human** 原则 skill。
+3. 用 `subagent_type: "poteto-agent"` 分派探索，按 Subagents 部分明确指定模型，遵循 **guard-the-context-window** 原则 skill。每个 subagent 返回文件位置、惯例、测试命令和入口，不内嵌大段原始内容。
+4. 把下方框架复制到计划文件，填写每个占位符。操作者没有指定路径时，写到 agent 存储目录的 `docs/` 下。保留所有标题和子块，并保持所示顺序。每个 PR 一节，每个 PR 是一项拥有独立证据的改动，遵循 **sequence-verifiable-units** 原则 skill。在 **How to read this** 中指明执行规程，按 `playbooks/autopilot-stack.md` 末尾的规则，在 `playbooks/autopilot-full.md` 与 `playbooks/autopilot-stack.md` 间选择。长期项目使用 `playbooks/orchestrate.md`。
+5. 完整遵循 `/technical-writing`，再用 `/unslop` 整理。正文只使用一种 Diátaxis 类型，即操作指南；解释和参考放入附录。每个标题说明任务或发现，不使用长破折号，不在句中用冒号连接意思。
+6. 运行 `node pstack/skills/poteto-mode/scripts/check-plan.mjs <plan.md>`，修复输出指出的每一项，遵循 **encode-lessons-in-structure** 原则 skill。
+7. 交付计划，提供计划路径和脚本输出，然后停止。只有操作者明确要求开始，才按计划指定的执行规程进入执行。
 
 <!-- en:3 -->
 **Verification.** Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked (the **prove-it-works** principle skill). That sentence is the verification rule. Every verification block opens with it. The live block is mandatory. Ten lanes on `grok-4.6-fast-xhigh` at the PR head drive the real surface through its control skill, per the **swarm** skill. Each lane is one box with a concrete scenario, the screenshot it saves, and its pass predicate. One lane is the **Regression lane against trunk.** It runs the same load-bearing scenario on trunk and head. If trunk does not have the feature, the lane records that fact and gates the behavior the diff adds plus the end state the user waits for instead of inventing a trunk result. The perf gate is dual-sided. Trunk and head must both produce the named metric. If trunk lacks the feature, also isolate the work the diff adds and set an absolute budget for that work plus the end-to-end state the user waits for. Do not claim a ratio between unlike scenarios. The perf block names the metric, the interleaved probe, the trunk baseline measured first, and the rule with the number that fails. A PR that changes an interaction is review-gated. The operator reviews it in chat with screenshots and a video before merge. A PR that changes no interaction writes `**Review gate.** None. <PR id> is not review-gated.` and no boxes under it.
 
 <!-- zh:3 -->
-> **中文**
->
-> **验证。** 仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证，遵循 **prove-it-works** 原则 skill。这句话就是验证规则，每个验证块都以它开头。live 检查块不可省略：按 **swarm** skill，在 PR 当前提交上使用 `grok-4.6-fast-xhigh` 运行十条通道，通过对应操作与验证 skill 驱动真实界面。每条通道对应一个检查项，明确具体场景、截图保存位置和通过条件。其中一条是 **Regression lane against trunk**，在主干和当前提交上运行同一个关键场景。主干没有该功能时，记录事实，改为检查 diff 新增的行为，以及用户等待的最终状态，不能编造主干结果。性能检查必须双边测量，主干和当前提交都要产出指定指标。主干没有功能时，还要隔离 diff 新增的工作，为这部分工作及用户等待的端到端状态设置绝对预算。不能在不同场景间声称有效比值。perf 块要明确指标、交错执行的测量方法、首先测得的主干基准，以及含具体失败阈值的规则。改变交互的 PR 必须经过人工评审：合并前，操作者在对话中查看截图和视频。不改变交互的 PR 写明 `**Review gate.** None. <PR id> is not review-gated.`，其下不放检查项。
+**验证。** 仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证，遵循 **prove-it-works** 原则 skill。这句话就是验证规则，每个验证块都以它开头。live 检查块不可省略：按 **swarm** skill，在 PR 当前提交上使用 `grok-4.6-fast-xhigh` 运行十条通道，通过对应操作与验证 skill 驱动真实界面。每条通道对应一个检查项，明确具体场景、截图保存位置和通过条件。其中一条是 **Regression lane against trunk**，在主干和当前提交上运行同一个关键场景。主干没有该功能时，记录事实，改为检查 diff 新增的行为，以及用户等待的最终状态，不能编造主干结果。性能检查必须双边测量，主干和当前提交都要产出指定指标。主干没有功能时，还要隔离 diff 新增的工作，为这部分工作及用户等待的端到端状态设置绝对预算。不能在不同场景间声称有效比值。perf 块要明确指标、交错执行的测量方法、首先测得的主干基准，以及含具体失败阈值的规则。改变交互的 PR 必须经过人工评审：合并前，操作者在对话中查看截图和视频。不改变交互的 PR 写明 `**Review gate.** None. <PR id> is not review-gated.`，其下不放检查项。
 
 <!-- en:4 -->
 **Control skill.** Pick it by surface. Browser, Electron, and web UIs use `control-ui` from `cursor-team-kit`. CLIs and TUIs use `control-cli` from `cursor-team-kit`. Native mobile uses whatever simulator-driving skill the repo has. A PR that touches two surfaces gets lanes on both. A surface with no control skill is a risk in Appendix C, and its live block still names how each lane drives it.
 
 <!-- zh:4 -->
-> **中文**
->
-> **操作与验证 skill。** 按实际操作界面选择。浏览器、Electron 和 Web UI 使用 `cursor-team-kit` 的 `control-ui`；CLI 和 TUI 使用同一插件的 `control-cli`；原生移动应用使用仓库已有的模拟器操作 skill。PR 涉及两类操作界面时，两边都要设置通道。缺少操作 skill 的界面，应作为风险写入附录 C，但 live 块仍须说明每条通道如何操作它。
+**操作与验证 skill。** 按实际操作界面选择。浏览器、Electron 和 Web UI 使用 `cursor-team-kit` 的 `control-ui`；CLI 和 TUI 使用同一插件的 `control-cli`；原生移动应用使用仓库已有的模拟器操作 skill。PR 涉及两类操作界面时，两边都要设置通道。缺少操作 skill 的界面，应作为风险写入附录 C，但 live 块仍须说明每条通道如何操作它。
 
 <!-- en:5 -->
 ````markdown
@@ -194,151 +184,147 @@ Each live lane runs on its own cloud VM at the PR head. Drive through `control-u
 ````
 
 <!-- zh:5 -->
-> **中文**
->
-> ````markdown
-> # <项目计划>执行计划
->
-> <十行以内，说明改了什么、面向谁、项目要落实的规则，以及按顺序排列的 PR ID。>
->
-> ## 如何阅读本计划
->
-> 每个勾选框是一项工作单元，必须说明什么证据支持勾选。嵌套项是上级检查项的子步骤。只有证据实际存在时才勾选，例如文件、日志行、截图、测试运行结果或 SHA。正文是操作指南，附录用于解释与记录。
->
-> 本项目执行 `pstack/skills/poteto-mode/playbooks/<execution playbook>.md`。<谁负责合并，哪些 PR ID 属于操作者负责、到可合并状态就停下的项目。>
->
-> 仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证。
->
-> ## 项目检查清单
->
-> ### 准备启动项目
->
-> - [ ] 向操作者说明执行协议和本计划，然后停止。只有操作者明确表示开始，才进入执行。
-> - [ ] 操作者同意后，用以下准确文字设置 `/goal`：“<计划路径、按顺序排列的 PR ID、验证规则、谁负责合并，以及完成条件。>”
-> - [ ] 项目开始时，从主干读取以下文件；每个 tick 都重新读取。
->   - [ ] `git show origin/main:pstack/skills/poteto-mode/playbooks/<execution playbook>.md`
->   - [ ] `git show origin/main:pstack/skills/swarm/SKILL.md`
->   - [ ] `git show origin/main:<control skill path>`
->   - [ ] `git show origin/main:pstack/skills/poteto-mode/playbooks/opening-a-pr.md`
->   - [ ] `git show origin/main:pstack/skills/<each other leaf skill the program uses>`
-> - [ ] 设置每 30 分钟一次的审计 tick。本地会话使用真实终端中的 `/loop`；云端主 agent 使用 cloud-sleeper 唤醒链。绝不能仅凭记忆维持周期。
-> - [ ] 逐字使用以下 tick 提示词：“从主干重新读取执行规程和已设置的 /goal。在本次 tick 中对照两者审计执行情况并纠正偏离。探测每条活跃通道，只根据实际副作用判断进展。立即停止卡住的通道并派出替代者。随后无论有没有变化，都在对话中向操作者发送状态，包含 PR、负责者、状态、head SHA 的队列表，自上个 tick 以来的判断、已合并内容、未关闭的人工检查关卡，以及阻碍。”
-> - [ ] 操作者要求 hold 或 stand-down 时，立即向每个负责者发送禁止一切写入的指令。
->
-> ### 启动负责者
->
-> - [ ] 每个 PR 启动一个负责者，授予执行规程规定的完整生命周期职责。
-> - [ ] 遵循以下依赖图。依赖项必须等父 PR 合并后再开始；执行规程采用 PR 栈时，则以父分支为基线。
->   - [ ] <PR id> 和 <PR id> 独立且先开始，两者都从 `main` 创建分支。
->   - [ ] <PR id> 在 <PR id> 之后。
-> - [ ] 遵守文件边界。<PR ID 或类别> 只能改动 `<glob>`。
-> - [ ] 遵守人工评审要求。<PR IDs> 会改变交互，必须在合并前等待操作者在对话中查看截图和视频。
->
-> ### 每个 PR 的操作流程
->
-> - [ ] 一次性确定代码托管平台。默认用 `gh`；如果 `command -v origin` 成功，且 Origin 能解析仓库，则所有 PR 操作都用 `origin pr`。任何回退到 `gh` 的情况都要记录。绝不能把 `gt` 设为必需工具。
-> - [ ] 创建准备评审的正式 PR，不能是 draft。按已确定的平台使用 `origin pr create --status open --base <base-branch>` 或 `gh pr create --base <base-branch>`。PR 栈中的子 PR 以父分支为目标。
-> - [ ] 面向 PR 的推送前，运行一次仓库 lint 和 typecheck，推送时启用 hooks。
-> - [ ] 每次提交前运行 `/deslop`，评审前运行 `/no-comments`。
-> - [ ] 按 `../references/bugbot-triage.md` 处理每条 Bugbot 和安全评审评论。
-> - [ ] 开始 babysit 前 rebase 到当前主干，报告可合并状态前再做一次。
->
-> ### 每个 PR 的判断与合并
->
-> - [ ] 在达到可合并状态的准确 head SHA 上，按 `pstack/skills/swarm/SKILL.md` 运行 swarm。设置一条检查关卡通道、PR 的 **Verify, live** 块规定的十条真实运行通道、**Verify, perf** 块规定的性能通道，以及一条阅读 diff 和证据记录、不轻信 PR 正文的审计通道。
-> - [ ] 所有通道都为 `PASS` 才算通过。发现问题交回负责者。新的 head 必须重新启动 swarm 并给出新判断。
-> - [ ] <执行规程中的合并或追加规则，加上 `playbooks/shipping.md` 中的 patch-id 规则。>
->
-> ### 每条真实运行通道的启动步骤
->
-> 每条真实运行通道都在独立云 VM 上运行 PR 当前提交，通过 `cursor-team-kit` 的 `control-ui` 或 `control-cli` 操作。
->
-> - [ ] `git fetch origin <head-branch> && git checkout <head SHA>`。
-> - [ ] <启动后端与操作界面，等待就绪。>
-> - [ ] <只能通过操作 skill 的命令输入，说明只读诊断手段。>
-> - [ ] 把所有截图保存为 `/tmp/swarm-<pr-id>/worker-<n>/<slug>.png`，在报告中返回路径。
->
-> ## <用动词短语说明任务>（<PR id>）
->
-> **依赖。** <PR ID，或无。>
->
-> **文件。**
->
-> - [ ] 编辑 `<path>`。
-> - [ ] 创建 `<path>`。
-> - [ ] 删除 `<path>`。
->
-> **实现。**
->
-> - [ ] <一项改动，明确符号和文件。>
->
-> **可观察结果。**
->
-> - [ ] <一个可观察结果，给出准确日志行或屏幕状态。>
->
-> **验证，unit。** 仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证。
->
-> - [ ] <测试文件及新增 case。> 运行 `<command>`。
->
-> **验证，live。** 仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证。按启动步骤，在 PR 当前提交上用 `grok-4.6-fast-xhigh` 运行十条通道。
->
-> - [ ] 通道 1，对照主干的回归通道。在主干和 head 运行 <同一个关键场景>。主干没有该功能时，记录事实，并检查 <diff 新增行为和用户等待的最终状态>。保存 `<slug>.png`。满足 <判定条件> 时通过。
-> - [ ] 通道 2，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
-> - [ ] 通道 3，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
-> - [ ] 通道 4，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
-> - [ ] 通道 5，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
-> - [ ] 通道 6，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
-> - [ ] 通道 7，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
-> - [ ] 通道 8，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
-> - [ ] 通道 9，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
-> - [ ] 通道 10，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
->
-> **验证，perf。** 仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证。
->
-> - [ ] 指标。<主干和 head 两边都测什么。主干没有功能时，还要说明 diff 新增的工作，以及用户等待的端到端状态。>
-> - [ ] 测量方法。<在主干和 head 交错运行的命令或流程，两边都必须产出指标。>
-> - [ ] 基准。先记录主干的 <数值>。
-> - [ ] 规则。<head 对比主干的规则及明确失败阈值。场景不同时，给 diff 新增工作及用户可见的最终状态设置绝对预算，不能使用无效比值。>
->
-> **人工评审关卡。** 合并前由操作者评审。
->
-> - [ ] 把通道 <n> 的截图复制到 `<media path>/<pr-id>-review-<slug>.png`。
-> - [ ] 在一台通道 VM 上录制 30 至 60 秒的视频，展示改动，保存为 `<media path>/<pr-id>-review.mp4`。
-> - [ ] 在对话中发出截图和视频，到可合并状态就停止，等待操作者点击确认。
->
-> **合并。**
->
-> - [ ] 主 agent 对准确 head SHA 给出通过判断。
-> - [ ] Bugbot 评论处理完成。
-> - [ ] 判断之后已 rebase 到当前主干，patch-id 未变。
-> - [ ] <负责者 squash-merge 自己的 PR；或主 agent 将其追加到基线分支 PR 栈，由操作者自底向上合入。>
->
-> ## 结束项目
->
-> - [ ] 上述所有检查项都有证据，且已勾选。
-> - [ ] 向操作者提供执行规程要求的报告。
->
-> ## 附录 A，原型证据
->
-> <每个已由原型回答的问题，附分支、SHA 和产物链接；列出仍未证明的问题。>
->
-> ## 附录 B，未采用的方案
->
-> <每个比较过的方案及未采用原因。>
->
-> ## 附录 C，风险
->
-> <每项风险、在哪个 PR 引入，以及负责者需要关注什么。>
->
-> ## 附录 D，链接与阅读清单
->
-> <修改前要读的文档。哪些 PR 使用 `pstack/skills/how/SKILL.md` 和 `pstack/skills/interrogate/SKILL.md`。按 `pstack/skills/show-me-your-work/SKILL.md` 留下过程记录。>
-> ````
+````markdown
+# <项目计划>执行计划
+
+<十行以内，说明改了什么、面向谁、项目要落实的规则，以及按顺序排列的 PR ID。>
+
+## 如何阅读本计划
+
+每个勾选框是一项工作单元，必须说明什么证据支持勾选。嵌套项是上级检查项的子步骤。只有证据实际存在时才勾选，例如文件、日志行、截图、测试运行结果或 SHA。正文是操作指南，附录用于解释与记录。
+
+本项目执行 `pstack/skills/poteto-mode/playbooks/<execution playbook>.md`。<谁负责合并，哪些 PR ID 属于操作者负责、到可合并状态就停下的项目。>
+
+仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证。
+
+## 项目检查清单
+
+### 准备启动项目
+
+- [ ] 向操作者说明执行协议和本计划，然后停止。只有操作者明确表示开始，才进入执行。
+- [ ] 操作者同意后，用以下准确文字设置 `/goal`：“<计划路径、按顺序排列的 PR ID、验证规则、谁负责合并，以及完成条件。>”
+- [ ] 项目开始时，从主干读取以下文件；每个 tick 都重新读取。
+  - [ ] `git show origin/main:pstack/skills/poteto-mode/playbooks/<execution playbook>.md`
+  - [ ] `git show origin/main:pstack/skills/swarm/SKILL.md`
+  - [ ] `git show origin/main:<control skill path>`
+  - [ ] `git show origin/main:pstack/skills/poteto-mode/playbooks/opening-a-pr.md`
+  - [ ] `git show origin/main:pstack/skills/<each other leaf skill the program uses>`
+- [ ] 设置每 30 分钟一次的审计 tick。本地会话使用真实终端中的 `/loop`；云端主 agent 使用 cloud-sleeper 唤醒链。绝不能仅凭记忆维持周期。
+- [ ] 逐字使用以下 tick 提示词：“从主干重新读取执行规程和已设置的 /goal。在本次 tick 中对照两者审计执行情况并纠正偏离。探测每条活跃通道，只根据实际副作用判断进展。立即停止卡住的通道并派出替代者。随后无论有没有变化，都在对话中向操作者发送状态，包含 PR、负责者、状态、head SHA 的队列表，自上个 tick 以来的判断、已合并内容、未关闭的人工检查关卡，以及阻碍。”
+- [ ] 操作者要求 hold 或 stand-down 时，立即向每个负责者发送禁止一切写入的指令。
+
+### 启动负责者
+
+- [ ] 每个 PR 启动一个负责者，授予执行规程规定的完整生命周期职责。
+- [ ] 遵循以下依赖图。依赖项必须等父 PR 合并后再开始；执行规程采用 PR 栈时，则以父分支为基线。
+  - [ ] <PR id> 和 <PR id> 独立且先开始，两者都从 `main` 创建分支。
+  - [ ] <PR id> 在 <PR id> 之后。
+- [ ] 遵守文件边界。<PR ID 或类别> 只能改动 `<glob>`。
+- [ ] 遵守人工评审要求。<PR IDs> 会改变交互，必须在合并前等待操作者在对话中查看截图和视频。
+
+### 每个 PR 的操作流程
+
+- [ ] 一次性确定代码托管平台。默认用 `gh`；如果 `command -v origin` 成功，且 Origin 能解析仓库，则所有 PR 操作都用 `origin pr`。任何回退到 `gh` 的情况都要记录。绝不能把 `gt` 设为必需工具。
+- [ ] 创建准备评审的正式 PR，不能是 draft。按已确定的平台使用 `origin pr create --status open --base <base-branch>` 或 `gh pr create --base <base-branch>`。PR 栈中的子 PR 以父分支为目标。
+- [ ] 面向 PR 的推送前，运行一次仓库 lint 和 typecheck，推送时启用 hooks。
+- [ ] 每次提交前运行 `/deslop`，评审前运行 `/no-comments`。
+- [ ] 按 `../references/bugbot-triage.md` 处理每条 Bugbot 和安全评审评论。
+- [ ] 开始 babysit 前 rebase 到当前主干，报告可合并状态前再做一次。
+
+### 每个 PR 的判断与合并
+
+- [ ] 在达到可合并状态的准确 head SHA 上，按 `pstack/skills/swarm/SKILL.md` 运行 swarm。设置一条检查关卡通道、PR 的 **Verify, live** 块规定的十条真实运行通道、**Verify, perf** 块规定的性能通道，以及一条阅读 diff 和证据记录、不轻信 PR 正文的审计通道。
+- [ ] 所有通道都为 `PASS` 才算通过。发现问题交回负责者。新的 head 必须重新启动 swarm 并给出新判断。
+- [ ] <执行规程中的合并或追加规则，加上 `playbooks/shipping.md` 中的 patch-id 规则。>
+
+### 每条真实运行通道的启动步骤
+
+每条真实运行通道都在独立云 VM 上运行 PR 当前提交，通过 `cursor-team-kit` 的 `control-ui` 或 `control-cli` 操作。
+
+- [ ] `git fetch origin <head-branch> && git checkout <head SHA>`。
+- [ ] <启动后端与操作界面，等待就绪。>
+- [ ] <只能通过操作 skill 的命令输入，说明只读诊断手段。>
+- [ ] 把所有截图保存为 `/tmp/swarm-<pr-id>/worker-<n>/<slug>.png`，在报告中返回路径。
+
+## <用动词短语说明任务>（<PR id>）
+
+**依赖。** <PR ID，或无。>
+
+**文件。**
+
+- [ ] 编辑 `<path>`。
+- [ ] 创建 `<path>`。
+- [ ] 删除 `<path>`。
+
+**实现。**
+
+- [ ] <一项改动，明确符号和文件。>
+
+**可观察结果。**
+
+- [ ] <一个可观察结果，给出准确日志行或屏幕状态。>
+
+**验证，unit。** 仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证。
+
+- [ ] <测试文件及新增 case。> 运行 `<command>`。
+
+**验证，live。** 仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证。按启动步骤，在 PR 当前提交上用 `grok-4.6-fast-xhigh` 运行十条通道。
+
+- [ ] 通道 1，对照主干的回归通道。在主干和 head 运行 <同一个关键场景>。主干没有该功能时，记录事实，并检查 <diff 新增行为和用户等待的最终状态>。保存 `<slug>.png`。满足 <判定条件> 时通过。
+- [ ] 通道 2，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
+- [ ] 通道 3，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
+- [ ] 通道 4，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
+- [ ] 通道 5，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
+- [ ] 通道 6，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
+- [ ] 通道 7，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
+- [ ] 通道 8，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
+- [ ] 通道 9，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
+- [ ] 通道 10，<场景。> 保存 `<slug>.png`。满足 <判定条件> 时通过。
+
+**验证，perf。** 仅有测试不足以构成充分验证。只有 unit、live 和 perf 三类检查全部勾选，PR 才算经过验证。
+
+- [ ] 指标。<主干和 head 两边都测什么。主干没有功能时，还要说明 diff 新增的工作，以及用户等待的端到端状态。>
+- [ ] 测量方法。<在主干和 head 交错运行的命令或流程，两边都必须产出指标。>
+- [ ] 基准。先记录主干的 <数值>。
+- [ ] 规则。<head 对比主干的规则及明确失败阈值。场景不同时，给 diff 新增工作及用户可见的最终状态设置绝对预算，不能使用无效比值。>
+
+**人工评审关卡。** 合并前由操作者评审。
+
+- [ ] 把通道 <n> 的截图复制到 `<media path>/<pr-id>-review-<slug>.png`。
+- [ ] 在一台通道 VM 上录制 30 至 60 秒的视频，展示改动，保存为 `<media path>/<pr-id>-review.mp4`。
+- [ ] 在对话中发出截图和视频，到可合并状态就停止，等待操作者点击确认。
+
+**合并。**
+
+- [ ] 主 agent 对准确 head SHA 给出通过判断。
+- [ ] Bugbot 评论处理完成。
+- [ ] 判断之后已 rebase 到当前主干，patch-id 未变。
+- [ ] <负责者 squash-merge 自己的 PR；或主 agent 将其追加到基线分支 PR 栈，由操作者自底向上合入。>
+
+## 结束项目
+
+- [ ] 上述所有检查项都有证据，且已勾选。
+- [ ] 向操作者提供执行规程要求的报告。
+
+## 附录 A，原型证据
+
+<每个已由原型回答的问题，附分支、SHA 和产物链接；列出仍未证明的问题。>
+
+## 附录 B，未采用的方案
+
+<每个比较过的方案及未采用原因。>
+
+## 附录 C，风险
+
+<每项风险、在哪个 PR 引入，以及负责者需要关注什么。>
+
+## 附录 D，链接与阅读清单
+
+<修改前要读的文档。哪些 PR 使用 `pstack/skills/how/SKILL.md` 和 `pstack/skills/interrogate/SKILL.md`。按 `pstack/skills/show-me-your-work/SKILL.md` 留下过程记录。>
+````
 
 <!-- en:6 -->
 **Reply:** the plan path, the PR ids with their dependencies and the review-gated set, what the prototypes proved and what stays unproven, and the check script's output.
 
 <!-- zh:6 -->
-> **中文**
->
-> **回复：** 计划路径、各 PR ID 及其依赖、需要人工评审的 PR 集合、原型证明了什么及哪些仍未证明，以及检查脚本的输出。
+**回复：** 计划路径、各 PR ID 及其依赖、需要人工评审的 PR 集合、原型证明了什么及哪些仍未证明，以及检查脚本的输出。

@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-outcome-oriented-execution
-> description: "用于有明确阶段边界的计划性重写和迁移。收敛到目标架构，不要用一次性兼容代码维持平滑的中间状态。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-outcome-oriented-execution
+description: "用于有明确阶段边界的计划性重写和迁移。收敛到目标架构，不要用一次性兼容代码维持平滑的中间状态。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Outcome-Oriented Execution
 
 <!-- zh:1 -->
-> **中文**
->
-> # 面向结果的执行
+**面向结果的执行**
 
 <!-- en:2 -->
 Optimize for the intended, verifiable end state rather than preserving smooth intermediate states.
 
 <!-- zh:2 -->
-> **中文**
->
-> 围绕预期且可验证的最终状态优化，而不是维持平滑的中间状态。
+围绕预期且可验证的最终状态优化，而不是维持平滑的中间状态。
 
 <!-- en:3 -->
 **Why:** Keeping every intermediate step fully stable often creates temporary compatibility code that becomes long-lived debt. Converge on the target architecture and prove correctness at explicit verification boundaries.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：** 让每个中间步骤都保持完全稳定，往往会产生临时兼容代码，最终变成长期债务。应收敛到目标架构，并在明确的验证边界证明正确性。
+**原因：** 让每个中间步骤都保持完全稳定，往往会产生临时兼容代码，最终变成长期债务。应收敛到目标架构，并在明确的验证边界证明正确性。
 
 <!-- en:4 -->
 **Core rule:**
@@ -52,12 +44,10 @@ Optimize for the intended, verifiable end state rather than preserving smooth in
 - Always run final verification before declaring done
 
 <!-- zh:4 -->
-> **中文**
->
-> **核心规则：**
-> - 优先保证最终状态的完整性，而不是过渡期间的稳定性。
-> - 中间状态出现破坏可以接受，但必须经过规划、范围明确且可逆。
-> - 宣布完成之前，始终运行最终验证。
+**核心规则：**
+- 优先保证最终状态的完整性，而不是过渡期间的稳定性。
+- 中间状态出现破坏可以接受，但必须经过规划、范围明确且可逆。
+- 宣布完成之前，始终运行最终验证。
 
 <!-- en:5 -->
 **Guardrails:**
@@ -67,10 +57,8 @@ Optimize for the intended, verifiable end state rather than preserving smooth in
 - Require full static and runtime verification at plan completion
 
 <!-- zh:5 -->
-> **中文**
->
-> **约束：**
-> - 仅用于有明确阶段边界的计划性重写和迁移。
-> - 声明哪些位置允许暂时失效。
-> - 迁移期间，对当前正在修改的部分保留能有效发现问题的检查。
-> - 计划完成时，必须进行完整的静态验证与运行时验证。
+**约束：**
+- 仅用于有明确阶段边界的计划性重写和迁移。
+- 声明哪些位置允许暂时失效。
+- 迁移期间，对当前正在修改的部分保留能有效发现问题的检查。
+- 计划完成时，必须进行完整的静态验证与运行时验证。

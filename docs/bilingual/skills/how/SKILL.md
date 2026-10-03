@@ -11,89 +11,66 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: how
-> description: "用于“X 如何工作”、修改前的代码走读，以及位置、职责和分层问题（“这应放在哪里”“哪个包负责它”“这是合适的层吗”）。解释子系统架构、运行流程和帮助新成员理解的心智模型。动机问题使用 why。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: how
+description: "用于“X 如何工作”、修改前的代码走读，以及位置、职责和分层问题（“这应放在哪里”“哪个包负责它”“这是合适的层吗”）。解释子系统架构、运行流程和帮助新成员理解的心智模型。动机问题使用 why。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # How
-
-<!-- zh:1 -->
-> **中文**
->
-> # How（中文）
 
 <!-- en:2 -->
 Explore the codebase to answer "how does X work?" questions. Produce architectural explanations at the level of a senior engineer onboarding onto a subsystem, enough to build a working mental model, not so much that it reads like annotated source code.
 
 <!-- zh:2 -->
-> **中文**
->
-> 探索代码库，回答“X 如何工作？”。按资深工程师熟悉新子系统所需的深度解释架构：足以形成可用的心智模型，但不要写成逐行源码注释。
+探索代码库，回答“X 如何工作？”。按资深工程师熟悉新子系统所需的深度解释架构：足以形成可用的心智模型，但不要写成逐行源码注释。
 
 <!-- en:3 -->
 ## Step 1. Assess Complexity
 
 <!-- zh:3 -->
-> **中文**
->
-> ## 步骤 1：评估复杂度
+**步骤 1：评估复杂度**
 
 <!-- en:4 -->
 If the scope is ambiguous, state your interpretation and explore. The user can redirect.
 
 <!-- zh:4 -->
-> **中文**
->
-> 范围不明确时，说明你的理解并开始探索，用户可以调整方向。
+范围不明确时，说明你的理解并开始探索，用户可以调整方向。
 
 <!-- en:5 -->
 - **Simple** (a single module, a small utility, a narrow question such as "how does function X work"): no explorers. One explainer explores and explains in a single pass. Go to Step 2b.
 - **Complex** (a subsystem spanning multiple files or services, a cross-cutting feature, a full architectural overview): spawn parallel explorers first, then hand off to the explainer. Go to Step 2a.
 
 <!-- zh:5 -->
-> **中文**
->
-> - **简单**（单个模块、小工具，或“函数 X 如何工作”之类的窄问题）：不启动探索者。由一名解释者一次完成探索和解释。转到步骤 2b。
-> - **复杂**（跨多个文件或服务的子系统、横切功能、完整架构概览）：先启动并行探索者，再交给解释者。转到步骤 2a。
+- **简单**（单个模块、小工具，或“函数 X 如何工作”之类的窄问题）：不启动探索者。由一名解释者一次完成探索和解释。转到步骤 2b。
+- **复杂**（跨多个文件或服务的子系统、横切功能、完整架构概览）：先启动并行探索者，再交给解释者。转到步骤 2a。
 
 <!-- en:6 -->
 When in doubt, take the simple path.
 
 <!-- zh:6 -->
-> **中文**
->
-> 拿不准时，选择简单流程。
+拿不准时，选择简单流程。
 
 <!-- en:7 -->
 **Other harnesses.** The spawns in this skill use Cursor's `Task` tool. In another harness, use its subagent tool: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Keep the prompt and the model. Drop parameters your tool doesn't have. If your harness has no subagent tool, as in Pi without an extension, run each role yourself, one after another. "Your configured ... model" means the matching line in the pstack settings file. Cursor loads `~/.cursor/rules/pstack-models.mdc` automatically. In other harnesses, read `~/.agents/pstack-models.md` if it exists.
 
 <!-- zh:7 -->
-> **中文**
->
-> **其他 agent 运行环境。**本 skill 的启动步骤使用 Cursor 的 `Task` 工具。其他环境请用对应 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示词和模型不变，去掉工具不支持的参数。环境没有 subagent 工具时，例如无扩展的 Pi，自行依次执行各角色。“你配置的……模型”指 pstack 设置文件中的对应条目。Cursor 会自动加载 `~/.cursor/rules/pstack-models.mdc`；其他环境中，若存在 `~/.agents/pstack-models.md`，请读取它。
+**其他 agent 运行环境。**本 skill 的启动步骤使用 Cursor 的 `Task` 工具。其他环境请用对应 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示词和模型不变，去掉工具不支持的参数。环境没有 subagent 工具时，例如无扩展的 Pi，自行依次执行各角色。“你配置的……模型”指 pstack 设置文件中的对应条目。Cursor 会自动加载 `~/.cursor/rules/pstack-models.mdc`；其他环境中，若存在 `~/.agents/pstack-models.md`，请读取它。
 
 <!-- en:8 -->
 ## Step 2a. Explore (complex questions only)
 
 <!-- zh:8 -->
-> **中文**
->
-> ## 步骤 2a：探索（仅复杂问题）
+**步骤 2a：探索（仅复杂问题）**
 
 <!-- en:9 -->
 Decompose the question into 2 to 4 exploration angles, each a distinct slice of the subsystem. Spawn all explorers in a single message:
 
 <!-- zh:9 -->
-> **中文**
->
-> 将问题拆成 2 至 4 个探索角度，每个角度覆盖子系统的不同部分。在同一条消息中启动所有探索者：
+将问题拆成 2 至 4 个探索角度，每个角度覆盖子系统的不同部分。在同一条消息中启动所有探索者：
 
 <!-- en:10 -->
 - `subagent_type`: `generalPurpose`
@@ -101,35 +78,27 @@ Decompose the question into 2 to 4 exploration angles, each a distinct slice of 
 - `readonly`: `true`
 
 <!-- zh:10 -->
-> **中文**
->
-> - `subagent_type`：`generalPurpose`
-> - `model`：你配置的 how-explorer 模型（默认 `grok-4.6-fast-xhigh`）
-> - `readonly`：`true`
+- `subagent_type`：`generalPurpose`
+- `model`：你配置的 how-explorer 模型（默认 `grok-4.6-fast-xhigh`）
+- `readonly`：`true`
 
 <!-- en:11 -->
 Each explorer gets the prompt in `references/explorer-prompt.md` with its angle filled in. Then go to Step 3.
 
 <!-- zh:11 -->
-> **中文**
->
-> 每名探索者收到 `references/explorer-prompt.md` 的提示词，并填入对应角度。然后转到步骤 3。
+每名探索者收到 `references/explorer-prompt.md` 的提示词，并填入对应角度。然后转到步骤 3。
 
 <!-- en:12 -->
 ## Step 2b. Direct Explain (simple questions)
 
 <!-- zh:12 -->
-> **中文**
->
-> ## 步骤 2b：直接解释（简单问题）
+**步骤 2b：直接解释（简单问题）**
 
 <!-- en:13 -->
 Spawn one Task subagent that explores and explains in one pass:
 
 <!-- zh:13 -->
-> **中文**
->
-> 启动一名 Task subagent，一次完成探索和解释：
+启动一名 Task subagent，一次完成探索和解释：
 
 <!-- en:14 -->
 - `subagent_type`: `generalPurpose`
@@ -137,35 +106,27 @@ Spawn one Task subagent that explores and explains in one pass:
 - `readonly`: `true`
 
 <!-- zh:14 -->
-> **中文**
->
-> - `subagent_type`：`generalPurpose`
-> - `model`：你配置的 how-explainer 模型（默认 `claude-fable-5-1-thinking-max`）
-> - `readonly`：`true`
+- `subagent_type`：`generalPurpose`
+- `model`：你配置的 how-explainer 模型（默认 `claude-fable-5-1-thinking-max`）
+- `readonly`：`true`
 
 <!-- en:15 -->
 Build its prompt from `references/explainer-prompt.md` without the explorer-findings section. Go to Step 4.
 
 <!-- zh:15 -->
-> **中文**
->
-> 基于 `references/explainer-prompt.md` 构建提示词，省略探索者发现章节。转到步骤 4。
+基于 `references/explainer-prompt.md` 构建提示词，省略探索者发现章节。转到步骤 4。
 
 <!-- en:16 -->
 ## Step 3. Synthesize (complex questions only)
 
 <!-- zh:16 -->
-> **中文**
->
-> ## 步骤 3：综合（仅复杂问题）
+**步骤 3：综合（仅复杂问题）**
 
 <!-- en:17 -->
 Once all explorers have returned, spawn one Task subagent to synthesize their findings into one explanation:
 
 <!-- zh:17 -->
-> **中文**
->
-> 所有探索者返回后，启动一名 Task subagent，将发现综合为一份解释：
+所有探索者返回后，启动一名 Task subagent，将发现综合为一份解释：
 
 <!-- en:18 -->
 - `subagent_type`: `generalPurpose`
@@ -173,48 +134,36 @@ Once all explorers have returned, spawn one Task subagent to synthesize their fi
 - `readonly`: `true`
 
 <!-- zh:18 -->
-> **中文**
->
-> - `subagent_type`：`generalPurpose`
-> - `model`：你配置的 how-explainer 模型（默认 `claude-fable-5-1-thinking-max`）
-> - `readonly`：`true`
+- `subagent_type`：`generalPurpose`
+- `model`：你配置的 how-explainer 模型（默认 `claude-fable-5-1-thinking-max`）
+- `readonly`：`true`
 
 <!-- en:19 -->
 Build its prompt from `references/explainer-prompt.md` with every explorer's findings filled in.
 
 <!-- zh:19 -->
-> **中文**
->
-> 基于 `references/explainer-prompt.md` 构建提示词，填入每名探索者的发现。
+基于 `references/explainer-prompt.md` 构建提示词，填入每名探索者的发现。
 
 <!-- en:20 -->
 ## Step 4. Present
 
 <!-- zh:20 -->
-> **中文**
->
-> ## 步骤 4：呈现
+**步骤 4：呈现**
 
 <!-- en:21 -->
 Present the explainer's output to the user. Light edits for clarity or context from the conversation are fine. Do not substantially rewrite it.
 
 <!-- zh:21 -->
-> **中文**
->
-> 向用户呈现解释者的输出。可以轻微调整以提高清晰度或补充对话上下文，不要大幅重写。
+向用户呈现解释者的输出。可以轻微调整以提高清晰度或补充对话上下文，不要大幅重写。
 
 <!-- en:22 -->
 ## Output Format
 
 <!-- zh:22 -->
-> **中文**
->
-> ## 输出格式
+**输出格式**
 
 <!-- en:23 -->
 The explanation uses the sections defined in `references/explainer-prompt.md`, dropping any that do not apply: Overview, Key Concepts, How It Works, Where Things Live, Gotchas.
 
 <!-- zh:23 -->
-> **中文**
->
-> 解释采用 `references/explainer-prompt.md` 定义的章节，删去不适用部分：概览、核心概念、工作原理、代码位置、注意事项。
+解释采用 `references/explainer-prompt.md` 定义的章节，删去不适用部分：概览、核心概念、工作原理、代码位置、注意事项。

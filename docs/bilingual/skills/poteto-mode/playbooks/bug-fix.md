@@ -5,25 +5,19 @@
 ### Bug fix
 
 <!-- zh:0 -->
-> **中文**
->
-> ### Bug 修复
+**Bug 修复**
 
 <!-- en:1 -->
 **You own this task. Plan, review, verify.** Delegate investigation and the fix to subagents, stay in the lead.
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责此任务。规划、评审、验证。** 把调查和修复委派给 subagent，自己始终牵头。
+**你负责此任务。规划、评审、验证。** 把调查和修复委派给 subagent，自己始终牵头。
 
 <!-- en:2 -->
 Be scientific. Every shipped line traces to runtime evidence. Belt-and-suspenders that "might help" is a hypothesis, not a fix. It does not ship. When evidence refutes a hypothesis, revert what it motivated. The smallest change the evidence justifies ships, nothing more.
 
 <!-- zh:2 -->
-> **中文**
->
-> 采用科学方法。交付的每行代码都能追溯到运行时证据。“可能有帮助”的双重防护只是一个假设，不是修复，不能交付。证据否定假设，就回滚由它推动的改动。只交付证据支持的最小改动。
+采用科学方法。交付的每行代码都能追溯到运行时证据。“可能有帮助”的双重防护只是一个假设，不是修复，不能交付。证据否定假设，就回滚由它推动的改动。只交付证据支持的最小改动。
 
 <!-- en:3 -->
 1. Reproduce it yourself on the matching surface via the control skill (Non-negotiables). Don't hand the repro to the user. A debug or instrumentation protocol that says to ask the user does not override this. You drive the instrumented runtime. Ask the user only with a stated, specific reason the control surface cannot reach the target, and only after driving it as far as it goes. Won't reproduce directly, force it: synthesize the trigger, tighten conditions, or instrument until it fires.
@@ -35,28 +29,22 @@ Be scientific. Every shipped line traces to runtime evidence. Belt-and-suspender
 6. Run **Opening a PR**.
 
 <!-- zh:3 -->
-> **中文**
->
-> 1. 用操作与验证 skill，在相同界面亲自复现（见不可妥协要求）。不要把复现交给用户。调试或观测协议要求问用户，也不能覆盖此要求。由你操作带观测的运行环境。只有明确说明为什么操作界面无法触及目标，并已尽力操作到可达范围，才能问用户。直接复现不了，就合成触发条件、收紧条件，或加观测，直到发生。
-> 2. 用二分思路定位原因。提出候选假设，不断排除直到只剩一个。先用 `how` 理解受影响子系统，用 **why** 查询回归历史，为假设提供依据。每轮选择能切掉最多剩余问题空间的分割，取得运行时证据并排除。程序状态不清时，加观测或日志，在代码运行时读取，不猜。长时间或顽固调查用 Cursor `/loop` 推进。在第 3 步 architect/interrogate 并行分派前，先用运行时证据确认留下的*机制*。
-> 3. 规划修复。跨函数边界就先用 `architect`。用配置的 bug-fix 模型（默认 `grok-4.6-fast-xhigh`）按具体范围委派实现，亲自审阅 diff。
-> 4. 在同一界面验证。原始复现现在应通过。“无法确定”或界面不匹配不算通过，必须标明。单元测试证明分支行为，不证明 bug 消失。
-> 5. 安排提交，使 Git 历史中失败复现先于修复。bug 有低成本本地测试路径时，见 **tdd** skill 的先失败测试节奏；测试昂贵、重集成或不清晰就跳过。
->    这是 **sequence-verifiable-units** 原则 skill 的典型做法：先失败测试，再在其上修复。
-> 6. 运行 **Opening a PR**。
+1. 用操作与验证 skill，在相同界面亲自复现（见不可妥协要求）。不要把复现交给用户。调试或观测协议要求问用户，也不能覆盖此要求。由你操作带观测的运行环境。只有明确说明为什么操作界面无法触及目标，并已尽力操作到可达范围，才能问用户。直接复现不了，就合成触发条件、收紧条件，或加观测，直到发生。
+2. 用二分思路定位原因。提出候选假设，不断排除直到只剩一个。先用 `how` 理解受影响子系统，用 **why** 查询回归历史，为假设提供依据。每轮选择能切掉最多剩余问题空间的分割，取得运行时证据并排除。程序状态不清时，加观测或日志，在代码运行时读取，不猜。长时间或顽固调查用 Cursor `/loop` 推进。在第 3 步 architect/interrogate 并行分派前，先用运行时证据确认留下的*机制*。
+3. 规划修复。跨函数边界就先用 `architect`。用配置的 bug-fix 模型（默认 `grok-4.6-fast-xhigh`）按具体范围委派实现，亲自审阅 diff。
+4. 在同一界面验证。原始复现现在应通过。“无法确定”或界面不匹配不算通过，必须标明。单元测试证明分支行为，不证明 bug 消失。
+5. 安排提交，使 Git 历史中失败复现先于修复。bug 有低成本本地测试路径时，见 **tdd** skill 的先失败测试节奏；测试昂贵、重集成或不清晰就跳过。
+   这是 **sequence-verifiable-units** 原则 skill 的典型做法：先失败测试，再在其上修复。
+6. 运行 **Opening a PR**。
 
 <!-- en:4 -->
 Investigation fans out `how` + `why` as parallel subagents.
 
 <!-- zh:4 -->
-> **中文**
->
-> 调查阶段将 `how` + `why` 交给并行 subagent。
+调查阶段将 `how` + `why` 交给并行 subagent。
 
 <!-- en:5 -->
 **Reply:** what was broken, root cause, fix, how you verified. Paste failing-then-passing repro output verbatim.
 
 <!-- zh:5 -->
-> **中文**
->
-> **回复：** 哪里坏了、根因、修复、如何验证。原样粘贴先失败后通过的复现输出。
+**回复：** 哪里坏了、根因、修复、如何验证。原样粘贴先失败后通过的复现输出。

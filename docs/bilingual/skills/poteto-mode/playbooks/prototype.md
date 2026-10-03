@@ -5,25 +5,19 @@
 ### Prototype
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 原型
+**原型**
 
 <!-- en:1 -->
 **You own the design decision, not the code. The prototype is a throwaway instrument. The real build follows Feature.**
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责设计决策，而不是代码。原型是一次性验证工具，真正的构建遵循 Feature。**
+**你负责设计决策，而不是代码。原型是一次性验证工具，真正的构建遵循 Feature。**
 
 <!-- en:2 -->
 The one playbook where the Laziness Protocol's "smallest change" and the verification bar invert. Speed over polish, code quality does not matter, no planning. The rigor is in picking the right design cheaply. Propose variations the user didn't ask for, throw an approach away and try another.
 
 <!-- zh:2 -->
-> **中文**
->
-> 这是唯一一个会反转 Laziness Protocol“最小改动”原则及验证标准的 playbook。速度优先于打磨，不要求代码质量，也不做规划。严谨之处在于以低成本选对设计。提出用户没有要求的变体，放弃一个方案，再尝试另一个。
+这是唯一一个会反转 Laziness Protocol“最小改动”原则及验证标准的 playbook。速度优先于打磨，不要求代码质量，也不做规划。严谨之处在于以低成本选对设计。提出用户没有要求的变体，放弃一个方案，再尝试另一个。
 
 <!-- en:3 -->
 1. Scope the decision the prototype exists to make: which layout, which interaction, which density, or for an empirical fork which behavior, timing, or approach. No decision means no prototype. Route to Feature.
@@ -34,19 +28,15 @@ The one playbook where the Laziness Protocol's "smallest change" and the verific
 6. Present alternatives, tradeoffs, and a recommendation. The output is the decision plus the throwaway artifact, not shippable code. Hand the chosen direction to **Feature** (or `architect` for the shape) for the real build.
 
 <!-- zh:3 -->
-> **中文**
->
-> 1. 明确原型要解决的决策：哪种布局、交互、信息密度；如果是需要实测的方案分歧，则明确哪种行为、时序或实现方式。没有决策就不需要原型，转到 Feature。
-> 2. 设计方向开放时收集参考。搜索既有案例，整理包含主题、配色和布局的 moodboard，让用户在构建前选择方向。方向已确定时跳过。
-> 3. 在独立临时目录里构建可丢弃的原型，与生产源码分开。视觉决策用原生 HTML/CSS/JS，或能呈现想法的最轻技术栈、CDN 依赖和支持热更新的开发服务器。行为或时序决策用能实际验证问题的最小脚本。不使用生产框架、不写测试、不做抽象。
-> 4. 比较方案时，用一个切换器（按钮或按键）展示全部方案，并标注每个变体。这是低成本实践 **exhaust-the-design-space** 原则 skill。
-> 5. 在匹配的操作界面验证。视觉决策用操作与验证 skill 为每个变体截图，并实际操作交互。行为或时序决策通过记录时序、打印输出或观察渲染来观测待决策事项。这里的测试是观测，而不是断言。
-> 6. 展示候选方案、取舍及建议。产物是决策加可丢弃原型，不是可交付代码。将选定方向交给 **Feature**（或用 `architect` 确定结构）进行真正构建。
+1. 明确原型要解决的决策：哪种布局、交互、信息密度；如果是需要实测的方案分歧，则明确哪种行为、时序或实现方式。没有决策就不需要原型，转到 Feature。
+2. 设计方向开放时收集参考。搜索既有案例，整理包含主题、配色和布局的 moodboard，让用户在构建前选择方向。方向已确定时跳过。
+3. 在独立临时目录里构建可丢弃的原型，与生产源码分开。视觉决策用原生 HTML/CSS/JS，或能呈现想法的最轻技术栈、CDN 依赖和支持热更新的开发服务器。行为或时序决策用能实际验证问题的最小脚本。不使用生产框架、不写测试、不做抽象。
+4. 比较方案时，用一个切换器（按钮或按键）展示全部方案，并标注每个变体。这是低成本实践 **exhaust-the-design-space** 原则 skill。
+5. 在匹配的操作界面验证。视觉决策用操作与验证 skill 为每个变体截图，并实际操作交互。行为或时序决策通过记录时序、打印输出或观察渲染来观测待决策事项。这里的测试是观测，而不是断言。
+6. 展示候选方案、取舍及建议。产物是决策加可丢弃原型，不是可交付代码。将选定方向交给 **Feature**（或用 `architect` 确定结构）进行真正构建。
 
 <!-- en:4 -->
 **Reply:** the variants explored, the evidence (screenshots for a visual decision, the observed output or timing for a behavioral one), tradeoffs, your recommendation, and the scratch path. Say plainly that the prototype is throwaway.
 
 <!-- zh:4 -->
-> **中文**
->
-> **回复：** 探索过的变体、证据（视觉决策用截图，行为决策用观测输出或时序）、取舍、建议和临时路径。明确说明原型可以丢弃。
+**回复：** 探索过的变体、证据（视觉决策用截图，行为决策用观测输出或时序）、取舍、建议和临时路径。明确说明原型可以丢弃。

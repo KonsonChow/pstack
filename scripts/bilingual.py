@@ -82,17 +82,23 @@ def render(source, data):
     for i, block in enumerate(data['blocks']):
         en = block['en'].rstrip()
         zh = block['zh'].rstrip()
-        if zh.strip() == en.strip() and re.match(r'^#{1,6} ', zh):
-            zh += '（中文）'
+        identical = zh.strip() == en.strip()
+        image = re.fullmatch(r'!\[([^\]\n]*)\]\(([^\n]+)\)', en)
+        translated_image = re.fullmatch(r'!\[([^\]\n]*)\]\(([^\n]+)\)', zh)
+        if image and translated_image and image[2] == translated_image[2]:
+            alt = image[1] if identical else f'{image[1]} / {translated_image[1]}'
+            en = f'![{alt}]({image[2]})'
+            identical = True
         if i == 0 and en.startswith('---\n'):
             en = '```yaml\n' + en + '\n```'
             zh = '```yaml\n' + zh + '\n```'
-        # Keep one collapsible container, with its English and Chinese labels.
         zh = re.sub(r'</?details>', '', zh)
         zh = re.sub(r'<summary>(.*?)</summary>', r'**\1**', zh)
+        if re.match(r'^#{1,6} ', en):
+            zh = re.sub(r'^#{1,6} (.+)', r'**\1**', zh, count=1)
         result.append(f'<!-- en:{i} -->\n' + local_links(en, source, dest) + '\n\n')
-        if zh.strip():
-            result.append(f'<!-- zh:{i} -->\n> **中文**\n>\n' + '\n'.join('> ' + line if line else '>' for line in local_links(zh, source, dest).splitlines()) + '\n\n')
+        if zh.strip() and not identical:
+            result.append(f'<!-- zh:{i} -->\n' + local_links(zh, source, dest) + '\n\n')
     return ''.join(result).rstrip() + '\n'
 
 

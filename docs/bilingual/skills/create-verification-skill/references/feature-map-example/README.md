@@ -5,25 +5,19 @@
 # Notes verification map
 
 <!-- zh:0 -->
-> **中文**
->
-> # Notes 功能验证清单
+**Notes 功能验证清单**
 
 <!-- en:1 -->
 This directory is the maintained source for verifying the user-facing behavior of Notes. Read the index before driving the app, then use the matching feature file as the recipe.
 
 <!-- zh:1 -->
-> **中文**
->
-> 本目录是验证 Notes 用户可见行为的持续维护来源。操作应用前先读索引，再以匹配的功能文件为操作步骤。
+本目录是验证 Notes 用户可见行为的持续维护来源。操作应用前先读索引，再以匹配的功能文件为操作步骤。
 
 <!-- en:2 -->
 ## Baseline preconditions
 
 <!-- zh:2 -->
-> **中文**
->
-> ## 基准前置条件
+**基准前置条件**
 
 <!-- en:3 -->
 - Launch Notes at `http://127.0.0.1:4173` with a disposable data directory.
@@ -34,22 +28,18 @@ This directory is the maintained source for verifying the user-facing behavior o
 - Never drive an instance that was not started by this verification run.
 
 <!-- zh:3 -->
-> **中文**
->
-> - 使用可丢弃数据目录，在 `http://127.0.0.1:4173` 启动 Notes。
-> - 设置 `NOTES_DATA_DIR=/tmp/notes-verify-$RUN_ID`，避免并行运行共享状态。
-> - 准备标题为 `Quarterly plan` 和 `Grocery list` 的笔记。
-> - 将 `control-notes` 和 `notes` CLI 放入 `PATH`。
-> - 运行 `control-notes doctor`，要求 URL、数据目录和构建版本符合预期。
-> - 绝不能操作并非由本次验证运行启动的实例。
+- 使用可丢弃数据目录，在 `http://127.0.0.1:4173` 启动 Notes。
+- 设置 `NOTES_DATA_DIR=/tmp/notes-verify-$RUN_ID`，避免并行运行共享状态。
+- 准备标题为 `Quarterly plan` 和 `Grocery list` 的笔记。
+- 将 `control-notes` 和 `notes` CLI 放入 `PATH`。
+- 运行 `control-notes doctor`，要求 URL、数据目录和构建版本符合预期。
+- 绝不能操作并非由本次验证运行启动的实例。
 
 <!-- en:4 -->
 ## Driving conventions
 
 <!-- zh:4 -->
-> **中文**
->
-> ## 操作约定
+**操作约定**
 
 <!-- en:5 -->
 - Start every recipe from the baseline state unless its preconditions say otherwise.
@@ -60,22 +50,18 @@ This directory is the maintained source for verifying the user-facing behavior o
 - Restore seeded data after a mutation. Do not remove proof artifacts during cleanup.
 
 <!-- zh:5 -->
-> **中文**
->
-> - 每组操作都从基准状态开始，除非其前置条件另有说明。
-> - 优先使用 ARIA role 和可访问名称，而非 CSS 选择器或 DOM 位置。
-> - 每条命令均按字面执行。引号中的名称和 flag 保持不变。
-> - 浏览器操作通过 `control-notes browser` 运行。
-> - 终端操作通过 `control-notes cli -- <command>` 运行。
-> - 修改之后恢复预置数据。清理时不要删除证明产物。
+- 每组操作都从基准状态开始，除非其前置条件另有说明。
+- 优先使用 ARIA role 和可访问名称，而非 CSS 选择器或 DOM 位置。
+- 每条命令均按字面执行。引号中的名称和 flag 保持不变。
+- 浏览器操作通过 `control-notes browser` 运行。
+- 终端操作通过 `control-notes cli -- <command>` 运行。
+- 修改之后恢复预置数据。清理时不要删除证明产物。
 
 <!-- en:6 -->
 ## Proof and skip reporting
 
 <!-- zh:6 -->
-> **中文**
->
-> ## 证明与跳过报告
+**证明与跳过报告**
 
 <!-- en:7 -->
 - Capture the user action and the resulting state, not only the final screen.
@@ -87,31 +73,25 @@ This directory is the maintained source for verifying the user-facing behavior o
 - Do not report a skipped entry point as verified through a different path.
 
 <!-- zh:7 -->
-> **中文**
->
-> - 记录用户操作和结果状态，而不只是最终画面。
-> - UI 证明包含 ARIA 快照及可见应用身份的截图。
-> - CLI 证明包含命令、stdout、stderr 和退出码。
-> - 修改证明包含通过第二个只读视图观察到的存储值。
-> - 每个产物都记录功能 ID 和使用的入口。
-> - 路径不可达时，报告尝试过的命令及未满足的前置条件。
-> - 不要把跳过的入口说成已通过另一条路径验证。
+- 记录用户操作和结果状态，而不只是最终画面。
+- UI 证明包含 ARIA 快照及可见应用身份的截图。
+- CLI 证明包含命令、stdout、stderr 和退出码。
+- 修改证明包含通过第二个只读视图观察到的存储值。
+- 每个产物都记录功能 ID 和使用的入口。
+- 路径不可达时，报告尝试过的命令及未满足的前置条件。
+- 不要把跳过的入口说成已通过另一条路径验证。
 
 <!-- en:8 -->
 ## Feature entry contract
 
 <!-- zh:8 -->
-> **中文**
->
-> ## 功能条目约定
+**功能条目约定**
 
 <!-- en:9 -->
 Each feature file starts with an H1 title and one paragraph describing the user-visible behavior. It then uses exactly four H2 sections in this order.
 
 <!-- zh:9 -->
-> **中文**
->
-> 每个功能文件以 H1 标题和描述用户可见行为的一段文字开始，然后严格按以下顺序使用四个 H2 章节。
+每个功能文件以 H1 标题和描述用户可见行为的一段文字开始，然后严格按以下顺序使用四个 H2 章节。
 
 <!-- en:10 -->
 1. `Sub-features` lists short IDs with one line for each behavior.
@@ -120,35 +100,27 @@ Each feature file starts with an H1 title and one paragraph describing the user-
 4. `Gotchas` lists traps that can waste or invalidate a verification run.
 
 <!-- zh:10 -->
-> **中文**
->
-> 1. `Sub-features` 用短 ID 列出子功能，每种行为一行。
-> 2. `How to get to it (user POV)` 列出所有用户入口。
-> 3. `Driving it with <harness>` 以 `Preconditions:` 开始，使用带标签的列表，将每个用户动作对应到准确命令和可观察结果。
-> 4. `Gotchas` 列出可能浪费验证时间或使结果无效的陷阱。
+1. `Sub-features` 用短 ID 列出子功能，每种行为一行。
+2. `How to get to it (user POV)` 列出所有用户入口。
+3. `Driving it with <harness>` 以 `Preconditions:` 开始，使用带标签的列表，将每个用户动作对应到准确命令和可观察结果。
+4. `Gotchas` 列出可能浪费验证时间或使结果无效的陷阱。
 
 <!-- en:11 -->
 Keep implementation details out of the map. Name only user paths, stable handles, required state, commands, and observable proof.
 
 <!-- zh:11 -->
-> **中文**
->
-> 验证清单不要包含实现细节。只写用户路径、稳定的操作标识、必需状态、命令和可观察证据。
+验证清单不要包含实现细节。只写用户路径、稳定的操作标识、必需状态、命令和可观察证据。
 
 <!-- en:12 -->
 ## Features
 
 <!-- zh:12 -->
-> **中文**
->
-> ## 功能
+**功能**
 
 <!-- en:13 -->
 - [Create a note](./create-note.md) covers browser and CLI creation, cancellation, persistence, and cleanup.
 - [Search notes](./search.md) covers toolbar, keyboard, and CLI search with matching, empty, and clear states.
 
 <!-- zh:13 -->
-> **中文**
->
-> - [创建笔记](./create-note.md) 覆盖浏览器和 CLI 创建、取消、持久化及清理。
-> - [搜索笔记](./search.md) 覆盖工具栏、键盘和 CLI 搜索，以及匹配、空结果和清除状态。
+- [创建笔记](./create-note.md) 覆盖浏览器和 CLI 创建、取消、持久化及清理。
+- [搜索笔记](./search.md) 覆盖工具栏、键盘和 CLI 搜索，以及匹配、空结果和清除状态。

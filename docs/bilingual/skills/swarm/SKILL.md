@@ -11,47 +11,34 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: swarm
-> description: "分派 N 个并行 worker，等待全部结束并收齐结果，返回一份报告。用于 /swarm、swarm this，或并行覆盖、竞速、连续检验和探索。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: swarm
+description: "分派 N 个并行 worker，等待全部结束并收齐结果，返回一份报告。用于 /swarm、swarm this，或并行覆盖、竞速、连续检验和探索。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Swarm
-
-<!-- zh:1 -->
-> **中文**
->
-> # Swarm（中文）
 
 <!-- en:2 -->
 Fan out N parallel cloud workers. They may cover separate slices, race the same brief, or mix both. The parent waits, aggregates, and returns one report.
 
 <!-- zh:2 -->
-> **中文**
->
-> 分派 N 个并行 cloud worker。它们可以分别覆盖不同部分、对同一任务竞速，或混合两者。主 agent 等待、汇总，返回一份报告。
+分派 N 个并行 cloud worker。它们可以分别覆盖不同部分、对同一任务竞速，或混合两者。主 agent 等待、汇总，返回一份报告。
 
 <!-- en:3 -->
 ## Start
 
 <!-- zh:3 -->
-> **中文**
->
-> ## 开始
+**开始**
 
 <!-- en:4 -->
 Open a todolist with one entry per phase before launching anything.
 
 <!-- zh:4 -->
-> **中文**
->
-> 启动任何任务前，创建待办列表，每阶段一项。
+启动任何任务前，创建待办列表，每阶段一项。
 
 <!-- en:5 -->
 1. Frame
@@ -60,20 +47,16 @@ Open a todolist with one entry per phase before launching anything.
 4. Report
 
 <!-- zh:5 -->
-> **中文**
->
-> 1. 界定任务
-> 2. 并行分派
-> 3. 汇总
-> 4. 报告
+1. 界定任务
+2. 并行分派
+3. 汇总
+4. 报告
 
 <!-- en:6 -->
 ## Phase A: Frame
 
 <!-- zh:6 -->
-> **中文**
->
-> ## 阶段 A：界定任务
+**阶段 A：界定任务**
 
 <!-- en:7 -->
 1. State the done predicate and the artifact or report the swarm must return.
@@ -83,98 +66,74 @@ Open a todolist with one entry per phase before launching anything.
 5. Give each worker its own writable output when it writes.
 
 <!-- zh:7 -->
-> **中文**
->
-> 1. 明确完成判定条件，以及 swarm 必须返回的产物或报告。
-> 2. 选择分工形态：分区、N 个 worker 同任务竞速，或混合。竞速或混合时，启动前声明 `first pass`、`rank all` 或 `best-of`。
-> 3. N 取用户给定值，或根据形态推导。N 是总 worker 数，不是云端并发上限。
-> 4. pstack 设置文件存在时，从 `swarm workers` 选择模型（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他环境为 `~/.agents/pstack-models.md`）；否则用 `grok-4.6-fast-xhigh`。模型竞速时，提前注明各组模型。
-> 5. worker 需要写入时，各自分配独立可写输出。
+1. 明确完成判定条件，以及 swarm 必须返回的产物或报告。
+2. 选择分工形态：分区、N 个 worker 同任务竞速，或混合。竞速或混合时，启动前声明 `first pass`、`rank all` 或 `best-of`。
+3. N 取用户给定值，或根据形态推导。N 是总 worker 数，不是云端并发上限。
+4. pstack 设置文件存在时，从 `swarm workers` 选择模型（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他环境为 `~/.agents/pstack-models.md`）；否则用 `grok-4.6-fast-xhigh`。模型竞速时，提前注明各组模型。
+5. worker 需要写入时，各自分配独立可写输出。
 
 <!-- en:8 -->
 ## Phase B: Fan out
 
 <!-- zh:8 -->
-> **中文**
->
-> ## 阶段 B：并行分派
+**阶段 B：并行分派**
 
 <!-- en:9 -->
 Spawn all N workers in one message with `subagent_type: generalPurpose`, `environment: "cloud"`, `run_in_background: true`, and the configured model. Use `environment: "local"` only when the worker needs access to something on the user's computer.
 
 <!-- zh:9 -->
-> **中文**
->
-> 在一条消息中启动所有 N 个 worker，设置 `subagent_type: generalPurpose`、`environment: "cloud"`、`run_in_background: true` 和配置的模型。只有需要访问用户电脑内容时，才用 `environment: "local"`。
+在一条消息中启动所有 N 个 worker，设置 `subagent_type: generalPurpose`、`environment: "cloud"`、`run_in_background: true` 和配置的模型。只有需要访问用户电脑内容时，才用 `environment: "local"`。
 
 <!-- en:10 -->
 When a worker must start from a non-default pushed branch, pass `cloud_base_branch`.
 
 <!-- zh:10 -->
-> **中文**
->
-> worker 需要从非默认的已推送分支开始时，传 `cloud_base_branch`。
+worker 需要从非默认的已推送分支开始时，传 `cloud_base_branch`。
 
 <!-- en:11 -->
 **Other harnesses.** These parameters belong to Cursor's `Task` tool, and `environment: "cloud"` runs a Cursor cloud agent. In another harness, use its subagent tool: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Workers run locally there, so give each one its own worktree or output path. Keep the brief and the model. Drop parameters your tool doesn't have. If your harness has no subagent tool, as in Pi without an extension, run the workers yourself, one after another.
 
 <!-- zh:11 -->
-> **中文**
->
-> **其他运行环境。** 这些参数属于 Cursor `Task`，`environment: "cloud"` 会运行 Cursor cloud agent。其他环境使用自身 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。这些环境中 worker 在本地运行，因此各自分配 worktree 或输出路径。保留任务说明与模型，删去不支持参数。如果没有 subagent 工具，例如未装扩展的 Pi，则按顺序亲自执行各 worker 工作。
+**其他运行环境。** 这些参数属于 Cursor `Task`，`environment: "cloud"` 会运行 Cursor cloud agent。其他环境使用自身 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。这些环境中 worker 在本地运行，因此各自分配 worktree 或输出路径。保留任务说明与模型，删去不支持参数。如果没有 subagent 工具，例如未装扩展的 Pi，则按顺序亲自执行各 worker 工作。
 
 <!-- en:12 -->
 Every brief stands alone. Include the goal, scope, exact slice or race arm, how to verify, and what to report. Reports use `PASS`, `ISSUES`, or `BLOCKED` with evidence.
 
 <!-- zh:12 -->
-> **中文**
->
-> 每份任务说明都须独立完整，包括目标、范围、具体分区或竞速组、验证方式和报告要求。报告使用 `PASS`、`ISSUES`、`BLOCKED`，并附证据。
+每份任务说明都须独立完整，包括目标、范围、具体分区或竞速组、验证方式和报告要求。报告使用 `PASS`、`ISSUES`、`BLOCKED`，并附证据。
 
 <!-- en:13 -->
 If a worker drops out, proceed with N-1 and note it.
 
 <!-- zh:13 -->
-> **中文**
->
-> 有 worker 退出时，以 N-1 继续，并说明。
+有 worker 退出时，以 N-1 继续，并说明。
 
 <!-- en:14 -->
 ## Phase C: Aggregate
 
 <!-- zh:14 -->
-> **中文**
->
-> ## 阶段 C：汇总
+**阶段 C：汇总**
 
 <!-- en:15 -->
 Read the terminal results. For coverage, every required slice needs a result. For a race, apply the selection rule declared up front. Use first pass, rank all, or best-of. Do not paste raw worker dumps.
 
 <!-- zh:15 -->
-> **中文**
->
-> 读取终态结果。覆盖任务中每个必需分区都要有结果；竞速按预先声明的 `first pass`、`rank all` 或 `best-of` 规则选择。不要粘贴原始 worker 大段输出。
+读取终态结果。覆盖任务中每个必需分区都要有结果；竞速按预先声明的 `first pass`、`rank all` 或 `best-of` 规则选择。不要粘贴原始 worker 大段输出。
 
 <!-- en:16 -->
 Keep a compact result table, one-line evidenced issues, and explicit gaps or dropouts.
 
 <!-- zh:16 -->
-> **中文**
->
-> 保留简洁结果表、附证据的单行问题，以及明确的缺口或退出情况。
+保留简洁结果表、附证据的单行问题，以及明确的缺口或退出情况。
 
 <!-- en:17 -->
 ## Phase D: Report
 
 <!-- zh:17 -->
-> **中文**
->
-> ## 阶段 D：报告
+**阶段 D：报告**
 
 <!-- en:18 -->
 Return one consolidated in-chat report with the table, issue one-liners, gaps or dropouts, and the race rule when used.
 
 <!-- zh:18 -->
-> **中文**
->
-> 在聊天中返回一份汇总报告，包括表格、单行问题、缺口或退出情况，以及适用时的竞速规则。
+在聊天中返回一份汇总报告，包括表格、单行问题、缺口或退出情况，以及适用时的竞速规则。

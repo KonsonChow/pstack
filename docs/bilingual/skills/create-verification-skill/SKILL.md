@@ -11,47 +11,37 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: create-verification-skill
-> description: "生成项目本地的验证 skill，像用户一样操作真实应用，适用于任何语言、框架或平台。用于 /create-verification-skill、“为这个仓库创建操作 skill”，或项目尚无脚本化方法证明 UI、CLI 或服务行为时。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: create-verification-skill
+description: "生成项目本地的验证 skill，像用户一样操作真实应用，适用于任何语言、框架或平台。用于 /create-verification-skill、“为这个仓库创建操作 skill”，或项目尚无脚本化方法证明 UI、CLI 或服务行为时。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Create a verification skill
 
 <!-- zh:1 -->
-> **中文**
->
-> # 创建验证 skill
+**创建验证 skill**
 
 <!-- en:2 -->
 Every serious project needs a scripted way to drive the real app and prove behavior: launch it, exercise a feature the way a user would, and capture evidence. This skill generates that as a project-local skill (`<skills>/verify-<app>/`) tailored to the repo. `<skills>` is your harness's project skill folder: `.cursor/skills/` in Cursor, `.claude/skills/` in Claude Code, `.pi/skills/` in Pi, `.agents/skills/` in Codex, OpenCode, and others. If the repo already keeps skills in one of these, use that one. You write the generator's output for the next agent, not for a human: it will be read cold, mid-task, by an agent that has never seen the app.
 
 <!-- zh:2 -->
-> **中文**
->
-> 每个正式项目都需要脚本化方式操作真实应用并证明行为：启动它、像用户一样执行功能、捕获证据。本 skill 生成针对仓库定制的项目本地 skill（`<skills>/verify-<app>/`）。`<skills>` 是 agent 运行环境的项目 skill 目录：Cursor 的 `.cursor/skills/`、Claude Code 的 `.claude/skills/`、Pi 的 `.pi/skills/`，以及 Codex、OpenCode 等的 `.agents/skills/`。仓库已经采用其中一种时，沿用它。生成内容写给下一个 agent，而不是人：它会在任务途中，被从未见过应用的 agent 从零阅读。
+每个正式项目都需要脚本化方式操作真实应用并证明行为：启动它、像用户一样执行功能、捕获证据。本 skill 生成针对仓库定制的项目本地 skill（`<skills>/verify-<app>/`）。`<skills>` 是 agent 运行环境的项目 skill 目录：Cursor 的 `.cursor/skills/`、Claude Code 的 `.claude/skills/`、Pi 的 `.pi/skills/`，以及 Codex、OpenCode 等的 `.agents/skills/`。仓库已经采用其中一种时，沿用它。生成内容写给下一个 agent，而不是人：它会在任务途中，被从未见过应用的 agent 从零阅读。
 
 <!-- en:3 -->
 ## 1. Interview the repo, not the user
 
 <!-- zh:3 -->
-> **中文**
->
-> ## 1. 向仓库求证，而不是向用户提问
+**1. 向仓库求证，而不是向用户提问**
 
 <!-- en:4 -->
 Answer these from the codebase and only ask the user what you cannot observe:
 
 <!-- zh:4 -->
-> **中文**
->
-> 从代码库回答以下问题，只问用户无法观察到的内容：
+从代码库回答以下问题，只问用户无法观察到的内容：
 
 <!-- en:5 -->
 - **Surface:** what does a user actually touch? A web UI, a CLI/TUI, a desktop app, an API, a mobile app, a library? A repo can have several; pick the primary one and note the rest.
@@ -61,37 +51,29 @@ Answer these from the codebase and only ask the user what you cannot observe:
 - **Isolate:** can two instances run side by side (ports, data dirs, profiles)? If not, say so in the generated skill: refusing to double-drive a shared instance beats corrupting the user's session.
 
 <!-- zh:5 -->
-> **中文**
->
-> - **交互界面：**用户实际接触什么？Web UI、CLI/TUI、桌面应用、API、移动应用还是库？仓库可能有多个；选主要的，并注明其他界面。
-> - **运行：**应用如何本地启动？优先使用仓库自己记录的开发命令（package scripts、Makefile、README 快速开始）。记录端口、环境变量、种子数据和认证。
-> - **操作：**agent 如何程序化交互？优先用已有运行工具——Playwright/Cypress 规范、expect 脚本、PTY 辅助工具、可用 curl 访问的端点、调试端口。之后再考虑通用方案：Web 和 Electron 用浏览器/CDP，CLI/TUI 用 tmux/PTY，服务用普通 HTTP。
-> - **观察：**能捕获什么证据？截图、终端记录、响应体、日志、退出码、数据库状态。
-> - **隔离：**两个实例能否并排运行（端口、数据目录、profile）？不能时，在生成 skill 中说明：拒绝同时操作共享实例，比破坏用户会话更好。
+- **交互界面：**用户实际接触什么？Web UI、CLI/TUI、桌面应用、API、移动应用还是库？仓库可能有多个；选主要的，并注明其他界面。
+- **运行：**应用如何本地启动？优先使用仓库自己记录的开发命令（package scripts、Makefile、README 快速开始）。记录端口、环境变量、种子数据和认证。
+- **操作：**agent 如何程序化交互？优先用已有运行工具——Playwright/Cypress 规范、expect 脚本、PTY 辅助工具、可用 curl 访问的端点、调试端口。之后再考虑通用方案：Web 和 Electron 用浏览器/CDP，CLI/TUI 用 tmux/PTY，服务用普通 HTTP。
+- **观察：**能捕获什么证据？截图、终端记录、响应体、日志、退出码、数据库状态。
+- **隔离：**两个实例能否并排运行（端口、数据目录、profile）？不能时，在生成 skill 中说明：拒绝同时操作共享实例，比破坏用户会话更好。
 
 <!-- en:6 -->
 If the checkout doesn't build or start as-is, fix that first (or report it precisely) before generating; a skill written against a broken base teaches wrong steps. When an irrelevant missing asset blocks startup (a static dir the API never serves, a sample config), the generated skill may create it, clearly marked as verification scaffolding, and remove it in cleanup.
 
 <!-- zh:6 -->
-> **中文**
->
-> 检出代码不能直接构建或启动时，先修复（或准确报告），再生成 skill；针对损坏基础写出的 skill 会教错步骤。无关的缺失资源阻碍启动时（例如 API 从不提供的静态目录、示例配置），生成的 skill 可以创建它，但必须明确标为验证基础结构，并在清理时删除。
+检出代码不能直接构建或启动时，先修复（或准确报告），再生成 skill；针对损坏基础写出的 skill 会教错步骤。无关的缺失资源阻碍启动时（例如 API 从不提供的静态目录、示例配置），生成的 skill 可以创建它，但必须明确标为验证基础结构，并在清理时删除。
 
 <!-- en:7 -->
 ## 2. Generate the skill
 
 <!-- zh:7 -->
-> **中文**
->
-> ## 2. 生成 skill
+**2. 生成 skill**
 
 <!-- en:8 -->
 Write `<skills>/verify-<app>/SKILL.md` with YAML frontmatter (`name: verify-<app>` and a `description` that names the app, the surface, and when to reach for it — without frontmatter the skill never registers) and these sections, each grounded in what the interview actually found (no placeholders left):
 
 <!-- zh:8 -->
-> **中文**
->
-> 编写 `<skills>/verify-<app>/SKILL.md`，加入 YAML frontmatter（`name: verify-<app>` 和说明应用、交互界面及适用时机的 `description`——没有 frontmatter，skill 不会注册），并包含下列章节。每节都必须基于实际调查结果，不留占位符：
+编写 `<skills>/verify-<app>/SKILL.md`，加入 YAML frontmatter（`name: verify-<app>` 和说明应用、交互界面及适用时机的 `description`——没有 frontmatter，skill 不会注册），并包含下列章节。每节都必须基于实际调查结果，不留占位符：
 
 <!-- en:9 -->
 - **Launch:** the exact command that starts the app for verification, and how to tell it's ready (a log line, a port answering, a prompt). Include teardown. For a short-lived CLI or TUI there is no server to keep alive: launch means build the binary (or install deps) once, then start each drive in its own isolated PTY or tmux session.
@@ -102,59 +84,45 @@ Write `<skills>/verify-<app>/SKILL.md` with YAML frontmatter (`name: verify-<app
 - **Helpers:** any script the skill ships is executable and its invocation is shown in the skill body. A helper the reader has to reverse-engineer is not a helper.
 
 <!-- zh:9 -->
-> **中文**
->
-> - **启动：**验证时启动应用的准确命令，以及就绪判断方法（日志行、端口响应、提示符）。包含停止方式。短生命周期 CLI 或 TUI 无需维持服务器：启动指先构建二进制（或安装依赖）一次，然后每次操作都在独立 PTY 或 tmux 会话中启动。
-> - **健康检查：**一个只读检查，回答“这个实例值得继续操作吗？”——进程存活、版本或构建正确、端口由我们拥有、认证有效。任何异常时 agent 都先运行它。
-> - **操作：**使用仓库真实选择器和命令的操作方案，不用示例。优先选择稳定标识（ARIA label、data 属性、提示符文本、路由路径），而不是坐标和 Tab 顺序。
-> - **证据：**捕获什么、保存到哪里。说明证明标准：执行真实用户路径，不调用内部 setter 或仅测试用端点；捕获动作及其结果状态，不仅最终画面；验证副作用（写文件、插入行、发送消息）和可见结果；仅在生产边界已隔离外部系统时使用 mock。安全路径是 dry-run 或测试模式时，通过观察文件、网络、Git ref，验证它实际跳过了什么，不只相信名字：有些 dry-run 仍访问网络或打开浏览器。
-> - **清理：**如何停止本次运行创建的实例。绝不按进程名杀进程，只停止自己启动的。清理删除实例和临时状态，绝不删除证据；证据产物在 skill 指定位置保留。
-> - **辅助脚本：**skill 附带的脚本必须可执行，并在正文中展示调用方法。需要读者逆向理解的脚本算不上辅助工具。
+- **启动：**验证时启动应用的准确命令，以及就绪判断方法（日志行、端口响应、提示符）。包含停止方式。短生命周期 CLI 或 TUI 无需维持服务器：启动指先构建二进制（或安装依赖）一次，然后每次操作都在独立 PTY 或 tmux 会话中启动。
+- **健康检查：**一个只读检查，回答“这个实例值得继续操作吗？”——进程存活、版本或构建正确、端口由我们拥有、认证有效。任何异常时 agent 都先运行它。
+- **操作：**使用仓库真实选择器和命令的操作方案，不用示例。优先选择稳定标识（ARIA label、data 属性、提示符文本、路由路径），而不是坐标和 Tab 顺序。
+- **证据：**捕获什么、保存到哪里。说明证明标准：执行真实用户路径，不调用内部 setter 或仅测试用端点；捕获动作及其结果状态，不仅最终画面；验证副作用（写文件、插入行、发送消息）和可见结果；仅在生产边界已隔离外部系统时使用 mock。安全路径是 dry-run 或测试模式时，通过观察文件、网络、Git ref，验证它实际跳过了什么，不只相信名字：有些 dry-run 仍访问网络或打开浏览器。
+- **清理：**如何停止本次运行创建的实例。绝不按进程名杀进程，只停止自己启动的。清理删除实例和临时状态，绝不删除证据；证据产物在 skill 指定位置保留。
+- **辅助脚本：**skill 附带的脚本必须可执行，并在正文中展示调用方法。需要读者逆向理解的脚本算不上辅助工具。
 
 <!-- en:10 -->
 ## 3. Seed the feature map
 
 <!-- zh:10 -->
-> **中文**
->
-> ## 3. 建立初始功能验证清单
+**3. 建立初始功能验证清单**
 
 <!-- en:11 -->
 Create `<skills>/verify-<app>/features/README.md` plus one file per user-facing feature you can identify (aim for the top 3-5 to start, from routes, commands, menus, or docs). Follow the shape in [`references/feature-map-example/`](references/feature-map-example/), with a README index and one file per feature. Each file answers, from the user's point of view: what the feature is, how to reach it, how to drive it with the harness, and what observable end state proves it works. The four H2s are `Sub-features`, `How to get to it (user POV)`, `Driving it with <harness>`, and `Gotchas`. The map is the repo's maintained verification source; a proof that drives one convenient entry point is incomplete when the map lists others.
 
 <!-- zh:11 -->
-> **中文**
->
-> 创建 `<skills>/verify-<app>/features/README.md`，以及每个可识别用户功能的独立文件（先从路由、命令、菜单或文档中选最重要的 3 至 5 个）。遵循 [`references/feature-map-example/`](references/feature-map-example/) 的结构：README 索引加每功能一个文件。每个文件从用户视角回答：功能是什么、如何进入、如何用操作工具执行、什么可观察的终态证明有效。四个 H2 为 `Sub-features`、`How to get to it (user POV)`、`Driving it with <harness>`、`Gotchas`。清单是仓库持续维护的验证来源；清单列有其他入口时，仅操作一个方便入口的证明不完整。
+创建 `<skills>/verify-<app>/features/README.md`，以及每个可识别用户功能的独立文件（先从路由、命令、菜单或文档中选最重要的 3 至 5 个）。遵循 [`references/feature-map-example/`](references/feature-map-example/) 的结构：README 索引加每功能一个文件。每个文件从用户视角回答：功能是什么、如何进入、如何用操作工具执行、什么可观察的终态证明有效。四个 H2 为 `Sub-features`、`How to get to it (user POV)`、`Driving it with <harness>`、`Gotchas`。清单是仓库持续维护的验证来源；清单列有其他入口时，仅操作一个方便入口的证明不完整。
 
 <!-- en:12 -->
 ## 4. Prove the generated skill before handing it over
 
 <!-- zh:12 -->
-> **中文**
->
-> ## 4. 交付前证明生成的 skill 有效
+**4. 交付前证明生成的 skill 有效**
 
 <!-- en:13 -->
 Run its own instructions end to end once: launch, doctor, drive ONE mapped feature (one is enough; the map exists so later runs can cover the rest), capture evidence, clean up. After cleanup, confirm the evidence still exists at the named location — a cleanup that eats the proof fails this step. Fix what fails, and run the generated cleanup after every failed iteration too, so broken attempts don't strand processes and ports. A generated skill that was never executed is a draft, not a deliverable.
 
 <!-- zh:13 -->
-> **中文**
->
-> 按它自己的指令完整运行一次：启动、健康检查、操作一项已列功能（一项足够；清单留给后续运行覆盖其余功能）、捕获证据、清理。清理后确认指定位置的证据仍存在；清理吃掉证据就不算通过。修复失败项，每次失败迭代后也运行生成的清理步骤，避免残留进程和端口。从未执行过的生成 skill 只是草稿，不是可交付物。
+按它自己的指令完整运行一次：启动、健康检查、操作一项已列功能（一项足够；清单留给后续运行覆盖其余功能）、捕获证据、清理。清理后确认指定位置的证据仍存在；清理吃掉证据就不算通过。修复失败项，每次失败迭代后也运行生成的清理步骤，避免残留进程和端口。从未执行过的生成 skill 只是草稿，不是可交付物。
 
 <!-- en:14 -->
 ## 5. Offer the maintenance loop
 
 <!-- zh:14 -->
-> **中文**
->
-> ## 5. 提供维护循环
+**5. 提供维护循环**
 
 <!-- en:15 -->
 Point the user at `/maintain-verification-skill` for keeping the map honest as the app changes. Suggest a cadence only if they ask.
 
 <!-- zh:15 -->
-> **中文**
->
-> 让用户知道可用 `/maintain-verification-skill` 在应用变化时保持清单准确。只有用户询问时，才建议执行频率。
+让用户知道可用 `/maintain-verification-skill` 在应用变化时保持清单准确。只有用户询问时，才建议执行频率。

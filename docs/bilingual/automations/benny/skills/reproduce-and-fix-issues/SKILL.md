@@ -11,47 +11,37 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: reproduce-and-fix-issues
-> description: 通过已配置的应用操作适配器复现 Slack 分诊确认的 bug，验证已有修复；只有具备修复前后证据，才创建范围受限的草稿 PR。仅由已配置的 Benny 复现自动化使用。
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: reproduce-and-fix-issues
+description: 通过已配置的应用操作适配器复现 Slack 分诊确认的 bug，验证已有修复；只有具备修复前后证据，才创建范围受限的草稿 PR。仅由已配置的 Benny 复现自动化使用。
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Reproduce and fix issues
 
 <!-- zh:1 -->
-> **中文**
->
-> # 复现并修复问题
+**复现并修复问题**
 
 <!-- en:2 -->
 Wait for a trusted triage marker in the source thread. Reproduce the exact symptom through the target app's real UI. Verify an existing fix when one exists. Attempt a bounded fix only after a confirmed repro.
 
 <!-- zh:2 -->
-> **中文**
->
-> 等待源讨论串中的可信分诊标记。通过目标应用的真实 UI 复现准确的症状。已有修复时先验证现有修复，只有确认复现后才尝试受限修复。
+等待源讨论串中的可信分诊标记。通过目标应用的真实 UI 复现准确的症状。已有修复时先验证现有修复，只有确认复现后才尝试受限修复。
 
 <!-- en:3 -->
 Load the external Benny configuration supplied by the automation. If the config, required actions, control adapter, or completed feature map is missing, fail closed.
 
 <!-- zh:3 -->
-> **中文**
->
-> 加载自动化提供的外部 Benny 配置。缺少配置、必需操作、操作适配器或已填写的功能验证清单时，必须拒绝继续。
+加载自动化提供的外部 Benny 配置。缺少配置、必需操作、操作适配器或已填写的功能验证清单时，必须拒绝继续。
 
 <!-- en:4 -->
 ## Hard safety rules
 
 <!-- zh:4 -->
-> **中文**
->
-> ## 必须遵守的安全规则
+**必须遵守的安全规则**
 
 <!-- en:5 -->
 - Freeze the source channel and root thread coordinates before doing any work.
@@ -74,42 +64,36 @@ Load the external Benny configuration supplied by the automation. If the config,
 - Apply pstack's `principle-sequence-verifiable-units`, `principle-fix-root-causes`, and `principle-prove-it-works` through repro, fix, and verification.
 
 <!-- zh:5 -->
-> **中文**
->
-> - 开始任何工作前，固定源频道与根讨论串坐标。
-> - 绝不能在源频道发顶层消息。
-> - 每次在源讨论串发帖前，先预检根消息。
-> - 只有协调者能向 Slack 发帖。
-> - 被委派的分析 worker 只读，只返回发现或媒体分析记录。
-> - 修复阶段的代码 worker，只有在其运行环境能证明排除了 Slack 凭据及所有 Slack 写操作时才可编辑，否则由协调者编辑。
-> - 每个子任务提示词都必须明确禁止 `SendSlackMessage`、`PostToSlack`、`chat.postMessage` 及其他所有 Slack 写操作。
-> - 绝不能向子任务提供 Slack token、发帖指令、用于发帖的源坐标，或对外汇报权限。
-> - 子任务必须拥有 Slack 写权限才能运行时，不要启动它。
-> - 工具 bot 是证据来源。除非有人明确委派修复工作，否则它们不负责修复。
-> - 必须通过真实 UI 操作，两次观察到准确且能区分正常与异常行为的症状。
-> - 状态检查可以佐证观察，但不得注入或强行制造症状。
-> - 未确认复现，就不能编写修复。
-> - 已有 PR 或 commit 时，转入验证模式，不要在其上另写修复。
-> - 使用 `github.com` 的 PR 链接。
-> - 截图、录屏、日志和 token 不得进入版本控制。
-> - 委派分析时，使用 pstack 的 `principle-guard-the-context-window`。
-> - 在复现、修复和验证全过程中，落实 pstack 的 `principle-sequence-verifiable-units`、`principle-fix-root-causes` 和 `principle-prove-it-works`。
+- 开始任何工作前，固定源频道与根讨论串坐标。
+- 绝不能在源频道发顶层消息。
+- 每次在源讨论串发帖前，先预检根消息。
+- 只有协调者能向 Slack 发帖。
+- 被委派的分析 worker 只读，只返回发现或媒体分析记录。
+- 修复阶段的代码 worker，只有在其运行环境能证明排除了 Slack 凭据及所有 Slack 写操作时才可编辑，否则由协调者编辑。
+- 每个子任务提示词都必须明确禁止 `SendSlackMessage`、`PostToSlack`、`chat.postMessage` 及其他所有 Slack 写操作。
+- 绝不能向子任务提供 Slack token、发帖指令、用于发帖的源坐标，或对外汇报权限。
+- 子任务必须拥有 Slack 写权限才能运行时，不要启动它。
+- 工具 bot 是证据来源。除非有人明确委派修复工作，否则它们不负责修复。
+- 必须通过真实 UI 操作，两次观察到准确且能区分正常与异常行为的症状。
+- 状态检查可以佐证观察，但不得注入或强行制造症状。
+- 未确认复现，就不能编写修复。
+- 已有 PR 或 commit 时，转入验证模式，不要在其上另写修复。
+- 使用 `github.com` 的 PR 链接。
+- 截图、录屏、日志和 token 不得进入版本控制。
+- 委派分析时，使用 pstack 的 `principle-guard-the-context-window`。
+- 在复现、修复和验证全过程中，落实 pstack 的 `principle-sequence-verifiable-units`、`principle-fix-root-causes` 和 `principle-prove-it-works`。
 
 <!-- en:6 -->
 ## 1. Freeze source coordinates
 
 <!-- zh:6 -->
-> **中文**
->
-> ## 1. 固定源坐标
+**1. 固定源坐标**
 
 <!-- en:7 -->
 Before making a work list or delegating:
 
 <!-- zh:7 -->
-> **中文**
->
-> 建立任务列表或委派之前：
+建立任务列表或委派之前：
 
 <!-- en:8 -->
 1. Require the trigger channel to equal the configured source channel.
@@ -120,30 +104,24 @@ Before making a work list or delegating:
 6. Fetch the source permalink.
 
 <!-- zh:8 -->
-> **中文**
->
-> 1. 要求触发频道与已配置的源频道一致。
-> 2. 存在 `trigger.thread_ts` 时，用它设置 `SOURCE_THREAD_TS`；否则使用 `trigger.ts`。
-> 3. 要求 `SOURCE_THREAD_TS` 非空。
-> 4. 把 `SOURCE_CHANNEL_ID` 和 `SOURCE_THREAD_TS` 保存为不可变值。
-> 5. 阅读源讨论串，确认根消息坐标准确匹配。
-> 6. 获取源消息永久链接。
+1. 要求触发频道与已配置的源频道一致。
+2. 存在 `trigger.thread_ts` 时，用它设置 `SOURCE_THREAD_TS`；否则使用 `trigger.ts`。
+3. 要求 `SOURCE_THREAD_TS` 非空。
+4. 把 `SOURCE_CHANNEL_ID` 和 `SOURCE_THREAD_TS` 保存为不可变值。
+5. 阅读源讨论串，确认根消息坐标准确匹配。
+6. 获取源消息永久链接。
 
 <!-- en:9 -->
 Never replace these values with a reply timestamp, operations timestamp, or status-message timestamp.
 
 <!-- zh:9 -->
-> **中文**
->
-> 绝不能用回复时间戳、运维消息时间戳或状态消息时间戳替换这些值。
+绝不能用回复时间戳、运维消息时间戳或状态消息时间戳替换这些值。
 
 <!-- en:10 -->
 Before every source-channel post:
 
 <!-- zh:10 -->
-> **中文**
->
-> 每次向源频道发帖前：
+每次向源频道发帖前：
 
 <!-- en:11 -->
 1. Read the thread by the immutable coordinates.
@@ -152,44 +130,34 @@ Before every source-channel post:
 4. Read the thread again and verify the new message is a reply.
 
 <!-- zh:11 -->
-> **中文**
->
-> 1. 用不可变坐标读取讨论串。
-> 2. 确认父消息仍存在、未删除，且仍属于源频道。
-> 3. 只能用 `channel=SOURCE_CHANNEL_ID` 和 `thread_ts=SOURCE_THREAD_TS` 发送。
-> 4. 再次读取讨论串，确认新消息是回复。
+1. 用不可变坐标读取讨论串。
+2. 确认父消息仍存在、未删除，且仍属于源频道。
+3. 只能用 `channel=SOURCE_CHANNEL_ID` 和 `thread_ts=SOURCE_THREAD_TS` 发送。
+4. 再次读取讨论串，确认新消息是回复。
 
 <!-- en:12 -->
 If any check fails, post nothing. Never retry at the root or in a fallback channel.
 
 <!-- zh:12 -->
-> **中文**
->
-> 任一检查失败，就不发帖。绝不能改为在频道顶层或备用频道重试。
+任一检查失败，就不发帖。绝不能改为在频道顶层或备用频道重试。
 
 <!-- en:13 -->
 ## 2. Wait for the triage contract
 
 <!-- zh:13 -->
-> **中文**
->
-> ## 2. 等待约定的分诊判断
+**2. 等待约定的分诊判断**
 
 <!-- en:14 -->
 Watch the source thread for the configured verdict budget. Stay silent while waiting.
 
 <!-- zh:14 -->
-> **中文**
->
-> 在配置的判断等待预算内监视源讨论串。等待期间保持静默。
+在配置的判断等待预算内监视源讨论串。等待期间保持静默。
 
 <!-- en:15 -->
 Accept a verdict only when:
 
 <!-- zh:15 -->
-> **中文**
->
-> 只有满足以下条件，才接受判断：
+只有满足以下条件，才接受判断：
 
 <!-- en:16 -->
 - Its author matches `slack.triage_identity_user_id`.
@@ -197,19 +165,15 @@ Accept a verdict only when:
 - It contains exactly one configured marker.
 
 <!-- zh:16 -->
-> **中文**
->
-> - 作者匹配 `slack.triage_identity_user_id`。
-> - 消息是 `SOURCE_THREAD_TS` 下的回复。
-> - 恰好包含一个已配置的标记。
+- 作者匹配 `slack.triage_identity_user_id`。
+- 消息是 `SOURCE_THREAD_TS` 下的回复。
+- 恰好包含一个已配置的标记。
 
 <!-- en:17 -->
 Public marker forms:
 
 <!-- zh:17 -->
-> **中文**
->
-> 公开标记格式：
+公开标记格式：
 
 <!-- en:18 -->
 ```text
@@ -220,72 +184,47 @@ Public marker forms:
 [benny:other]
 ```
 
-<!-- zh:18 -->
-> **中文**
->
-> ```text
-> [benny:bug]
-> [benny:bug] tracker=https://tracker.example/issue/123
-> [benny:performance]
-> [benny:performance] tracker=https://tracker.example/issue/123
-> [benny:other]
-> ```
-
 <!-- en:19 -->
 Proceed only for `bug` or `performance`. Capture the optional tracker URL. Stop silently for `other`, a missing verdict, an untrusted author, conflicting markers, or a timeout.
 
 <!-- zh:19 -->
-> **中文**
->
-> 只在标记为 `bug` 或 `performance` 时继续。保存可选的问题跟踪 URL。标记为 `other`、没有判断、作者不可信、标记冲突或超时，都静默停止。
+只在标记为 `bug` 或 `performance` 时继续。保存可选的问题跟踪 URL。标记为 `other`、没有判断、作者不可信、标记冲突或超时，都静默停止。
 
 <!-- en:20 -->
 This marker replaces private bot identities and free-form verdict matching.
 
 <!-- zh:20 -->
-> **中文**
->
-> 这个标记机制取代私有 bot 身份及自由文本判断匹配。
+这个标记机制取代私有 bot 身份及自由文本判断匹配。
 
 <!-- en:21 -->
 ## 3. Apply ownership and fix-artifact gates
 
 <!-- zh:21 -->
-> **中文**
->
-> ## 3. 检查修复归属与已有修复产物
+**3. 检查修复归属与已有修复产物**
 
 <!-- en:22 -->
 Re-read the thread immediately before starting work.
 
 <!-- zh:22 -->
-> **中文**
->
-> 开始工作前立即重新读取讨论串。
+开始工作前立即重新读取讨论串。
 
 <!-- en:23 -->
 ### Someone is explicitly fixing it
 
 <!-- zh:23 -->
-> **中文**
->
-> ### 已有人明确负责修复
+**已有人明确负责修复**
 
 <!-- en:24 -->
 Stop when a person clearly claims the fix, gives a concrete implementation plan, or asks another agent to implement, patch, fix, or open a pull request.
 
 <!-- zh:24 -->
-> **中文**
->
-> 有人明确认领修复、给出具体实现计划，或要求另一 agent 实现、打补丁、修复或创建 PR 时，停止。
+有人明确认领修复、给出具体实现计划，或要求另一 agent 实现、打补丁、修复或创建 PR 时，停止。
 
 <!-- en:25 -->
 Do not treat these as fix ownership:
 
 <!-- zh:25 -->
-> **中文**
->
-> 以下情况不表示有人负责修复：
+以下情况不表示有人负责修复：
 
 <!-- en:26 -->
 - A bot summarizes evidence.
@@ -294,84 +233,64 @@ Do not treat these as fix ownership:
 - A bot posts a cause hypothesis without agreeing to implement it.
 
 <!-- zh:26 -->
-> **中文**
->
-> - bot 总结证据。
-> - 工具查询日志或工单。
-> - 有人让 bot 诊断、解释、检查或复现。
-> - bot 发布根因假设，但未承诺实现修复。
+- bot 总结证据。
+- 工具查询日志或工单。
+- 有人让 bot 诊断、解释、检查或复现。
+- bot 发布根因假设，但未承诺实现修复。
 
 <!-- en:27 -->
 Judge the requested action, not the presence of a bot.
 
 <!-- zh:27 -->
-> **中文**
->
-> 判断请求的实际动作，不要仅凭 bot 出现就认定修复已有人负责。
+判断请求的实际动作，不要仅凭 bot 出现就认定修复已有人负责。
 
 <!-- en:28 -->
 ### A fix artifact already exists
 
 <!-- zh:28 -->
-> **中文**
->
-> ### 已有修复产物
+**已有修复产物**
 
 <!-- en:29 -->
 If an open pull request or merged commit plausibly fixes this report, switch to `references/verify-existing-fix.md`.
 
 <!-- zh:29 -->
-> **中文**
->
-> 如果一个打开的 PR 或已合并 commit 很可能修复了本报告，转到 `references/verify-existing-fix.md`。
+如果一个打开的 PR 或已合并 commit 很可能修复了本报告，转到 `references/verify-existing-fix.md`。
 
 <!-- en:30 -->
 An artifact may come from the thread, tracker issue, repository history, or pull request search. A claim without a commit or pull request is not a fix artifact.
 
 <!-- zh:30 -->
-> **中文**
->
-> 产物可能来自讨论串、问题跟踪 issue、仓库历史或 PR 搜索。没有 commit 或 PR 的口头声明，不算修复产物。
+产物可能来自讨论串、问题跟踪 issue、仓库历史或 PR 搜索。没有 commit 或 PR 的口头声明，不算修复产物。
 
 <!-- en:31 -->
 If a person owns the work but has not produced an artifact, stop. Do not race them.
 
 <!-- zh:31 -->
-> **中文**
->
-> 有人负责但尚未产出修复时，停止，不要与其竞相修改。
+有人负责但尚未产出修复时，停止，不要与其竞相修改。
 
 <!-- en:32 -->
 ## 4. Open an optional operations thread
 
 <!-- zh:32 -->
-> **中文**
->
-> ## 4. 按需创建运维讨论串
+**4. 按需创建运维讨论串**
 
 <!-- en:33 -->
 If `slack.operations_channel_id` is configured, the coordinator may create one root status message there. This is the only allowed root post in the repro workflow.
 
 <!-- zh:33 -->
-> **中文**
->
-> 配置了 `slack.operations_channel_id` 时，协调者可以在该频道创建一条顶层状态消息。这是复现流程唯一允许的顶层发帖。
+配置了 `slack.operations_channel_id` 时，协调者可以在该频道创建一条顶层状态消息。这是复现流程唯一允许的顶层发帖。
 
 <!-- en:34 -->
 Store its coordinates as `OPERATIONS_CHANNEL_ID` and `OPERATIONS_THREAD_TS`. Never confuse them with the source coordinates.
 
 <!-- zh:34 -->
-> **中文**
->
-> 将坐标保存为 `OPERATIONS_CHANNEL_ID` 和 `OPERATIONS_THREAD_TS`，绝不能与源坐标混淆。
+将坐标保存为 `OPERATIONS_CHANNEL_ID` 和 `OPERATIONS_THREAD_TS`，绝不能与源坐标混淆。
 
 <!-- en:35 -->
 Use the configured plain Unicode status strings. Keep status text short:
 
 <!-- zh:35 -->
-> **中文**
->
-> 使用已配置的普通 Unicode 状态字符串，状态文字保持简短：
+使用已配置的普通 Unicode 状态字符串，状态文字保持简短：
 
 <!-- en:36 -->
 - Reproducing
@@ -384,64 +303,50 @@ Use the configured plain Unicode status strings. Keep status text short:
 - Fix did not land
 
 <!-- zh:36 -->
-> **中文**
->
-> - 正在复现
-> - 未能复现
-> - 受阻
-> - 已复现
-> - 正在验证已有修复
-> - 正在尝试受限修复
-> - 已创建草稿 PR
-> - 修复未能交付
+- 正在复现
+- 未能复现
+- 受阻
+- 已复现
+- 正在验证已有修复
+- 正在尝试受限修复
+- 已创建草稿 PR
+- 修复未能交付
 
 <!-- en:37 -->
 Prefer configured Cursor Slack actions. Use `BENNY_SLACK_BOT_TOKEN` only when the user configured it for a narrow missing capability such as editing this one status message. Never expose the token to a worker.
 
 <!-- zh:37 -->
-> **中文**
->
-> 优先使用已配置的 Cursor Slack 操作。只有用户将 `BENNY_SLACK_BOT_TOKEN` 配置为补足特定缺失能力，例如编辑这一条状态消息时，才可使用。绝不能向 worker 暴露 token。
+优先使用已配置的 Cursor Slack 操作。只有用户将 `BENNY_SLACK_BOT_TOKEN` 配置为补足特定缺失能力，例如编辑这一条状态消息时，才可使用。绝不能向 worker 暴露 token。
 
 <!-- en:38 -->
 If no operations channel is configured, keep detailed status in the automation run output. Do not substitute a source-channel root message.
 
 <!-- zh:38 -->
-> **中文**
->
-> 未配置运维频道时，把详细状态留在自动化运行输出中。不能改为在源频道发布顶层消息。
+未配置运维频道时，把详细状态留在自动化运行输出中。不能改为在源频道发布顶层消息。
 
 <!-- en:39 -->
 ## 5. Load and check the control adapter
 
 <!-- zh:39 -->
-> **中文**
->
-> ## 5. 加载并检查操作适配器
+**5. 加载并检查操作适配器**
 
 <!-- en:40 -->
 Read `references/control-adapter.md` and the completed map at `control.feature_map_path`, then invoke the skill named by `control.skill_name`.
 
 <!-- zh:40 -->
-> **中文**
->
-> 阅读 `references/control-adapter.md`，以及 `control.feature_map_path` 指向的已填写清单，再调用 `control.skill_name` 指定的 skill。
+阅读 `references/control-adapter.md`，以及 `control.feature_map_path` 指向的已填写清单，再调用 `control.skill_name` 指定的 skill。
 
 <!-- en:41 -->
 Find the feature-map section that matches the reported user path. Read it before driving the app. If no section covers the feature, mark the run blocked instead of inventing a path or selector.
 
 <!-- zh:41 -->
-> **中文**
->
-> 找到功能验证清单中与报告的用户操作路径匹配的部分，操作应用前先阅读。没有覆盖该功能的章节时，标记执行受阻，不能自行编造路径或 selector。
+找到功能验证清单中与报告的用户操作路径匹配的部分，操作应用前先阅读。没有覆盖该功能的章节时，标记执行受阻，不能自行编造路径或 selector。
 
 <!-- en:42 -->
 Require all seven capabilities:
 
 <!-- zh:42 -->
-> **中文**
->
-> 以下七项能力必须全部具备：
+以下七项能力必须全部具备：
 
 <!-- en:43 -->
 1. Bring up the configured target app and test environment.
@@ -453,47 +358,37 @@ Require all seven capabilities:
 7. Clean up processes, sessions, profiles, and temporary data.
 
 <!-- zh:43 -->
-> **中文**
->
-> 1. 启动已配置的目标应用及测试环境。
-> 2. 进入清单中的功能，并触发文档说明的各类状态。
-> 3. 通过点击、输入、按键、滚动、拖拽、调整尺寸或导航，操作真实 UI。
-> 4. 在不修改状态的前提下检查状态。
-> 5. 采集截图。
-> 6. 开始和停止录屏。
-> 7. 清理进程、会话、profile 及临时数据。
+1. 启动已配置的目标应用及测试环境。
+2. 进入清单中的功能，并触发文档说明的各类状态。
+3. 通过点击、输入、按键、滚动、拖拽、调整尺寸或导航，操作真实 UI。
+4. 在不修改状态的前提下检查状态。
+5. 采集截图。
+6. 开始和停止录屏。
+7. 清理进程、会话、profile 及临时数据。
 
 <!-- en:44 -->
 If the adapter is absent or any required capability is missing, mark the operations status as blocked and stop. Do not pretend a screenshot, unit test, state mutation, or source reading is a UI repro.
 
 <!-- zh:44 -->
-> **中文**
->
-> 适配器不存在或缺少任一必需能力时，将运维状态标为受阻并停止。不能把截图、单元测试、修改状态或读源码伪装成 UI 复现。
+适配器不存在或缺少任一必需能力时，将运维状态标为受阻并停止。不能把截图、单元测试、修改状态或读源码伪装成 UI 复现。
 
 <!-- en:45 -->
 ## 6. Study the report
 
 <!-- zh:45 -->
-> **中文**
->
-> ## 6. 研究报告
+**6. 研究报告**
 
 <!-- en:46 -->
 Read the full source thread and tracker issue when present.
 
 <!-- zh:46 -->
-> **中文**
->
-> 阅读完整源讨论串，以及存在的问题跟踪 issue。
+阅读完整源讨论串，以及存在的问题跟踪 issue。
 
 <!-- en:47 -->
 Collect:
 
 <!-- zh:47 -->
-> **中文**
->
-> 收集以下信息：
+收集以下信息：
 
 <!-- en:48 -->
 - Exact action path
@@ -506,72 +401,56 @@ Collect:
 - Candidate code area
 
 <!-- zh:48 -->
-> **中文**
->
-> - 准确的操作路径
-> - 预期行为
-> - 实际观察到的行为
-> - 两者出现差异的关键状态
-> - 发生频率
-> - 版本、环境及平台
-> - 附件及错误特征
-> - 可能涉及的代码区域
+- 准确的操作路径
+- 预期行为
+- 实际观察到的行为
+- 两者出现差异的关键状态
+- 发生频率
+- 版本、环境及平台
+- 附件及错误特征
+- 可能涉及的代码区域
 
 <!-- en:49 -->
 Inspect screenshots and video. Use read-only parallel workers for code history, test ideas, blast-radius mapping, and media review when useful. Each worker gets a narrow question and the Slack-write prohibition.
 
 <!-- zh:49 -->
-> **中文**
->
-> 检查截图和视频。适合时，用只读并行 worker 检查代码历史、构思测试、分析影响范围和审查媒体。每个 worker 只获得一个范围明确的问题，以及禁止 Slack 写操作的要求。
+检查截图和视频。适合时，用只读并行 worker 检查代码历史、构思测试、分析影响范围和审查媒体。每个 worker 只获得一个范围明确的问题，以及禁止 Slack 写操作的要求。
 
 <!-- en:50 -->
 Use pstack's `how` skill to trace the action through the repository. Use `why` for regression history and defensive code. Form competing cause hypotheses and identify evidence that would separate them.
 
 <!-- zh:50 -->
-> **中文**
->
-> 用 pstack 的 `how` skill 追踪操作在仓库中的实现。涉及回归历史和防御性代码时，用 `why`。提出相互竞争的根因假设，并找出可以区分它们的证据。
+用 pstack 的 `how` skill 追踪操作在仓库中的实现。涉及回归历史和防御性代码时，用 `why`。提出相互竞争的根因假设，并找出可以区分它们的证据。
 
 <!-- en:51 -->
 ## 7. Reproduce
 
 <!-- zh:51 -->
-> **中文**
->
-> ## 7. 复现
+**7. 复现**
 
 <!-- en:52 -->
 Bring up the target app through the control adapter.
 
 <!-- zh:52 -->
-> **中文**
->
-> 通过操作适配器启动目标应用。
+通过操作适配器启动目标应用。
 
 <!-- en:53 -->
 Confirm the correct app, workspace, account, data set, and feature state before acting. Use stable app markers. Do not rely on window order or a familiar title alone.
 
 <!-- zh:53 -->
-> **中文**
->
-> 操作前确认应用、工作区、账号、数据集及功能状态正确。使用稳定的应用标识，不能仅依赖窗口顺序或熟悉的标题。
+操作前确认应用、工作区、账号、数据集及功能状态正确。使用稳定的应用标识，不能仅依赖窗口顺序或熟悉的标题。
 
 <!-- en:54 -->
 Drive the reported path through real UI actions.
 
 <!-- zh:54 -->
-> **中文**
->
-> 通过真实 UI 操作执行报告中的路径。
+通过真实 UI 操作执行报告中的路径。
 
 <!-- en:55 -->
 Before calling it reproduced:
 
 <!-- zh:55 -->
-> **中文**
->
-> 宣称复现之前：
+宣称复现之前：
 
 <!-- en:56 -->
 1. Name the correct final state.
@@ -583,47 +462,37 @@ Before calling it reproduced:
 7. Cross-check a real state value when possible.
 
 <!-- zh:56 -->
-> **中文**
->
-> 1. 明确正确的最终状态。
-> 2. 明确异常的最终状态。
-> 3. 到达两者出现差异的位置。
-> 4. 观察异常状态。
-> 5. 重置足够的状态，使第二次尝试独立于第一次。
-> 6. 重复同一路径，再次观察到相同异常状态。
-> 7. 条件允许时，用真实状态值交叉验证。
+1. 明确正确的最终状态。
+2. 明确异常的最终状态。
+3. 到达两者出现差异的位置。
+4. 观察异常状态。
+5. 重置足够的状态，使第二次尝试独立于第一次。
+6. 重复同一路径，再次观察到相同异常状态。
+7. 条件允许时，用真实状态值交叉验证。
 
 <!-- en:57 -->
 An expected dialog, loading state, or setup step is not the bug. Capture the final state that distinguishes correct from broken behavior.
 
 <!-- zh:57 -->
-> **中文**
->
-> 正常预期的对话框、加载状态或配置步骤不是 bug。要采集能区分正确行为与异常行为的最终状态。
+正常预期的对话框、加载状态或配置步骤不是 bug。要采集能区分正确行为与异常行为的最终状态。
 
 <!-- en:58 -->
 Use the configured repro budget. If the symptom does not reproduce within it, report a clean `Could not reproduce` outcome. If the environment cannot provide a required capability, report `Blocked` and state what was missing.
 
 <!-- zh:58 -->
-> **中文**
->
-> 遵守已配置的复现预算。在预算内无法复现症状时，明确报告 `Could not reproduce`。环境无法提供必需能力时，报告 `Blocked`，说明缺少什么。
+遵守已配置的复现预算。在预算内无法复现症状时，明确报告 `Could not reproduce`。环境无法提供必需能力时，报告 `Blocked`，说明缺少什么。
 
 <!-- en:59 -->
 ## 8. Capture and review evidence
 
 <!-- zh:59 -->
-> **中文**
->
-> ## 8. 采集并审查证据
+**8. 采集并审查证据**
 
 <!-- en:60 -->
 For a successful repro:
 
 <!-- zh:60 -->
-> **中文**
->
-> 成功复现后：
+成功复现后：
 
 <!-- en:61 -->
 - Record the full path through the symptom.
@@ -632,68 +501,52 @@ For a successful repro:
 - Keep artifacts in the configured temporary artifact directory.
 
 <!-- zh:61 -->
-> **中文**
->
-> - 录制经过症状的完整操作路径。
-> - 截取异常最终状态。
-> - 保存简短记录，写明准确步骤及观察到的状态。
-> - 把产物放入配置的临时证据目录。
+- 录制经过症状的完整操作路径。
+- 截取异常最终状态。
+- 保存简短记录，写明准确步骤及观察到的状态。
+- 把产物放入配置的临时证据目录。
 
 <!-- en:62 -->
 Have a read-only media reviewer answer one question: does the evidence visibly show the discriminating broken state?
 
 <!-- zh:62 -->
-> **中文**
->
-> 让只读媒体评审者回答一个问题：证据是否清楚显示了能区分正常与异常行为的关键异常状态？
+让只读媒体评审者回答一个问题：证据是否清楚显示了能区分正常与异常行为的关键异常状态？
 
 <!-- en:63 -->
 If the answer is no or uncertain, the repro is not confirmed. Capture better evidence or use `Could not reproduce`.
 
 <!-- zh:63 -->
-> **中文**
->
-> 答案为否或不确定时，复现尚未确认。采集更好的证据，或使用 `Could not reproduce`。
+答案为否或不确定时，复现尚未确认。采集更好的证据，或使用 `Could not reproduce`。
 
 <!-- en:64 -->
 Post detailed evidence only in the operations thread when configured. Keep the source update concise.
 
 <!-- zh:64 -->
-> **中文**
->
-> 配置了运维讨论串时，只在那里发布详细证据。源讨论串中的更新保持简短。
+配置了运维讨论串时，只在那里发布详细证据。源讨论串中的更新保持简短。
 
 <!-- en:65 -->
 ## 9. Report the repro outcome
 
 <!-- zh:65 -->
-> **中文**
->
-> ## 9. 报告复现结果
+**9. 报告复现结果**
 
 <!-- en:66 -->
 Update the operations status first.
 
 <!-- zh:66 -->
-> **中文**
->
-> 先更新运维状态。
+先更新运维状态。
 
 <!-- en:67 -->
 For `Could not reproduce` or `Blocked`, post nothing in the source thread. The operations thread or run output carries the result.
 
 <!-- zh:67 -->
-> **中文**
->
-> 结果为 `Could not reproduce` 或 `Blocked` 时，不在源讨论串发帖。结果放在运维讨论串或运行输出中。
+结果为 `Could not reproduce` 或 `Blocked` 时，不在源讨论串发帖。结果放在运维讨论串或运行输出中。
 
 <!-- en:68 -->
 For a confirmed repro, run the source preflight and post at most one unprompted source reply:
 
 <!-- zh:68 -->
-> **中文**
->
-> 确认复现后，执行源消息预检；未收到额外请求时，最多主动发布一条源讨论串回复：
+确认复现后，执行源消息预检；未收到额外请求时，最多主动发布一条源讨论串回复：
 
 <!-- en:69 -->
 - Say the issue reproduced.
@@ -703,77 +556,59 @@ For a confirmed repro, run the source preflight and post at most one unprompted 
 - Do not ping an owner by default.
 
 <!-- zh:69 -->
-> **中文**
->
-> - 说明问题已复现。
-> - 存在运维证据讨论串时附上链接。
-> - 最多包含三条简短发现。
-> - 存在问题跟踪 issue 时附上链接。
-> - 默认不通知负责人。
+- 说明问题已复现。
+- 存在运维证据讨论串时附上链接。
+- 最多包含三条简短发现。
+- 存在问题跟踪 issue 时附上链接。
+- 默认不通知负责人。
 
 <!-- en:70 -->
 Attach evidence only when the configured Slack action keeps it inside the same source thread and the organization's retention policy allows it.
 
 <!-- zh:70 -->
-> **中文**
->
-> 只有配置的 Slack 操作能把附件保留在同一源讨论串中，且组织的数据保留政策允许时，才附上证据。
+只有配置的 Slack 操作能把附件保留在同一源讨论串中，且组织的数据保留政策允许时，才附上证据。
 
 <!-- en:71 -->
 Wait for the configured rejection window. If a person shows that the setup or interpretation was wrong, correct the repro once. Do not start the fix phase until the window closes without a valid rejection.
 
 <!-- zh:71 -->
-> **中文**
->
-> 等待配置的异议窗口。如果有人证明配置或理解有误，修正一次复现。只有窗口结束且没有有效异议时，才能开始修复阶段。
+等待配置的异议窗口。如果有人证明配置或理解有误，修正一次复现。只有窗口结束且没有有效异议时，才能开始修复阶段。
 
 <!-- en:72 -->
 ## 10. Verify an existing fix
 
 <!-- zh:72 -->
-> **中文**
->
-> ## 10. 验证已有修复
+**10. 验证已有修复**
 
 <!-- en:73 -->
 When a fix artifact exists, follow `references/verify-existing-fix.md`.
 
 <!-- zh:73 -->
-> **中文**
->
-> 存在修复产物时，遵循 `references/verify-existing-fix.md`。
+存在修复产物时，遵循 `references/verify-existing-fix.md`。
 
 <!-- en:74 -->
 Verification must show the symptom on the baseline and its absence on the patched build. Both paths use the real UI twice.
 
 <!-- zh:74 -->
-> **中文**
->
-> 验证必须显示：基线版本存在症状，修复后的构建不存在症状。两种版本都通过真实 UI 执行两次。
+验证必须显示：基线版本存在症状，修复后的构建不存在症状。两种版本都通过真实 UI 执行两次。
 
 <!-- en:75 -->
 Do not edit the existing fix, add a competing patch, or open a replacement pull request.
 
 <!-- zh:75 -->
-> **中文**
->
-> 不得编辑已有修复、添加竞争补丁，或创建替代 PR。
+不得编辑已有修复、添加竞争补丁，或创建替代 PR。
 
 <!-- en:76 -->
 ## 11. Qualify a bounded fix
 
 <!-- zh:76 -->
-> **中文**
->
-> ## 11. 判断是否允许受限修复
+**11. 判断是否允许受限修复**
 
 <!-- en:77 -->
 Attempt a fix only when all of these hold:
 
 <!-- zh:77 -->
-> **中文**
->
-> 只有全部满足以下条件，才尝试修复：
+只有全部满足以下条件，才尝试修复：
 
 <!-- en:78 -->
 - The outcome is a plain confirmed repro.
@@ -785,55 +620,43 @@ Attempt a fix only when all of these hold:
 - The control adapter can run both baseline and patched builds.
 
 <!-- zh:78 -->
-> **中文**
->
-> - 当前结果是明确确认的复现。
-> - 媒体审查已确认异常最终状态。
-> - 没有出现已有修复产物。
-> - 异议窗口内无人认领修复。
-> - 运行时证据已经确认根因。
-> - 预计改动符合配置的修复预算与仓库范围。
-> - 操作适配器可以运行基线和修复后的构建。
+- 当前结果是明确确认的复现。
+- 媒体审查已确认异常最终状态。
+- 没有出现已有修复产物。
+- 异议窗口内无人认领修复。
+- 运行时证据已经确认根因。
+- 预计改动符合配置的修复预算与仓库范围。
+- 操作适配器可以运行基线和修复后的构建。
 
 <!-- en:79 -->
 If any condition fails, keep the repro report and stop without a pull request.
 
 <!-- zh:79 -->
-> **中文**
->
-> 任一条件不满足，保留复现报告并停止，不创建 PR。
+任一条件不满足，保留复现报告并停止，不创建 PR。
 
 <!-- en:80 -->
 When the gate passes, update operations status to `Attempting bounded fix`.
 
 <!-- zh:80 -->
-> **中文**
->
-> 检查通过时，将运维状态更新为 `Attempting bounded fix`。
+检查通过时，将运维状态更新为 `Attempting bounded fix`。
 
 <!-- en:81 -->
 ## 12. Root-cause and implement
 
 <!-- zh:81 -->
-> **中文**
->
-> ## 12. 查明根因并实现
+**12. 查明根因并实现**
 
 <!-- en:82 -->
 The coordinator owns every Slack post, the final diff review, commits, and the pull request.
 
 <!-- zh:82 -->
-> **中文**
->
-> 协调者负责所有 Slack 发帖、最终 diff 评审、commit 和 PR。
+协调者负责所有 Slack 发帖、最终 diff 评审、commit 和 PR。
 
 <!-- en:83 -->
 Read-only workers may:
 
 <!-- zh:83 -->
-> **中文**
->
-> 只读 worker 可以：
+只读 worker 可以：
 
 <!-- en:84 -->
 - Trace code and history
@@ -843,45 +666,35 @@ Read-only workers may:
 - Review media
 
 <!-- zh:84 -->
-> **中文**
->
-> - 追踪代码与历史
-> - 提出测试方案
-> - 分析影响范围
-> - 审查 diff
-> - 审查媒体
+- 追踪代码与历史
+- 提出测试方案
+- 分析影响范围
+- 审查 diff
+- 审查媒体
 
 <!-- en:85 -->
 They do not edit, run external writes, post status, or own the fix.
 
 <!-- zh:85 -->
-> **中文**
->
-> 它们不编辑、不执行外部写操作、不发布状态，也不负责修复。
+它们不编辑、不执行外部写操作、不发布状态，也不负责修复。
 
 <!-- en:86 -->
 A tightly scoped code edit may be delegated during this phase only when tool isolation removes Slack credentials and every Slack write action from that worker. Its prompt must still carry the explicit Slack-write ban. The coordinator reviews the edit and runs or verifies the required tests. If tool isolation is uncertain, keep the edit in the coordinator.
 
 <!-- zh:86 -->
-> **中文**
->
-> 本阶段只有在工具隔离从 worker 中移除了 Slack 凭据及所有 Slack 写操作时，才可委派范围严格受限的代码编辑。提示词仍必须明确禁止 Slack 写操作。协调者审查改动，并运行或验证必需测试。工具隔离无法确认时，由协调者自己编辑。
+本阶段只有在工具隔离从 worker 中移除了 Slack 凭据及所有 Slack 写操作时，才可委派范围严格受限的代码编辑。提示词仍必须明确禁止 Slack 写操作。协调者审查改动，并运行或验证必需测试。工具隔离无法确认时，由协调者自己编辑。
 
 <!-- en:87 -->
 Confirm the mechanism with runtime evidence. Eliminate competing hypotheses before editing.
 
 <!-- zh:87 -->
-> **中文**
->
-> 用运行时证据确认机制。编辑前排除其他竞争假设。
+用运行时证据确认机制。编辑前排除其他竞争假设。
 
 <!-- en:88 -->
 Fix the root cause with the smallest justified change.
 
 <!-- zh:88 -->
-> **中文**
->
-> 用最小且有依据的改动修复根因。
+用最小且有依据的改动修复根因。
 
 <!-- en:89 -->
 - Invoke pstack's `tdd` skill when there is a cheap local test target, and write the failing test before the fix.
@@ -890,36 +703,28 @@ Fix the root cause with the smallest justified change.
 - Stop if the change grows beyond the configured effort or risk budget.
 
 <!-- zh:89 -->
-> **中文**
->
-> - 存在低成本本地测试目标时，调用 pstack 的 `tdd` skill，在修复前先写失败测试。
-> - 测试路径成本高、不明确或高度依赖集成环境时，说明跳过 TDD 的原因。
-> - 不纳入无关整理。
-> - 改动超出已配置的工作投入或风险预算时，停止。
+- 存在低成本本地测试目标时，调用 pstack 的 `tdd` skill，在修复前先写失败测试。
+- 测试路径成本高、不明确或高度依赖集成环境时，说明跳过 TDD 的原因。
+- 不纳入无关整理。
+- 改动超出已配置的工作投入或风险预算时，停止。
 
 <!-- en:90 -->
 ## 13. Prove the fix
 
 <!-- zh:90 -->
-> **中文**
->
-> ## 13. 证明修复有效
+**13. 证明修复有效**
 
 <!-- en:91 -->
 Keep the original baseline evidence.
 
 <!-- zh:91 -->
-> **中文**
->
-> 保留原始基线证据。
+保留原始基线证据。
 
 <!-- en:92 -->
 On the patched build:
 
 <!-- zh:92 -->
-> **中文**
->
-> 在修复后的构建中：
+在修复后的构建中：
 
 <!-- en:93 -->
 1. Run the same real UI path.
@@ -930,46 +735,36 @@ On the patched build:
 6. Cross-check the same real state value used for the baseline.
 
 <!-- zh:93 -->
-> **中文**
->
-> 1. 执行相同的真实 UI 路径。
-> 2. 重复两次。
-> 3. 展示异常状态已消失。
-> 4. 展示取而代之的预期状态。
-> 5. 采集修复后的录屏与截图。
-> 6. 用基线采用的同一个真实状态值交叉验证。
+1. 执行相同的真实 UI 路径。
+2. 重复两次。
+3. 展示异常状态已消失。
+4. 展示取而代之的预期状态。
+5. 采集修复后的录屏与截图。
+6. 用基线采用的同一个真实状态值交叉验证。
 
 <!-- en:94 -->
 A compile, unit test, code review, or plausible diff is not after evidence.
 
 <!-- zh:94 -->
-> **中文**
->
-> 编译、单元测试、代码评审，或看起来合理的 diff，都不能作为修复后的行为证据。
+编译、单元测试、代码评审，或看起来合理的 diff，都不能作为修复后的行为证据。
 
 <!-- en:95 -->
 Run focused tests, then smoke the blast radius around the changed behavior. Cover nearby states, inputs, permissions, platforms, and failure paths that the change could affect. Stop without a pull request if a regression remains.
 
 <!-- zh:95 -->
-> **中文**
->
-> 运行针对性测试，再对改动行为周围的影响范围做冒烟检查。覆盖可能受影响的相邻状态、输入、权限、平台及失败路径。如果仍有回归问题，就停止，不创建 PR。
+运行针对性测试，再对改动行为周围的影响范围做冒烟检查。覆盖可能受影响的相邻状态、输入、权限、平台及失败路径。如果仍有回归问题，就停止，不创建 PR。
 
 <!-- en:96 -->
 ## 14. Open a draft pull request
 
 <!-- zh:96 -->
-> **中文**
->
-> ## 14. 创建草稿 PR
+**14. 创建草稿 PR**
 
 <!-- en:97 -->
 Only after before-and-after proof:
 
 <!-- zh:97 -->
-> **中文**
->
-> 只有修复前后证据都充分时，才执行：
+只有修复前后证据都充分时，才执行：
 
 <!-- en:98 -->
 - Review the final diff for unrelated changes and secrets.
@@ -982,48 +777,38 @@ Only after before-and-after proof:
 - Run the pull request text and all Slack updates through pstack's `unslop` skill.
 
 <!-- zh:98 -->
-> **中文**
->
-> - 检查最终 diff 是否有无关改动或密钥。
-> - 运行仓库要求的检查。
-> - 仓库流程允许时，创建小而有序的提交。
-> - 创建草稿 PR。本流程绝不能合并或部署。
-> - 使用问题跟踪系统支持的 PR 语法，关联配置的 issue。
-> - 使用配置的公开 URL 格式，通常为 `https://github.com/{owner}/{repo}/pull/{number}`。
-> - 包含复现步骤、根因、测试结果、修复前后证据，以及影响范围检查。
-> - 用 pstack 的 `unslop` skill 整理 PR 文字和所有 Slack 更新。
+- 检查最终 diff 是否有无关改动或密钥。
+- 运行仓库要求的检查。
+- 仓库流程允许时，创建小而有序的提交。
+- 创建草稿 PR。本流程绝不能合并或部署。
+- 使用问题跟踪系统支持的 PR 语法，关联配置的 issue。
+- 使用配置的公开 URL 格式，通常为 `https://github.com/{owner}/{repo}/pull/{number}`。
+- 包含复现步骤、根因、测试结果、修复前后证据，以及影响范围检查。
+- 用 pstack 的 `unslop` skill 整理 PR 文字和所有 Slack 更新。
 
 <!-- en:99 -->
 If pull request creation fails, do not claim success. Keep the commit or branch state in the run output and mark operations status `Fix did not land`.
 
 <!-- zh:99 -->
-> **中文**
->
-> PR 创建失败时，不要宣称成功。把 commit 或分支状态保留在运行输出中，并将运维状态标为 `Fix did not land`。
+PR 创建失败时，不要宣称成功。把 commit 或分支状态保留在运行输出中，并将运维状态标为 `Fix did not land`。
 
 <!-- en:100 -->
 On success, mark operations status `Draft pull request opened` and post one concise reply in the operations thread with the linked pull request. Do not create a second source-channel root or unprompted source reply.
 
 <!-- zh:100 -->
-> **中文**
->
-> 成功时，将运维状态标为 `Draft pull request opened`，并在运维讨论串发布一条包含 PR 链接的简短回复。不要另发源频道顶层消息，也不要再主动向源讨论串回复。
+成功时，将运维状态标为 `Draft pull request opened`，并在运维讨论串发布一条包含 PR 链接的简短回复。不要另发源频道顶层消息，也不要再主动向源讨论串回复。
 
 <!-- en:101 -->
 ## 15. Follow-ups and cleanup
 
 <!-- zh:101 -->
-> **中文**
->
-> ## 15. 后续处理与清理
+**15. 后续处理与清理**
 
 <!-- en:102 -->
 Watch the configured operations thread for one follow-up window.
 
 <!-- zh:102 -->
-> **中文**
->
-> 在一次配置的跟进窗口内，监视运维讨论串。
+在一次配置的跟进窗口内，监视运维讨论串。
 
 <!-- en:103 -->
 - Answer a direct question from evidence already gathered.
@@ -1032,17 +817,13 @@ Watch the configured operations thread for one follow-up window.
 - Stop when asked.
 
 <!-- zh:103 -->
-> **中文**
->
-> - 用已收集证据回答直接提问。
-> - 有具体纠正证明配置无效时，应用一次修正并重跑一次复现。
-> - 不参与人员协调或旁支闲聊。
-> - 被要求停止时就停止。
+- 用已收集证据回答直接提问。
+- 有具体纠正证明配置无效时，应用一次修正并重跑一次复现。
+- 不参与人员协调或旁支闲聊。
+- 被要求停止时就停止。
 
 <!-- en:104 -->
 Always call the control adapter's cleanup capability. Keep artifacts only as long as the configured retention policy allows.
 
 <!-- zh:104 -->
-> **中文**
->
-> 始终调用操作适配器的清理能力。证据产物的保存时间不得超过配置的数据保留政策。
+始终调用操作适配器的清理能力。证据产物的保存时间不得超过配置的数据保留政策。

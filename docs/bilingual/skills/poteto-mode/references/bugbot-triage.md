@@ -5,33 +5,25 @@
 # Bugbot triage
 
 <!-- zh:0 -->
-> **中文**
->
-> # Bugbot 问题分流
+**Bugbot 问题分流**
 
 <!-- en:1 -->
 Use this reference when the Babysit playbook (`../playbooks/babysit.md`) handles Bugbot or review-automation comments. The goal is not to ignore Bugbot by default. The goal is to stop treating every comment as a required code change.
 
 <!-- zh:1 -->
-> **中文**
->
-> Babysit 执行规程（`../playbooks/babysit.md`）处理 Bugbot 或自动评审评论时，使用本参考。目的不是默认忽略 Bugbot，而是不再把每条评论都当作必须修改代码的要求。
+Babysit 执行规程（`../playbooks/babysit.md`）处理 Bugbot 或自动评审评论时，使用本参考。目的不是默认忽略 Bugbot，而是不再把每条评论都当作必须修改代码的要求。
 
 <!-- en:2 -->
 ## Decision rubric
 
 <!-- zh:2 -->
-> **中文**
->
-> ## 决策标准
+**决策标准**
 
 <!-- en:3 -->
 Classify each Bugbot thread before acting:
 
 <!-- zh:3 -->
-> **中文**
->
-> 行动前先给每条 Bugbot 讨论分类：
+行动前先给每条 Bugbot 讨论分类：
 
 <!-- en:4 -->
 - `fix`: The comment identifies a plausible correctness, security, privacy, data loss, auth, billing, migration, idempotency, race, or shipped-behavior issue. Fix it in the lowest owning PR, then reply with the commit SHA and resolve the thread.
@@ -39,35 +31,27 @@ Classify each Bugbot thread before acting:
 - `ask`: The comment is novel, high-severity, security/privacy/data-related, or ambiguous. Ask the user instead of guessing.
 
 <!-- zh:4 -->
-> **中文**
->
-> - `fix`：评论指出可信的正确性、安全、隐私、数据丢失、认证授权、计费、迁移、幂等、竞态或已交付行为问题。在最靠栈底且拥有该代码的 PR 中修复，再回复提交 SHA 并解决讨论。
-> - `dismiss`：评论符合已记录的低风险噪声模式，当前代码或上下文证明无需改代码。简短说明理由并解决讨论。
-> - `ask`：评论涉及新情况、高严重性、安全、隐私或数据，或含义不清。询问用户，不要猜。
+- `fix`：评论指出可信的正确性、安全、隐私、数据丢失、认证授权、计费、迁移、幂等、竞态或已交付行为问题。在最靠栈底且拥有该代码的 PR 中修复，再回复提交 SHA 并解决讨论。
+- `dismiss`：评论符合已记录的低风险噪声模式，当前代码或上下文证明无需改代码。简短说明理由并解决讨论。
+- `ask`：评论涉及新情况、高严重性、安全、隐私或数据，或含义不清。询问用户，不要猜。
 
 <!-- en:5 -->
 When in doubt, ask. Skipping a noisy code-quality comment is cheap; skipping a real data or security bug is not.
 
 <!-- zh:5 -->
-> **中文**
->
-> 拿不准就问。跳过噪声性质的代码质量评论代价很小；跳过真实数据或安全 bug 代价很大。
+拿不准就问。跳过噪声性质的代码质量评论代价很小；跳过真实数据或安全 bug 代价很大。
 
 <!-- en:6 -->
 ## Learned pattern format
 
 <!-- zh:6 -->
-> **中文**
->
-> ## 经验模式的记录格式
+**经验模式的记录格式**
 
 <!-- en:7 -->
 Add future patterns in this shape:
 
 <!-- zh:7 -->
-> **中文**
->
-> 后续模式按以下格式添加：
+后续模式按以下格式添加：
 
 <!-- en:8 -->
 ```markdown
@@ -81,41 +65,33 @@ Add future patterns in this shape:
 ```
 
 <!-- zh:8 -->
-> **中文**
->
-> ```markdown
-> ### <简短的模式名称>
->
-> - Confidence: candidate | recurring | strong
-> - Skip when: <必须成立的条件>
-> - Do not skip when: <风险边界>
-> - Example signal: <识别模式的措辞或代码上下文>
-> - Source: <PR/评论 URL 或简短历史说明>
-> ```
+```markdown
+### <简短的模式名称>
+
+- Confidence: candidate | recurring | strong
+- Skip when: <必须成立的条件>
+- Do not skip when: <风险边界>
+- Example signal: <识别模式的措辞或代码上下文>
+- Source: <PR/评论 URL 或简短历史说明>
+```
 
 <!-- en:9 -->
 Use `candidate` for one or two examples. Use `recurring` after multiple real dismissals. Use `strong` only when the pattern is narrow, repeatedly verified, and low-risk.
 
 <!-- zh:9 -->
-> **中文**
->
-> 只有一两个案例时用 `candidate`；多次实际驳回后用 `recurring`；只有模式范围窄、反复验证且风险低时才用 `strong`。
+只有一两个案例时用 `candidate`；多次实际驳回后用 `recurring`；只有模式范围窄、反复验证且风险低时才用 `strong`。
 
 <!-- en:10 -->
 ## Recurring skip candidates
 
 <!-- zh:10 -->
-> **中文**
->
-> ## 候选的重复噪声模式
+**候选的重复噪声模式**
 
 <!-- en:11 -->
 ### Intentional UI or design-system visual changes
 
 <!-- zh:11 -->
-> **中文**
->
-> ### 有意进行的 UI 或设计系统视觉变更
+**有意进行的 UI 或设计系统视觉变更**
 
 <!-- en:12 -->
 - Confidence: candidate
@@ -124,20 +100,16 @@ Use `candidate` for one or two examples. Use `recurring` after multiple real dis
 - Example signal: Comments about focus outlines, button sizes, spacing, or shared component visual defaults where the owner replies "intentional" or "intended".
 
 <!-- zh:12 -->
-> **中文**
->
-> - Confidence: candidate
-> - Skip when: PR 描述、截图、设计评审或附近代码已明确这次视觉变更，Bugbot 只是重复指出共享视觉默认值变了。
-> - Do not skip when: 评论指出无障碍、焦点可见性、键盘导航、颜色对比度，或 PR 无意改变的组件 API 契约问题。
-> - Example signal: 评论讨论焦点轮廓、按钮尺寸、间距、共享组件视觉默认值，负责人回复“intentional”或“intended”。
+- Confidence: candidate
+- Skip when: PR 描述、截图、设计评审或附近代码已明确这次视觉变更，Bugbot 只是重复指出共享视觉默认值变了。
+- Do not skip when: 评论指出无障碍、焦点可见性、键盘导航、颜色对比度，或 PR 无意改变的组件 API 契约问题。
+- Example signal: 评论讨论焦点轮廓、按钮尺寸、间距、共享组件视觉默认值，负责人回复“intentional”或“intended”。
 
 <!-- en:13 -->
 ### Upstack or stack-local usage Bugbot cannot see
 
 <!-- zh:13 -->
-> **中文**
->
-> ### Bugbot 看不到的栈上层或栈内使用
+**Bugbot 看不到的栈上层或栈内使用**
 
 <!-- en:14 -->
 - Confidence: candidate
@@ -146,20 +118,16 @@ Use `candidate` for one or two examples. Use `recurring` after multiple real dis
 - Example signal: "Exported component is never used" with a human reply like "used upstack".
 
 <!-- zh:14 -->
-> **中文**
->
-> - Confidence: candidate
-> - Skip when: Bugbot 认为某个导出、组件、辅助函数或文件未使用，而当前代码托管平台的 PR 列表和 diff、栈上层 diff 或 PR 上下文，能证明后续 PR 会使用它。
-> - Do not skip when: 当前 PR 不属于 PR 栈、符号是公共 API，或无法验证所谓的栈上层使用。
-> - Example signal: “Exported component is never used”，而用户回复类似“used upstack”。
+- Confidence: candidate
+- Skip when: Bugbot 认为某个导出、组件、辅助函数或文件未使用，而当前代码托管平台的 PR 列表和 diff、栈上层 diff 或 PR 上下文，能证明后续 PR 会使用它。
+- Do not skip when: 当前 PR 不属于 PR 栈、符号是公共 API，或无法验证所谓的栈上层使用。
+- Example signal: “Exported component is never used”，而用户回复类似“used upstack”。
 
 <!-- en:15 -->
 ### Temporary duplication during parallel implementation
 
 <!-- zh:15 -->
-> **中文**
->
-> ### 并行实现期间的临时重复
+**并行实现期间的临时重复**
 
 <!-- en:16 -->
 - Confidence: candidate
@@ -168,20 +136,16 @@ Use `candidate` for one or two examples. Use `recurring` after multiple real dis
 - Example signal: "Significant duplication" or "duplicated validation logic" where the owner explains the old path will be deleted or the duplicate logic is intentionally local.
 
 <!-- zh:16 -->
-> **中文**
->
-> - Confidence: candidate
-> - Skip when: PR 有意重复少量代码，让新路径与正在删除、替换或验证的旧路径并行存在。
-> - Do not skip when: 重复代码影响安全、计费、数据访问、API 行为，或长期共享抽象显然能降低风险。
-> - Example signal: “Significant duplication”或“duplicated validation logic”，负责人解释旧路径将删除，或重复逻辑有意局限在本地。
+- Confidence: candidate
+- Skip when: PR 有意重复少量代码，让新路径与正在删除、替换或验证的旧路径并行存在。
+- Do not skip when: 重复代码影响安全、计费、数据访问、API 行为，或长期共享抽象显然能降低风险。
+- Example signal: “Significant duplication”或“duplicated validation logic”，负责人解释旧路径将删除，或重复逻辑有意局限在本地。
 
 <!-- en:17 -->
 ### Existing framework or component invariant covers the warning
 
 <!-- zh:17 -->
-> **中文**
->
-> ### 现有框架或组件不变量已覆盖警告
+**现有框架或组件不变量已覆盖警告**
 
 <!-- en:18 -->
 - Confidence: candidate
@@ -190,20 +154,16 @@ Use `candidate` for one or two examples. Use `recurring` after multiple real dis
 - Example signal: Comments about missing max-height on an inner popover when the shared popover enforces viewport bounds, or nullable values where the local checked value and passed value share the same source.
 
 <!-- zh:18 -->
-> **中文**
->
-> - Confidence: candidate
-> - Skip when: 当前 diff 或附近代码可见的共享组件、框架契约、类型不变量或唯一权威来源，已经保证所担心的行为。
-> - Do not skip when: 不变量仅被假定而未强制保证、依赖时序，或跨异步和状态边界后值可能不一致。
-> - Example signal: 内层 popover 缺少 max-height，但共享 popover 已限制在视口内；或担心可空值，而本地检查的值和传入值来自同一来源。
+- Confidence: candidate
+- Skip when: 当前 diff 或附近代码可见的共享组件、框架契约、类型不变量或唯一权威来源，已经保证所担心的行为。
+- Do not skip when: 不变量仅被假定而未强制保证、依赖时序，或跨异步和状态边界后值可能不一致。
+- Example signal: 内层 popover 缺少 max-height，但共享 popover 已限制在视口内；或担心可空值，而本地检查的值和传入值来自同一来源。
 
 <!-- en:19 -->
 ### Owner-declared follow-up or deferred cleanup
 
 <!-- zh:19 -->
-> **中文**
->
-> ### 负责人明确安排的后续工作或延期清理
+**负责人明确安排的后续工作或延期清理**
 
 <!-- en:20 -->
 - Confidence: candidate
@@ -212,20 +172,16 @@ Use `candidate` for one or two examples. Use `recurring` after multiple real dis
 - Example signal: "I'll worry about that later" or "we'll delete this eventually".
 
 <!-- zh:20 -->
-> **中文**
->
-> - Confidence: candidate
-> - Skip when: PR 负责人明确说这是已知后续工作，当前 PR 没让行为变差，且评论不涉及高风险领域。
-> - Do not skip when: agent 未获得负责人意见、问题是中高严重性的产品行为，或延期会把新的回归问题合入。
-> - Example signal: “I’ll worry about that later”或“we’ll delete this eventually”。
+- Confidence: candidate
+- Skip when: PR 负责人明确说这是已知后续工作，当前 PR 没让行为变差，且评论不涉及高风险领域。
+- Do not skip when: agent 未获得负责人意见、问题是中高严重性的产品行为，或延期会把新的回归问题合入。
+- Example signal: “I’ll worry about that later”或“we’ll delete this eventually”。
 
 <!-- en:21 -->
 ### Self-withdrawn or explicit false-positive rule comments
 
 <!-- zh:21 -->
-> **中文**
->
-> ### 已自行撤回或明确标注误报的规则评论
+**已自行撤回或明确标注误报的规则评论**
 
 <!-- en:22 -->
 - Confidence: recurring
@@ -234,28 +190,22 @@ Use `candidate` for one or two examples. Use `recurring` after multiple real dis
 - Example signal: A file-naming rule comment whose body says the file is already compliant.
 
 <!-- zh:22 -->
-> **中文**
->
-> - Confidence: recurring
-> - Skip when: 评论正文或 Bugbot 后续回复明确说明发现已撤回、符合规则或属于误报，且 agent 能在本地验证相关规则。
-> - Do not skip when: 唯一证据是用户对高风险问题说“false positive”，却没有解释。
-> - Example signal: 文件命名规则评论正文承认该文件已经合规。
+- Confidence: recurring
+- Skip when: 评论正文或 Bugbot 后续回复明确说明发现已撤回、符合规则或属于误报，且 agent 能在本地验证相关规则。
+- Do not skip when: 唯一证据是用户对高风险问题说“false positive”，却没有解释。
+- Example signal: 文件命名规则评论正文承认该文件已经合规。
 
 <!-- en:23 -->
 ## Ask by default
 
 <!-- zh:23 -->
-> **中文**
->
-> ## 默认询问
+**默认询问**
 
 <!-- en:24 -->
 Do not auto-skip these categories, even if a previous PR dismissed something similar:
 
 <!-- zh:24 -->
-> **中文**
->
-> 即使先前某个 PR 驳回过类似问题，也不要自动跳过以下类别：
+即使先前某个 PR 驳回过类似问题，也不要自动跳过以下类别：
 
 <!-- en:25 -->
 - Security, privacy, auth, billing, data retention, training-data, and permission-boundary findings.
@@ -264,44 +214,34 @@ Do not auto-skip these categories, even if a previous PR dismissed something sim
 - Comments where the suggested fix is small and clearly reduces risk without changing product intent.
 
 <!-- zh:25 -->
-> **中文**
->
-> - 安全、隐私、认证授权、计费、数据保留、训练数据及权限边界问题。
-> - 高严重性问题。
-> - 迁移、schema、幂等、并发、跨系统行为问题。
-> - 建议修复很小、明确降低风险且不改变产品意图的评论。
+- 安全、隐私、认证授权、计费、数据保留、训练数据及权限边界问题。
+- 高严重性问题。
+- 迁移、schema、幂等、并发、跨系统行为问题。
+- 建议修复很小、明确降低风险且不改变产品意图的评论。
 
 <!-- en:26 -->
 Historical data showed humans sometimes dismiss security/data-flow comments. Treat those as owner judgment calls, not team-wide skip rules.
 
 <!-- zh:26 -->
-> **中文**
->
-> 历史数据表明，用户有时会驳回安全或数据流评论。这属于负责人个别判断，不能据此形成团队通用的跳过规则。
+历史数据表明，用户有时会驳回安全或数据流评论。这属于负责人个别判断，不能据此形成团队通用的跳过规则。
 
 <!-- en:27 -->
 ## Candidate learnings from recent babysits
 
 <!-- zh:27 -->
-> **中文**
->
-> ## 最近 PR 跟进中的候选经验
+**最近 PR 跟进中的候选经验**
 
 <!-- en:28 -->
 Append new candidate learnings here during or after babysitting when they look team-useful but not yet mature. Prefer promoting recurring candidates into the section above once several PRs confirm the pattern.
 
 <!-- zh:28 -->
-> **中文**
->
-> 跟进 PR 期间或之后，把看起来对团队有用、但尚不成熟的新经验追加到这里。多个 PR 确认模式后，优先将反复出现的候选提升到上方章节。
+跟进 PR 期间或之后，把看起来对团队有用、但尚不成熟的新经验追加到这里。多个 PR 确认模式后，优先将反复出现的候选提升到上方章节。
 
 <!-- en:29 -->
 ### Manual reimplementations of native browser behavior
 
 <!-- zh:29 -->
-> **中文**
->
-> ### 手工重做浏览器原生行为
+**手工重做浏览器原生行为**
 
 <!-- en:30 -->
 - Confidence: candidate
@@ -311,21 +251,17 @@ Append new candidate learnings here during or after babysitting when they look t
 - Source: one sticky-occlusion PR: six Bugbot passes, roughly eighteen findings, every one fixed rather than dismissed.
 
 <!-- zh:30 -->
-> **中文**
->
-> - Confidence: candidate
-> - Skip when: 实际上几乎没有适用场景。diff 将浏览器原生行为换成手工实现（原生 sticky → JS 定位的克隆，原生滚动目标 → 转发 wheel/touch 事件，绘制顺序遮挡 → mask/clip-path）时，Bugbot 对这类代码报告的逻辑 bug 一直是真问题。
-> - Do not skip when: 问题涉及这类代码中的事件转发缺口（wheel deltaMode、触摸拖动、边缘 scroll-chaining、tap slop）、mask/clip 与命中测试不一致，或 observer 与 React 状态之间的时序竞态。默认修复。
-> - Example signal: “masks do not affect hit-testing”“overlay blocks wheel scroll”“ignores deltaMode”“runs in the IntersectionObserver callback before React applies state”。
-> - Source: 一个 sticky 遮挡 PR；经过六轮 Bugbot，约十八个发现，全部修复而未驳回。
+- Confidence: candidate
+- Skip when: 实际上几乎没有适用场景。diff 将浏览器原生行为换成手工实现（原生 sticky → JS 定位的克隆，原生滚动目标 → 转发 wheel/touch 事件，绘制顺序遮挡 → mask/clip-path）时，Bugbot 对这类代码报告的逻辑 bug 一直是真问题。
+- Do not skip when: 问题涉及这类代码中的事件转发缺口（wheel deltaMode、触摸拖动、边缘 scroll-chaining、tap slop）、mask/clip 与命中测试不一致，或 observer 与 React 状态之间的时序竞态。默认修复。
+- Example signal: “masks do not affect hit-testing”“overlay blocks wheel scroll”“ignores deltaMode”“runs in the IntersectionObserver callback before React applies state”。
+- Source: 一个 sticky 遮挡 PR；经过六轮 Bugbot，约十八个发现，全部修复而未驳回。
 
 <!-- en:31 -->
 ### Contract-test drift claims are cheaply verifiable — run the test first
 
 <!-- zh:31 -->
-> **中文**
->
-> ### 契约测试与文档不一致很容易验证，先运行测试
+**契约测试与文档不一致很容易验证，先运行测试**
 
 <!-- en:32 -->
 - Confidence: candidate
@@ -345,21 +281,17 @@ Append new candidate learnings here during or after babysitting when they look t
   pass 7 despite every earlier pass being fixed-and-resolved.
 
 <!-- zh:32 -->
-> **中文**
->
-> - Confidence: candidate
-> - Skip when: 绝不跳过验证本身，只需一条命令。PR 带有锁定协议或文档措辞的契约测试（针对 SKILL.md 的正则、文档文字快照），Bugbot 指出“测试不再匹配文档”（或反之）时，分类前先在 PR 最新提交运行测试。失败就是对该说法的实测确认；通过则是回复驳回时的具体反证。
-> - Do not skip when: 不适用。这是验证捷径，不是驳回模式。注意，多轮检查后倾向驳回的启发式会在这里出错：锁定文案的测试，恰恰会因前几轮修复修改文案而失配。
-> - Example signal: PR 前几次修复提交改写了被测试锁定的段落，评论称“Contract test omits the pre-fix wait”；在最新提交运行时，恰好在评论指出的断言失败。
-> - Source: 一个锁定文案的 PR，经过八轮 Bugbot；第 7 轮发现确实成立，尽管此前每轮都已修复并解决讨论。
+- Confidence: candidate
+- Skip when: 绝不跳过验证本身，只需一条命令。PR 带有锁定协议或文档措辞的契约测试（针对 SKILL.md 的正则、文档文字快照），Bugbot 指出“测试不再匹配文档”（或反之）时，分类前先在 PR 最新提交运行测试。失败就是对该说法的实测确认；通过则是回复驳回时的具体反证。
+- Do not skip when: 不适用。这是验证捷径，不是驳回模式。注意，多轮检查后倾向驳回的启发式会在这里出错：锁定文案的测试，恰恰会因前几轮修复修改文案而失配。
+- Example signal: PR 前几次修复提交改写了被测试锁定的段落，评论称“Contract test omits the pre-fix wait”；在最新提交运行时，恰好在评论指出的断言失败。
+- Source: 一个锁定文案的 PR，经过八轮 Bugbot；第 7 轮发现确实成立，尽管此前每轮都已修复并解决讨论。
 
 <!-- en:33 -->
 ### Stale security-review finding already fixed later in the same PR
 
 <!-- zh:33 -->
-> **中文**
->
-> ### 同一个 PR 后续提交已经修复的过期安全发现
+**同一个 PR 后续提交已经修复的过期安全发现**
 
 <!-- en:34 -->
 - Confidence: candidate
@@ -369,21 +301,17 @@ Append new candidate learnings here during or after babysitting when they look t
 - Source: one webhook-endpoint PR whose hardening commit postdated the review run.
 
 <!-- zh:34 -->
-> **中文**
->
-> - Confidence: candidate
-> - Skip when: agentic security review 或类似工具指出缺失 authz/校验调用，但当前 PR 最新提交明确含有该检查关卡及测试；通常是在评审运行后追加的加固提交中加入。
-> - Do not skip when: 所引用辅助函数对讨论中的身份主体不起作用、检查发生在应保护的副作用之后，或缺少该主体的覆盖测试。
-> - Example signal: HIGH 级“missing authorization check”，但最新提交已在副作用前调用对应防护。
-> - Source: 一个 webhook endpoint PR，其加固提交晚于评审运行时间。
+- Confidence: candidate
+- Skip when: agentic security review 或类似工具指出缺失 authz/校验调用，但当前 PR 最新提交明确含有该检查关卡及测试；通常是在评审运行后追加的加固提交中加入。
+- Do not skip when: 所引用辅助函数对讨论中的身份主体不起作用、检查发生在应保护的副作用之后，或缺少该主体的覆盖测试。
+- Example signal: HIGH 级“missing authorization check”，但最新提交已在副作用前调用对应防护。
+- Source: 一个 webhook endpoint PR，其加固提交晚于评审运行时间。
 
 <!-- en:35 -->
 ### Widening a deliberately narrow error condition would mask the real error
 
 <!-- zh:35 -->
-> **中文**
->
-> ### 扩大有意收窄的错误条件会掩盖真实错误
+**扩大有意收窄的错误条件会掩盖真实错误**
 
 <!-- en:36 -->
 - Confidence: candidate
@@ -405,10 +333,8 @@ Append new candidate learnings here during or after babysitting when they look t
   than a failed command.
 
 <!-- zh:36 -->
-> **中文**
->
-> - Confidence: candidate
-> - Skip when: 评论要求把窄条件（某个 `errno`、错误码或状态类别）扩大成兜底捕获，而这个窄条件表达了真实区别。典型例子是仅在 `ENOENT` 时启用依赖回退：“二进制未安装”与“命令已经运行但失败”是不同情况。对任意非零退出重试，会让真实失败（未找到、认证过期、网络错误）再走回退路径，最后报告回退的错误，掩盖原始错误。
-> - Do not skip when: 窄条件遗漏同一类别的情况（例如另一个“二进制不可用”的 errno `EACCES`，或另一个传输层失败）、未处理路径会丢数据或留下部分状态，或重试既幂等又保留原始错误报告。
-> - Example signal: “only retries when X fails with ENOENT … never tries the fallback even when a working Y exists”，所指代码的回退是为缺失依赖设计，而非失败操作。
-> - Source: 一个 CLI 重命名 PR，其回退为缺失二进制设计，而不是命令失败。
+- Confidence: candidate
+- Skip when: 评论要求把窄条件（某个 `errno`、错误码或状态类别）扩大成兜底捕获，而这个窄条件表达了真实区别。典型例子是仅在 `ENOENT` 时启用依赖回退：“二进制未安装”与“命令已经运行但失败”是不同情况。对任意非零退出重试，会让真实失败（未找到、认证过期、网络错误）再走回退路径，最后报告回退的错误，掩盖原始错误。
+- Do not skip when: 窄条件遗漏同一类别的情况（例如另一个“二进制不可用”的 errno `EACCES`，或另一个传输层失败）、未处理路径会丢数据或留下部分状态，或重试既幂等又保留原始错误报告。
+- Example signal: “only retries when X fails with ENOENT … never tries the fallback even when a working Y exists”，所指代码的回退是为缺失依赖设计，而非失败操作。
+- Source: 一个 CLI 重命名 PR，其回退为缺失二进制设计，而不是命令失败。

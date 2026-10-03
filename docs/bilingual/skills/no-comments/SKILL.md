@@ -11,63 +11,49 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: no-comments
-> description: "启动 Comment Sicko，修复接受的发现，并为声称的约束提供可执行的编码方案。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: no-comments
+description: "启动 Comment Sicko，修复接受的发现，并为声称的约束提供可执行的编码方案。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # No comments
 
 <!-- zh:1 -->
-> **中文**
->
-> # 不留注释
+**不留注释**
 
 <!-- en:2 -->
 Spawn Comment Sicko. Act on accepted findings.
 
 <!-- zh:2 -->
-> **中文**
->
-> 启动 Comment Sicko。处理接受的发现。
+启动 Comment Sicko。处理接受的发现。
 
 <!-- en:3 -->
 Defer to Comment Sicko's fresh perspective.
 
 <!-- zh:3 -->
-> **中文**
->
-> 尊重 Comment Sicko 带来的新视角。
+尊重 Comment Sicko 带来的新视角。
 
 <!-- en:4 -->
 ## Scope
 
 <!-- zh:4 -->
-> **中文**
->
-> ## 范围
+**范围**
 
 <!-- en:5 -->
 Use the caller's files or diff. Otherwise use the current diff against the base branch, default `main`, including the working tree.
 
 <!-- zh:5 -->
-> **中文**
->
-> 使用调用方提供的文件或 diff。否则使用当前相对于基线分支（默认 `main`）的 diff，包括工作树改动。
+使用调用方提供的文件或 diff。否则使用当前相对于基线分支（默认 `main`）的 diff，包括工作树改动。
 
 <!-- en:6 -->
 ## Steps
 
 <!-- zh:6 -->
-> **中文**
->
-> ## 步骤
+**步骤**
 
 <!-- en:7 -->
 1. Spawn `Task` with `subagent_type: "Comment Sicko"`. Pass the scope. Do not restate its rules. If your harness doesn't have Comment Sicko registered as a subagent (any harness other than Cursor with the pstack plugin), spawn a general subagent instead: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Its prompt is [`references/comment-sicko.md`](references/comment-sicko.md) verbatim, then the scope. If your harness has no subagent tool, as in Pi without an extension, run that prompt yourself in a fresh pass over the scope.
@@ -78,11 +64,9 @@ Use the caller's files or diff. Otherwise use the current diff against the base 
 6. Report the deletion count, restored comments, reruns, architect sketch, fixes, encoding offers, encodings, unenforced constraints, and other open work.
 
 <!-- zh:7 -->
-> **中文**
->
-> 1. 启动 `Task`，指定 `subagent_type: "Comment Sicko"`，传入范围，不要重述其规则。如果 agent 运行环境未注册 Comment Sicko（除安装 pstack 插件的 Cursor 之外的所有环境），则启动通用 subagent：Claude Code 中用 `Agent`（`subagent_type: general-purpose`），OpenCode 中用 `task`（`subagent_type: general`），Codex 中用 `spawn_agent`。提示词必须原样采用 [`references/comment-sicko.md`](references/comment-sicko.md)，再附上范围。如果环境没有 subagent 工具，例如未安装扩展的 Pi，就自己按照该提示词重新审视范围。
-> 2. 检查报告和 diff。拒绝业务代码编辑、越界改动、删除受例外保护的注释、错误的 `MUST KILL` 理由，以及将保留的有意行为当作问题的标记。对自有代码中意外行为提出的重塑标记仍需处理，不要恢复其注释。只有证明注释描述的是我们无法改变的东西，才允许保留。检查遗漏的范围内 lint 和 TypeScript 抑制。涉及正确性或安全性的抑制仍属于必须处理的 `MUST KILL`。只有明确例外和范围内证据才允许恢复删除。接受缺少依据的 `IMPORTANT` 或 `do not remove` 注释的删除或保留前，对其符号运行 `/how` 或 `/why`。删除理由不明确时，不要恢复。保留理由被推翻或仍不明确时，删除。对第一份被拒绝的报告，撤回并指出失败原因后重跑；若第二份仍被拒绝，将其报告为未解决，并判定 `/no-comments` 失败。
-> 3. 对简单且已接受的标记，直接删除无用路径、移除参数或使用真实 API 修复。若任何修复需要设计结构，对接受的整组发现及周边代码运行一次 `/architect`，到草图为止。Architect 负责设计，步骤 4 负责实现。
-> 4. 在范围内实现最小的根因修复。删除每个被点名的变通实现。根因在范围外时，合入范围内最小修复，并将剩余工作报告为未解决。**principle-fix-root-causes** 和 **principle-redesign-from-first-principles** skill 仅指导意图；它们都不授权扩展范围或修复范围外实例。绝不外挂掩盖症状的防护逻辑。
-> 5. 约束注释会写着 `do not remove`、`do not change wording` 或 `talk to X before changing`。保留描述我们无法改变之事的注释。提出范围内成本最低的类型、运行时、测试或 CI lint 方案，并等待交互确认。无人值守和评测场景要求调用方事先授权。获准后先编码约束，再删除注释。否则删除注释，将约束报告为未落实，并勾画范围外工作。
-> 6. 报告删除数量、恢复的注释、重跑情况、架构草图、修复、提出的约束编码方案、已实施编码、未强制落实的约束及其他未完成工作。
+1. 启动 `Task`，指定 `subagent_type: "Comment Sicko"`，传入范围，不要重述其规则。如果 agent 运行环境未注册 Comment Sicko（除安装 pstack 插件的 Cursor 之外的所有环境），则启动通用 subagent：Claude Code 中用 `Agent`（`subagent_type: general-purpose`），OpenCode 中用 `task`（`subagent_type: general`），Codex 中用 `spawn_agent`。提示词必须原样采用 [`references/comment-sicko.md`](references/comment-sicko.md)，再附上范围。如果环境没有 subagent 工具，例如未安装扩展的 Pi，就自己按照该提示词重新审视范围。
+2. 检查报告和 diff。拒绝业务代码编辑、越界改动、删除受例外保护的注释、错误的 `MUST KILL` 理由，以及将保留的有意行为当作问题的标记。对自有代码中意外行为提出的重塑标记仍需处理，不要恢复其注释。只有证明注释描述的是我们无法改变的东西，才允许保留。检查遗漏的范围内 lint 和 TypeScript 抑制。涉及正确性或安全性的抑制仍属于必须处理的 `MUST KILL`。只有明确例外和范围内证据才允许恢复删除。接受缺少依据的 `IMPORTANT` 或 `do not remove` 注释的删除或保留前，对其符号运行 `/how` 或 `/why`。删除理由不明确时，不要恢复。保留理由被推翻或仍不明确时，删除。对第一份被拒绝的报告，撤回并指出失败原因后重跑；若第二份仍被拒绝，将其报告为未解决，并判定 `/no-comments` 失败。
+3. 对简单且已接受的标记，直接删除无用路径、移除参数或使用真实 API 修复。若任何修复需要设计结构，对接受的整组发现及周边代码运行一次 `/architect`，到草图为止。Architect 负责设计，步骤 4 负责实现。
+4. 在范围内实现最小的根因修复。删除每个被点名的变通实现。根因在范围外时，合入范围内最小修复，并将剩余工作报告为未解决。**principle-fix-root-causes** 和 **principle-redesign-from-first-principles** skill 仅指导意图；它们都不授权扩展范围或修复范围外实例。绝不外挂掩盖症状的防护逻辑。
+5. 约束注释会写着 `do not remove`、`do not change wording` 或 `talk to X before changing`。保留描述我们无法改变之事的注释。提出范围内成本最低的类型、运行时、测试或 CI lint 方案，并等待交互确认。无人值守和评测场景要求调用方事先授权。获准后先编码约束，再删除注释。否则删除注释，将约束报告为未落实，并勾画范围外工作。
+6. 报告删除数量、恢复的注释、重跑情况、架构草图、修复、提出的约束编码方案、已实施编码、未强制落实的约束及其他未完成工作。

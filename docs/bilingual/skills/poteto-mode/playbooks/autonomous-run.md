@@ -5,17 +5,13 @@
 ### Autonomous run
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 自主执行
+**自主执行**
 
 <!-- en:1 -->
 **You own the exit condition. Define done, then drive to it without stopping.**
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责退出条件。定义完成，然后不停推进直到达到。**
+**你负责退出条件。定义完成，然后不停推进直到达到。**
 
 <!-- en:2 -->
 1. State the exit condition as a checkable predicate before the first iteration (tests green, repro fixed, all N PRs merged, pixel-diff zero).
@@ -27,20 +23,16 @@
 6. Stop when the predicate is met. A plateau is not a stop, so keep going and pivot your approach to push past it. Surface a genuine dead end rather than spinning, and never relax the predicate to declare victory.
 
 <!-- zh:2 -->
-> **中文**
->
-> 1. 首轮前将退出条件明确为可检查判定（测试通过、复现已修、N 个 PR 全合并、pixel-diff 为零）。
-> 2. 用当前环境的 `/loop` 选择唤醒机制（Cursor、Claude Code 内置，不是 pstack skill；没有时见 SKILL.md 的 Harness）。有事件可监听（CI、合并、ref 推进）时，配置 watcher subagent，事件触发唤醒，长时间心跳作后备。无事件时，用固定间隔心跳，间隔按何时值得重查结果设定。
-> 3. 每轮做证据支持的最小改动，按条件验证；有进展则提交，无帮助则丢弃。“可能有帮助”的双重防护回滚，不顺便留着。
->    用 **sequence-verifiable-units** 原则 skill 排序，每单元验证后再进入下一个，不把检查堆到最后。
-> 4. 执行中发现的问题由你负责。损坏 skill、相关 bug、不稳定验证器、评审噪声、工具故障、无人处理的后续事项、可修复漂移，都通过 poteto-mode 自行解决。范围外修复独立 PR。可逆工作不留给用户，也不用 `AskQuestion`。只报告不可逆动作、实验无法决定的真实产品或偏好问题，或真正无路可走的情况。以主判定条件持续驱动，每次旁支修复后回到主任务。
-> 5. 每轮通过 **show-me-your-work** skill 记录检查点，写一行说明改了什么、是否向满足条件推进。
-> 6. 达到条件才停止。平台期不是停止理由，换方法继续突破。真正无路可走时说明，不空转，绝不放宽条件宣布成功。
+1. 首轮前将退出条件明确为可检查判定（测试通过、复现已修、N 个 PR 全合并、pixel-diff 为零）。
+2. 用当前环境的 `/loop` 选择唤醒机制（Cursor、Claude Code 内置，不是 pstack skill；没有时见 SKILL.md 的 Harness）。有事件可监听（CI、合并、ref 推进）时，配置 watcher subagent，事件触发唤醒，长时间心跳作后备。无事件时，用固定间隔心跳，间隔按何时值得重查结果设定。
+3. 每轮做证据支持的最小改动，按条件验证；有进展则提交，无帮助则丢弃。“可能有帮助”的双重防护回滚，不顺便留着。
+   用 **sequence-verifiable-units** 原则 skill 排序，每单元验证后再进入下一个，不把检查堆到最后。
+4. 执行中发现的问题由你负责。损坏 skill、相关 bug、不稳定验证器、评审噪声、工具故障、无人处理的后续事项、可修复漂移，都通过 poteto-mode 自行解决。范围外修复独立 PR。可逆工作不留给用户，也不用 `AskQuestion`。只报告不可逆动作、实验无法决定的真实产品或偏好问题，或真正无路可走的情况。以主判定条件持续驱动，每次旁支修复后回到主任务。
+5. 每轮通过 **show-me-your-work** skill 记录检查点，写一行说明改了什么、是否向满足条件推进。
+6. 达到条件才停止。平台期不是停止理由，换方法继续突破。真正无路可走时说明，不空转，绝不放宽条件宣布成功。
 
 <!-- en:3 -->
 **Reply:** the exit condition, iterations run, what landed, what was discarded, final predicate state.
 
 <!-- zh:3 -->
-> **中文**
->
-> **回复：** 退出条件、执行轮数、合入了什么、丢弃了什么、最终条件状态。
+**回复：** 退出条件、执行轮数、合入了什么、丢弃了什么、最终条件状态。

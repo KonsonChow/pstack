@@ -5,25 +5,19 @@
 # Routing map example
 
 <!-- zh:0 -->
-> **中文**
->
-> # 路由表示例
+**路由表示例**
 
 <!-- en:1 -->
 Copy this file outside `.cursor/automations/benny/`, for example to `.cursor/benny/routing.md`, and replace every placeholder. Point `routing.map_path` at the copy. Pack refreshes must not overwrite it.
 
 <!-- zh:1 -->
-> **中文**
->
-> 把本文件复制到 `.cursor/automations/benny/` 外，例如 `.cursor/benny/routing.md`，替换所有占位符。让 `routing.map_path` 指向副本。刷新包时不得覆盖它。
+把本文件复制到 `.cursor/automations/benny/` 外，例如 `.cursor/benny/routing.md`，替换所有占位符。让 `routing.map_path` 指向副本。刷新包时不得覆盖它。
 
 <!-- en:2 -->
 The triage skill treats this as data. A route needs evidence from the report or cause trace. A keyword match alone is not enough.
 
 <!-- zh:2 -->
-> **中文**
->
-> 分流 skill 将其视为数据。路由必须有报告或原因追踪中的证据，只有关键词匹配不够。
+分流 skill 将其视为数据。路由必须有报告或原因追踪中的证据，只有关键词匹配不够。
 
 <!-- en:3 -->
 ```yaml
@@ -73,63 +67,11 @@ ping_policy:
     - "unverified-owner"
 ```
 
-<!-- zh:3 -->
-> **中文**
->
-> ```yaml
-> routes:
->   - name: "billing-example"
->     match:
->       product_areas:
->         - "billing-area-placeholder"
->       code_paths:
->         - "billing-code-path-placeholder"
->       error_signatures:
->         - "billing-error-placeholder"
->     destination:
->       slack_channel: "billing-channel-placeholder"
->       tracker_team: "billing-team-placeholder"
->     owners:
->       - "billing-owner-placeholder"
->     allow_feature_owner_ping: false
->
->   - name: "desktop-example"
->     match:
->       product_areas:
->         - "desktop-area-placeholder"
->       code_paths:
->         - "desktop-code-path-placeholder"
->       error_signatures:
->         - "desktop-error-placeholder"
->     destination:
->       slack_channel: "desktop-channel-placeholder"
->       tracker_team: "desktop-team-placeholder"
->     owners:
->       - "desktop-owner-placeholder"
->     allow_feature_owner_ping: false
->
-> fallback:
->   destination: ""
->   owners: []
->   allow_feature_owner_ping: false
->
-> ping_policy:
->   default: "off"
->   allow:
->     - "configured-feature-owner"
->     - "confirmed-regression-author"
->   deny:
->     - "broad-on-call-group"
->     - "unverified-owner"
-> ```
-
 <!-- en:4 -->
 ## Rules
 
 <!-- zh:4 -->
-> **中文**
->
-> ## 规则
+**规则**
 
 <!-- en:5 -->
 - Leave `fallback.destination` empty unless one team accepts all unmatched reports.
@@ -140,11 +82,9 @@ ping_policy:
 - A reroute tells the reporter where to go. The automation never cross-posts.
 
 <!-- zh:5 -->
-> **中文**
->
-> - 除非一个团队接受所有未匹配报告，否则 `fallback.destination` 保持空。
-> - 使用稳定的产品领域、代码路径、错误特征。
-> - 公开副本不含私密数据。
-> - 不在将公开的示例中粘贴原始用户或频道 ID。
-> - 目标团队同意前，保持关闭 feature-owner ping。
-> - 转交只是告诉报告者该去哪，自动化绝不跨频道转发。
+- 除非一个团队接受所有未匹配报告，否则 `fallback.destination` 保持空。
+- 使用稳定的产品领域、代码路径、错误特征。
+- 公开副本不含私密数据。
+- 不在将公开的示例中粘贴原始用户或频道 ID。
+- 目标团队同意前，保持关闭 feature-owner ping。
+- 转交只是告诉报告者该去哪，自动化绝不跨频道转发。

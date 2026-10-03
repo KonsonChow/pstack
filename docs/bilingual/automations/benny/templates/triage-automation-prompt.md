@@ -5,53 +5,36 @@
 # Triage automation prompt
 
 <!-- zh:0 -->
-> **中文**
->
-> # 分诊自动化提示词
+**分诊自动化提示词**
 
 <!-- en:1 -->
 > Source material for the copied setup workflow. Paraphrase this intent into a built-in `automate` draft after `automate` confirms that the copied pack is committed in the repository where the automation will run.
 
 <!-- zh:1 -->
-> **中文**
->
-> > 用于复制包配置流程的源材料。待 `automate` 确认复制包已提交到自动化实际运行的仓库后，将此意图改写为内置 `automate` 草稿。
+> 用于复制包配置流程的源材料。待 `automate` 确认复制包已提交到自动化实际运行的仓库后，将此意图改写为内置 `automate` 草稿。
 
 <!-- en:2 -->
 Read and follow `.cursor/automations/benny/skills/triage-issue-reports/SKILL.md` for this run.
 
 <!-- zh:2 -->
-> **中文**
->
-> 本次运行请阅读并遵循 `.cursor/automations/benny/skills/triage-issue-reports/SKILL.md`。
+本次运行请阅读并遵循 `.cursor/automations/benny/skills/triage-issue-reports/SKILL.md`。
 
 <!-- en:3 -->
 Configuration source. Include this repository-relative path only when it is committed in the same target repository. Otherwise paraphrase the configured values. Never use a plugin source or cache path:
 
 <!-- zh:3 -->
-> **中文**
->
-> 配置来源。仅当此相对仓库路径已提交到同一目标仓库时，才包含它；否则转述配置值。绝不使用插件源目录或缓存路径：
+配置来源。仅当此相对仓库路径已提交到同一目标仓库时，才包含它；否则转述配置值。绝不使用插件源目录或缓存路径：
 
 <!-- en:4 -->
 ```text
 {{BENNY_CONFIG_PATH}}
 ```
 
-<!-- zh:4 -->
-> **中文**
->
-> ```text
-> {{BENNY_CONFIG_PATH}}
-> ```
-
 <!-- en:5 -->
 Trigger:
 
 <!-- zh:5 -->
-> **中文**
->
-> 触发信息：
+触发信息：
 
 <!-- en:6 -->
 ```json
@@ -62,56 +45,35 @@ Trigger:
 }
 ```
 
-<!-- zh:6 -->
-> **中文**
->
-> ```json
-> {
-> 	"source_channel_id": "{{SLACK_CHANNEL_ID}}",
-> 	"message_ts": "{{SLACK_MESSAGE_TS}}",
-> 	"thread_ts": "{{SLACK_THREAD_TS_OR_EMPTY}}"
-> }
-> ```
-
 <!-- en:7 -->
 The creation intent should describe this as a new top-level report in the configured source Slack channel.
 
 <!-- zh:7 -->
-> **中文**
->
-> 创建意图应描述为：配置的来源 Slack 频道中出现一份新的顶层报告。
+创建意图应描述为：配置的来源 Slack 频道中出现一份新的顶层报告。
 
 <!-- en:8 -->
 Treat the source channel and root thread timestamp as immutable. If either is missing or does not match configuration, stop without posting or writing to the issue tracker.
 
 <!-- zh:8 -->
-> **中文**
->
-> 来源频道和根线程时间戳不可更改。如果其中任何一项缺失或与配置不符，停止，不发帖，也不写入问题追踪系统。
+来源频道和根线程时间戳不可更改。如果其中任何一项缺失或与配置不符，停止，不发帖，也不写入问题追踪系统。
 
 <!-- en:9 -->
 The committed operational file owns classification, attachment review, cause tracing, routing, dedupe, tracker writes, and the final verdict. Post no progress messages. Never post a root message in the source channel.
 
 <!-- zh:9 -->
-> **中文**
->
-> 已提交的操作文件负责分类、附件审查、原因追踪、路由、去重、追踪系统写入及最终结论。不发送进度消息，绝不在来源频道发送根消息。
+已提交的操作文件负责分类、附件审查、原因追踪、路由、去重、追踪系统写入及最终结论。不发送进度消息，绝不在来源频道发送根消息。
 
 <!-- en:10 -->
 The coordinator is the only Slack poster. Any delegated worker must be read-only, return findings only, and receive an explicit ban on every Slack write action.
 
 <!-- zh:10 -->
-> **中文**
->
-> 协调者是唯一可以在 Slack 发帖的角色。委派执行者必须只读，仅返回发现，并收到明确禁止一切 Slack 写操作的指令。
+协调者是唯一可以在 Slack 发帖的角色。委派执行者必须只读，仅返回发现，并收到明确禁止一切 Slack 写操作的指令。
 
 <!-- en:11 -->
 End the single verdict with exactly one configured marker:
 
 <!-- zh:11 -->
-> **中文**
->
-> 单条结论必须以且仅以一个配置标记结束：
+单条结论必须以且仅以一个配置标记结束：
 
 <!-- en:12 -->
 ```text
@@ -120,19 +82,8 @@ End the single verdict with exactly one configured marker:
 [benny:other]
 ```
 
-<!-- zh:12 -->
-> **中文**
->
-> ```text
-> [benny:bug]
-> [benny:performance]
-> [benny:other]
-> ```
-
 <!-- en:13 -->
 A bug or performance marker may add `tracker=<URL>`.
 
 <!-- zh:13 -->
-> **中文**
->
-> 缺陷或性能标记后可以附加 `tracker=<URL>`。
+缺陷或性能标记后可以附加 `tracker=<URL>`。

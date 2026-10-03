@@ -5,25 +5,19 @@
 # Create a note
 
 <!-- zh:0 -->
-> **中文**
->
-> # 创建笔记
+**创建笔记**
 
 <!-- en:1 -->
 Create note lets a user save a titled note from the browser or CLI, cancel an unfinished draft, and confirm the saved note from a second user-facing view.
 
 <!-- zh:1 -->
-> **中文**
->
-> 创建笔记功能允许用户从浏览器或 CLI 保存带标题的笔记、取消未完成草稿，并从第二个面向用户的视图确认保存结果。
+创建笔记功能允许用户从浏览器或 CLI 保存带标题的笔记、取消未完成草稿，并从第二个面向用户的视图确认保存结果。
 
 <!-- en:2 -->
 ## Sub-features
 
 <!-- zh:2 -->
-> **中文**
->
-> ## 子功能
+**子功能**
 
 <!-- en:3 -->
 - `create-open` opens a blank editor from each browser entry point.
@@ -32,20 +26,16 @@ Create note lets a user save a titled note from the browser or CLI, cancel an un
 - `create-cli` creates the same note shape from the terminal.
 
 <!-- zh:3 -->
-> **中文**
->
-> - `create-open` 从每个浏览器入口打开空白编辑器。
-> - `create-save` 持久保存标题和正文。
-> - `create-cancel` 丢弃未完成的浏览器草稿。
-> - `create-cli` 从终端创建相同结构的笔记。
+- `create-open` 从每个浏览器入口打开空白编辑器。
+- `create-save` 持久保存标题和正文。
+- `create-cancel` 丢弃未完成的浏览器草稿。
+- `create-cli` 从终端创建相同结构的笔记。
 
 <!-- en:4 -->
 ## How to get to it (user POV)
 
 <!-- zh:4 -->
-> **中文**
->
-> ## 如何进入（用户视角）
+**如何进入（用户视角）**
 
 <!-- en:5 -->
 - Choose the `New note` button in the browser toolbar.
@@ -53,27 +43,21 @@ Create note lets a user save a titled note from the browser or CLI, cancel an un
 - Run `notes create --title <title> --body <body>` in a terminal.
 
 <!-- zh:5 -->
-> **中文**
->
-> - 选择浏览器工具栏的 `New note` 按钮。
-> - 浏览器焦点不在可编辑字段中时，按 `n`。
-> - 在终端运行 `notes create --title <title> --body <body>`。
+- 选择浏览器工具栏的 `New note` 按钮。
+- 浏览器焦点不在可编辑字段中时，按 `n`。
+- 在终端运行 `notes create --title <title> --body <body>`。
 
 <!-- en:6 -->
 ## Driving it with control-notes
 
 <!-- zh:6 -->
-> **中文**
->
-> ## 用 control-notes 操作
+**用 control-notes 操作**
 
 <!-- en:7 -->
 Preconditions:
 
 <!-- zh:7 -->
-> **中文**
->
-> 前置条件：
+前置条件：
 
 <!-- en:8 -->
 - Notes is healthy at `http://127.0.0.1:4173`.
@@ -81,11 +65,9 @@ Preconditions:
 - `control-notes doctor` reports the expected URL and disposable data directory.
 
 <!-- zh:8 -->
-> **中文**
->
-> - Notes 在 `http://127.0.0.1:4173` 正常运行。
-> - 没有标题为 `Release checklist` 的笔记。
-> - `control-notes doctor` 报告预期 URL 和可丢弃的数据目录。
+- Notes 在 `http://127.0.0.1:4173` 正常运行。
+- 没有标题为 `Release checklist` 的笔记。
+- `control-notes doctor` 报告预期 URL 和可丢弃的数据目录。
 
 <!-- en:9 -->
 - **Open editor.** Choose `New note`. Run `control-notes browser click --role button --name "New note"`. A form named `Note editor` appears with focus in the `Title` textbox.
@@ -97,23 +79,19 @@ Preconditions:
 - **Proof.** Reopen both saved notes from `All notes`. Run `control-notes browser snapshot --aria --path artifacts/create-note/list.aria.txt` and `control-notes browser screenshot --path artifacts/create-note/list.png`. The artifacts show `Release checklist` and `CLI note`.
 
 <!-- zh:9 -->
-> **中文**
->
-> - **打开编辑器。**选择 `New note`。运行 `control-notes browser click --role button --name "New note"`。出现名为 `Note editor` 的表单，焦点位于 `Title` 文本框。
-> - **输入内容。**输入标题和正文。运行 `control-notes browser fill --role textbox --name "Title" --value "Release checklist"` 和 `control-notes browser fill --role textbox --name "Body" --value "Tag and publish"`。`Save note` 按钮变为可用。
-> - **保存笔记。**选择 `Save note`。运行 `control-notes browser click --role button --name "Save note"`。出现名为 `Note saved` 的状态，标题显示 `Release checklist`。
-> - **确认持久保存。**返回笔记列表并重新打开笔记。运行 `control-notes browser click --role link --name "All notes"` 和 `control-notes browser click --role link --name "Release checklist"`。编辑器显示两个已保存的值。
-> - **取消草稿。**新建笔记、输入 `Discard me`，然后选择 `Cancel`。运行 `control-notes browser click --role button --name "New note"`、`control-notes browser fill --role textbox --name "Title" --value "Discard me"` 和 `control-notes browser click --role button --name "Cancel"`。返回笔记列表，且没有 `Discard me` 链接。
-> - **CLI 入口。**创建第二份笔记。运行 `control-notes cli -- notes create --title "CLI note" --body "Created from terminal" --format json`。退出码为 `0`，stdout 包含新笔记 ID 和标题。
-> - **证据。**从 `All notes` 重新打开两份已保存笔记。运行 `control-notes browser snapshot --aria --path artifacts/create-note/list.aria.txt` 和 `control-notes browser screenshot --path artifacts/create-note/list.png`。产物显示 `Release checklist` 和 `CLI note`。
+- **打开编辑器。**选择 `New note`。运行 `control-notes browser click --role button --name "New note"`。出现名为 `Note editor` 的表单，焦点位于 `Title` 文本框。
+- **输入内容。**输入标题和正文。运行 `control-notes browser fill --role textbox --name "Title" --value "Release checklist"` 和 `control-notes browser fill --role textbox --name "Body" --value "Tag and publish"`。`Save note` 按钮变为可用。
+- **保存笔记。**选择 `Save note`。运行 `control-notes browser click --role button --name "Save note"`。出现名为 `Note saved` 的状态，标题显示 `Release checklist`。
+- **确认持久保存。**返回笔记列表并重新打开笔记。运行 `control-notes browser click --role link --name "All notes"` 和 `control-notes browser click --role link --name "Release checklist"`。编辑器显示两个已保存的值。
+- **取消草稿。**新建笔记、输入 `Discard me`，然后选择 `Cancel`。运行 `control-notes browser click --role button --name "New note"`、`control-notes browser fill --role textbox --name "Title" --value "Discard me"` 和 `control-notes browser click --role button --name "Cancel"`。返回笔记列表，且没有 `Discard me` 链接。
+- **CLI 入口。**创建第二份笔记。运行 `control-notes cli -- notes create --title "CLI note" --body "Created from terminal" --format json`。退出码为 `0`，stdout 包含新笔记 ID 和标题。
+- **证据。**从 `All notes` 重新打开两份已保存笔记。运行 `control-notes browser snapshot --aria --path artifacts/create-note/list.aria.txt` 和 `control-notes browser screenshot --path artifacts/create-note/list.png`。产物显示 `Release checklist` 和 `CLI note`。
 
 <!-- en:10 -->
 ## Gotchas
 
 <!-- zh:10 -->
-> **中文**
->
-> ## 注意事项
+**注意事项**
 
 <!-- en:11 -->
 - Pressing `n` while a textbox has focus types the character instead of opening a new editor.
@@ -122,9 +100,7 @@ Preconditions:
 - Remove `Release checklist` and `CLI note` during fixture cleanup, but retain their proof artifacts.
 
 <!-- zh:11 -->
-> **中文**
->
-> - 文本框有焦点时，按 `n` 会输入字符，而非打开新编辑器。
-> - 保存时会去掉标题首尾空白。断言渲染后的标题，不要断言草稿输入值。
-> - 单有保存状态不足以证明成功，必须从列表重新打开笔记。
-> - 清理测试夹具时删除 `Release checklist` 和 `CLI note`，但保留验证产物。
+- 文本框有焦点时，按 `n` 会输入字符，而非打开新编辑器。
+- 保存时会去掉标题首尾空白。断言渲染后的标题，不要断言草稿输入值。
+- 单有保存状态不足以证明成功，必须从列表重新打开笔记。
+- 清理测试夹具时删除 `Release checklist` 和 `CLI note`，但保留验证产物。

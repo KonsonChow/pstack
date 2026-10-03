@@ -5,25 +5,19 @@
 ### Refactoring
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 重构
+**重构**
 
 <!-- en:1 -->
 **You own the contract. The structure changes. The behavior does not.** Distinct from Feature, which adds behavior, and Bug fix, which corrects it.
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责守住契约。结构改变，行为不变。** 与新增行为的 Feature、修正行为的 Bug fix 不同。
+**你负责守住契约。结构改变，行为不变。** 与新增行为的 Feature、修正行为的 Bug fix 不同。
 
 <!-- en:2 -->
 If the cleanup reveals a missing feature or a real bug, split it out and ship the structural change first against the pinned contract. A redesign is allowed, but name it and route to Feature. Large or cross-cutting structural work belongs to the **figure-it-out** skill. This playbook is the focused-to-medium change.
 
 <!-- zh:2 -->
-> **中文**
->
-> 清理过程中发现缺失功能或真实 bug，拆出来，先按锁定契约交付结构改动。可以重新设计，但须明确说明，并路由到 Feature。大型或横跨多处的结构工作用 **figure-it-out** skill。本规程适用于聚焦至中等规模的改动。
+清理过程中发现缺失功能或真实 bug，拆出来，先按锁定契约交付结构改动。可以重新设计，但须明确说明，并路由到 Feature。大型或横跨多处的结构工作用 **figure-it-out** skill。本规程适用于聚焦至中等规模的改动。
 
 <!-- en:3 -->
 1. Pin the behavior contract first. Run the **how** skill over the affected subsystem to learn the contract, then write a characterization test, snapshot, or equivalence harness that captures current behavior before any structure moves. If the area has no coverage, write the pin before touching structure. Type check and lint are not a pin.
@@ -36,21 +30,17 @@ If the cleanup reveals a missing feature or a real bug, split it out and ship th
 8. Rebase into small ordered commits. A subtraction commit, then the reshape, then any follow-on cleanup. Shape them with the **sequence-verifiable-units** principle skill, so each behavior-preserving slice stays green before the next. Run **Opening a PR**.
 
 <!-- zh:3 -->
-> **中文**
->
-> 1. 先锁定行为契约。对受影响子系统运行 **how** skill 了解契约，任何结构调整前，用刻画现状的测试、快照或等价性验证环境记录当前行为。没有覆盖时，先建立锁定检查，再改结构。类型检查和 lint 不能锁定行为。
-> 2. 按 **principle-model-the-domain** 明确代码缺什么结构。形态已清晰且局部时，保留朴素代码。重塑必须删除分支或非法状态，而不是增加间接层。
-> 3. 明确目标形态。说明若今天新建，模块布局、类型、调用图应是什么（**principle-foundational-thinking**、**principle-redesign-from-first-principles**）。目标跨函数边界时，调整前运行 **architect** skill 并行探索形态设计。
-> 4. 先减后增。引入新形态前，删除死代码，合并只有一个调用方的封装，删除多余校验和孤立引用（**principle-subtract-before-you-add**）。交付达到目标形态的最小改动（**principle-laziness-protocol**）。“可能有帮助”的猜测性清理要回滚。
-> 5. 以保持行为的小步推进，每步锁定检查都通过。API 重塑时，同一轮迁移所有调用方并删除旧 API（**principle-migrate-callers-then-delete-legacy-apis**）。不做兼容 shim，不保留新旧并行路径。每次重命名都对照真实文件抽查；字符串、文字说明和反向引用中的用法容易漏掉。用配置的 refactoring 模型（默认 `grok-4.6-fast-xhigh`）将机械修改交给 subagent，明确文件路径、移动名称和要保持的行为。亲自审阅 diff。
-> 6. 在真实产物上证明行为未变，不能只说“能编译”（**principle-prove-it-works**）。较大重塑用等价检查：脚本比较旧新输出、在新代码重放已记录基准，或用相关操作与验证 skill 在对应界面做冒烟运行。自己负责验证，不信委派者“看起来不错”的摘要。
-> 7. 确认改动值得保留。成功标准是降低阅读负担（**principle-minimize-reader-load**）。diff 没在任何地方降低阅读负担，就回滚。
-> 8. 整理成按顺序的小提交：先做减法，再重塑，再后续清理。使用 **sequence-verifiable-units** 原则 skill，使每个保持行为的切片通过后再进入下一个。运行 **Opening a PR**。
+1. 先锁定行为契约。对受影响子系统运行 **how** skill 了解契约，任何结构调整前，用刻画现状的测试、快照或等价性验证环境记录当前行为。没有覆盖时，先建立锁定检查，再改结构。类型检查和 lint 不能锁定行为。
+2. 按 **principle-model-the-domain** 明确代码缺什么结构。形态已清晰且局部时，保留朴素代码。重塑必须删除分支或非法状态，而不是增加间接层。
+3. 明确目标形态。说明若今天新建，模块布局、类型、调用图应是什么（**principle-foundational-thinking**、**principle-redesign-from-first-principles**）。目标跨函数边界时，调整前运行 **architect** skill 并行探索形态设计。
+4. 先减后增。引入新形态前，删除死代码，合并只有一个调用方的封装，删除多余校验和孤立引用（**principle-subtract-before-you-add**）。交付达到目标形态的最小改动（**principle-laziness-protocol**）。“可能有帮助”的猜测性清理要回滚。
+5. 以保持行为的小步推进，每步锁定检查都通过。API 重塑时，同一轮迁移所有调用方并删除旧 API（**principle-migrate-callers-then-delete-legacy-apis**）。不做兼容 shim，不保留新旧并行路径。每次重命名都对照真实文件抽查；字符串、文字说明和反向引用中的用法容易漏掉。用配置的 refactoring 模型（默认 `grok-4.6-fast-xhigh`）将机械修改交给 subagent，明确文件路径、移动名称和要保持的行为。亲自审阅 diff。
+6. 在真实产物上证明行为未变，不能只说“能编译”（**principle-prove-it-works**）。较大重塑用等价检查：脚本比较旧新输出、在新代码重放已记录基准，或用相关操作与验证 skill 在对应界面做冒烟运行。自己负责验证，不信委派者“看起来不错”的摘要。
+7. 确认改动值得保留。成功标准是降低阅读负担（**principle-minimize-reader-load**）。diff 没在任何地方降低阅读负担，就回滚。
+8. 整理成按顺序的小提交：先做减法，再重塑，再后续清理。使用 **sequence-verifiable-units** 原则 skill，使每个保持行为的切片通过后再进入下一个。运行 **Opening a PR**。
 
 <!-- en:4 -->
 **Reply:** the structure that changed, the pin you held it against, the equivalence proof, the reader-load delta, what shipped and what got reverted. No new behavior.
 
 <!-- zh:4 -->
-> **中文**
->
-> **回复：** 改了什么结构、守住了哪个锁定检查、等价证据、阅读负担变化、交付了什么、回滚了什么。没有新增行为。
+**回复：** 改了什么结构、守住了哪个锁定检查、等价证据、阅读负担变化、交付了什么、回滚了什么。没有新增行为。

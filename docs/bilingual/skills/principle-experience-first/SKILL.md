@@ -11,31 +11,25 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-experience-first
-> description: "产品、UX 或功能范围出现权衡时应用。优先用户满意的体验，而非实现便利；少交付精心打磨的功能，胜过多交付粗糙功能。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-experience-first
+description: "产品、UX 或功能范围出现权衡时应用。优先用户满意的体验，而非实现便利；少交付精心打磨的功能，胜过多交付粗糙功能。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Experience First
 
 <!-- zh:1 -->
-> **中文**
->
-> # 体验优先
+**体验优先**
 
 <!-- en:2 -->
 When implementation convenience conflicts with user delight, choose delight.
 
 <!-- zh:2 -->
-> **中文**
->
-> 实现便利与用户满意体验冲突时，选体验。
+实现便利与用户满意体验冲突时，选体验。
 
 <!-- en:3 -->
 - Every feature, control, and option must be justified
@@ -45,26 +39,20 @@ When implementation convenience conflicts with user delight, choose delight.
 - Tighten the core loop (every feature should serve the central workflow or get out of the way)
 
 <!-- zh:3 -->
-> **中文**
->
-> - 每个功能、控件、选项都必须有充分理由。
-> - 少做，做好（三个精心打磨的功能，胜过十个粗糙功能）。
-> - 定方案前先做原型（在可丢弃 HTML 中决定设计，比在生产代码中便宜）。
-> - 做好细节（过渡、对齐、间距、反馈、错误状态）。
-> - 打磨核心流程（每个功能都应服务主要工作流，否则就别妨碍它）。
+- 每个功能、控件、选项都必须有充分理由。
+- 少做，做好（三个精心打磨的功能，胜过十个粗糙功能）。
+- 定方案前先做原型（在可丢弃 HTML 中决定设计，比在生产代码中便宜）。
+- 做好细节（过渡、对齐、间距、反馈、错误状态）。
+- 打磨核心流程（每个功能都应服务主要工作流，否则就别妨碍它）。
 
 <!-- en:4 -->
 The user is whoever consumes the work. For a UI that is the end user. For a library or an internal API it is the colleague who imports it. The engineer who maintains the code next is a user too. Weigh their experience the same way, and explain impact from their perspective.
 
 <!-- zh:4 -->
-> **中文**
->
-> 用户就是使用工作成果的人。UI 的用户是最终用户；库或内部 API 的用户是导入它的同事；下一位维护代码的工程师也是用户。以同样标准衡量他们的体验，从他们的角度解释影响。
+用户就是使用工作成果的人。UI 的用户是最终用户；库或内部 API 的用户是导入它的同事；下一位维护代码的工程师也是用户。以同样标准衡量他们的体验，从他们的角度解释影响。
 
 <!-- en:5 -->
 Foundations should serve the experience. Foundational thinking governs the *sequence* of work. This principle governs the *target*.
 
 <!-- zh:5 -->
-> **中文**
->
-> 基础设计要服务体验。Foundational thinking 决定工作的*顺序*，本原则决定工作的*目标*。
+基础设计要服务体验。Foundational thinking 决定工作的*顺序*，本原则决定工作的*目标*。

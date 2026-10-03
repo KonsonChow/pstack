@@ -5,25 +5,19 @@
 ### Hillclimb
 
 <!-- zh:0 -->
-> **中文**
->
-> ### Hillclimb（迭代优化）
+**Hillclimb（迭代优化）**
 
 <!-- en:1 -->
 **You own the metric and the experiment's integrity. Supervise and review. Delegate the attempts.** For sustained, iterative improvement of one measurable thing against a target. A one-off fix is Bug fix or Perf issue. This is the loop.
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责指标和实验可信度，监督并评审，将具体尝试委派出去。** 用于针对目标持续、迭代改善一个可测量对象。一次性修复用 Bug fix 或 Perf issue，这里关注持续循环。
+**你负责指标和实验可信度，监督并评审，将具体尝试委派出去。** 用于针对目标持续、迭代改善一个可测量对象。一次性修复用 Bug fix 或 Perf issue，这里关注持续循环。
 
 <!-- en:2 -->
 Core discipline: one change, one measurement, keep or revert. Never stack untested changes, and never claim a win from code inspection (the **prove-it-works** principle skill).
 
 <!-- zh:2 -->
-> **中文**
->
-> 核心纪律：一个改动、一次测量，保留或回滚。不叠加未测试改动，不能凭看代码就宣称改善（**prove-it-works** 原则 skill）。
+核心纪律：一个改动、一次测量，保留或回滚。不叠加未测试改动，不能凭看代码就宣称改善（**prove-it-works** 原则 skill）。
 
 <!-- en:3 -->
 1. Ground the workload and architecture before choosing the metric. Run the **how** skill over the target, name the realistic workload dimensions that can move the result (data size, history, state, concurrency), and select a case that reproduces the user's complaint. If no case reproduces it, fix the repro instead of hillclimbing. Then fix one metric, the direction that counts as better, and a checkable stop predicate that pairs a target with a floor on attempts so a lucky early win can't end the run (the example "at least 50% better than baseline and at least 10 iterations" is this shape). Use the user's numbers when given, otherwise agree them.
@@ -41,26 +35,22 @@ Core discipline: one change, one measurement, keep or revert. Never stack untest
 8. Run **Opening a PR** with the accepted commits stacked in the order they landed.
 
 <!-- zh:3 -->
-> **中文**
->
-> 1. 选指标前，先摸清工作负载与架构。对目标运行 **how** skill，明确能影响结果的真实负载维度（数据量、历史、状态、并发），选择能复现用户抱怨的案例。没有案例复现，就先修复复现方法，不做 hillclimb。再固定一个指标、改善方向，以及可检查的停止条件；条件同时包含目标和尝试次数下限，避免一次幸运改善提前结束（例如“比基准至少改善 50%，且至少 10 轮”）。用户给了数字就用，否则先达成一致。
-> 2. 构建测量运行环境，证明灵敏度，再冻结（**build-the-lever** 原则 skill）。运行相互对照的真实负载，确认目标案例复现症状，较轻案例能按预期区分。如果区分不了，调整负载或指标。冻结后，用一条可重复命令输出指标，采样足够多以超越噪声（N 次的中位数，不是单次）。任何改动前，记录基准指标及回归关卡通过结果（必须持续通过的测试）。
-> 3. 通过 **show-me-your-work** skill 建立决策日志。一个 `decision.tsv`，每次尝试一行：id、假设、改动、before、after、delta、tests、结论（保留或回滚）、备注。每次尝试前读取。放在代码树外，加入 gitignore。
-> 4. 每个假设都基于第 1 步的架构模型，说明具体机制（“把 X 移出启动路径，因为它阻塞首次绘制”），而不是“试着 memoize 点东西”。
-> 5. 循环，每轮一个假设：
->    - 用配置的 hillclimb 模型（默认 `grok-4.6-fast-xhigh`），以严格范围交给 subagent。你监督并审阅 diff，不亲自敲实现（**guard-the-context-window** 原则 skill）。同时存在多个独立假设时，分派并行 subagent，各在独立 worktree（**separate-before-serializing-shared-state** 原则 skill）。
->    - 用冻结的测量环境测量改动前后，并运行回归关卡。
->    - 只有指标改善超越噪声且关卡仍通过，才接受；否则完整回滚。“可能有帮助”不能保留。
->    - 每个接受的修复单独提交，只暂存自己改的文件（`git add <files>`，绝不用 `-A`）。保留或回滚都记录一行。
->    每轮结束先检查，再开始下一轮（**sequence-verifiable-units** 原则 skill）。无人值守时，只借用 Autonomous run 规程（`playbooks/autonomous-run.md`）的唤醒机制，不借其停止规则。
-> 6. 不要在第一次平台期止步。停滞、连续多次拒绝时，换假设类别、组合接近成功的方案、重读源码，或尝试更大胆的方案，再判断是否优化到头。正确性和简单性优于指标。破坏行为的改善回滚；指标不变但更简单的改动保留（**laziness-protocol** 原则 skill）。
-> 7. 满足停止条件，或剩余想法价值边际低、成本不值得时停止。不能放宽条件来达标，仍有廉价且未试的假设时不能退出。卡住就说明，不要空转。
-> 8. 运行 **Opening a PR**，接受的提交按落实顺序堆叠。
+1. 选指标前，先摸清工作负载与架构。对目标运行 **how** skill，明确能影响结果的真实负载维度（数据量、历史、状态、并发），选择能复现用户抱怨的案例。没有案例复现，就先修复复现方法，不做 hillclimb。再固定一个指标、改善方向，以及可检查的停止条件；条件同时包含目标和尝试次数下限，避免一次幸运改善提前结束（例如“比基准至少改善 50%，且至少 10 轮”）。用户给了数字就用，否则先达成一致。
+2. 构建测量运行环境，证明灵敏度，再冻结（**build-the-lever** 原则 skill）。运行相互对照的真实负载，确认目标案例复现症状，较轻案例能按预期区分。如果区分不了，调整负载或指标。冻结后，用一条可重复命令输出指标，采样足够多以超越噪声（N 次的中位数，不是单次）。任何改动前，记录基准指标及回归关卡通过结果（必须持续通过的测试）。
+3. 通过 **show-me-your-work** skill 建立决策日志。一个 `decision.tsv`，每次尝试一行：id、假设、改动、before、after、delta、tests、结论（保留或回滚）、备注。每次尝试前读取。放在代码树外，加入 gitignore。
+4. 每个假设都基于第 1 步的架构模型，说明具体机制（“把 X 移出启动路径，因为它阻塞首次绘制”），而不是“试着 memoize 点东西”。
+5. 循环，每轮一个假设：
+   - 用配置的 hillclimb 模型（默认 `grok-4.6-fast-xhigh`），以严格范围交给 subagent。你监督并审阅 diff，不亲自敲实现（**guard-the-context-window** 原则 skill）。同时存在多个独立假设时，分派并行 subagent，各在独立 worktree（**separate-before-serializing-shared-state** 原则 skill）。
+   - 用冻结的测量环境测量改动前后，并运行回归关卡。
+   - 只有指标改善超越噪声且关卡仍通过，才接受；否则完整回滚。“可能有帮助”不能保留。
+   - 每个接受的修复单独提交，只暂存自己改的文件（`git add <files>`，绝不用 `-A`）。保留或回滚都记录一行。
+   每轮结束先检查，再开始下一轮（**sequence-verifiable-units** 原则 skill）。无人值守时，只借用 Autonomous run 规程（`playbooks/autonomous-run.md`）的唤醒机制，不借其停止规则。
+6. 不要在第一次平台期止步。停滞、连续多次拒绝时，换假设类别、组合接近成功的方案、重读源码，或尝试更大胆的方案，再判断是否优化到头。正确性和简单性优于指标。破坏行为的改善回滚；指标不变但更简单的改动保留（**laziness-protocol** 原则 skill）。
+7. 满足停止条件，或剩余想法价值边际低、成本不值得时停止。不能放宽条件来达标，仍有廉价且未试的假设时不能退出。卡住就说明，不要空转。
+8. 运行 **Opening a PR**，接受的提交按落实顺序堆叠。
 
 <!-- en:4 -->
 **Reply:** the metric and target, baseline to final with the percent delta, iterations run (kept vs reverted), each accepted fix on one line, the `decision.tsv` path, and the best idea you would try next if pushed further.
 
 <!-- zh:4 -->
-> **中文**
->
-> **回复：** 指标与目标、基准到最终值及百分比变化、尝试轮数（保留与回滚）、每个接受修复一行、`decision.tsv` 路径，以及若继续优化最想尝试的方案。
+**回复：** 指标与目标、基准到最终值及百分比变化、尝试轮数（保留与回滚）、每个接受修复一行、`decision.tsv` 路径，以及若继续优化最想尝试的方案。

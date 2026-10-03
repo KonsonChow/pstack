@@ -5,25 +5,19 @@
 ### Investigation
 
 <!-- zh:0 -->
-> **中文**
->
-> ### 调查
+**调查**
 
 <!-- en:1 -->
 **You own the answer. Plan, route, write.**
 
 <!-- zh:1 -->
-> **中文**
->
-> **你负责给出答案。规划、选择流程、撰写结果。**
+**你负责给出答案。规划、选择流程、撰写结果。**
 
 <!-- en:2 -->
 Investigation requests are read-only. They produce a cited explanation or a recommendation, not a code change.
 
 <!-- zh:2 -->
-> **中文**
->
-> 调查请求是只读的，产出有引用的解释或建议，不修改代码。
+调查请求是只读的，产出有引用的解释或建议，不修改代码。
 
 <!-- en:3 -->
 1. Route through the **how** skill. For motivation questions, also route through the **why** skill.
@@ -32,25 +26,19 @@ Investigation requests are read-only. They produce a cited explanation or a reco
 4. Apply the **unslop** skill to the reply.
 
 <!-- zh:3 -->
-> **中文**
->
-> 1. 使用 **how** skill。涉及动机的问题同时使用 **why** skill。
-> 2. 吞吐量检查点始终只写一行：`throughput checkpoint: n/a, read-only investigation`。
-> 3. 按 `how` 的结构输出（概览 / 核心概念 / 工作原理 / 代码位置 / 注意事项）；若请求是从多个方案中选择，则给出建议和取舍对比表。
-> 4. 使用 **unslop** skill 清理回复。
+1. 使用 **how** skill。涉及动机的问题同时使用 **why** skill。
+2. 吞吐量检查点始终只写一行：`throughput checkpoint: n/a, read-only investigation`。
+3. 按 `how` 的结构输出（概览 / 核心概念 / 工作原理 / 代码位置 / 注意事项）；若请求是从多个方案中选择，则给出建议和取舍对比表。
+4. 使用 **unslop** skill 清理回复。
 
 <!-- en:4 -->
 No PR, no babysit, no `architect` unless the investigation precedes a code change. If it does, hand back to the user and re-route to Bug fix or Feature.
 
 <!-- zh:4 -->
-> **中文**
->
-> 不创建 PR、不跟进合并、不使用 `architect`，除非调查是代码改动的前置工作。如果是，先向用户返回结果，再转入 Bug fix 或 Feature 流程。
+不创建 PR、不跟进合并、不使用 `architect`，除非调查是代码改动的前置工作。如果是，先向用户返回结果，再转入 Bug fix 或 Feature 流程。
 
 <!-- en:5 -->
 **Reply:** the investigation output. For "are we sure?" answers, include your real judgment with reasons. Push back if the premise is wrong (see Autonomy).
 
 <!-- zh:5 -->
-> **中文**
->
-> **回复：**调查结果。回答“我们确定吗？”时，应给出真实判断及理由。前提有误就指出（参见 Autonomy）。
+**回复：**调查结果。回答“我们确定吗？”时，应给出真实判断及理由。前提有误就指出（参见 Autonomy）。

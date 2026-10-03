@@ -5,25 +5,19 @@
 # Databricks Analytics & System Tables
 
 <!-- zh:0 -->
-> **中文**
->
-> # Databricks 分析与系统表
+**Databricks 分析与系统表**
 
 <!-- en:1 -->
 ## What this source contains
 
 <!-- zh:1 -->
-> **中文**
->
-> ## 这个来源包含什么
+**这个来源包含什么**
 
 <!-- en:2 -->
 Databricks is the product-analytics, data-pipeline, and warehouse-telemetry layer. It complements Datadog. Datadog is the *infra/runtime* view, Databricks is the *product/data* view (what users did, which experiments ran, how feature usage evolved, where a threshold constant came from).
 
 <!-- zh:2 -->
-> **中文**
->
-> Databricks 是产品分析、数据流水线和数据仓库遥测层，与 Datadog 互补。Datadog 提供*基础设施／运行时*视角，Databricks 提供*产品／数据*视角（用户做了什么、运行了哪些实验、功能用量如何变化、某个阈值常量从何而来）。
+Databricks 是产品分析、数据流水线和数据仓库遥测层，与 Datadog 互补。Datadog 提供*基础设施／运行时*视角，Databricks 提供*产品／数据*视角（用户做了什么、运行了哪些实验、功能用量如何变化、某个阈值常量从何而来）。
 
 <!-- en:3 -->
 - **Product analytics events.** `your_warehouse.events.analytics_track_event` (raw) and typed, deduplicated per-event dbt models in `<your_analytics_db>.<schema>.<table>`. User behavior: feature invocations, clicks, accepts/rejects, submissions, client-reported errors.
@@ -34,38 +28,30 @@ Databricks is the product-analytics, data-pipeline, and warehouse-telemetry laye
 - **Databricks notebooks.** Exploratory analyses engineers wrote before code changes. **Not queryable via the SQL MCP.** If you suspect the rationale lives in a notebook, name it as a gap.
 
 <!-- zh:3 -->
-> **中文**
->
-> - **产品分析事件。** `your_warehouse.events.analytics_track_event`（原始表）以及 `<your_analytics_db>.<schema>.<table>` 中按事件划分、类型化且已去重的 dbt 模型。反映用户行为：功能调用、点击、接受／拒绝、提交、客户端报告错误。
-> - **用量与计费事件。** `your_warehouse.events.usage_event`／`<your_analytics_db>.<schema>.stg_usage_events`、`your_warehouse.events.raw_model_event`／`<your_analytics_db>.<schema>.stg_raw_model_events`。用于由成本或数量驱动的决策。
-> - **实验／功能开关数据。** 曝光和结果表。**Schema 因公司而异。** 假定表名之前，用 `SHOW TABLES` 探查。
-> - **系统表。** `system.query.history`、`system.compute.warehouses`、`system.billing.*`、`system.access.audit`。回答“查询是否昂贵”“多久有人运行一次”“仓库负载何时骤增”。
-> - **dbt 血缘。** `<your_analytics_db>.<schema>` 中模型揭示哪些流水线依赖某张表／字段。上游变更经常推动调用方代码变更。
-> - **Databricks notebook。** 工程师在修改代码前编写的探索性分析。**不能通过 SQL MCP 查询。** 怀疑理由在 notebook 中时，标明此证据缺口。
+- **产品分析事件。** `your_warehouse.events.analytics_track_event`（原始表）以及 `<your_analytics_db>.<schema>.<table>` 中按事件划分、类型化且已去重的 dbt 模型。反映用户行为：功能调用、点击、接受／拒绝、提交、客户端报告错误。
+- **用量与计费事件。** `your_warehouse.events.usage_event`／`<your_analytics_db>.<schema>.stg_usage_events`、`your_warehouse.events.raw_model_event`／`<your_analytics_db>.<schema>.stg_raw_model_events`。用于由成本或数量驱动的决策。
+- **实验／功能开关数据。** 曝光和结果表。**Schema 因公司而异。** 假定表名之前，用 `SHOW TABLES` 探查。
+- **系统表。** `system.query.history`、`system.compute.warehouses`、`system.billing.*`、`system.access.audit`。回答“查询是否昂贵”“多久有人运行一次”“仓库负载何时骤增”。
+- **dbt 血缘。** `<your_analytics_db>.<schema>` 中模型揭示哪些流水线依赖某张表／字段。上游变更经常推动调用方代码变更。
+- **Databricks notebook。** 工程师在修改代码前编写的探索性分析。**不能通过 SQL MCP 查询。** 怀疑理由在 notebook 中时，标明此证据缺口。
 
 <!-- en:4 -->
 ## How to search it
 
 <!-- zh:4 -->
-> **中文**
->
-> ## 如何搜索
+**如何搜索**
 
 <!-- en:5 -->
 Use the Databricks SQL MCP. Primary tool: `execute_sql_read_only`. If it returns a `statement_id`, poll with `poll_sql_result` rather than re-running.
 
 <!-- zh:5 -->
-> **中文**
->
-> 使用 Databricks SQL MCP。主要工具为 `execute_sql_read_only`。返回 `statement_id` 时，用 `poll_sql_result` 轮询，不要重新执行。
+使用 Databricks SQL MCP。主要工具为 `execute_sql_read_only`。返回 `statement_id` 时，用 `poll_sql_result` 轮询，不要重新执行。
 
 <!-- en:6 -->
 **Orient before querying.** Schemas are company-specific. Probe before trusting a table name:
 
 <!-- zh:6 -->
-> **中文**
->
-> **查询前先了解结构。** Schema 因公司而异，相信表名之前先探查：
+**查询前先了解结构。** Schema 因公司而异，相信表名之前先探查：
 
 <!-- en:7 -->
 ```sql
@@ -73,37 +59,23 @@ SHOW TABLES IN <your_analytics_db>.<schema> LIKE '*<keyword>*';
 DESCRIBE TABLE <your_analytics_db>.<schema>.stg_<event>;
 ```
 
-<!-- zh:7 -->
-> **中文**
->
-> ```sql
-> SHOW TABLES IN <your_analytics_db>.<schema> LIKE '*<keyword>*';
-> DESCRIBE TABLE <your_analytics_db>.<schema>.stg_<event>;
-> ```
-
 <!-- en:8 -->
 **Time-bound every query.** These tables are huge and unconstrained scans time out. Filter on `_timestamp` (events) or `start_time` (`system.query.history`) with a window bracketing the ship date, typically ~30 days before and after, wider only for strong reason.
 
 <!-- zh:8 -->
-> **中文**
->
-> **每条查询限定时间。** 这些表很大，无约束扫描会超时。按 `_timestamp`（事件）或 `start_time`（`system.query.history`）过滤，时间窗覆盖交付日期，通常前后各约 30 天，只有充分理由才扩大。
+**每条查询限定时间。** 这些表很大，无约束扫描会超时。按 `_timestamp`（事件）或 `start_time`（`system.query.history`）过滤，时间窗覆盖交付日期，通常前后各约 30 天，只有充分理由才扩大。
 
 <!-- en:9 -->
 **Prefer typed dbt models over the raw table.** `<your_analytics_db>.<schema>.<table>` is deduplicated, typed, and liquid-clustered. `your_warehouse.events.analytics_track_event` has duplicates and untyped `properties_json`. Model-name pattern: `stg_<source>_<event_name_with_underscores>`, where `<source>` is `app`, `backend`, `website`, or `cli`. Confirm the exact model name with `SHOW TABLES` when the pattern alone doesn't resolve it. Drop to the raw table only when there's no dbt model yet, or you need events from inside the dbt refresh lag.
 
 <!-- zh:9 -->
-> **中文**
->
-> **优先类型化 dbt 模型，而不是原始表。** `<your_analytics_db>.<schema>.<table>` 已去重、类型化，并采用 liquid clustering；`your_warehouse.events.analytics_track_event` 有重复和未类型化的 `properties_json`。模型名模式为 `stg_<source>_<event_name_with_underscores>`，`<source>` 是 `app`、`backend`、`website` 或 `cli`。仅靠模式无法定位时，用 `SHOW TABLES` 确认准确名称。只有尚无 dbt 模型，或需要 dbt 刷新延迟范围内的事件时，才使用原始表。
+**优先类型化 dbt 模型，而不是原始表。** `<your_analytics_db>.<schema>.<table>` 已去重、类型化，并采用 liquid clustering；`your_warehouse.events.analytics_track_event` 有重复和未类型化的 `properties_json`。模型名模式为 `stg_<source>_<event_name_with_underscores>`，`<source>` 是 `app`、`backend`、`website` 或 `cli`。仅靠模式无法定位时，用 `SHOW TABLES` 确认准确名称。只有尚无 dbt 模型，或需要 dbt 刷新延迟范围内的事件时，才使用原始表。
 
 <!-- en:10 -->
 **Column conventions on the typed dbt models** (knowing these avoids a `DESCRIBE` round-trip):
 
 <!-- zh:10 -->
-> **中文**
->
-> **类型化 dbt 模型的列约定**（了解这些可以省一次 `DESCRIBE`）：
+**类型化 dbt 模型的列约定**（了解这些可以省一次 `DESCRIBE`）：
 
 <!-- en:11 -->
 - `_timestamp`, `_id`, `_auth_id`, `_request_id`, `event_name`. Standard on every model
@@ -111,27 +83,21 @@ DESCRIBE TABLE <your_analytics_db>.<schema>.stg_<event>;
 - `context_team_id`, `context_client_version`, `context_country`, `context_client_os`. Pre-extracted client context
 
 <!-- zh:11 -->
-> **中文**
->
-> - `_timestamp`、`_id`、`_auth_id`、`_request_id`、`event_name`：每个模型的标准字段。
-> - `properties_<name>`：类型化、下划线命名的事件属性（`properties_entrypoint`、`properties_size_bytes` 等）。
-> - `context_team_id`、`context_client_version`、`context_country`、`context_client_os`：预先提取的客户端上下文。
+- `_timestamp`、`_id`、`_auth_id`、`_request_id`、`event_name`：每个模型的标准字段。
+- `properties_<name>`：类型化、下划线命名的事件属性（`properties_entrypoint`、`properties_size_bytes` 等）。
+- `context_team_id`、`context_client_version`、`context_country`、`context_client_os`：预先提取的客户端上下文。
 
 <!-- en:12 -->
 ### Investigation patterns that tend to pay off
 
 <!-- zh:12 -->
-> **中文**
->
-> ### 通常有收获的调查模式
+**通常有收获的调查模式**
 
 <!-- en:13 -->
 Pick the table + column combination that matches the target:
 
 <!-- zh:13 -->
-> **中文**
->
-> 选择与目标匹配的表及列组合：
+选择与目标匹配的表及列组合：
 
 <!-- en:14 -->
 1. **Event usage trajectory.** Daily counts on the relevant `stg_*` model across a ±30d window around the PR merge. A step function from zero to steady volume within a day or two of the merge is strong circumstantial evidence the PR launched the feature. A decay to zero suggests a deprecation or deletion.
@@ -141,47 +107,37 @@ Pick the table + column combination that matches the target:
 5. **dbt lineage.** If the target reads from or writes into a `<your_analytics_db>.<schema>` model, the model's own git history (in this repo) often carries the rationale. Hand that lead back to the git investigator rather than chasing it yourself.
 
 <!-- zh:14 -->
-> **中文**
->
-> 1. **事件用量变化。** 查看相关 `stg_*` 模型在 PR 合并前后各 30 天内的每日数量。合并后一两天内从零跳到稳定用量，是 PR 上线功能的强间接证据；下降到零则暗示弃用或删除。
-> 2. **保护措施／防御检查的来源。** 查看 PR *之前* 14 天相关 `properties_<name>` 列的分布（中位数／p99／最大值）。p99 与目标阈值常量匹配，暗示数值由数据确定。
-> 3. **实验／功能开关查询。** 用 `SHOW TABLES ... LIKE '*experiment*'` 找曝光表，再查询 PR 日期附近相关 flag key 按变体划分的曝光数量。
-> 4. **迁移、回填或性能重写的查询历史证据。** 在窄 `start_time` 范围内，对 `system.query.history` 按 `statement_text ILIKE '%<table_or_symbol>%'` 过滤，找出可能推动改动的昂贵查询（按 `total_duration_ms` 排序，或聚合 `SUM(read_bytes)`、`COUNT(*)`）。
-> 5. **dbt 血缘。** 目标读写 `<your_analytics_db>.<schema>` 模型时，该模型自身的 git 历史（在此仓库中）常保存理由。将线索交回 git 调查者，不要自己追查。
+1. **事件用量变化。** 查看相关 `stg_*` 模型在 PR 合并前后各 30 天内的每日数量。合并后一两天内从零跳到稳定用量，是 PR 上线功能的强间接证据；下降到零则暗示弃用或删除。
+2. **保护措施／防御检查的来源。** 查看 PR *之前* 14 天相关 `properties_<name>` 列的分布（中位数／p99／最大值）。p99 与目标阈值常量匹配，暗示数值由数据确定。
+3. **实验／功能开关查询。** 用 `SHOW TABLES ... LIKE '*experiment*'` 找曝光表，再查询 PR 日期附近相关 flag key 按变体划分的曝光数量。
+4. **迁移、回填或性能重写的查询历史证据。** 在窄 `start_time` 范围内，对 `system.query.history` 按 `statement_text ILIKE '%<table_or_symbol>%'` 过滤，找出可能推动改动的昂贵查询（按 `total_duration_ms` 排序，或聚合 `SUM(read_bytes)`、`COUNT(*)`）。
+5. **dbt 血缘。** 目标读写 `<your_analytics_db>.<schema>` 模型时，该模型自身的 git 历史（在此仓库中）常保存理由。将线索交回 git 调查者，不要自己追查。
 
 <!-- en:15 -->
 ## What good evidence looks like here
 
 <!-- zh:15 -->
-> **中文**
->
-> ## 这里的可靠证据是什么样的
+**这里的可靠证据是什么样的**
 
 <!-- en:16 -->
 Beyond the pattern shapes above:
 
 <!-- zh:16 -->
-> **中文**
->
-> 除上述模式外：
+除上述模式外：
 
 <!-- en:17 -->
 - An error-classifying event's count drops to near zero in the days after a defensive-code PR. Suggests the PR resolved that error class
 - An exposure table row names the target's feature-flag key with a "shipped" / "concluded" decision around the PR ship date
 
 <!-- zh:17 -->
-> **中文**
->
-> - 防御代码 PR 后数天，某类错误事件数量降至接近零，暗示 PR 解决该错误类别。
-> - 曝光表中出现目标的功能开关 key，并在 PR 交付日前后有“shipped”／“concluded”决策。
+- 防御代码 PR 后数天，某类错误事件数量降至接近零，暗示 PR 解决该错误类别。
+- 曝光表中出现目标的功能开关 key，并在 PR 交付日前后有“shipped”／“concluded”决策。
 
 <!-- en:18 -->
 ## Common pitfalls
 
 <!-- zh:18 -->
-> **中文**
->
-> ## 常见陷阱
+**常见陷阱**
 
 <!-- en:19 -->
 - **Instrumented ≠ caused.** An event's existence means someone cared enough to log it, not that the target code exists *because* of it. Pair with a PR/commit citation from the git investigator before claiming causation.
@@ -193,23 +149,19 @@ Beyond the pattern shapes above:
 - **Notebooks aren't queryable.** The SQL MCP can't see Databricks notebooks. If you suspect the rationale lives in one, return a gap.
 
 <!-- zh:19 -->
-> **中文**
->
-> - **有埋点 ≠ 因果。** 事件存在只代表有人愿意记录，不代表目标代码*因为*它才存在。主张因果前，结合 git 调查者给出的 PR／提交引用。
-> - **隐蔽埋点变化。** 事件量阶跃可能只是开始记录新事件，不是用户行为变化。把增长解读为功能上线信号前，检查同期埋点 PR。
-> - **Schema 漂移。** 事件属性会演变，今天 dbt 模型上的列在目标编写时可能不存在；旧数据可能只在原始 `properties_json` 中携带属性。
-> - **dbt 刷新延迟。** `<your_analytics_db>.<schema>.*` 定时重建（通常按小时／天）。最近几小时的事件应回退到 `your_warehouse.events.*`，按 `_id` 去重。
-> - **公司特有表。** 实验、功能开关、计费、用量表各不相同。未确认表存在就报告结果是经典失败模式。先 `SHOW TABLES`／`DESCRIBE TABLE`。
-> - **保留期断层。** 相关时间窗早于数据保留期或 dbt 模型创建日，是*缺口*而不是空结果。明确说明，避免综合分析者把“无结果”理解为“无活动”。
-> - **Notebook 不可查询。** SQL MCP 看不到 Databricks notebook。怀疑理由在那里时，返回缺口。
+- **有埋点 ≠ 因果。** 事件存在只代表有人愿意记录，不代表目标代码*因为*它才存在。主张因果前，结合 git 调查者给出的 PR／提交引用。
+- **隐蔽埋点变化。** 事件量阶跃可能只是开始记录新事件，不是用户行为变化。把增长解读为功能上线信号前，检查同期埋点 PR。
+- **Schema 漂移。** 事件属性会演变，今天 dbt 模型上的列在目标编写时可能不存在；旧数据可能只在原始 `properties_json` 中携带属性。
+- **dbt 刷新延迟。** `<your_analytics_db>.<schema>.*` 定时重建（通常按小时／天）。最近几小时的事件应回退到 `your_warehouse.events.*`，按 `_id` 去重。
+- **公司特有表。** 实验、功能开关、计费、用量表各不相同。未确认表存在就报告结果是经典失败模式。先 `SHOW TABLES`／`DESCRIBE TABLE`。
+- **保留期断层。** 相关时间窗早于数据保留期或 dbt 模型创建日，是*缺口*而不是空结果。明确说明，避免综合分析者把“无结果”理解为“无活动”。
+- **Notebook 不可查询。** SQL MCP 看不到 Databricks notebook。怀疑理由在那里时，返回缺口。
 
 <!-- en:20 -->
 ## What to return
 
 <!-- zh:20 -->
-> **中文**
->
-> ## 返回什么
+**返回什么**
 
 <!-- en:21 -->
 For each relevant finding:
@@ -221,12 +173,10 @@ For each relevant finding:
 - Relevance + strength: direct / circumstantial / weak
 
 <!-- zh:21 -->
-> **中文**
->
-> 每条相关发现包括：
-> - 类型（产品事件／实验曝光／用量或计费事件／系统表行／dbt 模型）
-> - 完全限定表名及实际执行的准确查询
-> - 查询时间窗
-> - 精简数值摘要（数量、分位数、首次／最后出现时间）。**不要倾倒原始行。**
-> - 与目标交付日的时间关联（如“首行 2024-08-15，PR #49074 于 2024-08-14 合并”）
-> - 相关性及强度：直接／间接／弱
+每条相关发现包括：
+- 类型（产品事件／实验曝光／用量或计费事件／系统表行／dbt 模型）
+- 完全限定表名及实际执行的准确查询
+- 查询时间窗
+- 精简数值摘要（数量、分位数、首次／最后出现时间）。**不要倾倒原始行。**
+- 与目标交付日的时间关联（如“首行 2024-08-15，PR #49074 于 2024-08-14 合并”）
+- 相关性及强度：直接／间接／弱

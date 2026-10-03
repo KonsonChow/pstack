@@ -5,17 +5,13 @@
 # Slack Conversations
 
 <!-- zh:0 -->
-> **中文**
->
-> # Slack 对话
+**Slack 对话**
 
 <!-- en:1 -->
 ## What this source contains
 
 <!-- zh:1 -->
-> **中文**
->
-> ## 该来源包含什么
+**该来源包含什么**
 
 <!-- en:2 -->
 - Real-time discussions of problems and decisions
@@ -26,38 +22,30 @@
 - DMs (usually not searchable, scope accordingly)
 
 <!-- zh:2 -->
-> **中文**
->
-> - 关于问题和决策的即时讨论
-> - 应急决策所在的事故频道
-> - 讨论取舍的设计线程
-> - 资深工程师回答却没有写入文档的问题
-> - 合入后的讨论，解释为何重新审视某事
-> - 私信（通常无法搜索，需据此限定范围）
+- 关于问题和决策的即时讨论
+- 应急决策所在的事故频道
+- 讨论取舍的设计线程
+- 资深工程师回答却没有写入文档的问题
+- 合入后的讨论，解释为何重新审视某事
+- 私信（通常无法搜索，需据此限定范围）
 
 <!-- en:3 -->
 Slack is frequently where the *real* decisions got made, especially for smaller changes that didn't warrant a doc. It's also the most ephemeral source. Threads get deleted, channels get archived, and search quality degrades over time.
 
 <!-- zh:3 -->
-> **中文**
->
-> Slack 常常是真正作出决策的地方，尤其是无需正式文档的小改动。它也是最容易消失的来源：线程会删除，频道会归档，搜索质量随时间下降。
+Slack 常常是真正作出决策的地方，尤其是无需正式文档的小改动。它也是最容易消失的来源：线程会删除，频道会归档，搜索质量随时间下降。
 
 <!-- en:4 -->
 ## How to search it
 
 <!-- zh:4 -->
-> **中文**
->
-> ## 如何搜索
+**如何搜索**
 
 <!-- en:5 -->
 Slack MCP tools vary. Check which Slack MCP is available and inspect its tool schema first. It may require `mcp_auth`. If authentication fails, stop and report the gap.
 
 <!-- zh:5 -->
-> **中文**
->
-> Slack MCP 工具各不相同。先检查可用的 Slack MCP 及其工具 schema，可能需要 `mcp_auth`。认证失败时，停止并报告证据缺口。
+Slack MCP 工具各不相同。先检查可用的 Slack MCP 及其工具 schema，可能需要 `mcp_auth`。认证失败时，停止并报告证据缺口。
 
 <!-- en:6 -->
 1. **Author-bounded search.** Messages from the PR author around the PR merge date. Limits scope dramatically and often hits gold.
@@ -73,27 +61,23 @@ Slack MCP tools vary. Check which Slack MCP is available and inspect its tool sc
 6. **Thread traversal.** When you find a relevant message, fetch the whole thread. The decision often lives in the replies.
 
 <!-- zh:6 -->
-> **中文**
->
-> 1. **限定作者搜索。**搜索 PR 作者在合并日前后的消息。可大幅缩小范围，常能找到关键线索。
-> 2. **搜索功能名和关键符号。**包括拼写错误和口语表达。
-> 3. **搜索 PR URL。**评审或讨论 PR 时 Slack 常会贴链接。搜索 PR URL（或仅 `/pull/<number>`）。
-> 4. **搜索错误字符串。**代码处理特定错误时，搜索该错误，常能找到事故线程。
-> 5. **限定频道搜索。**缩小到可能相关的频道：
->    - `#eng-*`：工程讨论
->    - `#proj-*`：项目频道
->    - `#incident-*` / `#sev-*`：事故频道
->    - 负责该代码的团队专用频道
->    - 设计评审频道
-> 6. **遍历线程。**发现相关消息后，获取完整线程；决策常在回复中。
+1. **限定作者搜索。**搜索 PR 作者在合并日前后的消息。可大幅缩小范围，常能找到关键线索。
+2. **搜索功能名和关键符号。**包括拼写错误和口语表达。
+3. **搜索 PR URL。**评审或讨论 PR 时 Slack 常会贴链接。搜索 PR URL（或仅 `/pull/<number>`）。
+4. **搜索错误字符串。**代码处理特定错误时，搜索该错误，常能找到事故线程。
+5. **限定频道搜索。**缩小到可能相关的频道：
+   - `#eng-*`：工程讨论
+   - `#proj-*`：项目频道
+   - `#incident-*` / `#sev-*`：事故频道
+   - 负责该代码的团队专用频道
+   - 设计评审频道
+6. **遍历线程。**发现相关消息后，获取完整线程；决策常在回复中。
 
 <!-- en:7 -->
 ## What good evidence looks like here
 
 <!-- zh:7 -->
-> **中文**
->
-> ## 好的证据是什么样
+**好的证据是什么样**
 
 <!-- en:8 -->
 - A thread where tradeoffs were explicitly debated ("I was going to use A but B is better because...")
@@ -103,21 +87,17 @@ Slack MCP tools vary. Check which Slack MCP is available and inspect its tool sc
 - A message from a product manager or customer-facing engineer explaining a customer ask
 
 <!-- zh:8 -->
-> **中文**
->
-> - 明确讨论取舍的线程（“我本来想用 A，但 B 更好，因为……”）
-> - 事故频道中描述该代码要防止的缺陷的消息
-> - 评审者提问，以及作者或负责人给出的权威回答
-> - 引用作出决策的会议
-> - 产品经理或面向客户的工程师解释客户需求的消息
+- 明确讨论取舍的线程（“我本来想用 A，但 B 更好，因为……”）
+- 事故频道中描述该代码要防止的缺陷的消息
+- 评审者提问，以及作者或负责人给出的权威回答
+- 引用作出决策的会议
+- 产品经理或面向客户的工程师解释客户需求的消息
 
 <!-- en:9 -->
 ## Common pitfalls
 
 <!-- zh:9 -->
-> **中文**
->
-> ## 常见陷阱
+**常见陷阱**
 
 <!-- en:10 -->
 - **Channel archaeology limits.** Very old messages may be gone due to retention policies. If you can't find anything before a certain date, note the retention cliff.
@@ -127,21 +107,17 @@ Slack MCP tools vary. Check which Slack MCP is available and inspect its tool sc
 - **Auth failures.** If the MCP isn't authenticated, stop. Don't make up findings. Report that Slack wasn't searchable.
 
 <!-- zh:10 -->
-> **中文**
->
-> - **频道考古的限制。**过旧消息可能因保留策略而消失。某日期之前找不到内容时，注明保留范围的截止点。
-> - **未搜索的私信。**许多决策发生在无法搜索的私信中，会有遗漏，这是已知限制。
-> - **把随口玩笑当作决策。**Slack 很随意。“哈哈，直接做吧”即便发生在提交之前，也不是决策。寻找经过思考的讨论。
-> - **单条消息丢失上下文。**没有完整线程，单条消息的含义可能与上下文中不同。始终获取线程。
-> - **认证失败。**MCP 未认证时停止，不要编造发现。报告 Slack 无法搜索。
+- **频道考古的限制。**过旧消息可能因保留策略而消失。某日期之前找不到内容时，注明保留范围的截止点。
+- **未搜索的私信。**许多决策发生在无法搜索的私信中，会有遗漏，这是已知限制。
+- **把随口玩笑当作决策。**Slack 很随意。“哈哈，直接做吧”即便发生在提交之前，也不是决策。寻找经过思考的讨论。
+- **单条消息丢失上下文。**没有完整线程，单条消息的含义可能与上下文中不同。始终获取线程。
+- **认证失败。**MCP 未认证时停止，不要编造发现。报告 Slack 无法搜索。
 
 <!-- en:11 -->
 ## What to return
 
 <!-- zh:11 -->
-> **中文**
->
-> ## 返回什么
+**返回什么**
 
 <!-- en:12 -->
 For each relevant thread:
@@ -153,12 +129,10 @@ For each relevant thread:
 - Context: what thread/incident/discussion this was part of
 
 <!-- zh:12 -->
-> **中文**
->
-> 每个相关线程提供：
-> - 频道名称
-> - 永久链接或线程 ID
-> - 参与者
-> - 讨论日期范围
-> - 关键原文引用及归属
-> - 上下文：属于哪个线程、事故或讨论
+每个相关线程提供：
+- 频道名称
+- 永久链接或线程 ID
+- 参与者
+- 讨论日期范围
+- 关键原文引用及归属
+- 上下文：属于哪个线程、事故或讨论

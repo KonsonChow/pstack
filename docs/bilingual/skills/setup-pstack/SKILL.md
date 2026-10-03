@@ -10,104 +10,80 @@ description: Configure which models pstack uses per role and at what reasoning b
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: setup-pstack
-> description: 配置 pstack 各角色使用的模型及推理预算。检测可用模型，写入始终生效的规则，覆盖 skill 默认值。用于 /setup-pstack、“configure pstack models”、“pstack budget”，或调整 pstack 的模型选择。
-> ---
-> ```
+```yaml
+---
+name: setup-pstack
+description: 配置 pstack 各角色使用的模型及推理预算。检测可用模型，写入始终生效的规则，覆盖 skill 默认值。用于 /setup-pstack、“configure pstack models”、“pstack budget”，或调整 pstack 的模型选择。
+---
+```
 
 <!-- en:1 -->
 # Setup pstack
 
 <!-- zh:1 -->
-> **中文**
->
-> # 设置 pstack
+**设置 pstack**
 
 <!-- en:2 -->
 Write pstack's model settings, one model per role:
 
 <!-- zh:2 -->
-> **中文**
->
-> 写入 pstack 的模型设置，每个角色一个模型：
+写入 pstack 的模型设置，每个角色一个模型：
 
 <!-- en:3 -->
 - **Cursor:** `~/.cursor/rules/pstack-models.mdc`, an always-applied rule.
 - **Every other harness** (Claude Code, Codex, Pi, OpenCode, and others): `~/.agents/pstack-models.md`. These harnesses don't load Cursor rules, so pstack skills read this file when they pick a model.
 
 <!-- zh:3 -->
-> **中文**
->
-> - **Cursor：** `~/.cursor/rules/pstack-models.mdc`，始终应用的规则。
-> - **其他所有 agent 运行环境**（Claude Code、Codex、Pi、OpenCode 等）：`~/.agents/pstack-models.md`。这些环境不加载 Cursor 规则，因此 pstack skill 选模型时读取此文件。
+- **Cursor：** `~/.cursor/rules/pstack-models.mdc`，始终应用的规则。
+- **其他所有 agent 运行环境**（Claude Code、Codex、Pi、OpenCode 等）：`~/.agents/pstack-models.md`。这些环境不加载 Cursor 规则，因此 pstack skill 选模型时读取此文件。
 
 <!-- en:4 -->
 "The settings file" below means the file for your harness. When reading, check both paths and use the one that exists.
 
 <!-- zh:4 -->
-> **中文**
->
-> 下文“设置文件”指当前运行环境对应的文件。读取时检查两个路径，使用实际存在的那个。
+下文“设置文件”指当前运行环境对应的文件。读取时检查两个路径，使用实际存在的那个。
 
 <!-- en:5 -->
 ## Steps
 
 <!-- zh:5 -->
-> **中文**
->
-> ## 步骤
+**步骤**
 
 <!-- en:6 -->
 ### 1. Detect available models
 
 <!-- zh:6 -->
-> **中文**
->
-> ### 1. 检测可用模型
+**1. 检测可用模型**
 
 <!-- en:7 -->
 Enumerate the model slugs you can pass to a subagent in this session (Cursor `Task`, Claude Code `Agent`, OpenCode `task`, Codex `spawn_agent`). That is the dependable source. If your harness also has a command that lists the user's models, prefer it for completeness (for example `opencode models` or `pi --list-models`). If you cannot detect any, ask the user to paste the slugs they have access to. Never write a real slug you have not confirmed is available. The aliases `inherit-parent` and `auto` are always valid even though they are not detected slugs.
 
 <!-- zh:7 -->
-> **中文**
->
-> 列出本次会话中可传给 subagent 的模型 slug（Cursor `Task`、Claude Code `Agent`、OpenCode `task`、Codex `spawn_agent`），这是可靠来源。当前环境如果有列出用户模型的命令，优先使用以保证完整，例如 `opencode models` 或 `pi --list-models`。检测不到时，要求用户粘贴可用 slug。未经确认可用的真实 slug 绝不能写入。`inherit-parent` 和 `auto` 别名始终有效，即使不在检测列表。
+列出本次会话中可传给 subagent 的模型 slug（Cursor `Task`、Claude Code `Agent`、OpenCode `task`、Codex `spawn_agent`），这是可靠来源。当前环境如果有列出用户模型的命令，优先使用以保证完整，例如 `opencode models` 或 `pi --list-models`。检测不到时，要求用户粘贴可用 slug。未经确认可用的真实 slug 绝不能写入。`inherit-parent` 和 `auto` 别名始终有效，即使不在检测列表。
 
 <!-- en:8 -->
 ### 2. Load current state
 
 <!-- zh:8 -->
-> **中文**
->
-> ### 2. 加载当前状态
+**2. 加载当前状态**
 
 <!-- en:9 -->
 The default role-to-model mapping is the rule shape shown in step 5 below. If the settings file already exists, read it and treat its `# budget` line and its role values as the current choices. Otherwise start from those defaults.
 
 <!-- zh:9 -->
-> **中文**
->
-> 默认的角色到模型映射，见下方第 5 步的规则结构。如果设置文件已存在，读取它，以 `# budget` 行及角色值作为当前选择；否则从默认值开始。
+默认的角色到模型映射，见下方第 5 步的规则结构。如果设置文件已存在，读取它，以 `# budget` 行及角色值作为当前选择；否则从默认值开始。
 
 <!-- en:10 -->
 ### 3. Budget, map, and confirm
 
 <!-- zh:10 -->
-> **中文**
->
-> ### 3. 选择预算、建立映射并确认
+**3. 选择预算、建立映射并确认**
 
 <!-- en:11 -->
 **(a) Ask for a budget.** Prefer your structured-question tool (`AskQuestion` in Cursor, `AskUserQuestion` in Claude Code, `question` in OpenCode) over free text. Offer these four options with these exact labels, and name the current budget when the rule records one.
 
 <!-- zh:11 -->
-> **中文**
->
-> **(a) 询问预算。** 优先使用结构化提问工具（Cursor 的 `AskQuestion`、Claude Code 的 `AskUserQuestion`、OpenCode 的 `question`），而非自由文本。提供下列四个选项，标签必须原样使用；规则已有预算时，说明当前预算。
+**(a) 询问预算。** 优先使用结构化提问工具（Cursor 的 `AskQuestion`、Claude Code 的 `AskUserQuestion`、OpenCode 的 `question`），而非自由文本。提供下列四个选项，标签必须原样使用；规则已有预算时，说明当前预算。
 
 <!-- en:12 -->
 - `unlimited — keep max`
@@ -116,60 +92,46 @@ The default role-to-model mapping is the rule shape shown in step 5 below. If th
 - `small — medium reasoning`
 
 <!-- zh:12 -->
-> **中文**
->
-> - `unlimited — keep max`（不限预算，保留 max）
-> - `large — xhigh reasoning`（较大预算，xhigh 推理）
-> - `medium — high reasoning`（中等预算，high 推理）
-> - `small — medium reasoning`（较小预算，medium 推理）
+- `unlimited — keep max`（不限预算，保留 max）
+- `large — xhigh reasoning`（较大预算，xhigh 推理）
+- `medium — high reasoning`（中等预算，high 推理）
+- `small — medium reasoning`（较小预算，medium 推理）
 
 <!-- en:13 -->
 **(b) Apply it.** Build the working table from the skill defaults, and on a re-run keep any role you changed by family, list, or alias (`inherit-parent`, `auto`). `unlimited` leaves every effort as in that table. `large`, `medium`, and `small` set the effort token of every real slug, panel entries included, to `xhigh`, `high`, or `medium`. The effort token is the last token, or the one before a trailing `fast`, on the ladder `max` > `xhigh` > `high` > `medium` > `low`. If the result is not a detected slug, use the same family's detected slug with the highest effort at or below the target, else mark the role as needing a choice. `inherit-parent` and `auto` do not change. So `small` turns `claude-fable-5-1-thinking-max` into `claude-fable-5-1-thinking-medium`, and `grok-4.6-fast-xhigh` into `cursor-grok-4.6-medium-fast` when only that form is detected.
 
 <!-- zh:13 -->
-> **中文**
->
-> **(b) 应用预算。** 从 skill 默认值建立工作表；再次运行时，保留此前按模型系列、列表或别名（`inherit-parent`、`auto`）改过的角色。`unlimited` 保留表中所有 effort。`large`、`medium`、`small` 将每个真实 slug（含评审组列表）的 effort token 分别改为 `xhigh`、`high`、`medium`。effort token 是最后一个 token，或末尾 `fast` 前的 token，等级为 `max` > `xhigh` > `high` > `medium` > `low`。结果若不在已检测 slug 中，选择同系列、不高于目标且 effort 最高的可用 slug；否则将角色标为待选择。`inherit-parent` 和 `auto` 不变。因此 `small` 会将 `claude-fable-5-1-thinking-max` 改为 `claude-fable-5-1-thinking-medium`；若只检测到另一种形式，则把 `grok-4.6-fast-xhigh` 改为 `cursor-grok-4.6-medium-fast`。
+**(b) 应用预算。** 从 skill 默认值建立工作表；再次运行时，保留此前按模型系列、列表或别名（`inherit-parent`、`auto`）改过的角色。`unlimited` 保留表中所有 effort。`large`、`medium`、`small` 将每个真实 slug（含评审组列表）的 effort token 分别改为 `xhigh`、`high`、`medium`。effort token 是最后一个 token，或末尾 `fast` 前的 token，等级为 `max` > `xhigh` > `high` > `medium` > `low`。结果若不在已检测 slug 中，选择同系列、不高于目标且 effort 最高的可用 slug；否则将角色标为待选择。`inherit-parent` 和 `auto` 不变。因此 `small` 会将 `claude-fable-5-1-thinking-max` 改为 `claude-fable-5-1-thinking-medium`；若只检测到另一种形式，则把 `grok-4.6-fast-xhigh` 改为 `cursor-grok-4.6-medium-fast`。
 
 <!-- en:14 -->
 **(c) Show the roles and confirm.** Show every role with its model, marking any real slug not in the detected set as needing a choice. Ask whether to accept as-is or change specific roles, offering the detected models plus `inherit-parent` and `auto` (both mean: this role runs on the parent chat model, which is how Auto users stay on Auto) as the options. Prefer your structured-question tool over free text. For panel roles (arena runners, architect runners, interrogate reviewers) the value is a list, and one subagent runs per entry, alias entries included, so the list length sets the count. `arena cross-judge pool` is also a list, but Arena selects one value from it whose model family differs from the parent's when possible. `swarm workers` is the default model for every worker unless a race or comparison assigns another model per arm.
 
 <!-- zh:14 -->
-> **中文**
->
-> **(c) 展示角色并确认。** 展示每个角色及模型，把不在检测集合的真实 slug 标为待选择。询问是原样接受还是调整特定角色，选项包含已检测模型及 `inherit-parent`、`auto`（都表示使用主会话模型，因此 Auto 用户可以继续用 Auto）。优先结构化提问。评审组角色（arena runners、architect runners、interrogate reviewers）值为列表，每项启动一个 subagent，别名也计入，所以列表长度决定数量。`arena cross-judge pool` 也是列表，但 Arena 尽量从中选一个与主会话不同模型系列的值。`swarm workers` 是各 worker 的默认模型，除非竞速或比较为各组另设模型。
+**(c) 展示角色并确认。** 展示每个角色及模型，把不在检测集合的真实 slug 标为待选择。询问是原样接受还是调整特定角色，选项包含已检测模型及 `inherit-parent`、`auto`（都表示使用主会话模型，因此 Auto 用户可以继续用 Auto）。优先结构化提问。评审组角色（arena runners、architect runners、interrogate reviewers）值为列表，每项启动一个 subagent，别名也计入，所以列表长度决定数量。`arena cross-judge pool` 也是列表，但 Arena 尽量从中选一个与主会话不同模型系列的值。`swarm workers` 是各 worker 的默认模型，除非竞速或比较为各组另设模型。
 
 <!-- en:15 -->
 ### 4. Validate
 
 <!-- zh:15 -->
-> **中文**
->
-> ### 4. 校验
+**4. 校验**
 
 <!-- en:16 -->
 Every real slug written must be in the detected set. `inherit-parent` and `auto` always pass. If a chosen real slug is not available, stop and ask again.
 
 <!-- zh:16 -->
-> **中文**
->
-> 写入的每个真实 slug 都必须在检测集合中。`inherit-parent` 和 `auto` 始终通过。选择的真实 slug 不可用时，停下重新询问。
+写入的每个真实 slug 都必须在检测集合中。`inherit-parent` 和 `auto` 始终通过。选择的真实 slug 不可用时，停下重新询问。
 
 <!-- en:17 -->
 ### 5. Write the rule
 
 <!-- zh:17 -->
-> **中文**
->
-> ### 5. 写入规则
+**5. 写入规则**
 
 <!-- en:18 -->
 Write the settings file with a `# budget` line with the chosen label and its target effort, and one line per role, using the same labels poteto-mode uses. In Cursor, include the frontmatter below with `alwaysApply: true`. In other harnesses, write `~/.agents/pstack-models.md` without the frontmatter (start at the first `#` line). Overwrite the whole file so re-runs stay idempotent. Shape:
 
 <!-- zh:18 -->
-> **中文**
->
-> 设置文件写一行 `# budget`，包括选定标签和目标 effort；每个角色写一行，标签与 poteto-mode 一致。Cursor 中包含下方 frontmatter，设 `alwaysApply: true`；其他环境写 `~/.agents/pstack-models.md`，不带 frontmatter（从第一个 `#` 行开始）。每次覆盖整个文件，使重复运行保持幂等。结构如下：
+设置文件写一行 `# budget`，包括选定标签和目标 effort；每个角色写一行，标签与 poteto-mode 一致。Cursor 中包含下方 frontmatter，设 `alwaysApply: true`；其他环境写 `~/.agents/pstack-models.md`，不带 frontmatter（从第一个 `#` 行开始）。每次覆盖整个文件，使重复运行保持幂等。结构如下：
 
 <!-- en:19 -->
 ```
@@ -200,63 +162,53 @@ interrogate reviewers: claude-fable-5-1-thinking-max, gpt-5.6-sol-max, grok-4.6-
 ```
 
 <!-- zh:19 -->
-> **中文**
->
-> ```
-> ---
-> description: pstack 各角色的模型选择（覆盖 skill 默认值）
-> alwaysApply: true
-> ---
-> # pstack 模型配置。每个角色一行。删除某行即回退到 skill 默认值。
-> # 值为 `inherit-parent` 或 `auto`：角色使用主会话模型（省略 subagent 的 `model`）。评审组列表中的别名项仍计入并行任务数。
-> # budget: unlimited (max)
-> feature, refactoring: grok-4.6-fast-xhigh
-> bug-fix: grok-4.6-fast-xhigh
-> perf-issue: grok-4.6-fast-xhigh
-> hillclimb: grok-4.6-fast-xhigh
-> judgment and prose: claude-fable-5-1-thinking-max
-> hardest tasks: claude-fable-5-1-thinking-max
-> how explorer: grok-4.6-fast-xhigh
-> how explainer: claude-fable-5-1-thinking-max
-> why investigators: grok-4.6-fast-xhigh
-> why synthesizer: claude-fable-5-1-thinking-max
-> reflect tooling: gpt-5.6-sol-max
-> reflect judgment, divergent, synthesizer: claude-fable-5-1-thinking-max
-> arena runners: claude-fable-5-1-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
-> arena cross-judge pool: claude-fable-5-1-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
-> swarm workers: grok-4.6-fast-xhigh
-> architect runners: claude-fable-5-1-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
-> interrogate reviewers: claude-fable-5-1-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
-> ```
+```
+---
+description: pstack 各角色的模型选择（覆盖 skill 默认值）
+alwaysApply: true
+---
+# pstack 模型配置。每个角色一行。删除某行即回退到 skill 默认值。
+# 值为 `inherit-parent` 或 `auto`：角色使用主会话模型（省略 subagent 的 `model`）。评审组列表中的别名项仍计入并行任务数。
+# budget: unlimited (max)
+feature, refactoring: grok-4.6-fast-xhigh
+bug-fix: grok-4.6-fast-xhigh
+perf-issue: grok-4.6-fast-xhigh
+hillclimb: grok-4.6-fast-xhigh
+judgment and prose: claude-fable-5-1-thinking-max
+hardest tasks: claude-fable-5-1-thinking-max
+how explorer: grok-4.6-fast-xhigh
+how explainer: claude-fable-5-1-thinking-max
+why investigators: grok-4.6-fast-xhigh
+why synthesizer: claude-fable-5-1-thinking-max
+reflect tooling: gpt-5.6-sol-max
+reflect judgment, divergent, synthesizer: claude-fable-5-1-thinking-max
+arena runners: claude-fable-5-1-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
+arena cross-judge pool: claude-fable-5-1-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
+swarm workers: grok-4.6-fast-xhigh
+architect runners: claude-fable-5-1-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
+interrogate reviewers: claude-fable-5-1-thinking-max, gpt-5.6-sol-max, grok-4.6-fast-xhigh, claude-opus-5-thinking-xhigh
+```
 
 <!-- en:20 -->
 ### 6. Confirm
 
 <!-- zh:20 -->
-> **中文**
->
-> ### 6. 确认
+**6. 确认**
 
 <!-- en:21 -->
 Tell the user which file was written. In Cursor, the rule applies to new sessions. In other harnesses, pstack skills read `~/.agents/pstack-models.md` when they pick a model. Re-running this skill updates it.
 
 <!-- zh:21 -->
-> **中文**
->
-> 告诉用户写入了哪个文件。Cursor 中，规则在新会话生效。其他环境中，pstack skill 选模型时读取 `~/.agents/pstack-models.md`。再次运行本 skill 可更新它。
+告诉用户写入了哪个文件。Cursor 中，规则在新会话生效。其他环境中，pstack skill 选模型时读取 `~/.agents/pstack-models.md`。再次运行本 skill 可更新它。
 
 <!-- en:22 -->
 ### 7. Offer a verification skill (optional)
 
 <!-- zh:22 -->
-> **中文**
->
-> ### 7. 可选：建议建立验证 skill
+**7. 可选：建议建立验证 skill**
 
 <!-- en:23 -->
 Check whether the project has a way to drive the real app for proof (a `verify-*` skill, or an existing harness). If not, offer once: "want a project-local verification skill, so agents can drive the app the way a user does and prove changes work? I can generate one with /create-verification-skill." On yes, invoke `/create-verification-skill` (resolves wherever pstack is installed: workspace, user, or plugin). On no, move on without pushing.
 
 <!-- zh:23 -->
-> **中文**
->
-> 检查项目是否已有驱动真实应用来提供证据的方式（`verify-*` skill 或现有运行环境）。没有时只提议一次：“要创建项目内的验证 skill，让 agent 像用户一样操作应用，证明改动能工作吗？我可以用 /create-verification-skill 生成。”同意就调用 `/create-verification-skill`（在 pstack 安装的位置解析，可以是工作区、用户或插件）。拒绝就继续，不再劝说。
+检查项目是否已有驱动真实应用来提供证据的方式（`verify-*` skill 或现有运行环境）。没有时只提议一次：“要创建项目内的验证 skill，让 agent 像用户一样操作应用，证明改动能工作吗？我可以用 /create-verification-skill 生成。”同意就调用 `/create-verification-skill`（在 pstack 安装的位置解析，可以是工作区、用户或插件）。拒绝就继续，不再劝说。

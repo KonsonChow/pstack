@@ -11,63 +11,49 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: figure-it-out
-> description: "没有更具体规程适用时，设计可审计的执行规程：大型迁移、复杂多部分改动，或用户离开后回来审阅的工作。按任务调整严谨程度，运行假设验证循环，通过 show-me-your-work 记录决策。用于 /figure-it-out、figure it out、大型迁移，或没有更窄规程适用时。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: figure-it-out
+description: "没有更具体规程适用时，设计可审计的执行规程：大型迁移、复杂多部分改动，或用户离开后回来审阅的工作。按任务调整严谨程度，运行假设验证循环，通过 show-me-your-work 记录决策。用于 /figure-it-out、figure it out、大型迁移，或没有更窄规程适用时。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Figure it out
 
 <!-- zh:1 -->
-> **中文**
->
-> # 设计执行方法
+**设计执行方法**
 
 <!-- en:2 -->
 When the task matches no playbook, design one. The deliverable before any code is the workflow itself: a sequence of phases that scales rigor to the task, runs the scientific method, and leaves a decision trail a human can audit after stepping away. Bias toward more rigor. The cost of building the wrong thing dwarfs the cost of being careful.
 
 <!-- zh:2 -->
-> **中文**
->
-> 任务没有匹配规程，就设计一个。写任何代码前的交付物是工作流本身：一串与任务风险匹配的阶段，采用科学方法，并留下用户离开后能审计的决策轨迹。倾向更严格。做错东西的代价远大于谨慎的代价。
+任务没有匹配规程，就设计一个。写任何代码前的交付物是工作流本身：一串与任务风险匹配的阶段，采用科学方法，并留下用户离开后能审计的决策轨迹。倾向更严格。做错东西的代价远大于谨慎的代价。
 
 <!-- en:3 -->
 ## Start
 
 <!-- zh:3 -->
-> **中文**
->
-> ## 开始
+**开始**
 
 <!-- en:4 -->
 Open a todolist whose first item is to read the Principles section of the **poteto-mode** skill. Then add the phases below as todos.
 
 <!-- zh:4 -->
-> **中文**
->
-> 创建待办列表，首项是阅读 **poteto-mode** skill 的 Principles 一节，再把下列阶段加入待办。
+创建待办列表，首项是阅读 **poteto-mode** skill 的 Principles 一节，再把下列阶段加入待办。
 
 <!-- en:5 -->
 ## Phase A: Frame
 
 <!-- zh:5 -->
-> **中文**
->
-> ## 阶段 A：界定任务
+**阶段 A：界定任务**
 
 <!-- en:6 -->
 Ground first, then commit. Don't start the run until you can state:
 
 <!-- zh:6 -->
-> **中文**
->
-> 先根据证据摸清现状，再投入执行。能够说明以下内容之前，不开始正式运行：
+先根据证据摸清现状，再投入执行。能够说明以下内容之前，不开始正式运行：
 
 <!-- en:7 -->
 - The definition of done as a falsifiable predicate (the **prove-it-works** principle skill).
@@ -75,35 +61,27 @@ Ground first, then commit. Don't start the run until you can state:
 - The rigor level, biased high. One-way doors and high blast radius get more. Reversible low-stakes steps get less. Rigor is gates and artifacts, not "try harder".
 
 <!-- zh:7 -->
-> **中文**
->
-> - 可证伪的完成判定条件（**prove-it-works** 原则 skill）。
-> - 量化范围：大致单元数与工作量，以及摸清现状时发现的阻塞。
-> - 严谨程度，倾向从严。不可逆决策和大影响范围用更严格流程；可逆低风险步骤适当降低。严谨体现为检查关卡和产物，不是“再努力一点”。
+- 可证伪的完成判定条件（**prove-it-works** 原则 skill）。
+- 量化范围：大致单元数与工作量，以及摸清现状时发现的阻塞。
+- 严谨程度，倾向从严。不可逆决策和大影响范围用更严格流程；可逆低风险步骤适当降低。严谨体现为检查关卡和产物，不是“再努力一点”。
 
 <!-- en:8 -->
 Present the framing and tradeoffs before committing to a long run. Reversible work proceeds (the **never-block-on-the-human** principle skill), but a multi-hour run earns one checkpoint.
 
 <!-- zh:8 -->
-> **中文**
->
-> 投入长时间执行前，展示任务界定与权衡。可逆工作直接进行（**never-block-on-the-human** 原则 skill），但多小时执行应有一次检查点。
+投入长时间执行前，展示任务界定与权衡。可逆工作直接进行（**never-block-on-the-human** 原则 skill），但多小时执行应有一次检查点。
 
 <!-- en:9 -->
 ## Phase B: Design the workflow
 
 <!-- zh:9 -->
-> **中文**
->
-> ## 阶段 B：设计工作流
+**阶段 B：设计工作流**
 
 <!-- en:10 -->
 Decompose into atomic, independently-landable units. Sequence riskiest-unknown-first. Scaffold and verification come before features (the **foundational-thinking** principle skill).
 
 <!-- zh:10 -->
-> **中文**
->
-> 拆成原子、可独立合入的单元，先处理风险最高的未知项。基础结构和验证先于功能（**foundational-thinking** 原则 skill）。
+拆成原子、可独立合入的单元，先处理风险最高的未知项。基础结构和验证先于功能（**foundational-thinking** 原则 skill）。
 
 <!-- en:11 -->
 - Build the verification harness before the work, with the baseline captured from the pre-change state, so the check reads as "old value vs new value".
@@ -112,38 +90,30 @@ Decompose into atomic, independently-landable units. Sequence riskiest-unknown-f
 - Write the designed phase list down. That list is what the human reviews.
 
 <!-- zh:11 -->
-> **中文**
->
-> - 工作开始前构建验证运行环境，从改动前状态采集基准，使检查呈现为“旧值对比新值”。
-> - 不可逆设计决策使用 **architect** skill（它会运行 **arena**）。形态已明确的机械工作跳过。已定设计再跑一次 arena 是过度设计（**laziness-protocol** 原则 skill）。
-> - 决定哪些工作可并行分派。只沿边界并行，每个 worker 使用独立 worktree 或分支（**separate-before-serializing-shared-state** 原则 skill）。不要过度并行。
-> - 写下设计好的阶段列表，这是用户评审的内容。
+- 工作开始前构建验证运行环境，从改动前状态采集基准，使检查呈现为“旧值对比新值”。
+- 不可逆设计决策使用 **architect** skill（它会运行 **arena**）。形态已明确的机械工作跳过。已定设计再跑一次 arena 是过度设计（**laziness-protocol** 原则 skill）。
+- 决定哪些工作可并行分派。只沿边界并行，每个 worker 使用独立 worktree 或分支（**separate-before-serializing-shared-state** 原则 skill）。不要过度并行。
+- 写下设计好的阶段列表，这是用户评审的内容。
 
 <!-- en:12 -->
 Then execute the design. Add its steps to the todolist as concrete items, after the Phase C entry and before Phase D. Run each under the Phase C loop discipline, and weave the Phase D log through them, a row as each step lands, rather than saving the whole trail for the end.
 
 <!-- zh:12 -->
-> **中文**
->
-> 随后执行设计。把具体步骤加入待办，放在 Phase C 条目之后、Phase D 之前。每步遵循 Phase C 的循环纪律，Phase D 的日志贯穿其间；每步落实时写一行，不要最后才补整段轨迹。
+随后执行设计。把具体步骤加入待办，放在 Phase C 条目之后、Phase D 之前。每步遵循 Phase C 的循环纪律，Phase D 的日志贯穿其间；每步落实时写一行，不要最后才补整段轨迹。
 
 <!-- en:13 -->
 ## Phase C: Run the loop
 
 <!-- zh:13 -->
-> **中文**
->
-> ## 阶段 C：运行循环
+**阶段 C：运行循环**
 
 <!-- en:14 -->
 Each unit is an experiment. State the hypothesis, make the smallest change, measure against the predicate on the real artifact, keep it if it advanced, revert it if it didn't.
 Apply the **sequence-verifiable-units** principle skill, verifying each unit before starting the next instead of batching checks at the end.
 
 <!-- zh:14 -->
-> **中文**
->
-> 每个单元都是实验。说明假设，做最小改动，在真实产物上测量是否满足判定条件；有进展就保留，没有就回滚。
-> 应用 **sequence-verifiable-units** 原则 skill，验证一个单元再开始下一个，不把检查堆到最后。
+每个单元都是实验。说明假设，做最小改动，在真实产物上测量是否满足判定条件；有进展就保留，没有就回滚。
+应用 **sequence-verifiable-units** 原则 skill，验证一个单元再开始下一个，不把检查堆到最后。
 
 <!-- en:15 -->
 - Verify by inspecting the artifact, never a self-report. When something passes too easily, suspect the observation method before the system.
@@ -151,48 +121,36 @@ Apply the **sequence-verifiable-units** principle skill, verifying each unit bef
 - A verdict is VERIFIED, NOT VERIFIED, or INCONCLUSIVE. Inconclusive is not a pass. Don't hide a negative.
 
 <!-- zh:15 -->
-> **中文**
->
-> - 检查产物来验证，绝不相信自述。太容易通过时，先怀疑观测方法，再怀疑系统。
-> - 委派工作配独立评审者，信任前亲自审计委派产物。worker 钻检查关卡空子，就重置并收紧约定。关卡本身错误，就用独立改动修关卡，不绕过去。
-> - 结论为 VERIFIED、NOT VERIFIED 或 INCONCLUSIVE。无法确定不等于通过，不能隐藏负面结果。
+- 检查产物来验证，绝不相信自述。太容易通过时，先怀疑观测方法，再怀疑系统。
+- 委派工作配独立评审者，信任前亲自审计委派产物。worker 钻检查关卡空子，就重置并收紧约定。关卡本身错误，就用独立改动修关卡，不绕过去。
+- 结论为 VERIFIED、NOT VERIFIED 或 INCONCLUSIVE。无法确定不等于通过，不能隐藏负面结果。
 
 <!-- en:16 -->
 ## Phase D: Keep the audit trail
 
 <!-- zh:16 -->
-> **中文**
->
-> ## 阶段 D：保留审计轨迹
+**阶段 D：保留审计轨迹**
 
 <!-- en:17 -->
 Log the run via the **show-me-your-work** skill, one canonical TSV with a row per decision and per unit, evidence as links. figure-it-out's work is usually ambitious enough to commit the trail so the reviewer can read it in the PR. Commit it when confidence has to be shown. Prefer evidence produced by committed scripts. The trail plus the diff is what lets the human come back and trust the work.
 
 <!-- zh:17 -->
-> **中文**
->
-> 通过 **show-me-your-work** skill 记录执行，使用一份权威 TSV，每个决策和单元一行，证据写链接。figure-it-out 的工作通常足够复杂，应提交轨迹让评审者在 PR 阅读。需要展示信心依据时就提交。优先已提交脚本产生的证据。轨迹和 diff 一起，让用户回来后能信任结果。
+通过 **show-me-your-work** skill 记录执行，使用一份权威 TSV，每个决策和单元一行，证据写链接。figure-it-out 的工作通常足够复杂，应提交轨迹让评审者在 PR 阅读。需要展示信心依据时就提交。优先已提交脚本产生的证据。轨迹和 diff 一起，让用户回来后能信任结果。
 
 <!-- en:18 -->
 ## Phase E: Verify and hand back
 
 <!-- zh:18 -->
-> **中文**
->
-> ## 阶段 E：验证并交回结果
+**阶段 E：验证并交回结果**
 
 <!-- en:19 -->
 Check the whole against the Phase A predicate on the real product, not just the harness. Encode any recurring correction as a gate, a lint rule, a check, or a script (the **encode-lessons-in-structure** principle skill).
 
 <!-- zh:19 -->
-> **中文**
->
-> 在真实产品上用阶段 A 的判定条件验证整体，不能只验证运行环境。反复出现的纠正，固化成关卡、lint、检查或脚本（**encode-lessons-in-structure** 原则 skill）。
+在真实产品上用阶段 A 的判定条件验证整体，不能只验证运行环境。反复出现的纠正，固化成关卡、lint、检查或脚本（**encode-lessons-in-structure** 原则 skill）。
 
 <!-- en:20 -->
 **Reply:** the playbook you designed, the rigor level and why, the decision-trail path, what's verified against the predicate, and what's still open.
 
 <!-- zh:20 -->
-> **中文**
->
-> **回复：** 设计的规程、严谨程度及理由、决策轨迹路径、按条件验证了什么、还有什么未解决。
+**回复：** 设计的规程、严谨程度及理由、决策轨迹路径、按条件验证了什么、还有什么未解决。

@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-fix-root-causes
-> description: "调试时应用。每个症状都追踪到根因并在那里修复；先复现，不断追问为什么直到根因，抵制仅靠 nil 检查压住崩溃的防护。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-fix-root-causes
+description: "调试时应用。每个症状都追踪到根因并在那里修复；先复现，不断追问为什么直到根因，抵制仅靠 nil 检查压住崩溃的防护。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Fix Root Causes
 
 <!-- zh:1 -->
-> **中文**
->
-> # 修复根因
+**修复根因**
 
 <!-- en:2 -->
 When debugging, do not fix symptoms. Trace every problem to its root cause and fix it there.
 
 <!-- zh:2 -->
-> **中文**
->
-> 调试时，不修表面症状。把每个问题追到根因，在根因处修复。
+调试时，不修表面症状。把每个问题追到根因，在根因处修复。
 
 <!-- en:3 -->
 **Why:** Symptom fixes accumulate. Each workaround makes the system harder to reason about, and the real bug remains. Root-cause fixes are slower upfront but reduce total debugging time.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：** 症状修复会累积。每个 workaround 都增加系统理解难度，真实 bug 却仍存在。根因修复前期慢一些，但减少总调试时间。
+**原因：** 症状修复会累积。每个 workaround 都增加系统理解难度，真实 bug 却仍存在。根因修复前期慢一些，但减少总调试时间。
 
 <!-- en:4 -->
 **Pattern:**
@@ -55,28 +47,22 @@ When debugging, do not fix symptoms. Trace every problem to its root cause and f
 - When stuck, instrument. Don't guess (add logging, read the actual error)
 
 <!-- zh:4 -->
-> **中文**
->
-> **模式：**
-> - 先复现。
-> - 不断问“为什么”，直到根因。
-> - 不加掩盖问题的防护（加 nil 检查让崩溃消失，就是症状修复）。
-> - Workaround 需要一整段注释才能合理化时，代码有问题（修代码，不修注释）。
-> - 检查模式，不只查实例（grep 相同模式，修所有实例）。
-> - 卡住就增加观测，不猜（加日志，读真实错误）。
+**模式：**
+- 先复现。
+- 不断问“为什么”，直到根因。
+- 不加掩盖问题的防护（加 nil 检查让崩溃消失，就是症状修复）。
+- Workaround 需要一整段注释才能合理化时，代码有问题（修代码，不修注释）。
+- 检查模式，不只查实例（grep 相同模式，修所有实例）。
+- 卡住就增加观测，不猜（加日志，读真实错误）。
 
 <!-- en:5 -->
 **Restart bugs: suspect state before code**
 
 <!-- zh:5 -->
-> **中文**
->
-> **重启后出错：先怀疑状态，再怀疑代码**
+**重启后出错：先怀疑状态，再怀疑代码**
 
 <!-- en:6 -->
 When something "fails after restart," suspect stale persistent state first: config files, caches, lock files, serialized state. If clearing a state file restores behavior, prioritize state validation as the fix.
 
 <!-- zh:6 -->
-> **中文**
->
-> 问题“重启后失败”时，先怀疑过期持久化状态：配置文件、缓存、锁文件、序列化状态。清除状态文件能恢复行为时，优先从状态校验入手修复。
+问题“重启后失败”时，先怀疑过期持久化状态：配置文件、缓存、锁文件、序列化状态。清除状态文件能恢复行为时，优先从状态校验入手修复。

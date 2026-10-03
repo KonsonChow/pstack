@@ -11,39 +11,31 @@ disable-model-invocation: true
 ```
 
 <!-- zh:0 -->
-> **中文**
->
-> ```yaml
-> ---
-> name: principle-make-operations-idempotent
-> description: "设计在崩溃、重启和重试中运行的命令、生命周期步骤或处理循环时应用。不论此前执行留下什么部分状态，都收敛到同一最终状态。"
-> disable-model-invocation: true
-> ---
-> ```
+```yaml
+---
+name: principle-make-operations-idempotent
+description: "设计在崩溃、重启和重试中运行的命令、生命周期步骤或处理循环时应用。不论此前执行留下什么部分状态，都收敛到同一最终状态。"
+disable-model-invocation: true
+---
+```
 
 <!-- en:1 -->
 # Make Operations Idempotent
 
 <!-- zh:1 -->
-> **中文**
->
-> # 使操作幂等
+**使操作幂等**
 
 <!-- en:2 -->
 Design operations so they converge to the correct state regardless of how many times they run or where they start from. Every state-mutating operation should answer: "What happens if this runs twice? What happens if the previous run crashed halfway?"
 
 <!-- zh:2 -->
-> **中文**
->
-> 设计操作，使其不论运行多少次、从什么状态开始，都收敛到正确状态。每个会修改状态的操作都应回答：“跑两次会怎样？上次中途崩溃会怎样？”
+设计操作，使其不论运行多少次、从什么状态开始，都收敛到正确状态。每个会修改状态的操作都应回答：“跑两次会怎样？上次中途崩溃会怎样？”
 
 <!-- en:3 -->
 **Why:** Commands, lifecycle operations, and processing loops run where crashes, restarts, and retries are normal. If partial state changes the next run's outcome, every restart becomes a debugging session.
 
 <!-- zh:3 -->
-> **中文**
->
-> **原因：** 命令、生命周期操作和处理循环运行在崩溃、重启、重试是常态的环境中。如果部分状态会改变下一次结果，每次重启都变成调试。
+**原因：** 命令、生命周期操作和处理循环运行在崩溃、重启、重试是常态的环境中。如果部分状态会改变下一次结果，每次重启都变成调试。
 
 <!-- en:4 -->
 **The pattern:**
@@ -53,13 +45,11 @@ Design operations so they converge to the correct state regardless of how many t
 - Idempotent scheduling: failed work respawns cleanly, fresh input regenerated after each cycle
 
 <!-- zh:4 -->
-> **中文**
->
-> **模式：**
-> - 收敛式启动：扫描已有状态，清理过期产物，接管仍存活的会话。
-> - 按内容清理：比较内容是否等价，而非创建顺序。
-> - 自修复锁：用 PID 检测过期锁。
-> - 幂等调度：失败工作干净地重新启动，每轮后重新生成新输入。
+**模式：**
+- 收敛式启动：扫描已有状态，清理过期产物，接管仍存活的会话。
+- 按内容清理：比较内容是否等价，而非创建顺序。
+- 自修复锁：用 PID 检测过期锁。
+- 幂等调度：失败工作干净地重新启动，每轮后重新生成新输入。
 
 <!-- en:5 -->
 **The test:**
@@ -68,17 +58,13 @@ Design operations so they converge to the correct state regardless of how many t
 3. Does re-execution converge to the same end state?
 
 <!-- zh:5 -->
-> **中文**
->
-> **自检：**
-> 1. 连续运行两次会怎样？
-> 2. 上次运行在每个可能位置崩溃，会怎样？
-> 3. 重新执行会收敛到同一最终状态吗？
+**自检：**
+1. 连续运行两次会怎样？
+2. 上次运行在每个可能位置崩溃，会怎样？
+3. 重新执行会收敛到同一最终状态吗？
 
 <!-- en:6 -->
 If any answer is "it depends on what state was left behind," the operation needs a reconciliation step.
 
 <!-- zh:6 -->
-> **中文**
->
-> 任何答案若是“看留下什么状态”，操作就需要状态协调步骤。
+任何答案若是“看留下什么状态”，操作就需要状态协调步骤。
