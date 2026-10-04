@@ -1,6 +1,6 @@
 {
   "source": "skills/figure-it-out/SKILL.md",
-  "sha256": "e041c64a39f1084a20e60ee99762c4dbd3ec8be56ed33fd68ea867b8bd8bd3e4",
+  "sha256": "0eb9485f0e7d84fee56b5d0f0af0faf4635e3ca87c8cba3970c01293b76ecc19",
   "blocks": [
     {
       "en": "---\nname: figure-it-out\ndescription: \"Design an auditable playbook when no narrower one fits: a large migration, an ambitious multi-part change, or work a human reviews after stepping away. Scales rigor to the task, runs a hypothesis loop, and logs decisions via show-me-your-work. Use for /figure-it-out, 'figure it out', a large migration, or when no narrower playbook applies.\"\ndisable-model-invocation: true\n---\n\n",
@@ -11,8 +11,8 @@
       "zh": "# 设计执行方法\n\n"
     },
     {
-      "en": "When the task matches no playbook, design one. The deliverable before any code is the workflow itself: a sequence of phases that scales rigor to the task, runs the scientific method, and leaves a decision trail a human can audit after stepping away. Bias toward more rigor. The cost of building the wrong thing dwarfs the cost of being careful.\n\n",
-      "zh": "任务没有匹配规程，就设计一个。写任何代码前的交付物是工作流本身：一串与任务风险匹配的阶段，采用科学方法，并留下用户离开后能审计的决策轨迹。倾向更严格。做错东西的代价远大于谨慎的代价。\n\n"
+      "en": "When the task matches no playbook, design one. The deliverable before any code is the workflow itself: a sequence of phases that scales rigor to the task, runs the scientific method, and leaves a decision trail a human can audit after stepping away.\n\n",
+      "zh": "任务没有匹配规程，就设计一个。写任何代码前的交付物是工作流本身：一串与任务风险匹配的阶段，采用科学方法，并留下用户离开后能审计的决策轨迹。\n\n"
     },
     {
       "en": "## Start\n\n",
@@ -63,16 +63,16 @@
       "zh": "每个单元都是实验。说明假设，做最小改动，在真实产物上测量是否满足判定条件；有进展就保留，没有就回滚。\n应用 **sequence-verifiable-units** 原则 skill，验证一个单元再开始下一个，不把检查堆到最后。\n\n"
     },
     {
-      "en": "- Verify by inspecting the artifact, never a self-report. When something passes too easily, suspect the observation method before the system.\n- Pair delegated work with a judge and audit the delegates' artifacts yourself before trusting them. If a worker games the gate, reset and harden the contract. If the gate itself is wrong, fix the gate in its own change rather than routing around it.\n- A verdict is VERIFIED, NOT VERIFIED, or INCONCLUSIVE. Inconclusive is not a pass. Don't hide a negative.\n\n",
-      "zh": "- 检查产物来验证，绝不相信自述。太容易通过时，先怀疑观测方法，再怀疑系统。\n- 委派工作配独立评审者，信任前亲自审计委派产物。worker 钻检查关卡空子，就重置并收紧约定。关卡本身错误，就用独立改动修关卡，不绕过去。\n- 结论为 VERIFIED、NOT VERIFIED 或 INCONCLUSIVE。无法确定不等于通过，不能隐藏负面结果。\n\n"
+      "en": "- Verify by inspecting the artifact, never a self-report. When something passes too easily, suspect the observation method before the system.\n- Pair delegated work with a judge. If a worker games the gate, reset and harden the contract. If the gate itself is wrong, fix the gate in its own change rather than routing around it.\n- A verdict is VERIFIED, NOT VERIFIED, or INCONCLUSIVE. Inconclusive is not a pass. Don't hide a negative.\n\n",
+      "zh": "- 检查产物来验证，绝不相信自述。太容易通过时，先怀疑观测方法，再怀疑系统。\n- 委派工作配独立评审者。worker 钻检查关卡空子，就重置并收紧约定。关卡本身错误，就用独立改动修关卡，不绕过去。\n- 结论为 VERIFIED、NOT VERIFIED 或 INCONCLUSIVE。无法确定不等于通过，不能隐藏负面结果。\n\n"
     },
     {
       "en": "## Phase D: Keep the audit trail\n\n",
       "zh": "## 阶段 D：保留审计轨迹\n\n"
     },
     {
-      "en": "Log the run via the **show-me-your-work** skill, one canonical TSV with a row per decision and per unit, evidence as links. figure-it-out's work is usually ambitious enough to commit the trail so the reviewer can read it in the PR. Commit it when confidence has to be shown. Prefer evidence produced by committed scripts. The trail plus the diff is what lets the human come back and trust the work.\n\n",
-      "zh": "通过 **show-me-your-work** skill 记录执行，使用一份权威 TSV，每个决策和单元一行，证据写链接。figure-it-out 的工作通常足够复杂，应提交轨迹让评审者在 PR 阅读。需要展示信心依据时就提交。优先已提交脚本产生的证据。轨迹和 diff 一起，让用户回来后能信任结果。\n\n"
+      "en": "Log the run via the **show-me-your-work** skill. figure-it-out's work is usually ambitious enough to commit the trail so the reviewer can read it in the PR. The trail plus the diff is what lets the human come back and trust the work.\n\n",
+      "zh": "通过 **show-me-your-work** skill 记录执行。figure-it-out 的工作通常足够复杂，应提交轨迹让评审者在 PR 阅读。轨迹和 diff 一起，让用户回来后能信任结果。\n\n"
     },
     {
       "en": "## Phase E: Verify and hand back\n\n",

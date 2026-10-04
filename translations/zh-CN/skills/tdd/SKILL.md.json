@@ -1,6 +1,6 @@
 {
   "source": "skills/tdd/SKILL.md",
-  "sha256": "011cab0ecc04a3632121efb493ae4d60aa282a9b72c66de74dd8ad7e4313e05a",
+  "sha256": "eeb868e2dfebee528d730a67d7b17498fac4bb85dec2e38bc5c5176aca4d5d2f",
   "blocks": [
     {
       "en": "---\nname: tdd\ndescription: \"Use only when the user explicitly asks for TDD, a failing test, or a regression test, OR when the bug has an obvious cheap local test target. Skip when the test path is unclear, expensive, integration-heavy, or not requested.\"\ndisable-model-invocation: true\n---\n\n",
@@ -23,16 +23,16 @@
       "zh": "## 工作流\n\n"
     },
     {
-      "en": "1. **Understand the bug.** Identify the intended behavior, current behavior, affected path, and smallest observable reproduction.\n2. **Choose the narrowest executable check.** Prefer the closest unit, component, integration, or regression test already used for that codepath. If no practical test path is obvious, do not create one from scratch just to satisfy the workflow.\n3. **Write the failing test first.** Add the smallest focused test that would have caught the bug. The test should encode intended behavior, not mirror the current implementation.\n4. **Run the new test before fixing.** Confirm it fails for the intended reason. If it passes or fails for an unrelated reason, correct the test or reproduction before editing the implementation.\n5. **Fix the bug.** Make the smallest production change that satisfies the intended behavior while preserving nearby contracts.\n6. **Rerun the regression test.** Confirm the test now passes.\n7. **Run nearby validation.** Run relevant adjacent tests, type checks, lint, or scenario checks when the change has broader risk.\n\n",
-      "zh": "1. **理解 bug。** 明确预期行为、当前行为、受影响路径和最小可观察复现。\n2. **选择最窄的可执行检查。** 优先该路径已有的最近单元、组件、集成或回归测试。没有明显实用路径时，不为满足流程从零搭建。\n3. **先写失败测试。** 添加能捕获该 bug 的最小聚焦测试，表达预期行为，不照抄当前实现。\n4. **修复前运行新测试。** 确认它因预期原因失败。已通过或因无关原因失败时，先修测试或复现，再改实现。\n5. **修复 bug。** 做满足预期行为、保持周边契约的最小生产代码改动。\n6. **重跑回归测试。** 确认现已通过。\n7. **验证邻近范围。** 改动风险更广时，运行相关相邻测试、类型检查、lint 或场景检查。\n\n"
+      "en": "1. **Understand the bug.** Identify the intended behavior, current behavior, affected path, and smallest observable reproduction.\n2. **Choose the narrowest executable check.** Prefer the closest unit, component, integration, or regression test already used for that codepath. If no practical test path is obvious, do not create one from scratch just to satisfy the workflow.\n3. **Write the failing test first.** Add the smallest focused test that would have caught the bug. The test should encode intended behavior, not mirror the current implementation.\n4. **Run the new test before fixing.** Confirm it fails for the intended reason. If it passes or fails for an unrelated reason, correct the test or reproduction before editing the implementation.\n5. **Fix the bug.** Make the smallest production change that satisfies the intended behavior while preserving nearby contracts.\n6. **Rerun the regression test.** Confirm the test now passes.\n\n",
+      "zh": "1. **理解 bug。** 明确预期行为、当前行为、受影响路径和最小可观察复现。\n2. **选择最窄的可执行检查。** 优先该路径已有的最近单元、组件、集成或回归测试。没有明显实用路径时，不为满足流程从零搭建。\n3. **先写失败测试。** 添加能捕获该 bug 的最小聚焦测试，表达预期行为，不照抄当前实现。\n4. **修复前运行新测试。** 确认它因预期原因失败。已通过或因无关原因失败时，先修测试或复现，再改实现。\n5. **修复 bug。** 做满足预期行为、保持周边契约的最小生产代码改动。\n6. **重跑回归测试。** 确认现已通过。\n\n"
     },
     {
       "en": "## If a Failing Test Is Impractical\n\n",
       "zh": "## 失败测试不切实际时\n\n"
     },
     {
-      "en": "Do not silently skip the regression step. Before fixing, explicitly explain why a failing test is impossible or not worth the cost, then choose the closest executable regression check available. Examples include a targeted script, manual reproduction command, browser automation, snapshot comparison, log assertion, or focused integration check.\n\n",
-      "zh": "不要悄悄跳过回归步骤。修复前明确说明为什么失败测试不可能或不值得，再选择最接近的可执行回归检查，例如定向脚本、手工复现命令、浏览器自动化、快照比较、日志断言或聚焦集成检查。\n\n"
+      "en": "Use the closest executable regression check instead: a targeted script, manual reproduction command, browser automation, snapshot comparison, log assertion, or focused integration check.\n\n",
+      "zh": "改用最接近的可执行回归检查：定向脚本、手工复现命令、浏览器自动化、快照比较、日志断言或聚焦集成检查。\n\n"
     },
     {
       "en": "Prefer no new test over a bad test. A bad test is one that mostly tests mocks, encodes current implementation details, depends on timing or unrelated global state, needs expensive infrastructure for a small fix, or would be deleted immediately after proving the fix.\n\n",
@@ -43,8 +43,8 @@
       "zh": "## 约束\n\n"
     },
     {
-      "en": "- Do not change tests merely to match a wrong implementation.\n- Do not weaken existing assertions unless the expected behavior has genuinely changed and the reason is clear.\n- Keep the regression test focused on the bug. Avoid broad fixture churn or unrelated coverage expansion.\n- Do not add tests when the practical signal is weak. Use manual or scripted verification and say why.\n- If the bug is flaky, make the test deterministic where possible and document the signal being locked down.\n- If the bug exposes a broader class of failures, first land the focused regression path, then consider additional sibling coverage.\n\n",
-      "zh": "- 不要只为匹配错误实现而改测试。\n- 除非预期行为确实变化且理由明确，否则不要弱化现有断言。\n- 回归测试聚焦该 bug，避免大批 fixture 改动或无关覆盖扩张。\n- 实际信号很弱时不要加测试，改用手工或脚本验证，并说明原因。\n- Bug 偶发时，尽可能让测试确定，并记录锁定的信号。\n- Bug 暴露更广的一类失败时，先合入聚焦回归路径，再考虑相邻覆盖。\n\n"
+      "en": "- Do not change tests merely to match a wrong implementation.\n- Do not weaken existing assertions unless the expected behavior has genuinely changed and the reason is clear.\n- Keep the regression test focused on the bug. Avoid broad fixture churn or unrelated coverage expansion.\n- If the bug is flaky, make the test deterministic where possible and document the signal being locked down.\n- If the bug exposes a broader class of failures, first land the focused regression path, then consider additional sibling coverage.\n\n",
+      "zh": "- 不要只为匹配错误实现而改测试。\n- 除非预期行为确实变化且理由明确，否则不要弱化现有断言。\n- 回归测试聚焦该 bug，避免大批 fixture 改动或无关覆盖扩张。\n- Bug 偶发时，尽可能让测试确定，并记录锁定的信号。\n- Bug 暴露更广的一类失败时，先合入聚焦回归路径，再考虑相邻覆盖。\n\n"
     },
     {
       "en": "## Final Response\n\n",

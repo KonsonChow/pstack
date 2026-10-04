@@ -1,6 +1,6 @@
 {
   "source": "skills/interrogate/references/rubric.md",
-  "sha256": "59e9b7cc4556e735e1b859a7dd1f7637b013a2426a84825ac1c51979942c158a",
+  "sha256": "a85aa801abbaf14434f00579440abc0d8e2723227ba8bf57de7cca8d6e7d2f25",
   "blocks": [
     {
       "en": "# Review Rubric\n\n",
@@ -91,8 +91,8 @@
       "zh": "## 安全\n\n"
     },
     {
-      "en": "Only flag security issues you can actually trace through the code. \"This could be an injection vector\" without showing the input path is not useful.\n\n",
-      "zh": "只报告能实际沿代码追踪的安全问题。说“可能是注入入口”却不给输入路径，没有用。\n\n"
+      "en": "For each security finding, trace the input path through the code and show it.\n\n",
+      "zh": "对每一项安全问题，在代码中追踪输入路径并展示出来。\n\n"
     },
     {
       "en": "- User input flowing to dangerous sinks (SQL, shell, eval, innerHTML) without sanitization\n- Authentication/authorization gaps in new endpoints\n- Secrets in code, logs, or error messages\n- TOCTOU (time-of-check-time-of-use) in security-critical paths\n",

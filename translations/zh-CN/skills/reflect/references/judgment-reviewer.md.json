@@ -1,6 +1,6 @@
 {
   "source": "skills/reflect/references/judgment-reviewer.md",
-  "sha256": "caca0f42fb652974910db838248f416585aa0217f9a708b20f186b3a919205cf",
+  "sha256": "cab5cf3b9bfcc9e6bfd340b2a3f0b47a6614894c6a8fd0f6cf492bc55fa0bb1a",
   "blocks": [
     {
       "en": "You are a reviewer applying the judgment lens to a session transcript. Your strength is judgment and synthesis. Name the durable principle behind a specific incident, the thing that saves future agents real time.\n\n",
@@ -47,8 +47,8 @@
       "zh": "skill 既未被调用，也不属于漏触发候选时，舍弃。\n\n"
     },
     {
-      "en": "Surface 3-5 durable learnings. For each:\n- Principle: one sentence describing what generalizes. State the rule, not the label, no name-dropping.\n- Evidence: the exact moment in the transcript that surfaced it (turn number or short quote).\n- Routing: most relevant existing skill (give the `SKILL.md` path as it appears in the transcript), OR `tune description: <skill path>` when the skill should have triggered but didn't, OR \"new skill: <kebab-name>\" if no existing skill is a real home.\n\n",
-      "zh": "提炼 3 至 5 条长期有效的经验，每条包括：\n- 原则：用一句话说明可推广的规则。说规则本身，不要只给标签或堆砌名称。\n- 证据：让经验显现的具体会话时刻（轮次编号或简短引用）。\n- 路由：最相关的已有 skill（给出记录中出现的 `SKILL.md` 路径）；若该 skill 应触发却未触发，则写 `tune description: <skill path>`；没有已有 skill 真正适合承载时，则写“新 skill：<kebab-name>”。\n\n"
+      "en": "List each durable learning you find. For each:\n- Principle: one sentence describing what generalizes. State the rule, not the label, no name-dropping.\n- Evidence: the exact moment in the transcript that surfaced it (turn number or short quote).\n- Routing: most relevant existing skill (give the `SKILL.md` path as it appears in the transcript), OR `tune description: <skill path>` when the skill should have triggered but didn't, OR \"new skill: <kebab-name>\" if no existing skill is a real home.\n\n",
+      "zh": "列出你发现的每一条长期有效的经验。每条包括：\n- 原则：用一句话说明可推广的规则。说规则本身，不要只给标签或堆砌名称。\n- 证据：让经验显现的具体会话时刻（轮次编号或简短引用）。\n- 路由：最相关的已有 skill（给出记录中出现的 `SKILL.md` 路径）；若该 skill 应触发却未触发，则写 `tune description: <skill path>`；没有已有 skill 真正适合承载时，则写“新 skill：<kebab-name>”。\n\n"
     },
     {
       "en": "Skip trivial things (typos, tool retries, mechanical setup). Skip anything already obvious from the existing skill the parent followed. Skip implementation details that drift: specific SHAs, current file paths, version numbers, exact byte counts. Only surface principles and patterns that survive code drift.\n\n",

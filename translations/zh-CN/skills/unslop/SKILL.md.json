@@ -1,6 +1,6 @@
 {
   "source": "skills/unslop/SKILL.md",
-  "sha256": "c6d2572294d933a428211921069e9a248490e9b466ca59437cb4d9de248600ca",
+  "sha256": "195411d320b5b328f9f642baf59757ed19aaf0931c0838740e0aca273d538dc1",
   "blocks": [
     {
       "en": "---\nname: unslop\ndescription: Cut AI tells from any writing. Must always apply.\ndisable-model-invocation: true\n---\n\n",
@@ -19,8 +19,8 @@
       "zh": "## 流程\n\n"
     },
     {
-      "en": "1. Scan for the patterns below.\n2. Rewrite. Preserve meaning, match intended tone.\n3. Self-audit: \"What makes this obviously AI generated?\" Fix remaining tells.\n\n",
-      "zh": "1. 检查下列模式。\n2. 改写，保留含义并匹配预期语气。\n3. 自查：“哪里让人一眼看出这是 AI 生成的？”修复剩余痕迹。\n\n"
+      "en": "1. Scan for the patterns below.\n2. Rewrite. Preserve meaning, match intended tone.\n\n",
+      "zh": "1. 检查下列模式。\n2. 改写，保留含义并匹配预期语气。\n\n"
     },
     {
       "en": "## Patterns to detect and fix\n\n",

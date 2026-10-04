@@ -1,10 +1,10 @@
 {
   "source": "agents/poteto-agent.md",
-  "sha256": "c3850be1b97bc97cec0568ed8b26d04e7693c4e07868137c58fe546d37f288e9",
+  "sha256": "abe41c169ecbfe65641f1725f4188d568e046c0dec7fd2dc271abb594c299201",
   "blocks": [
     {
-      "en": "---\nname: poteto-agent\ndescription: Routing target for `/poteto-mode` and any request for poteto's style. Resume an existing `poteto-agent` for the conversation rather than spawning a sibling. Reads the `poteto-mode` skill's `SKILL.md` in full before any work, including its inline Principles index. Substituting `generalPurpose` skips that read and drifts.\nis_background: true\n---\n\n",
-      "zh": "---\nname: poteto-agent\ndescription: `/poteto-mode` 及所有要求采用 poteto 风格的请求的路由目标。同一对话应恢复现有 `poteto-agent`，而不是另起一个同级 agent。任何工作开始前，都要完整读取 `poteto-mode` skill 的 `SKILL.md`，包括其中的 Principles 索引。用 `generalPurpose` 替代会跳过这次读取，导致行为偏离。\nis_background: true\n---\n\n"
+      "en": "---\nname: poteto-agent\ndescription: Routing target for `/poteto-mode` and any request for poteto's style. Spawn a fresh `poteto-agent` for each new task, and resume one only in the strict cases that poteto-mode's Subagents section names. Reads the `poteto-mode` skill's `SKILL.md` in full before any work, including its inline Principles index. Substituting `generalPurpose` skips that read and drifts.\nis_background: true\n---\n\n",
+      "zh": "---\nname: poteto-agent\ndescription: `/poteto-mode` 及所有要求采用 poteto 风格的请求的路由目标。每个新任务应启动全新的 `poteto-agent`，仅在 poteto-mode 的 Subagents 章节明确列出的严格情况下才恢复已有 agent。任何工作开始前，都要完整读取 `poteto-mode` skill 的 `SKILL.md`，包括其中的 Principles 索引。用 `generalPurpose` 替代会跳过这次读取，导致行为偏离。\nis_background: true\n---\n\n"
     },
     {
       "en": "# Poteto subagent\n\n",

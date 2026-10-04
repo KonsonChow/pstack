@@ -1,6 +1,6 @@
 {
   "source": "skills/interrogate/SKILL.md",
-  "sha256": "a032d652d67575f20a03eeb7aeec27a504b5c7d905f9e9daaad48534dc6a86e8",
+  "sha256": "1d23326c925d1acf60fae82bedf6a878d1fd0bde4d15e45561d624cdda9faf7b",
   "blocks": [
     {
       "en": "---\nname: interrogate\ndescription: \"Use for \\\"interrogate\\\", \\\"adversarial review\\\", \\\"multi-model review\\\", \\\"challenge this\\\", \\\"stress test this code\\\", \\\"find blind spots\\\", or \\\"tear this apart\\\". Multiple LLM reviewers challenge changes from independent angles.\"\ndisable-model-invocation: true\n---\n\n",
@@ -63,20 +63,20 @@
       "zh": "**其他运行环境。** 此 skill 使用 Cursor 的 `Task`。其他环境使用自身 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示和模型，删除工具不支持的参数。没有 subagent 工具（例如未装扩展的 Pi）时，自己依次执行每位评审者。\n\n"
     },
     {
-      "en": "Use the `interrogate reviewers` list from the pstack settings file when present (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.agents/pstack-models.md` in other harnesses), one reviewer per entry, extending or shrinking the Reviewer A/B/C/D labels below to the configured entry count. Otherwise use the table defaults.\n\n",
-      "zh": "有 pstack 配置文件时，使用其 `interrogate reviewers` 列表（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他环境为 `~/.agents/pstack-models.md`），每项一位评审者。根据配置数量扩展或缩减下方 Reviewer A/B/C/D 标签。没有时使用表格默认值。\n\n"
+      "en": "Use the `interrogate reviewers` line in the pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.agents/pstack-models.md` in other harnesses), one reviewer per entry, extending or shrinking the Reviewer A/B/C labels below to the configured entry count. If the file or that line is missing, use the table defaults.\n\n",
+      "zh": "使用 pstack 设置文件中的 `interrogate reviewers` 行（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他运行环境为 `~/.agents/pstack-models.md`），每项对应一名评审者，根据配置条目数增减下方的评审者 A/B/C 标签。文件或该行缺失时，使用表格默认值。\n\n"
     },
     {
-      "en": "| Subagent | Default model |\n|----------|---------------|\n| Reviewer A | `claude-fable-5-1-thinking-max` |\n| Reviewer B | `gpt-5.6-sol-max` |\n| Reviewer C | `grok-4.6-fast-xhigh` |\n| Reviewer D | `claude-opus-5-thinking-xhigh` |\n\n",
-      "zh": "| Subagent | 默认模型 |\n|----------|---------------|\n| 评审者 A | `claude-fable-5-1-thinking-max` |\n| 评审者 B | `gpt-5.6-sol-max` |\n| 评审者 C | `grok-4.6-fast-xhigh` |\n| 评审者 D | `claude-opus-5-thinking-xhigh` |\n\n"
+      "en": "| Subagent | Default model |\n|----------|---------------|\n| Reviewer A | `claude-opus-5-5-max` |\n| Reviewer B | `gpt-5.6-sol-max` |\n| Reviewer C | `grok-4.7-xhigh-fast` |\n\n",
+      "zh": "| Subagent | 默认模型 |\n|----------|---------------|\n| 评审者 A | `claude-opus-5-5-max` |\n| 评审者 B | `gpt-5.6-sol-max` |\n| 评审者 C | `grok-4.7-xhigh-fast` |\n\n"
     },
     {
-      "en": "For each reviewer:\n- `subagent_type`: `generalPurpose`\n- `model`: the configured `interrogate reviewers` entry, or the table default with no configured line\n- `readonly`: `true`\n\n",
-      "zh": "每位评审者：\n- `subagent_type`：`generalPurpose`\n- `model`：配置的 `interrogate reviewers` 项；没有配置则用表格默认值。\n- `readonly`：`true`\n\n"
+      "en": "For each reviewer:\n- `subagent_type`: `generalPurpose`\n- `model`: the configured `interrogate reviewers` entry, or the table default with no configured line. For an `auto` or `inherit-parent` entry, omit `model` so that reviewer runs on the parent model.\n- `readonly`: `true`\n\n",
+      "zh": "每位评审者：\n- `subagent_type`：`generalPurpose`\n- `model`：配置的 `interrogate reviewers` 项；没有配置则用表格默认值。对于 `auto` 或 `inherit-parent` 条目，省略 `model` 以使评审者在父模型上运行。\n- `readonly`：`true`\n\n"
     },
     {
-      "en": "If a model slug is rejected as unresolvable when you try to spawn the subagent, check the valid slugs in the subagent tool's error message or your harness's model list, pick the closest equivalent (prefer the highest-reasoning tier of the same family), spawn with the valid slug, and open a separate PR to update the configured value or default table. Do not block the review on the slug issue. If the configured value is `inherit-parent` or `auto`, omit `model` instead. Never treat those aliases as broken slugs or enter this fallback for them.\n\n",
-      "zh": "启动时模型 slug 无法解析而被拒绝，检查 subagent 错误消息或运行环境模型列表中的有效 slug，选择最接近者（优先同模型家族最高推理等级），使用有效 slug 启动，并另开 PR 更新配置值或默认表。不要因 slug 问题阻塞评审。配置为 `inherit-parent` 或 `auto` 时，省略 `model`。这些别名不是损坏 slug，不应进入上述回退。\n\n"
+      "en": "If your subagent tool rejects a configured entry, run that reviewer on the table default of its family and say so. Families go by prefix: `claude-*`, `gpt-*`, and `grok-*`. With no family match, use Reviewer A's default. If it rejects a table default, check the valid slugs in its error message or your harness's model list, pick the closest equivalent (prefer the highest-reasoning tier of the same family), spawn with it, and open a separate PR to update the default table. Do not block the review on the slug issue. Never treat an alias entry as a rejected slug or apply either fallback to it.\n\n",
+      "zh": "如果你的 subagent 工具拒绝配置的条目，使用该家族对应的表格默认值运行该评审者并予以说明。家族按前缀区分：`claude-*`、`gpt-*` 和 `grok-*`。若无匹配的家族，使用 Reviewer A 的默认值。如果拒绝表格默认值，检查错误信息或 harness 模型列表中的有效 slug，选择最接近的等价模型（优先选择同家族最高推理等级），以此启动，并单独提 PR 更新默认表。切勿因 slug 问题阻塞审查。绝不要将别名条目视为损坏的 slug 或对其应用回退逻辑。\n\n"
     },
     {
       "en": "Read `references/reviewer-prompt.md` and fill in the template with:\n1. The stated intent\n2. The diff or file contents\n3. The review rubric from `references/rubric.md`\n4. The code-quality lens from `references/code-quality-review.md`\n\n",

@@ -1,6 +1,6 @@
 {
   "source": "skills/why/SKILL.md",
-  "sha256": "7bcccc3b6fe14e8b32578e0a396665d5d617200f0427f121f0e1b08f3981f7bd",
+  "sha256": "0cf5090e5209e31eadd9433e2e12082b5e5b1ead4c008f4c37602a7406205d68",
   "blocks": [
     {
       "en": "---\nname: why\ndescription: \"Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds. Discovers available MCPs and queries each evidence category (source control, issue tracker, long-form docs, real-time chat, infrastructure observability, error tracking, product analytics warehouse) in parallel, then returns a cited read on decisions and tradeoffs. Use how for runtime behavior.\"\ndisable-model-invocation: true\n---\n\n",
@@ -17,6 +17,10 @@
     {
       "en": "Companion to the `how` skill. `how` answers what the code does and how it works. `why` answers what forces led to its shape.\n\n",
       "zh": "与 `how` skill 配套。`how` 回答代码做什么、如何工作；`why` 回答哪些因素促成了当前结构。\n\n"
+    },
+    {
+      "en": "Each spawn below names a role line in the pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.agents/pstack-models.md` in other harnesses) and a default. Set `model` to that line's value, or to the default if the file or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If your subagent tool rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message or your harness's model list.\n\n",
+      "zh": "下方的每次启动均指明了 pstack 设置文件（在 Cursor 中为 `~/.cursor/rules/pstack-models.mdc`，在其他运行环境中为 `~/.agents/pstack-models.md`）中的角色行及默认值。将 `model` 设为该行的值；若文件或该行缺失，则设为默认值。当值为 `auto` 或 `inherit-parent` 时，不设置 `model`。若 subagent 工具拒绝某个模型标识，使用默认值并说明情况。若拒绝默认值，从错误信息或 运行环境模型列表中选取同家族最接近的有效模型标识。\n\n"
     },
     {
       "en": "## Operating Posture\n\n",
@@ -107,12 +111,12 @@
       "zh": "在同一消息中启动所有匹配的调查者，让它们并行运行。不要让一个 agent 覆盖多个 MCP。\n\n"
     },
     {
-      "en": "**Other harnesses.** The spawns in this skill use Cursor's `Task` tool. In another harness, use its subagent tool: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Keep the prompt and the model. Drop parameters your tool doesn't have. If your harness has no subagent tool, as in Pi without an extension, run each investigator yourself, one after another. \"Your configured ... model\" means the matching line in the pstack settings file. Cursor loads `~/.cursor/rules/pstack-models.mdc` automatically. In other harnesses, read `~/.agents/pstack-models.md` if it exists.\n\n",
-      "zh": "**其他 agent 运行环境。**本 skill 的启动步骤使用 Cursor 的 `Task` 工具。其他环境请使用对应 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示词和模型不变，去掉工具不支持的参数。环境没有 subagent 工具时，例如无扩展的 Pi，自行依次执行每个调查者角色。“你配置的……模型”指 pstack 设置文件中的对应条目。Cursor 自动加载 `~/.cursor/rules/pstack-models.mdc`；其他环境中，若存在 `~/.agents/pstack-models.md`，请读取它。\n\n"
+      "en": "**Other harnesses.** The spawns in this skill use Cursor's `Task` tool. In another harness, use its subagent tool: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Keep the prompt and the model. Drop parameters your tool doesn't have. If your harness has no subagent tool, as in Pi without an extension, run each investigator yourself, one after another.\n\n",
+      "zh": "**其他 agent 运行环境。**本 skill 的启动步骤使用 Cursor 的 `Task` 工具。其他环境请使用对应 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示词和模型不变，去掉工具不支持的参数。环境没有 subagent 工具时，例如无扩展的 Pi，自行依次执行每个调查者角色。\n\n"
     },
     {
-      "en": "Subagent config (each):\n- `subagent_type`: `generalPurpose`\n- `model`: your configured why-investigators model (default `grok-4.6-fast-xhigh`)\n- `readonly`: `false` (agent mode). **Do not use readonly/Ask mode.** It strips MCP access, which disables MCP-backed investigators entirely. Investigators still shouldn't write anything.\n\n",
-      "zh": "每名 subagent 的配置：\n- `subagent_type`：`generalPurpose`\n- `model`：你配置的 why-investigators 模型（默认 `grok-4.6-fast-xhigh`）\n- `readonly`：`false`（agent 模式）。**不要使用 readonly/Ask 模式。**它会移除 MCP 访问能力，使依赖 MCP 的调查者完全无法工作。但调查者仍不应写任何内容。\n\n"
+      "en": "Subagent config (each):\n- `subagent_type`: `generalPurpose`\n- `model`: the `why investigators` line, default `grok-4.7-xhigh-fast`\n- `readonly`: `false` (agent mode). **Do not use readonly/Ask mode.** It strips MCP access, which disables MCP-backed investigators entirely. Investigators still shouldn't write anything.\n\n",
+      "zh": "每名 subagent 的配置：\n- `subagent_type`：`generalPurpose`\n- `model`： `why investigators` 行，默认 `grok-4.7-xhigh-fast`\n- `readonly`：`false`（agent 模式）。**不要使用 readonly/Ask 模式。**它会移除 MCP 访问能力，使依赖 MCP 的调查者完全无法工作。但调查者仍不应写任何内容。\n\n"
     },
     {
       "en": "Each investigator gets:\n1. The base prompt from `references/investigator-prompt.md`\n2. The category playbook `references/sources/<source>.md` for the selected MCP, adapted from the examples in `references/source-playbook.md`\n3. The cross-cutting `references/sources/incident-postmortem.md` **if the target code looks defensive** (null checks, retry logic, timeout handling, rate limiting, feature flags, egress guards, OOM handlers)\n4. The code anchor from Step 2 (file paths, symbols, commit hashes, PR numbers, ticket IDs)\n5. The user's original question\n\n",
@@ -183,8 +187,8 @@
       "zh": "启动一名综合 subagent：\n\n"
     },
     {
-      "en": "- `subagent_type`: `generalPurpose`\n- `model`: your configured why-synthesizer model (default `claude-fable-5-1-thinking-max`)\n- `readonly`: `false` (agent mode). The synthesizer's quality check spot-verifies citations, which can require MCP access. Readonly/Ask mode strips MCPs and defeats that.\n\n",
-      "zh": "- `subagent_type`：`generalPurpose`\n- `model`：你配置的 why-synthesizer 模型（默认 `claude-fable-5-1-thinking-max`）\n- `readonly`：`false`（agent 模式）。综合者质量检查会抽查引用，可能需要 MCP。Readonly/Ask 模式会移除 MCP，使此检查失效。\n\n"
+      "en": "- `subagent_type`: `generalPurpose`\n- `model`: the `why synthesizer` line, default `claude-opus-5-5-max`\n- `readonly`: `false` (agent mode). The synthesizer's quality check spot-verifies citations, which can require MCP access. Readonly/Ask mode strips MCPs and defeats that.\n\n",
+      "zh": "- `subagent_type`：`generalPurpose`\n- `model`： `why synthesizer` 行，默认 `claude-opus-5-5-max`\n- `readonly`：`false`（agent 模式）。综合者质量检查会抽查引用，可能需要 MCP。Readonly/Ask 模式会移除 MCP，使此检查失效。\n\n"
     },
     {
       "en": "The synthesizer gets:\n1. The investigator findings, including any null results and any categories skipped with justification\n2. The code anchor from Step 2 (file paths, symbols, commit hashes, PR numbers, ticket IDs)\n3. The user's original question\n4. The epistemics framework from `references/epistemics.md`\n5. The synthesizer prompt template from `references/synthesizer-prompt.md`\n\n",

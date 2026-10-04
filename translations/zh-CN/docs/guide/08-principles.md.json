@@ -1,14 +1,14 @@
 {
   "source": "docs/guide/08-principles.md",
-  "sha256": "3ede7c9cf74d9631142aec016a01843d97c1e20469387144b70c2660d50fa96f",
+  "sha256": "a103e293dd6d9513f425feac39547f0c2c049300f36704d80b6d49c958e5a4bb",
   "blocks": [
     {
       "en": "# Steer with principle names\n\n",
       "zh": "# 用原则名称调整方向"
     },
     {
-      "en": "pstack ships 23 principles as individual skills. `/poteto-mode` reads their index at the start of every multi-step task, applies the ones the task triggers, and names each applied principle in its reply along with the decision it changed.\n\n",
-      "zh": "pstack 将 23 条原则分别发布为独立 skill。`/poteto-mode` 在每个多步骤任务开始时读取索引，应用任务触发的原则，并在回复中说明用了哪条原则，以及它改变了哪项决策。"
+      "en": "pstack ships 24 principles as individual skills. `/poteto-mode` reads their index at the start of every multi-step task, applies the ones the task triggers, and names each applied principle in its reply along with the decision it changed.\n\n",
+      "zh": "pstack 将 24 条原则分别发布为独立 skill。`/poteto-mode` 在每个多步骤任务开始时读取索引，应用任务触发的原则，并在回复中说明用了哪条原则，以及它改变了哪项决策。"
     },
     {
       "en": "You don't invoke principles. You use their names to steer. Each name points at a complete rule the agent has already read, so one phrase redirects the work more precisely than a paragraph of instructions.\n\n",
@@ -47,8 +47,8 @@
       "zh": "这些短语有效，是因为背后的规则足够具体。agent 仍须在回复中说明，规则改变了哪项决策。如果只引用原则却说不出实际决策变化，就说明它只是提了名字，并没有落实。"
     },
     {
-      "en": "## The 23, briefly\n\n",
-      "zh": "## 23 条原则简览"
+      "en": "## The 24, briefly\n\n",
+      "zh": "## 24 条原则简览"
     },
     {
       "en": "The core principles decide how much to build and when to rethink the design:\n\n",
@@ -71,8 +71,8 @@
       "zh": "验证原则规定什么算证据："
     },
     {
-      "en": "- [Prove It Works](../../skills/principle-prove-it-works/SKILL.md) verifies the real artifact, not a proxy.\n- [Fix Root Causes](../../skills/principle-fix-root-causes/SKILL.md) reproduces and traces to the cause before changing code.\n- [Sequence Work into Verifiable Units](../../skills/principle-sequence-verifiable-units/SKILL.md) ends each small unit in a check before starting the next.\n- [Test Behavior, Not Implementation](../../skills/principle-test-behavior-not-implementation/SKILL.md) calls the code the way its users do and asserts a literal expected value, and deletes a test that would still pass if every imported function returned `undefined`.\n\n",
-      "zh": "- [Prove It Works](../../skills/principle-prove-it-works/SKILL.md)：验证真实产物，而不是替代指标。\n- [Fix Root Causes](../../skills/principle-fix-root-causes/SKILL.md)：改代码前，先复现并追踪到根因。\n- [Sequence Work into Verifiable Units](../../skills/principle-sequence-verifiable-units/SKILL.md)：每个小单元都以检查结束，确认后再进入下一个。\n- [Test Behavior, Not Implementation](../../skills/principle-test-behavior-not-implementation/SKILL.md)：按使用者的方式调用代码，并以字面预期值作断言；如果所有导入函数都返回 `undefined` 时测试仍通过，就删除这个测试。"
+      "en": "- [Prove It Works](../../skills/principle-prove-it-works/SKILL.md) verifies the real artifact, not a proxy.\n- [Fix Root Causes](../../skills/principle-fix-root-causes/SKILL.md) reproduces and traces to the cause before changing code.\n- [Sequence Work into Verifiable Units](../../skills/principle-sequence-verifiable-units/SKILL.md) ends each small unit in a check before starting the next.\n- [Test Behavior, Not Implementation](../../skills/principle-test-behavior-not-implementation/SKILL.md) calls the code the way its users do and asserts a literal expected value, and deletes a test that would still pass if every imported function returned `undefined`.\n- [Explain the Number](../../skills/principle-explain-the-number/SKILL.md) names what limits a measured number and rules out that it measured something else, before anyone trusts or reports it.\n\n",
+      "zh": "- [Prove It Works](../../skills/principle-prove-it-works/SKILL.md)：验证真实产物，而不是替代指标。\n- [Fix Root Causes](../../skills/principle-fix-root-causes/SKILL.md)：改代码前，先复现并追踪到根因。\n- [Sequence Work into Verifiable Units](../../skills/principle-sequence-verifiable-units/SKILL.md)：每个小单元都以检查结束，确认后再进入下一个。\n- [Test Behavior, Not Implementation](../../skills/principle-test-behavior-not-implementation/SKILL.md)：按使用者的方式调用代码，并以字面预期值作断言；如果所有导入函数都返回 `undefined` 时测试仍通过，就删除这个测试。\n- [Explain the Number](../../skills/principle-explain-the-number/SKILL.md)：在信任或汇报测得的数字前，说明其限制因素，并排除测量了其他内容的可能。\n\n"
     },
     {
       "en": "The delegation principles keep parallel work sane:\n\n",

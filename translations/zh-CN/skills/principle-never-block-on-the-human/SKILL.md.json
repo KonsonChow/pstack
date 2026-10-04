@@ -1,6 +1,6 @@
 {
   "source": "skills/principle-never-block-on-the-human/SKILL.md",
-  "sha256": "d82bce9ab9193249d1ec0d514202d89602f0fd3d312174d622c2dd222bae5a2e",
+  "sha256": "f2764bb9338cbfc788c903cf4b9cd0a5f4042d3a04dd6d59cbd525d9beaadd0a",
   "blocks": [
     {
       "en": "---\nname: principle-never-block-on-the-human\ndescription: \"Apply when tempted to ask 'should I do X?' on reversible work. Proceed, present the result, let the human course-correct after the fact; reserve confirmation for irreversible actions.\"\ndisable-model-invocation: true\n---\n\n",
@@ -19,8 +19,8 @@
       "zh": "**原因：** 每次等待许可都会停滞流水线，让人成为瓶颈。代码改动可逆且可评审，因此错误决策的成本通常低于阻塞的成本。\n\n"
     },
     {
-      "en": "**Pattern:**\n- **Proceed, then present.** Do the work, show the result. Don't ask \"should I do X?\" Do X, explain why.\n- **Reserve questions for genuine ambiguity.** Ask only when you cannot infer intent from context.\n- **Make the system self-healing.** When you notice a problem, log it and fix it in the next round.\n- **Supervision is async.** Design workflows for review-after-the-fact.\n\n",
-      "zh": "**模式：**\n- **先执行，再展示。** 完成工作，展示结果。不要问“要不要做 X？”，先做 X，再解释原因。\n- **只对真正的歧义提问。** 只有无法从上下文推断意图时才问。\n- **让系统自行修复。** 发现问题时记录下来，在下一轮修复。\n- **监督是异步的。** 按事后评审设计工作流程。\n\n"
+      "en": "**Pattern:**\n- **Proceed, then present.** Do the work, show the result. Don't ask \"should I do X?\" Do X, explain why.\n- **Make the system self-healing.** When you notice a problem, log it and fix it in the next round.\n\n",
+      "zh": "**模式：**\n- **先执行，再展示。** 完成工作，展示结果。不要问“要不要做 X？”，先做 X，再解释原因。\n- **让系统自行修复。** 发现问题时记录下来，在下一轮修复。\n\n"
     },
     {
       "en": "**Boundaries:**\n- **Irreversible actions** (force-push, delete production data, send external messages) still require confirmation.\n- **Reversible actions** (write code, edit notes, split tasks) should proceed without blocking.\n- **Product direction** comes from the human. *Execution* should not block.\n",

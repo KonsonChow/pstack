@@ -1,6 +1,6 @@
 {
   "source": "skills/reflect/SKILL.md",
-  "sha256": "68cc55d20e175c19acda0e003ce6b83e84e6324b04cb20e46a51e199d5e63e2c",
+  "sha256": "bbbba9bb0b7a63b1b65c7db4eafdbddeed266d1d19dd457926d137adf7aebd7e",
   "blocks": [
     {
       "en": "---\nname: reflect\ndescription: Spawn three parallel review subagents over the active transcript, surface learnings, and route each to a concrete edit on an existing skill. Use when the user says reflect.\ndisable-model-invocation: true\n---\n\n",
@@ -59,16 +59,20 @@
       "zh": "### 2. 并行启动三位评审者\n\n"
     },
     {
-      "en": "One message, three `Task` calls, `subagent_type: generalPurpose`, explicit `model:` on each, agent mode (`readonly: false`). Reviewers need MCP access for context lookups (tickets, chat threads, observability traces referenced in the transcript). Readonly strips MCPs.\n\n",
-      "zh": "一条消息中发起三个 `Task` 调用，`subagent_type: generalPurpose`，每个显式指定 `model:`，使用 agent 模式（`readonly: false`）。评审者需要 MCP 查询上下文（会话引用的工单、聊天线程、可观测性 trace），只读模式会移除 MCP。\n\n"
+      "en": "One message, three `Task` calls, `subagent_type: generalPurpose`, with `model` set as below, agent mode (`readonly: false`). Reviewers need MCP access for context lookups (tickets, chat threads, observability traces referenced in the transcript). Readonly strips MCPs.\n\n",
+      "zh": "一条消息中发起三个 `Task` 调用，`subagent_type: generalPurpose`，按下方设置 `model`，使用 agent 模式（`readonly: false`）。评审者需要 MCP 查询上下文（会话引用的工单、聊天线程、可观测性 trace），只读模式会移除 MCP。\n\n"
     },
     {
-      "en": "**Other harnesses.** The spawns in this skill use Cursor's `Task` tool. In another harness, use its subagent tool: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Keep the prompt and the model. Drop parameters your tool doesn't have. If your harness has no subagent tool, as in Pi without an extension, run each role yourself, one after another. \"Your configured ... model\" means the matching line in the pstack settings file. Cursor loads `~/.cursor/rules/pstack-models.mdc` automatically. In other harnesses, read `~/.agents/pstack-models.md` if it exists.\n\n",
-      "zh": "**其他运行环境。** 此 skill 的启动使用 Cursor `Task`。其他环境使用自身工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示词和模型，删除工具不支持的参数。如果没有 subagent 工具（如未装扩展的 Pi），自己依次执行各角色。“配置的……模型”指 pstack 设置文件中对应行。Cursor 自动加载 `~/.cursor/rules/pstack-models.mdc`；其他环境读取 `~/.agents/pstack-models.md`（如果存在）。\n\n"
+      "en": "**Other harnesses.** The spawns in this skill use Cursor's `Task` tool. In another harness, use its subagent tool: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Keep the prompt and the model. Drop parameters your tool doesn't have. If your harness has no subagent tool, as in Pi without an extension, run each role yourself, one after another.\n\n",
+      "zh": "**其他运行环境。** 此 skill 的启动使用 Cursor `Task`。其他环境使用自身工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示词和模型，删除工具不支持的参数。如果没有 subagent 工具（如未装扩展的 Pi），自己依次执行各角色。\n\n"
     },
     {
-      "en": "| Lens | `model` | Prompt template |\n|---|---|---|\n| Judgment | your configured reflect-judgment model (default `claude-fable-5-1-thinking-max`) | `references/judgment-reviewer.md` |\n| Tooling | your configured reflect-tooling model (default `gpt-5.6-sol-max`) | `references/tooling-reviewer.md` |\n| Divergent | your configured reflect-judgment model (default `claude-fable-5-1-thinking-max`) | `references/divergent-reviewer.md` |\n\n",
-      "zh": "| 视角 | `model` | 提示词模板 |\n|---|---|---|\n| 判断 | 配置的 reflect-judgment 模型（默认 `claude-fable-5-1-thinking-max`） | `references/judgment-reviewer.md` |\n| 工具 | 配置的 reflect-tooling 模型（默认 `gpt-5.6-sol-max`） | `references/tooling-reviewer.md` |\n| 发散 | 配置的 reflect-judgment 模型（默认 `claude-fable-5-1-thinking-max`） | `references/divergent-reviewer.md` |\n\n"
+      "en": "Each reviewer and the synthesizer name a role line in the pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.agents/pstack-models.md` in other harnesses) and a default. Set `model` to that line's value, or to the default if the file or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If your subagent tool rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message or your harness's model list.\n\n",
+      "zh": "每位评审者与综合者均指定了 pstack 设置文件（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他运行环境为 `~/.agents/pstack-models.md`）中的角色行及默认值。将 `model` 设为该行的值；若文件或该行缺失，则设为默认值。当值为 `auto` 或 `inherit-parent` 时，不设置 `model`。若 subagent 工具拒绝某个模型标识，使用默认值并说明情况。若拒绝默认值，从错误信息或运行环境模型列表中选取同家族最接近的有效模型标识。\n\n"
+    },
+    {
+      "en": "| Lens | Role line | Default `model` | Prompt template |\n|---|---|---|---|\n| Judgment | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-max` | `references/judgment-reviewer.md` |\n| Tooling | `reflect tooling` | `gpt-5.6-sol-max` | `references/tooling-reviewer.md` |\n| Divergent | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-max` | `references/divergent-reviewer.md` |\n\n",
+      "zh": "| 视角 | 角色配置行 | 默认 `model` | 提示词模板 |\n|---|---|---|---|\n| 判断 | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-max` | `references/judgment-reviewer.md` |\n| 工具 | `reflect tooling` | `gpt-5.6-sol-max` | `references/tooling-reviewer.md` |\n| 发散 | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-max` | `references/divergent-reviewer.md` |\n\n"
     },
     {
       "en": "Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in the `Task` response body.\n\n",
@@ -79,8 +83,8 @@
       "zh": "### 3. 综合分析\n\n"
     },
     {
-      "en": "One `Task` call, `subagent_type: generalPurpose`, using your configured reflect-judgment model (default `claude-fable-5-1-thinking-max`), agent mode (`readonly: false`). The synthesizer's quality check includes spot-verifying citations, which can require MCP access. Readonly strips MCPs. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.\n\n",
-      "zh": "发起一个 `Task`，`subagent_type: generalPurpose`，使用配置的 reflect-judgment 模型（默认 `claude-fable-5-1-thinking-max`），agent 模式（`readonly: false`）。综合分析者要抽查引用，可能需要 MCP；只读模式会移除 MCP。逐字使用 `references/synthesizer.md`，在标记处内联每位评审者完整输出。综合分析者返回结构化的 Accepted／Rejected／Backlog 列表。\n\n"
+      "en": "One `Task` call, `subagent_type: generalPurpose`, with `model` from the `reflect judgment, divergent, synthesizer` line (default `claude-opus-5-5-max`), agent mode (`readonly: false`). The synthesizer's quality check includes spot-verifying citations, which can require MCP access. Readonly strips MCPs. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.\n\n",
+      "zh": "发起一个 `Task` 调用，`subagent_type: generalPurpose`，`model` 取自 `reflect judgment, divergent, synthesizer` 行（默认 `claude-opus-5-5-max`），agent 模式（`readonly: false`）。综合分析者要抽查引用，可能需要 MCP；只读模式会移除 MCP。逐字使用 `references/synthesizer.md`，在标记处内联每位评审者完整输出。综合分析者返回结构化的 Accepted／Rejected／Backlog 列表。\n\n"
     },
     {
       "en": "### 4. Structural enforcement check\n\n",

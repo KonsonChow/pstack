@@ -1,6 +1,6 @@
 {
   "source": "skills/architect/SKILL.md",
-  "sha256": "897a59beaa3cab107d98c256206e062cc4a5e9421a45b9d462fbded19291fea5",
+  "sha256": "0d10a7ddc7e06285676e2648205d01e44f74479129c2413dd533750c23276a62",
   "blocks": [
     {
       "en": "---\nname: architect\ndescription: \"Sketch types, signatures, and module structure before code, then stay in the loop while implementation fills in. Use for /architect, 'architect this', 'design this', or non-trivial work where jumping to code would lock in the wrong shape.\"\ndisable-model-invocation: true\n---\n\n",
@@ -51,16 +51,16 @@
       "zh": "带着设计草图任务和阶段 A 的理解产物运行 **arena** skill。将 `references/runner-prompt.md` 作为每个执行者的提示词。每个候选者按 `references/rationale-template.md` 生成设计包。\n\n"
     },
     {
-      "en": "Use your configured architect runners (defaults `claude-fable-5-1-thinking-max`, `gpt-5.6-sol-max`, `grok-4.6-fast-xhigh`, `claude-opus-5-thinking-xhigh`).\n\n",
-      "zh": "使用已配置的 architect 执行模型（默认 `claude-fable-5-1-thinking-max`、`gpt-5.6-sol-max`、`grok-4.6-fast-xhigh`、`claude-opus-5-thinking-xhigh`）。\n\n"
+      "en": "Take the runners from the `architect runners` line in the pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.agents/pstack-models.md` in other harnesses), in place of the `arena runners` line. If the file or that line is missing, use `claude-opus-5-5-max`, `gpt-5.6-sol-max`, `grok-4.7-xhigh-fast`. Alias and rejected entries follow the runner rules in the **arena** skill's Phase A.\n\n",
+      "zh": "从 pstack 设置文件（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他运行环境为 `~/.agents/pstack-models.md`）中的 `architect runners` 行获取执行模型，以替代 `arena runners` 行。若文件或该行缺失，使用 `claude-opus-5-5-max`、`gpt-5.6-sol-max`、`grok-4.7-xhigh-fast`。别名与被拒绝的条目遵循 **arena** skill 阶段 A 中的 runner 规则。\n\n"
     },
     {
       "en": "Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.\n\n",
       "zh": "至少设计两遍。综合前必须有至少两个结构不同的候选方案，即便第一个看起来已足够。这是 **exhaust-the-design-space** 原则 skill 的具体实践。需要整体结构的替代方案，而非同一结构内的局部修补。\n\n"
     },
     {
-      "en": "Screen every candidate against [`references/design-red-flags.md`](references/design-red-flags.md) before synthesis. Reject or revise shallow modules, information leakage, temporal decomposition, and pass-through methods.\n\n",
-      "zh": "综合前，用 [`references/design-red-flags.md`](references/design-red-flags.md) 审查每个候选方案。拒绝或修改浅模块、信息泄漏、按执行时间顺序拆模块，以及透传方法。\n\n"
+      "en": "Screen every candidate against [`references/design-red-flags.md`](references/design-red-flags.md) before synthesis. Assume the next contributor is an agent that sees only the files it opened, copies the nearest example, and takes the shortest path that compiles. Prefer the design where a change that looks right from one file is right for the whole repo.\n\n",
+      "zh": "综合前，用 [`references/design-red-flags.md`](references/design-red-flags.md) 审查每个候选方案。假设下一位贡献者是一个 agent，它只看得到自己打开的文件、复制离它最近的示例，并走通编译的最短路径。优先选择这样一种设计：从单个文件看起来合理的修改，对整个代码库也是正确的。\n\n"
     },
     {
       "en": "Compare viable candidates on interface depth. Prefer the design that hides more complexity behind a smaller, simpler public surface. A rich interface can keep call chains short by concentrating capability instead of scattering it across layers.\n\n",

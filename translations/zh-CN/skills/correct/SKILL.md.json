@@ -1,0 +1,58 @@
+{
+  "source": "skills/correct/SKILL.md",
+  "sha256": "bf482bacc972b3f124a4af8bf9364b4b3e280cb5845e44c326ea4f4565e5c904",
+  "blocks": [
+    {
+      "en": "---\nname: correct\ndescription: \"Find the mistakes agents keep repeating in this repo and make each one impossible. Try architecture first, then types, then a lint whose error names the fix, then a test, and write docs last. Prove each check fails on a real past mistake. Repeat this each time the operator corrects you. Use for /correct.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: correct\ndescription: \"找出 agent 在本仓库中反复犯的错误，并从根本上使其不再可能发生。优先通过架构消除，其次通过类型约束，再通过错误信息指明修复方式的 lint，然后通过测试，最后才编写文档。证明每项检查都能在过去的真实错误上报错。每当操作者纠正你时重复此过程。用于 /correct。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Correct\n\n",
+      "zh": "# 纠正\n\n"
+    },
+    {
+      "en": "The operator keeps correcting agents in this repo for the same mistakes. Change the repo so the next agent can't make them.\n\n",
+      "zh": "操作者不断因为相同的错误在此仓库中纠正 agent。改造仓库，让下一位 agent 无法再犯这些错误。\n\n"
+    },
+    {
+      "en": "Assume every contributor is an agent that sees only the files it opened, copies the nearest example, and takes the shortest path that compiles. Design the repo so a change that looks right from one file is right for the whole repo.\n\n",
+      "zh": "假设每位贡献者都是一个 agent，它只看得到自己打开的文件、复制离它最近的示例，并选择能通过编译的最短路径。请设计好仓库，使得从单个文件看起来合理的修改，对整个仓库而言也是正确的。\n\n"
+    },
+    {
+      "en": "## Find the mistake classes\n\n",
+      "zh": "## 找出错误类别\n\n"
+    },
+    {
+      "en": "First, read recent commits, reverts, review comments, agent instruction files, and comments that explain workarounds. Group the mistakes into classes. A class counts once it has happened twice.\n\n",
+      "zh": "首先，阅读最近的 commit、revert、审查评论、agent 指令文件以及解释变通方案的代码注释。将错误归类。一旦同一类错误发生过两次，就算作一类。\n\n"
+    },
+    {
+      "en": "## Fix each class at the highest level that works\n\n",
+      "zh": "## 在有效的最高层级解决每一类错误\n\n"
+    },
+    {
+      "en": "1. **Eliminate it with architecture.** Give each piece of state one owner and each task one supported way. Hide internals so the wrong import fails. Replace hand-synced lists with one source of truth. Delete old ways and dead code an agent would copy.\n2. **Enforce it with types so the bad state can't be written.** If bad code still compiles, add a lint or CI check whose error names the file, type, or function to use instead. If the pattern is already common, fail only when a change adds more.\n3. **Test the behavior.** Fix or delete any test that would still pass if every function it calls returned nothing.\n4. **Write docs or agent rules last, only for judgment calls.** Nothing fails when an agent skips them.\n\n",
+      "zh": "1. **通过架构消除它。** 让每份状态拥有唯一的负责者，让每个任务拥有唯一支持的方式。隐藏内部实现，让错误的导入 直接失败。用单一事实来源取代手动同步的列表。删除会被 agent 依葫芦画瓢复制的旧方式与废弃代码。\n2. **通过类型强化约束，使得不良状态根本无法写出。** 如果不良代码仍能编译通过，添加 lint 或 CI 检查，其错误信息中必须直接指明应改用的文件、类型或函数。如果该模式已在代码库中广泛存在，则仅当某次修改引入更多时报错失败。\n3. **对行为进行测试。** 如果一个测试在其调用的每个函数均返回空值时依然能通过，修复或删除该测试。\n4. **最后才编写文档或 agent 规则，且仅针对需要判断的选择。** 当 agent 跳过规则时，系统不会产生任何失败报错。\n\n"
+    },
+    {
+      "en": "## Fix and prove\n\n",
+      "zh": "## 修复并验证\n\n"
+    },
+    {
+      "en": "Then fix the most frequent classes now, one commit each. Prove each new check fails on a real past mistake. Run the same command locally and in CI. Exceptions go on the offending line with a reason, an expiry date, and a human's approval.\n\n",
+      "zh": "随后立即着手修复最频繁的错误类别，每个类别独立为一个 commit。证明每项新增的检查都能在过去的真实错误上报错。在本地和 CI 中运行完全相同的命令。若有例外情况，直接标注在违规行上，注明原因、过期日期并获得人工批准。\n\n"
+    },
+    {
+      "en": "## Keep the rule table\n\n",
+      "zh": "## 维护规则对应表\n\n"
+    },
+    {
+      "en": "Last, keep a table in the agent instruction file that pairs each rule with what enforces it. When the operator corrects you, fix the mistake and add the rule. If the rule was already there and nothing enforces it, that's a repeat, so fix it at the highest level in the same change. Drop a rule once its mistake can't happen.\n\n",
+      "zh": "最后，在 agent 指令文件中维护一张表格，将每条规则与强制执行它的机制相对应。当操作者纠正你时，修复该错误并补上规则。如果规则之前已存在却没有任何强制执行机制，说明这是重复犯错，因此在同一个改动中于最高层级将其彻底消除。一旦某项错误已不可能发生，便可移除对应规则。\n\n"
+    },
+    {
+      "en": "**Reply:** each class with its evidence, the level you picked, and why a higher level didn't work.\n",
+      "zh": "**回复：** 每一个错误类别及其证据、你选择的解决层级，以及为什么更高层级行不通的原因。\n"
+    }
+  ]
+}

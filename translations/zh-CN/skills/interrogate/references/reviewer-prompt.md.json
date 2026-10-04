@@ -1,6 +1,6 @@
 {
   "source": "skills/interrogate/references/reviewer-prompt.md",
-  "sha256": "a397cc61102add709803d917fb23d726920525bf23e7c06dc4ed0b5cbeb00e54",
+  "sha256": "e0598e254792b56de39bb16b1e6db559b03a522fdc54b98f942d254090920ae6",
   "blocks": [
     {
       "en": "# Reviewer Prompt Template\n\n",
@@ -71,8 +71,8 @@
       "zh": "每项发现包括：\n\n"
     },
     {
-      "en": "1. **Severity**: `critical` | `warning` | `nit`\n   - `critical`: Would cause bugs, data loss, security issues, or fundamentally broken behavior\n   - `warning`: Design concern, maintainability risk, or correctness issue that isn't immediately broken but will cause pain\n   - `nit`: Style, naming, minor improvement. Only include nits if they're genuinely useful, not to pad your review.\n2. **Finding**: What the problem is, in concrete terms. Reference specific lines/functions.\n3. **Evidence**: Why you believe this is a problem. Show your reasoning. Don't just assert.\n4. **Suggestion** (optional): What you'd do instead, if you have a concrete alternative. Skip this if you don't have a clear fix.\n\n",
-      "zh": "1. **严重程度**：`critical` | `warning` | `nit`\n   - `critical`：会导致缺陷、数据丢失、安全问题或根本性行为错误\n   - `warning`：设计隐患、可维护性风险，或尚未立即出错但日后会带来麻烦的正确性问题\n   - `nit`：风格、命名、轻微改进。只有确实有帮助时才列出，不要凑数。\n2. **问题**：具体说明问题所在，引用准确行或函数。\n3. **证据**：解释为何认为这是问题，展示推理，不要只有断言。\n4. **建议**（可选）：有具体替代方案时说明会怎么做；没有明确修复办法就省略。\n\n"
+      "en": "1. **Severity**: `critical` | `warning` | `nit`\n   - `critical`: Would cause bugs, data loss, security issues, or fundamentally broken behavior\n   - `warning`: Design concern, maintainability risk, or correctness issue that isn't immediately broken but will cause pain\n   - `nit`: Style, naming, minor improvement.\n2. **Finding**: What the problem is, in concrete terms. Reference specific lines/functions.\n3. **Evidence**: Why you believe this is a problem. Show your reasoning. Don't just assert.\n4. **Suggestion** (optional): What you'd do instead, if you have a concrete alternative. Skip this if you don't have a clear fix.\n\n",
+      "zh": "1. **严重程度**：`critical` | `warning` | `nit`\n   - `critical`：会导致缺陷、数据丢失、安全问题或根本性行为错误\n   - `warning`：设计隐患、可维护性风险，或尚未立即出错但日后会带来麻烦的正确性问题\n   - `nit`：风格、命名、轻微改进。\n2. **问题**：具体说明问题所在，引用准确行或函数。\n3. **证据**：解释为何认为这是问题，展示推理，不要只有断言。\n4. **建议**（可选）：有具体替代方案时说明会怎么做；没有明确修复办法就省略。\n\n"
     },
     {
       "en": "## What Makes a Good Finding\n\n",
@@ -87,8 +87,8 @@
       "zh": "## 避免什么\n\n"
     },
     {
-      "en": "- Restating what the code does without identifying a problem\n- Suggesting rewrites for working code because you'd prefer a different style\n- Raising hypothetical issues (\"what if someone passes null here\") without evidence that the code path is reachable\n- Praising the code. You're an adversary, not a cheerleader. If you find nothing wrong, say \"no findings\" and stop.\n\n",
-      "zh": "- 只复述代码行为，不指出问题\n- 仅因偏好其他风格，就建议重写正常工作的代码\n- 在没有证据证明路径可达时，提出假设性问题（“有人传入 null 怎么办”）\n- 赞美代码。你是对手，不是啦啦队。找不到问题就说“无发现”并停止。\n\n"
+      "en": "- Restating what the code does without identifying a problem\n- Praising the code. You're an adversary, not a cheerleader. If you find nothing wrong, say \"no findings\" and stop.\n\n",
+      "zh": "- 只复述代码行为，不指出问题\n- 赞美代码。你是对手，不是啦啦队。找不到问题就说“无发现”并停止。\n\n"
     },
     {
       "en": "## Output\n\n",

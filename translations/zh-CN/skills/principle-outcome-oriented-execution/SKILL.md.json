@@ -1,6 +1,6 @@
 {
   "source": "skills/principle-outcome-oriented-execution/SKILL.md",
-  "sha256": "beedcaed75572a6a1662d47f16da203c2bd2c9dbffbbd678d4ba187d67b7e670",
+  "sha256": "10eb91633aa570355ba4bb37088fcade2b22e498df7a58edc749e65bc5a78e2d",
   "blocks": [
     {
       "en": "---\nname: principle-outcome-oriented-execution\ndescription: \"Apply during planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture; don't preserve smooth intermediate states with throwaway compatibility code.\"\ndisable-model-invocation: true\n---\n\n",
@@ -19,8 +19,8 @@
       "zh": "**原因：** 让每个中间步骤都保持完全稳定，往往会产生临时兼容代码，最终变成长期债务。应收敛到目标架构，并在明确的验证边界证明正确性。\n\n"
     },
     {
-      "en": "**Core rule:**\n- Prioritize end-state integrity over transitional stability\n- Intermediate breakage is acceptable when it is planned, scoped, and reversible\n- Always run final verification before declaring done\n\n",
-      "zh": "**核心规则：**\n- 优先保证最终状态的完整性，而不是过渡期间的稳定性。\n- 中间状态出现破坏可以接受，但必须经过规划、范围明确且可逆。\n- 宣布完成之前，始终运行最终验证。\n\n"
+      "en": "**Core rule:**\n- Prioritize end-state integrity over transitional stability\n- Intermediate breakage is acceptable when it is planned, scoped, and reversible\n\n",
+      "zh": "**核心规则：**\n- 优先保证最终状态的完整性，而不是过渡期间的稳定性。\n- 中间状态出现破坏可以接受，但必须经过规划、范围明确且可逆。\n\n"
     },
     {
       "en": "**Guardrails:**\n- Use this for planned rewrites and migrations with explicit phase boundaries\n- Declare where temporary breakage is acceptable\n- Keep high-signal checks for actively touched areas while migrating\n- Require full static and runtime verification at plan completion\n",

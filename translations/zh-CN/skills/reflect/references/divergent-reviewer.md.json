@@ -1,6 +1,6 @@
 {
   "source": "skills/reflect/references/divergent-reviewer.md",
-  "sha256": "d0e25f18c46106a20ff80b9bdcdeccc1d1bcfe673f68e985329325bfe142e90a",
+  "sha256": "fd02ccb35ad00cc1e25ab76e2c025822b19c6a40d22d02026d9d78d034a83a22",
   "blocks": [
     {
       "en": "You are a reviewer applying the divergent lens to a session transcript. Your strength is divergent angles and blind-spot coverage. The things the other reviewers will miss. Second-order effects. What didn't happen but should have. Anti-patterns avoided. Alternative paths not taken.\n\n",
@@ -51,8 +51,8 @@
       "zh": "上面的“应调用却未调用 skill”是标准的漏触发情形。将这类发现路由到 `tune description`。skill 既未被调用、也不属于漏触发候选时，舍弃。\n\n"
     },
     {
-      "en": "Surface 3-5 durable learnings. For each:\n- Principle: one sentence naming the contrarian or second-order observation. Don't restate the obvious learning. Name the one beneath it.\n- Evidence: the exact moment in the transcript (turn number or short quote, including what was said AND what wasn't).\n- Routing: most relevant existing skill (give the `SKILL.md` path as it appears in the transcript), OR `tune description: <skill path>` when the skill should have triggered but didn't, OR \"new skill: <kebab-name>\".\n\n",
-      "zh": "提炼 3 至 5 条长期有效的经验，每条包括：\n- 原则：用一句话表达逆向或二阶观察。不要重述显而易见的经验，要指出其背后的那条。\n- 证据：会话中具体的时刻（轮次编号或简短引用，同时包括说了什么、没说什么）。\n- 路由：最相关的已有 skill（给出记录中出现的 `SKILL.md` 路径）；若该 skill 应触发却未触发，则写 `tune description: <skill path>`；或写“新 skill：<kebab-name>”。\n\n"
+      "en": "List each durable learning you find. For each:\n- Principle: one sentence naming the contrarian or second-order observation. Don't restate the obvious learning. Name the one beneath it.\n- Evidence: the exact moment in the transcript (turn number or short quote, including what was said AND what wasn't).\n- Routing: most relevant existing skill (give the `SKILL.md` path as it appears in the transcript), OR `tune description: <skill path>` when the skill should have triggered but didn't, OR \"new skill: <kebab-name>\".\n\n",
+      "zh": "列出你发现的每一条长期有效的经验。每条包括：\n- 原则：用一句话表达逆向或二阶观察。不要重述显而易见的经验，要指出其背后的那条。\n- 证据：会话中具体的时刻（轮次编号或简短引用，同时包括说了什么、没说什么）。\n- 路由：最相关的已有 skill（给出记录中出现的 `SKILL.md` 路径）；若该 skill 应触发却未触发，则写 `tune description: <skill path>`；或写“新 skill：<kebab-name>”。\n\n"
     },
     {
       "en": "Skip trivial things. Skip anything already obvious from the existing skill the parent followed. Skip implementation details that drift: specific SHAs, current file paths, version numbers, exact byte counts. Only surface principles and patterns that survive code drift.\n\n",

@@ -1,6 +1,6 @@
 {
   "source": "skills/architect/references/design-red-flags.md",
-  "sha256": "905066f9bbac81c573c2b325be47751d2c0f9325e0a0772bd4384e82dafe9336",
+  "sha256": "d0e639e4cc588ec865f930d3a4111faad60987ae36925917e319d7ceca7c69ce",
   "blocks": [
     {
       "en": "# Design red flags\n\n",
@@ -63,8 +63,56 @@
       "zh": "透传方法将同一组参数转发给形状相同的另一个方法。它增加一层，却没有隐藏复杂度。\n\n"
     },
     {
-      "en": "Remove it or move responsibility to the module that can complete the operation. Keep a forwarding boundary only when it adds policy, adaptation, or a distinct abstraction.\n",
+      "en": "Remove it or move responsibility to the module that can complete the operation. Keep a forwarding boundary only when it adds policy, adaptation, or a distinct abstraction.\n\n",
       "zh": "删除它，或把职责移到能完整执行操作的模块。只有转发边界增加了策略、适配或独立抽象时才保留。\n\n"
+    },
+    {
+      "en": "## Split ownership\n\n",
+      "zh": "## 分散的状态归属\n\n"
+    },
+    {
+      "en": "More than one module writes the same state or keeps its own copy of it. An agent that edits one writer can't see the others, so their rules diverge.\n\n",
+      "zh": "不止一个模块写入相同的状态，或者各自维护一份状态副本。编辑其中一个写入者的 agent 看不到其他写入者，导致各处规则逐渐分化脱节。\n\n"
+    },
+    {
+      "en": "Give each piece of state one owner. Other modules read it or ask the owner to change it.\n\n",
+      "zh": "让每一处状态拥有唯一的 owner。其他模块只能读取它，或请求 owner 进行更改。\n\n"
+    },
+    {
+      "en": "## Two ways to do one task\n\n",
+      "zh": "## 同一任务存在两种完成途径\n\n"
+    },
+    {
+      "en": "The design supports more than one way to do the same task. An agent copies whichever way it finds first, so every way keeps gaining callers.\n\n",
+      "zh": "架构设计支持用多种方式完成相同的任务。agent 会复制它最先找到的方式，导致每种途径的使用者都在不断增加。\n\n"
+    },
+    {
+      "en": "Keep one way. Move callers off the others and delete them in the same change.\n\n",
+      "zh": "只保留一种途径。在同一个改动中将调用方从其他途径迁走，并彻底删除废弃途径。\n\n"
+    },
+    {
+      "en": "## Importable internals\n\n",
+      "zh": "## 可被直接导入的内部实现\n\n"
+    },
+    {
+      "en": "A caller can import a module's internals. An agent takes the shortest path that compiles, so it imports them directly and they become part of the interface.\n\n",
+      "zh": "调用方能够 import 模块的内部实现。agent 往往采取能通过编译的最短路径，因而会直接导入内部实现，使其不知不觉变成了公共接口的一部分。\n\n"
+    },
+    {
+      "en": "Make internals unreachable from outside the module, so an import from outside fails the build.\n\n",
+      "zh": "让内部实现从模块外部完全无法触及，使得来自外部的 import 直接构建失败。\n\n"
+    },
+    {
+      "en": "## Hand-synced list\n\n",
+      "zh": "## 手工同步的列表\n\n"
+    },
+    {
+      "en": "Two or more places list the same items, and adding an item means editing every list. An agent that sees one list updates only that one.\n\n",
+      "zh": "两个或多个地方列出了相同的条目，增加一个条目意味着需要编辑每一处列表。只看到一处列表的 agent 只会更新那一个地方。\n\n"
+    },
+    {
+      "en": "Keep one list and derive the others from it. If a list can't be derived, make the build fail when the lists disagree.\n",
+      "zh": "只保留一份列表，其他列表均从中派生。如果某份列表无法自动派生，则在列表不一致时让构建直接失败。\n\n"
     }
   ]
 }

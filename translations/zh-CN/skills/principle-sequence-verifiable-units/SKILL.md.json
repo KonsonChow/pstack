@@ -1,6 +1,6 @@
 {
   "source": "skills/principle-sequence-verifiable-units/SKILL.md",
-  "sha256": "761390804ee36c32f5338d8db47ec54463d40ff96dbb296dfafabcd5f2593eec",
+  "sha256": "2ccbbacc56ace5afdfb8670cef19d7bd009fb2a0033b9a741cbdf2b6baf72187",
   "blocks": [
     {
       "en": "---\nname: principle-sequence-verifiable-units\ndescription: \"Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer.\"\ndisable-model-invocation: true\n---\n\n",
@@ -25,10 +25,6 @@
     {
       "en": "**Delivery.** Stack commits and PRs in the order that proves the work. The canonical shape is the failing test first, then the fix on top. Other story orders are a subtraction before the reshape, a baseline capture before the treatment, the scaffold before the feature. Each commit lands on its own and the sequence reads as an argument.\n\n",
       "zh": "**交付。** 按能证明工作的顺序堆叠提交和 PR。典型形态是先失败测试，再在上面放修复。其他顺序包括先减法再重塑、先采集基准再施加改动、先基础结构再功能。每个提交可独立合入，序列整体像一段论证。\n\n"
-    },
-    {
-      "en": "**Pattern:**\n- Pick the smallest unit that ends in a check: an edit plus its test, or a commit that stands alone.\n- Verify before advancing. Red to green per unit, never deferred to a final batch.\n- Order the units so the sequence builds confidence on its own, for you while executing and for a reviewer reading the stack.\n\n",
-      "zh": "**模式：**\n- 选择结束时能检查的最小单元：编辑加测试，或可独立成立的提交。\n- 先验证再前进。每单元由失败到通过，不延后到最终整批检查。\n- 排序使序列本身建立信心：执行中的你和阅读 PR 栈的评审者都受益。\n\n"
     },
     {
       "en": "The sequencing complement to the **prove-it-works** principle skill, which keeps each check real, and the **build-the-lever** principle skill, which makes the per-unit check cheap.\n",

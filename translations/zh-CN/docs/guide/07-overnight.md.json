@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/07-overnight.md",
-  "sha256": "eefbc665ad411ee22b6430d779674e5e8d8f304d51fafd80a62ab2334d095ebc",
+  "sha256": "5033d61e8b4b6fb0b2304b2132f26bf0b6aee685aa4ed53a76a73cf0ac1c3557",
   "blocks": [
     {
       "en": "# Run work while you sleep\n\n",
@@ -79,8 +79,8 @@
       "zh": "上述约定把一个任务推进到一个完成条件。有些夜间工作是一组独立改动，甚至整个项目计划。下面三套执行规程把同样的验证机制扩展到更大范围。"
     },
     {
-      "en": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) runs a queue of independent PRs to merged. Each PR gets one owner agent that carries it from build through merge, and no owner merges on its own verdict. A swarm of fresh verifiers checks every merge-ready head, and only a clean verdict authorizes the merge:\n\n",
-      "zh": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) 把一组独立 PR 推进到合入。每个 PR 有一个负责 agent，从实现一路负责到合并，但任何负责 agent 都不能仅凭自己的判断合并。新启动的一组验证者会检查每个达到可合并状态的分支当前提交，只有验证通过的结论才能授权合并："
+      "en": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) runs a queue of independent PRs to merged. Each PR gets one owner agent that carries it from build through merge, and no owner merges on its own verdict. A swarm of fresh verifiers starts a round at the owner's code-ready head and again at every later push that changes the patch. Only a clean verdict on the patch that merges authorizes the merge:\n\n",
+      "zh": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) 把一组独立 PR 推进到合入。每个 PR 有一个负责 agent，从实现一路负责到合并，但任何负责 agent 都不能仅凭自己的判断合并。新启动的一组验证者会在负责 agent 达到代码就绪的 commit 处启动一轮验证，并在后续每次改动补丁的推送时再次启动。只有对最终合入补丁给出的干净通过结论，才能授权合并：\n\n"
     },
     {
       "en": "```text\n/poteto-mode full autopilot on this queue. each item is independent. i want them merged by morning.\n```\n\n",

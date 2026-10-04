@@ -1,6 +1,6 @@
 {
   "source": "skills/poteto-mode/playbooks/pause-safely.md",
-  "sha256": "7d5fc10e144265f1b35f8157926541e738c1de64b6a85b3e61b51cf268c3dffd",
+  "sha256": "77968cfe5f4a71a8cd33e0ae8ffcdbd88dd693a212c240457773e6c40c96c21d",
   "blocks": [
     {
       "en": "### Pause safely\n\n",
@@ -11,8 +11,8 @@
       "zh": "**你负责干净地停止。留下一个让全新启动的 agent 可以继续工作的检查点。**只有明确要求暂停时才这样做。用户说“继续”“我要睡了，你继续”或“不要停”时，不要暂停。\n\n"
     },
     {
-      "en": "1. Stop at a safe boundary. Finish the current atomic step or back out of it. Never stop mid-edit in a known-broken state. Start nothing new, and cancel any nested subagents.\n2. Take no irreversible action to pause. No PR and no push unless you already had one out.\n3. Make the work durable. Commit uncommitted edits as one clear `wip:` commit on the current branch so nothing is lost. If the tree is broken, say so in the commit body in one line.\n4. Write the resume note off-context. Capture intent, what you were doing, progress and what's verified, current state, next steps, key files, and gotchas. For the compaction trigger write it to a file like `/tmp/<slug>-resume.md`. If a show-me-your-work trail exists, point at it instead of duplicating it.\n\n",
-      "zh": "1. 在安全边界停止。完成当前原子步骤，或撤回该步骤。绝不在编辑途中、明知系统已损坏时停下。不开始新工作，并取消所有嵌套 subagent。\n2. 不要为了暂停执行不可逆操作。除非已有 PR 或推送，否则不新建 PR、不推送。\n3. 让工作持久保存。将未提交编辑作为一个明确的 `wip:` 提交保存到当前分支，避免丢失。如果工作树已损坏，用一句话写进提交正文。\n4. 将恢复说明写到上下文之外。记录意图、正在做什么、进度及已验证内容、当前状态、下一步、关键文件和注意事项。遇到上下文压缩触发时，写到 `/tmp/<slug>-resume.md` 这样的文件中。如果已有 show-me-your-work 记录，引用它，不要重复。\n\n"
+      "en": "1. Stop at a safe boundary. Finish the current atomic step or back out of it. Start nothing new, and cancel any nested subagents.\n2. Take no irreversible action to pause. No PR and no push unless you already had one out.\n3. Make the work durable. Commit uncommitted edits as one clear `wip:` commit on the current branch so nothing is lost. If the tree is broken, say so in the commit body in one line.\n4. Write the resume note off-context. Capture intent, what you were doing, progress and what's verified, current state, next steps, key files, and gotchas. For the compaction trigger write it to a file like `/tmp/<slug>-resume.md`. If a show-me-your-work trail exists, point at it instead of duplicating it.\n\n",
+      "zh": "1. 在安全边界停止。完成当前原子步骤，或撤回该步骤。不开始新工作，并取消所有嵌套 subagent。\n2. 不要为了暂停执行不可逆操作。除非已有 PR 或推送，否则不新建 PR、不推送。\n3. 让工作持久保存。将未提交编辑作为一个明确的 `wip:` 提交保存到当前分支，避免丢失。如果工作树已损坏，用一句话写进提交正文。\n4. 将恢复说明写到上下文之外。记录意图、正在做什么、进度及已验证内容、当前状态、下一步、关键文件和注意事项。遇到上下文压缩触发时，写到 `/tmp/<slug>-resume.md` 这样的文件中。如果已有 show-me-your-work 记录，引用它，不要重复。\n\n"
     },
     {
       "en": "**Reply:** where you are in the loop, what's on disk versus still in your head (paths, no diff dumps), the commits you made and whether the tree is clean, and the first action on resume. This is a pause, not a final report.\n",

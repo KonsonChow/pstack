@@ -1,6 +1,6 @@
 {
   "source": "skills/typescript-best-practices/references/patterns.md",
-  "sha256": "62e9cd32d2fa066a35d0d1349aac22dce31a48ad7d5eaf142570770cfe707384",
+  "sha256": "faa1362055374452efccac1b629677c61acfb0bcc6c4e3311836b5715638ee18",
   "blocks": [
     {
       "en": "# TypeScript patterns\n\n",
@@ -151,16 +151,24 @@
       "zh": "每个 `as` 都可能导致运行时崩溃。只有类型系统已经验证主张后，才允许转换。\n\n"
     },
     {
-      "en": "```ts\n// Don't\nconst user = data as User;\n\n// Do. Earn the cast at the boundary.\nfunction parseUser(data: unknown): User {\n  if (typeof data !== \"object\" || data === null) {\n    throw new Error(\"expected object\");\n  }\n  if (!(\"id\" in data) || typeof (data as Record<string, unknown>).id !== \"string\") {\n    throw new Error(\"expected id\");\n  }\n  // ... validate all fields\n  return data as User; // OK, earned cast after full validation\n}\n```\n\n",
-      "zh": "```ts\n// 不要这样\nconst user = data as User;\n\n// 应这样：在边界校验后取得转换依据。\nfunction parseUser(data: unknown): User {\n  if (typeof data !== \"object\" || data === null) {\n    throw new Error(\"expected object\");\n  }\n  if (!(\"id\" in data) || typeof (data as Record<string, unknown>).id !== \"string\") {\n    throw new Error(\"expected id\");\n  }\n  // ……校验所有字段\n  return data as User; // 可以，完整校验后有据可依\n}\n```\n\n"
+      "en": "```ts\nimport { z } from \"zod\";\n\n// Don't\nconst user = data as User;\n\n// Don't\nfunction isUser(data: unknown): data is User {\n  return typeof data === \"object\" && data !== null && \"id\" in data;\n}\n\n// Do\nconst userSchema = z.object({ id: z.string(), name: z.string() });\ntype User = z.infer<typeof userSchema>;\n\nfunction parseUser(data: unknown): User {\n  return userSchema.parse(data);\n}\n```\n\n",
+      "zh": "```ts\nimport { z } from \"zod\";\n\n// 不要这样\nconst user = data as User;\n\n// 不要这样\nfunction isUser(data: unknown): data is User {\n  return typeof data === \"object\" && data !== null && \"id\" in data;\n}\n\n// 应这样\nconst userSchema = z.object({ id: z.string(), name: z.string() });\ntype User = z.infer<typeof userSchema>;\n\nfunction parseUser(data: unknown): User {\n  return userSchema.parse(data);\n}\n```\n\n"
+    },
+    {
+      "en": "When the type comes first, annotate the validator with the type it proves. The compiler then rejects a validator that proves less than the type. Remove `name` from the object below and the assignment fails to compile.\n\n",
+      "zh": "当先有类型时，用该类型标注校验器。编译器便会拒绝证明范围窄于该类型的校验器。如果从下方对象中移除 `name`，赋值就会编译报错。\n\n"
+    },
+    {
+      "en": "```ts\ntype User = { id: string; name: string };\n\nconst userSchema: z.ZodType<User> = z.object({ id: z.string(), name: z.string() });\n```\n\n",
+      "zh": "```ts\ntype User = { id: string; name: string };\n\nconst userSchema: z.ZodType<User> = z.object({ id: z.string(), name: z.string() });\n```\n\n"
     },
     {
       "en": "When refactoring an `as` out of existing code, identify why TypeScript can't infer:\n\n",
       "zh": "从现有代码中移除 `as` 时，先确定 TypeScript 无法推导的原因：\n\n"
     },
     {
-      "en": "- Missing discriminant: add one, switch to a discriminated union.\n- Overly wide source type (e.g. `Record<string, unknown>`): narrow it.\n- Untyped boundary: add a parse function or schema.\n- Genuinely inexpressible: use a branded type or `satisfies`.\n\n",
-      "zh": "- 缺少辨识字段：添加字段，改用可辨识联合。\n- 来源类型过宽（例如 `Record<string, unknown>`）：收窄。\n- 边界未定义类型：添加解析函数或 schema。\n- 确实无法表达：使用品牌类型或 `satisfies`。\n\n"
+      "en": "- Missing discriminant: add one, switch to a discriminated union.\n- Overly wide source type (e.g. `Record<string, unknown>`): narrow it.\n- Untyped boundary: parse with the schema that owns the shape. Add a schema only where none exists.\n- Genuinely inexpressible: use a branded type or `satisfies`.\n\n",
+      "zh": "- 缺少辨识字段：添加字段，改用可辨识联合。\n- 来源类型过宽（例如 `Record<string, unknown>`）：收窄。\n- 边界未定义类型：用定义该形态的 schema 进行解析。仅在不存在 schema 时才添加。\n- 确实无法表达：使用品牌类型或 `satisfies`。\n\n"
     },
     {
       "en": "## Narrowing hierarchy\n\n",
