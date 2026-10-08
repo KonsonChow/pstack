@@ -1,0 +1,26 @@
+{% extends 'base.html' %} {% block content %}
+<div class="search-page">
+  <p class="eyebrow">FIND YOUR NEXT STEP</p>
+  <h1>搜索完整文库</h1>
+  <p class="lead">输入中文问题、技能名称或英文关键词。</p>
+  <form role="search" id="search-form">
+    <label for="query">搜索内容</label>
+    <div class="search-input">
+      <input
+        id="query"
+        name="q"
+        type="search"
+        placeholder="例如：验证、architect、overnight"
+        autocomplete="off"
+      /><button type="submit">搜索</button>
+    </div>
+  </form>
+  <p class="search-status" role="status" aria-live="polite">
+    搜索索引在当前设备中运行。
+  </p>
+  <noscript
+    ><p>搜索需要 JavaScript。你仍可通过侧边目录浏览全部文档。</p></noscript
+  >
+  <ol id="search-results" class="search-results"></ol>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="zh-CN" data-base="{{ base }}" data-language="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="PStack 中文学习站。阅读完整中英双语文库，学习技能与执行规程，跟踪上游变化。">
+  <meta name="theme-color" content="#f5f2eb">
+  <title>{{ title }} · PStack</title>
+  <link rel="stylesheet" href="{{ url('/assets/site.css') }}">
+  <script src="{{ url('/assets/site.js') }}" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main">跳到正文</a>
+<header class="masthead">
+  <a class="brand" href="{{ url('/') }}" aria-label="PStack 学习站首页"><span class="brand-mark" aria-hidden="true">p.</span><span>PStack<small>中文学习站</small></span></a>
+  <nav class="top-nav" aria-label="主导航"><a href="{{ url('/guide/') }}" {% if route.startswith('/guide/') %}aria-current="page"{% endif %}>开始学习</a><a href="{{ url('/library/') }}" {% if route != '/' and not route.startswith('/guide/') and route not in ['/changes/', '/search/'] %}aria-current="page"{% endif %}>完整文库</a><a href="{{ url('/changes/') }}" {% if route == '/changes/' %}aria-current="page"{% endif %}>上游变更</a></nav>
+  <a class="search-shortcut" href="{{ url('/search/') }}"><span aria-hidden="true">⌕</span> 搜索 <kbd>/</kbd></a>
+  <button class="menu-toggle" aria-controls="library-nav" aria-expanded="false">目录</button>
+</header>
+<div class="site-layout">
+  <aside class="sidebar" id="library-nav">
+    <nav aria-label="学习文库">
+      <p class="eyebrow">THE FIELD GUIDE</p>
+      {% for key, item in sections.items() %}<a class="section-link {% if route.startswith('/' + key + '/') %}active{% endif %}" href="{{ url('/' + key + '/') }}"><span>{{ item[0] }}</span><small>{{ catalog.section(key)|length }}</small></a>
+      {% if key == 'guide' and route.startswith('/guide/') %}<ol class="chapter-nav">{% for chapter in catalog.section('guide') if chapter.route != '/guide/' %}<li><a href="{{ url(chapter.route) }}" {% if route == chapter.route %}aria-current="page"{% endif %}>{{ chapter.title_zh }}</a></li>{% endfor %}</ol>{% endif %}
+      {% endfor %}
+      <div class="nav-divider"></div><a class="section-link" href="{{ url('/changes/') }}">上游变更 <span aria-hidden="true">↗</span></a>
+      <a class="section-link" href="{{ url('/reference/glossary/') }}">术语对照</a><a class="section-link" href="{{ url('/reference/source-notes/') }}">阅读前须知</a>
+    </nav>
+    <div class="sidebar-note"><span class="status-dot"></span> 完整中文快照<small>v{{ published.version }} · {{ published.count }} 篇已校验文档</small><a href="{{ url('/changes/') }}">查看版本与同步状态 →</a></div>
+  </aside>
+  <main id="main" tabindex="-1">{% block content %}{% endblock %}</main>
+</div>
+<footer class="site-footer"><span>PStack / 学习、实践、验证。</span><span>中文社区学习版 · <a href="https://github.com/{{ repository }}">GitHub</a> · <a href="{{ url('/about/') }}">来源与许可</a></span></footer>
+</body>
+</html>

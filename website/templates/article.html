@@ -1,0 +1,87 @@
+{% extends 'base.html' %} {% block content %}
+<div class="article-layout">
+  <div class="article-main">
+    <nav class="breadcrumbs" aria-label="当前位置">
+      <a href="{{ url('/') }}">首页</a><span>/</span
+      ><a href="{{ url('/' + doc.section + '/') }}"
+        >{{ sections[doc.section][0] }}</a
+      >{% if owner %}<span>/</span
+      ><a href="{{ url(owner.route) }}">{{ owner.title_zh }}</a>{% endif %}
+    </nav>
+    <header class="article-header">
+      <p class="eyebrow">{{ sections[doc.section][0] }} / PSTACK</p>
+      <h1>{{ doc.title_zh }}</h1>
+      <p class="english-title" lang="en">{{ doc.title_en }}</p>
+      <div class="article-meta">
+        <span>v{{ published.version }}</span
+        ><a
+          href="https://github.com/{{ repository }}/blob/{{ published.revision }}/{{ doc.source }}"
+          >查看源文件 ↗</a
+        ><span>中文已校验</span>
+      </div>
+    </header>
+    <div class="reading-controls" role="group" aria-label="阅读语言">
+      <span>阅读模式</span
+      ><button data-language="zh" aria-pressed="true">中文</button
+      ><button data-language="en" aria-pressed="false">English</button
+      ><button data-language="both" aria-pressed="false">双语</button>
+    </div>
+    <noscript
+      ><p class="notice">
+        当前显示中文全文。启用 JavaScript
+        可切换英文或双语；英文原文也可通过上方源文件链接阅读。
+      </p></noscript
+    >
+    <details class="mobile-toc">
+      <summary>本页目录</summary>
+      <nav aria-label="本页目录（移动端）">
+        {% for item in toc %}<a href="#{{ item.anchor }}">{{ item.title }}</a>{%
+        endfor %}
+      </nav>
+    </details>
+    <div class="bilingual-document">
+      <section class="prose language-zh" lang="zh-CN" aria-label="中文全文">
+        {{ content.zh }}
+      </section>
+      <section
+        class="prose language-en"
+        lang="en"
+        aria-label="English full text"
+      >
+        {{ content.en }}
+      </section>
+    </div>
+    {% if children %}
+    <section class="related-docs">
+      <h2>配套材料</h2>
+      {% for child in children %}<a href="{{ url(child.route) }}"
+        >{{ child.title_zh }} <span>↗</span></a
+      >{% endfor %}
+    </section>
+    {% endif %} {% if previous or following %}
+    <nav class="chapter-pagination" aria-label="章节翻页">
+      {% if previous %}<a href="{{ url(previous.route) }}"
+        ><small>← 上一章</small><span>{{ previous.title_zh }}</span></a
+      >{% else %}<span></span>{% endif %}{% if following %}<a
+        href="{{ url(following.route) }}"
+        ><small>下一章 →</small><span>{{ following.title_zh }}</span></a
+      >{% endif %}
+    </nav>
+    {% endif %}
+    <p class="article-source">
+      来源 {{ doc.source }}<br />中文与英文共用此页面；标题锚点沿用英文原文。
+    </p>
+  </div>
+  <aside class="toc">
+    <p class="eyebrow">ON THIS PAGE</p>
+    <nav aria-label="本页目录">
+      {% for item in toc %}<a
+        class="level-{{ item.level }}"
+        href="#{{ item.anchor }}"
+        >{{ item.title }}</a
+      >{% endfor %}
+    </nav>
+    <a class="back-top" href="#main">回到页首 ↑</a>
+  </aside>
+</div>
+{% endblock %}

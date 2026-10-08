@@ -1,0 +1,30 @@
+{% extends 'base.html' %} {% block content %}
+<div class="collection">
+  <p class="eyebrow">THE COMPLETE LIBRARY</p>
+  <h1>完整文库</h1>
+  <p class="lead">
+    {{ published.count }} 篇经过校验的中英文档，按 PStack
+    的学习顺序与工作职责组织。
+  </p>
+  <div class="library-rows">
+    {% for key, item in sections.items() %}<a
+      class="library-row"
+      href="{{ url('/' + key + '/') }}"
+      ><h3>{{ item[0] }}</h3>
+      <p>{{ item[1] }}</p>
+      <span>{{ catalog.section(key)|length }} 篇 <b>↗</b></span></a
+    >{% endfor %}
+  </div>
+  <h2 class="group-title">本站编者注</h2>
+  <p class="lead">
+    帮助理解翻译术语和原文中的环境假设，不计入上游文档覆盖统计。
+  </p>
+  <div class="related-docs">
+    <a href="{{ url('/reference/glossary/') }}"
+      >翻译术语与表达约定 <span>↗</span></a
+    ><a href="{{ url('/reference/source-notes/') }}"
+      >阅读时需要区分的原文假设 <span>↗</span></a
+    >
+  </div>
+</div>
+{% endblock %}
