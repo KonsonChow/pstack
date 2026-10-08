@@ -1,6 +1,6 @@
 {
   "source": "skills/reflect/SKILL.md",
-  "sha256": "bbbba9bb0b7a63b1b65c7db4eafdbddeed266d1d19dd457926d137adf7aebd7e",
+  "sha256": "241f3c5c8de2eefdfa8ed49efa07e5e51fd37ac8bc7594dfd64f1980fca45d3f",
   "blocks": [
     {
       "en": "---\nname: reflect\ndescription: Spawn three parallel review subagents over the active transcript, surface learnings, and route each to a concrete edit on an existing skill. Use when the user says reflect.\ndisable-model-invocation: true\n---\n\n",
@@ -71,8 +71,8 @@
       "zh": "每位评审者与综合者均指定了 pstack 设置文件（Cursor 为 `~/.cursor/rules/pstack-models.mdc`，其他运行环境为 `~/.agents/pstack-models.md`）中的角色行及默认值。将 `model` 设为该行的值；若文件或该行缺失，则设为默认值。当值为 `auto` 或 `inherit-parent` 时，不设置 `model`。若 subagent 工具拒绝某个模型标识，使用默认值并说明情况。若拒绝默认值，从错误信息或运行环境模型列表中选取同家族最接近的有效模型标识。\n\n"
     },
     {
-      "en": "| Lens | Role line | Default `model` | Prompt template |\n|---|---|---|---|\n| Judgment | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-max` | `references/judgment-reviewer.md` |\n| Tooling | `reflect tooling` | `gpt-5.6-sol-max` | `references/tooling-reviewer.md` |\n| Divergent | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-max` | `references/divergent-reviewer.md` |\n\n",
-      "zh": "| 视角 | 角色配置行 | 默认 `model` | 提示词模板 |\n|---|---|---|---|\n| 判断 | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-max` | `references/judgment-reviewer.md` |\n| 工具 | `reflect tooling` | `gpt-5.6-sol-max` | `references/tooling-reviewer.md` |\n| 发散 | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-max` | `references/divergent-reviewer.md` |\n\n"
+      "en": "| Lens | Role line | Default `model` | Prompt template |\n|---|---|---|---|\n| Judgment | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-xhigh` | `references/judgment-reviewer.md` |\n| Tooling | `reflect tooling` | `grok-4.7-xhigh-fast` | `references/tooling-reviewer.md` |\n| Divergent | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-xhigh` | `references/divergent-reviewer.md` |\n\n",
+      "zh": "| 视角 | 角色行 | 默认 `model` | 提示词模板 |\n|---|---|---|---|\n| 判断 | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-xhigh` | `references/judgment-reviewer.md` |\n| 工具 | `reflect tooling` | `grok-4.7-xhigh-fast` | `references/tooling-reviewer.md` |\n| 发散思考 | `reflect judgment, divergent, synthesizer` | `claude-opus-5-5-xhigh` | `references/divergent-reviewer.md` |\n\n"
     },
     {
       "en": "Pass each template verbatim, substituting the transcript path or digest where marked. Reviewers return findings in the `Task` response body.\n\n",
@@ -83,8 +83,8 @@
       "zh": "### 3. 综合分析\n\n"
     },
     {
-      "en": "One `Task` call, `subagent_type: generalPurpose`, with `model` from the `reflect judgment, divergent, synthesizer` line (default `claude-opus-5-5-max`), agent mode (`readonly: false`). The synthesizer's quality check includes spot-verifying citations, which can require MCP access. Readonly strips MCPs. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.\n\n",
-      "zh": "发起一个 `Task` 调用，`subagent_type: generalPurpose`，`model` 取自 `reflect judgment, divergent, synthesizer` 行（默认 `claude-opus-5-5-max`），agent 模式（`readonly: false`）。综合分析者要抽查引用，可能需要 MCP；只读模式会移除 MCP。逐字使用 `references/synthesizer.md`，在标记处内联每位评审者完整输出。综合分析者返回结构化的 Accepted／Rejected／Backlog 列表。\n\n"
+      "en": "One `Task` call, `subagent_type: generalPurpose`, with `model` from the `reflect judgment, divergent, synthesizer` line (default `claude-opus-5-5-xhigh`), agent mode (`readonly: false`). The synthesizer's quality check includes spot-verifying citations, which can require MCP access. Readonly strips MCPs. Use `references/synthesizer.md` verbatim, with each reviewer's full output inlined where marked. The synthesizer returns a structured Accepted / Rejected / Backlog list.\n\n",
+      "zh": "发起一个 `Task` 调用，`subagent_type: generalPurpose`，`model` 取自 `reflect judgment, divergent, synthesizer` 行（默认 `claude-opus-5-5-xhigh`），agent 模式（`readonly: false`）。综合分析者要抽查引用，可能需要 MCP；只读模式会移除 MCP。逐字使用 `references/synthesizer.md`，在标记处内联每位评审者完整输出。综合分析者返回结构化的 Accepted／Rejected／Backlog 列表。\n\n"
     },
     {
       "en": "### 4. Structural enforcement check\n\n",

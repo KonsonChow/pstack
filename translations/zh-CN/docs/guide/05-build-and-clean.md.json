@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/05-build-and-clean.md",
-  "sha256": "6bd421b43a3cf9fec3cd201fd40ce65fd8c657264eac48b0c9a175b6afd7c252",
+  "sha256": "a93cc7771f7b35c7b54d0120b6f66e8367794ce6791237e889a30e7585c190fa",
   "blocks": [
     {
       "en": "# Build the change and clean the diff\n\n",
@@ -55,6 +55,18 @@
       "zh": "如果要持续改善某个数值指标，可以使用 [Hillclimb 执行规程](../../skills/poteto-mode/playbooks/hillclimb.md)。给出指标、目标和最低尝试次数，它就会在固定不变的测量环境中，一次验证一个假设，持续迭代。有效改进会保留，其余改动全部撤回。"
     },
     {
+      "en": "Both perf playbooks run [`/benchmark-checklist`](../../skills/benchmark-checklist/SKILL.md) on their numbers. Perf issue vets its baseline and every number after it, and Hillclimb vets its harness before freezing it. [Verify and ship](./06-verify-and-ship.md#vet-a-measured-number-with-benchmark-checklist) shows when to type it yourself.\n\n",
+      "zh": "两项性能执行规程都会用 [`/benchmark-checklist`](../../skills/benchmark-checklist/SKILL.md) 审核数据。Perf issue 审核基准及此后的每个测量值，Hillclimb 则在固定 agent 运行环境前审核它。[验证与交付](./06-verify-and-ship.md#vet-a-measured-number-with-benchmark-checklist) 说明何时需要你自行调用。\n\n"
+    },
+    {
+      "en": "Sometimes you want the cause before any fix. For a live symptom, such as a leak, an idle CPU spin, or a visual glitch, the [Runtime forensics playbook](../../skills/poteto-mode/playbooks/runtime-forensics.md) instruments the running process. For a profile you already captured, the [Trace forensics playbook](../../skills/poteto-mode/playbooks/trace-forensics.md) reads the artifact and maps the hot frame to source. Both return a diagnosis, not a fix:\n\n",
+      "zh": "有时你希望先查明根因，再考虑修复。对于内存泄漏、空闲时 CPU 忙转或视觉异常等正在发生的症状，[运行时取证执行规程](../../skills/poteto-mode/playbooks/runtime-forensics.md) 会为运行中的进程添加观测。对于已经采集的 profile，[trace 取证执行规程](../../skills/poteto-mode/playbooks/trace-forensics.md) 会读取证据文件，将热点栈帧映射到源码。两者都只给出诊断：\n\n"
+    },
+    {
+      "en": "```text\n/poteto-mode here's a cpuprofile from the slow startup. tell me where the time goes and which source lines own it. no fix yet.\n```\n\n",
+      "zh": "```text\n/poteto-mode 这是启动缓慢时采集的 cpuprofile。说明时间花在哪里，由哪些源码行负责。暂时不要修复。\n```\n\n"
+    },
+    {
       "en": "## Write the failing test first with `/tdd`\n\n",
       "zh": "## 用 `/tdd` 先写会失败的测试"
     },
@@ -71,12 +83,12 @@
       "zh": "在已有上下文中，这就足够了。[`/tdd`](../../skills/tdd/SKILL.md) 会先写一个最小测试，确保它因目标问题而失败，再修复问题并重新运行测试。如果测试需要大范围搭建运行环境或使用脆弱的 mock，它会说明情况，改用最接近目标行为的可执行检查。当真实命令能提供更有力的证据时，不必强行写测试。"
     },
     {
-      "en": "## Let the TypeScript rules load themselves\n\n",
-      "zh": "## 让 TypeScript 规则自动加载"
+      "en": "## Load the TypeScript rules by name\n\n",
+      "zh": "## 按名称加载 TypeScript 规则\n\n"
     },
     {
-      "en": "[`typescript-best-practices`](../../skills/typescript-best-practices/SKILL.md) has no slash command in your workflow. It loads whenever the agent touches a `.ts` or `.tsx` file and turns the type-system principles into concrete rules: discriminated unions, `unknown` at boundaries, exhaustive variants, schema-derived types.\n\n",
-      "zh": "[`typescript-best-practices`](../../skills/typescript-best-practices/SKILL.md) 不需要你在工作流程中显式调用斜杠命令。agent 处理 `.ts` 或 `.tsx` 文件时，它会自动加载，把类型系统原则落实为具体规则，包括可辨识联合类型、边界处使用 `unknown`、穷尽处理所有变体，以及由 schema 派生类型。"
+      "en": "[`typescript-best-practices`](../../skills/typescript-best-practices/SKILL.md) turns the type-system principles into concrete rules: discriminated unions, `unknown` at boundaries, exhaustive variants, schema-derived types. It doesn't load on its own, so type `/typescript-best-practices` when a task touches `.ts` or `.tsx` files.\n\n",
+      "zh": "[`typescript-best-practices`](../../skills/typescript-best-practices/SKILL.md) 将类型系统原则落实为具体规则：可辨识联合、在边界使用 `unknown`、穷尽处理各变体、从 schema 推导类型。它不会自行加载，因此任务涉及 `.ts` 或 `.tsx` 文件时，要输入 `/typescript-best-practices`。\n\n"
     },
     {
       "en": "## Clean before you commit\n\n",

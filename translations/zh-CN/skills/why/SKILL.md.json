@@ -1,6 +1,6 @@
 {
   "source": "skills/why/SKILL.md",
-  "sha256": "0cf5090e5209e31eadd9433e2e12082b5e5b1ead4c008f4c37602a7406205d68",
+  "sha256": "1f9c0a97e30582b1733110314e171b14f68340b0edf63d14dac422aa2525b17a",
   "blocks": [
     {
       "en": "---\nname: why\ndescription: \"Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds. Discovers available MCPs and queries each evidence category (source control, issue tracker, long-form docs, real-time chat, infrastructure observability, error tracking, product analytics warehouse) in parallel, then returns a cited read on decisions and tradeoffs. Use how for runtime behavior.\"\ndisable-model-invocation: true\n---\n\n",
@@ -187,8 +187,8 @@
       "zh": "启动一名综合 subagent：\n\n"
     },
     {
-      "en": "- `subagent_type`: `generalPurpose`\n- `model`: the `why synthesizer` line, default `claude-opus-5-5-max`\n- `readonly`: `false` (agent mode). The synthesizer's quality check spot-verifies citations, which can require MCP access. Readonly/Ask mode strips MCPs and defeats that.\n\n",
-      "zh": "- `subagent_type`：`generalPurpose`\n- `model`： `why synthesizer` 行，默认 `claude-opus-5-5-max`\n- `readonly`：`false`（agent 模式）。综合者质量检查会抽查引用，可能需要 MCP。Readonly/Ask 模式会移除 MCP，使此检查失效。\n\n"
+      "en": "- `subagent_type`: `generalPurpose`\n- `model`: the `why synthesizer` line, default `claude-opus-5-5-xhigh`\n- `readonly`: `false` (agent mode). The synthesizer's quality check spot-verifies citations, which can require MCP access. Readonly/Ask mode strips MCPs and defeats that.\n\n",
+      "zh": "- `subagent_type`：`generalPurpose`\n- `model`： `why synthesizer` 行，默认 `claude-opus-5-5-xhigh`\n- `readonly`：`false`（agent 模式）。综合者质量检查会抽查引用，可能需要 MCP。Readonly/Ask 模式会移除 MCP，使此检查失效。\n\n"
     },
     {
       "en": "The synthesizer gets:\n1. The investigator findings, including any null results and any categories skipped with justification\n2. The code anchor from Step 2 (file paths, symbols, commit hashes, PR numbers, ticket IDs)\n3. The user's original question\n4. The epistemics framework from `references/epistemics.md`\n5. The synthesizer prompt template from `references/synthesizer-prompt.md`\n\n",

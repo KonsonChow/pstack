@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/02-poteto-mode.md",
-  "sha256": "379a1b2c9cd2ba54032b2b142563328d0f3d65039f067863d19b1d4c008737f5",
+  "sha256": "979f61ca3d44cb8e68affda40327d32797e93fa9cc53ced7444c15e2600897e1",
   "blocks": [
     {
       "en": "# Route work through `/poteto-mode`\n\n",
@@ -43,6 +43,50 @@
       "zh": "这是一个 Bug fix 提示词。“先复现”是明确约束，不是客套话，执行规程会遵守它。你会看到待办列表填入 Bug fix 的步骤。跳过的步骤仍然可见，并标注 `skip: <reason>`。"
     },
     {
+      "en": "## What goes in a prompt\n\n",
+      "zh": "## 提示词中写什么\n\n"
+    },
+    {
+      "en": "A useful prompt carries up to five things, and each one fits in a sentence:\n\n",
+      "zh": "一个有用的提示词最多包含五项，每项一句话就够：\n\n"
+    },
+    {
+      "en": "- **The goal.** Say what's wrong, or what you want.\n- **The done check.** It must be able to pass or fail. \"Make it better\" and \"work on it for an hour\" aren't checks.\n- **The proof you want to see.** Ask for the real command output, a video of the flow, the stored value, or a before-and-after number.\n- **What you already know.** A symptom, a repro step, a log line, or a link saves the agent a search.\n- **The real constraints.** \"repro first\", \"don't change any code yet\", \"zero behavior change\", and \"let me review before proceeding\" each change what the agent does.\n\n",
+      "zh": "- **目标。** 说明哪里有问题，或你想实现什么。\n- **完成检查。** 必须能判断通过或失败。“让它更好”和“做一个小时”都不是检查。\n- **希望看到的证据。** 要求真实命令输出、操作流程视频、存储值或前后对比数据。\n- **已知信息。** 症状、复现步骤、日志行或链接都能省去 agent 的一次搜索。\n- **实际约束。** “先复现”“暂时不要改代码”“行为完全不变”“继续之前先让我审查”都会改变 agent 的做法。\n\n"
+    },
+    {
+      "en": "Here's one prompt with all five:\n\n",
+      "zh": "下面这个提示词包含全部五项：\n\n"
+    },
+    {
+      "en": "```text\n/poteto-mode the csv export drops its last row since yesterday's deploy. failing job id is 4812. repro first, then fix. done means the 60k-row fixture exports every row. show me the row counts before and after.\n```\n\n",
+      "zh": "```text\n/poteto-mode 昨天部署后，csv 导出会丢失最后一行。失败任务 id 为 4812。先复现，再修复。完成条件是包含 6 万行的测试数据能导出每一行。给我看修复前后的行数。\n```\n\n"
+    },
+    {
+      "en": "Two things are worth leaving out:\n\n",
+      "zh": "有两项最好先不写：\n\n"
+    },
+    {
+      "en": "- **The how.** Say what to achieve, and leave the agent room to find a better path than the one you'd pick. The same goes for a list of skills, covered in the pitfall below.\n- **Your theory of the cause, at first.** A stated guess narrows the search to wherever you pointed. Let the agent restate the problem before you share your hunch.\n\n",
+      "zh": "- **具体做法。** 说明要实现什么，给 agent 留出空间，找到比你预想更好的路径。下面的误区部分会说明，列出一串 skill 也是同样的问题。\n- **你对根因的猜测。** 一开始就提出猜测，会将搜索范围限制在你指向的位置。先让 agent 复述问题，再分享你的直觉。\n\n"
+    },
+    {
+      "en": "For a noisy report, such as a long thread or a vague bug, make the restatement the first step:\n\n",
+      "zh": "面对信息杂乱的报告，比如很长的讨论串或模糊的 bug，先要求复述问题：\n\n"
+    },
+    {
+      "en": "```text\n/poteto-mode read this thread. restate the underlying issue in your own words, in plain english. don't change any code yet.\n```\n\n",
+      "zh": "```text\n/poteto-mode 阅读这个讨论串，用你自己的话，以通俗语言复述根本问题。暂时不要改代码。\n```\n\n"
+    },
+    {
+      "en": "A misreading shows up in the restatement, before any code exists. Correct it there, and it costs you one message instead of one wrong fix.\n\n",
+      "zh": "误读会在写代码前的复述中暴露。此时纠正只需一条消息，不必付出一次错误修复的代价。\n\n"
+    },
+    {
+      "en": "## Follow up short\n\n",
+      "zh": "## 后续提示保持简短\n\n"
+    },
+    {
       "en": "When the conversation already carries the context, the prompt shrinks to almost nothing. All of these are enough:\n\n",
       "zh": "如果对话已经包含足够的上下文，提示词可以缩短到几乎只剩一句。下面这些都足够："
     },
@@ -59,8 +103,8 @@
       "zh": "```text\n一直做，直到完成\n```"
     },
     {
-      "en": "Short works because the mode is sticky and the playbook holds the structure. Your words carry the intent, and the skill carries the rigor.\n\n",
-      "zh": "简短提示词之所以有效，是因为工作模式持续生效，执行规程负责维持步骤结构。你表达意图，skill 保证执行过程的严谨性。"
+      "en": "Short works because the playbook holds the structure, and a Custom Mode keeps `/poteto-mode` in context on every turn. [Set up pstack](./01-setup.md#run-your-first-task) shows how to start one. Your words carry the intent, and the skill carries the rigor.\n\n",
+      "zh": "简短提示有效，是因为执行规程提供了流程结构，而自定义工作模式让 `/poteto-mode` 每轮都留在上下文中。[配置 pstack](./01-setup.md#run-your-first-task) 介绍了如何启动。你的话传达意图，skill 提供严谨流程。\n\n"
     },
     {
       "en": "## Switch tasks with \"new task\"\n\n",
@@ -79,20 +123,24 @@
       "zh": "“新任务”告诉 `/poteto-mode` 重新匹配执行规程，而不是继续原来的流程。“暂时不要改代码”则把这个任务限定为 Investigation。如果不说这两句，正在执行 Feature 流程的模式容易把你的问题当成下一项功能步骤。"
     },
     {
-      "en": "## Give parallel work its own worktree\n\n",
-      "zh": "## 为并行任务分配独立 worktree"
+      "en": "## Give parallel work its own machine\n\n",
+      "zh": "## 给并行任务各自的机器\n\n"
     },
     {
-      "en": "If you run several agents against one repository, they will fight over the working tree. Ask for isolation up front:\n\n",
-      "zh": "如果多个 agent 同时操作同一个仓库，它们会争用工作树。一开始就要求隔离："
+      "en": "If you run several agents against one repository on one computer, they will fight over the working tree, the ports, and the build output. The cleanest isolation is a [cloud subagent](https://cursor.com/docs/subagents#cloud-subagents). Each one gets its own VM and branch, so it can install dependencies, run your app, and record video of the result without touching your machine. Type `/in-cloud` before the task, or ask the parent chat to hand work to cloud subagents.\n\n",
+      "zh": "如果多个 agent 在同一台电脑上操作同一个仓库，它们会争用工作树、端口和构建输出。最彻底的隔离方式是 [云端 subagent](https://cursor.com/docs/subagents#cloud-subagents)。每个 subagent 都有自己的 VM 和分支，可以安装依赖、运行应用并录制结果视频，不影响你的机器。在任务前输入 `/in-cloud`，或要求主对话将工作交给云端 subagent。\n\n"
+    },
+    {
+      "en": "When the work has to stay local, ask for a worktree up front:\n\n",
+      "zh": "必须在本地执行时，提前要求使用 worktree：\n\n"
     },
     {
       "en": "```text\n/poteto-mode new task. branch off <base> in a fresh worktree, then port the parser change there.\n```\n\n",
       "zh": "```text\n/poteto-mode 新任务。在新的 worktree 中从 <base> 创建分支，再把 parser 改动移植过去。\n```"
     },
     {
-      "en": "Each task in its own branch and worktree means no agent stomps another's files. The [Opening a PR playbook](../../skills/poteto-mode/playbooks/opening-a-pr.md) already works from a worktree for code changes, so mostly you only say this when a specific base or location matters.\n\n",
-      "zh": "每个任务都有独立分支和 worktree，就不会覆盖其他 agent 的文件。[Opening a PR 执行规程](../../skills/poteto-mode/playbooks/opening-a-pr.md) 在修改代码时本就使用 worktree，因此通常只有对基线或位置有明确要求时，才需要补充这句话。"
+      "en": "Each task in its own branch and worktree means no agent stomps another's files. Worktrees cost disk and machine resources, so a laptop runs only a handful at once. The [Opening a PR playbook](../../skills/poteto-mode/playbooks/opening-a-pr.md) already works from a worktree for code changes, so mostly you only say this when a specific base or location matters.\n\n",
+      "zh": "每个任务都有自己的分支和 worktree，就不会覆盖其他 agent 的文件。worktree 会消耗磁盘和机器资源，因此笔记本通常只能同时运行少量任务。[创建 PR 执行规程](../../skills/poteto-mode/playbooks/opening-a-pr.md) 已经要求代码改动在 worktree 中进行，所以通常只有基线或位置有特定要求时，才需要额外说明。\n\n"
     },
     {
       "en": "Worktrees accumulate. When disk gets tight, ask:\n\n",

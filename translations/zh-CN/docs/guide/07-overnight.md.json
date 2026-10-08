@@ -1,18 +1,34 @@
 {
   "source": "docs/guide/07-overnight.md",
-  "sha256": "5033d61e8b4b6fb0b2304b2132f26bf0b6aee685aa4ed53a76a73cf0ac1c3557",
+  "sha256": "d7bd33a3d880768688dff4c1c2b5481ca9f0f194f5d97e44b65c9f96624d3ff0",
   "blocks": [
     {
       "en": "# Run work while you sleep\n\n",
       "zh": "# 让任务在你休息时继续"
     },
     {
-      "en": "This is the payoff for everything before it. An agent you can trust to verify its own work is an agent you can leave alone with a hard task. What makes that safe isn't hope. It's a checkable finish condition, an isolated worktree, and a decision log you audit in the morning.\n\n",
-      "zh": "前面所有做法的价值，在这里体现出来。一个能可靠验证自己工作的 agent，才值得让它独立处理困难任务。安全性来自可检验的完成条件、隔离的 worktree，以及第二天可以复核的决策记录，而不是一厢情愿的信任。"
+      "en": "This is the payoff for everything before it. An agent you can trust to verify its own work is an agent you can leave alone with a hard task. What makes that safe isn't hope. It's a checkable finish condition, an isolated worktree or cloud agent, and a decision log you audit in the morning.\n\n",
+      "zh": "前面所有准备的收益就在这里。能可靠验证自身工作的 agent，才适合独立处理困难任务。保障来自可检查的完成条件、隔离的 worktree 或云端 agent，以及你早上可审查的决策日志。\n\n"
     },
     {
       "en": "![She waves goodnight from the door while robots keep the factory running, one updating a DECISION LOG wall board under a BUILD LOOP ACTIVE sign.](./images/overnight.jpg)\n\n",
       "zh": "![她站在门口挥手道晚安，机器人继续运转工厂，其中一个在 BUILD LOOP ACTIVE 标牌下更新 DECISION LOG 记录板。](./images/overnight.jpg)"
+    },
+    {
+      "en": "## Earn the trust before the loop\n\n",
+      "zh": "## 循环运行前先建立信任\n\n"
+    },
+    {
+      "en": "A loop you don't trust just produces unchecked work faster, and the mess compounds with every iteration. Before you leave one running, check that it has earned it:\n\n",
+      "zh": "不可信的循环只会更快地产生未经检查的工作，每次迭代都会加重混乱。让它独立运行前，先确认以下条件：\n\n"
+    },
+    {
+      "en": "- You've done the task once by hand, or watched an agent do it, so you know what good looks like.\n- The agent has the tools and signals you'd use yourself: the verification skill, the profiler, the logs.\n- Every stage proves its work and can stop the line when the work misses the bar.\n- You've read a few transcripts and turned the repeated failures into tools, skills, or checks.\n\n",
+      "zh": "- 你亲手做过一次任务，或看过 agent 完成它，知道合格结果是什么。\n- agent 拥有你自己会使用的工具与信号：验证 skill、性能分析器和日志。\n- 每个阶段都能证明自己的工作，达不到标准时可以停止整个流程。\n- 你读过几份对话记录，并将反复出现的失败转为工具、skill 或检查。\n\n"
+    },
+    {
+      "en": "Make the loop autonomous only after all four hold. Until then, run it while you watch.\n\n",
+      "zh": "四项全部满足后，才让循环自主运行。在此之前，观察着它执行。\n\n"
     },
     {
       "en": "## The overnight contract\n\n",
@@ -37,6 +53,10 @@
     {
       "en": "Because you'll review this work after stepping away, `/poteto-mode` routes it through [`/figure-it-out`](../../skills/figure-it-out/SKILL.md), which designs the run's phases before any code and wires in the decision log.\n\n",
       "zh": "因为你会在离开后再复核工作，`/poteto-mode` 会把任务交给 [`/figure-it-out`](../../skills/figure-it-out/SKILL.md)，在写代码前设计执行阶段，并接入决策记录。"
+    },
+    {
+      "en": "To stop a run on purpose, tell the agent to pause, or that you're about to go offline or restart Cursor. The [Pause safely playbook](../../skills/poteto-mode/playbooks/pause-safely.md) finishes or backs out of the current step, commits a work-in-progress checkpoint, and writes a resume note. A fresh chat picks the work up from that note through the Session pickup playbook. Saying \"keep going\" never triggers a pause.\n\n",
+      "zh": "要主动停止运行，告诉 agent 暂停，或说明你即将离线或重启 Cursor。[安全暂停执行规程](../../skills/poteto-mode/playbooks/pause-safely.md) 会完成或撤回当前步骤，提交进行中的工作检查点，并写下恢复说明。新对话通过 Session pickup 执行规程读取该说明，继续工作。“继续执行”绝不会触发暂停。\n\n"
     },
     {
       "en": "## What the loop does all night\n\n",
@@ -101,6 +121,46 @@
     {
       "en": "```text\n/poteto-mode orchestrate the store migration. own it until every package is converted and merged. i'll check in twice a day.\n```\n\n",
       "zh": "```text\n/poteto-mode 协调 store 迁移。一直负责，直到每个包都完成迁移并合入。我每天查看两次进展。\n```"
+    },
+    {
+      "en": "## Run many projects in parallel\n\n",
+      "zh": "## 并行运行多个项目\n\n"
+    },
+    {
+      "en": "A [Cursor Project](https://cursor.com/blog/projects) gives one coordinator agent a persistent thread. The coordinator doesn't write code. It directs subagents, which run in the cloud by default, so the work continues when your laptop is closed. That's the shape the Orchestrate playbook expects. Start your prompts to the coordinator with `/poteto-mode`, and the subagents it spawns follow the playbooks.\n\n",
+      "zh": "[Cursor Project](https://cursor.com/blog/projects) 为协调 agent 提供持久对话线程。协调者不写代码，而是指挥 subagent；subagent 默认在云端运行，所以关闭笔记本后工作仍会继续。这正是 Orchestrate 执行规程预期的结构。发给协调者的提示词以 `/poteto-mode` 开头，它启动的 subagent 就会遵循执行规程。\n\n"
+    },
+    {
+      "en": "A few habits help:\n\n",
+      "zh": "几个习惯会有帮助：\n\n"
+    },
+    {
+      "en": "- Give each body of work its own Project, such as a feature, a migration, a perf push, or a tech-debt cleanup. Several can run side by side.\n- Drag related chats into the Project, finished ones included. They become context for every agent in it.\n- Give each PR a verification swarm before it merges, and let Autopilot-stack or Autopilot-full carry the queue.\n- Ask the coordinator for a plan backed by data, and have it answer open questions with prototypes before it asks you.\n\n",
+      "zh": "- 每项独立工作使用自己的 Project，如功能开发、迁移、性能优化或技术债清理。多个 Project 可以同时运行。\n- 将相关对话拖入 Project，包括已完成的对话。它们会成为该 Project 中所有 agent 的上下文。\n- 每个 PR 合入前安排一次验证 swarm，让 Autopilot-stack 或 Autopilot-full 处理队列。\n- 要求协调者提供数据支持的计划，并在向你提问前用原型回答未决问题。\n\n"
+    },
+    {
+      "en": "One prompt can carry a whole Project, from research through execution:\n\n",
+      "zh": "一条提示词可以覆盖整个 Project，从研究到执行：\n\n"
+    },
+    {
+      "en": "```text\n/poteto-mode refactor this repo so its architecture is more agent friendly. use /correct and /architect on past commits and review comments to find the mistakes agents make most here. use /recall for context from past chats. answer open questions with prototypes instead of asking me. come back with a plan backed by real data. once i approve it, run it with autopilot-stack or autopilot-full, and ask me which.\n```\n\n",
+      "zh": "```text\n/poteto-mode 重构这个仓库，让架构更适合 agent 工作。用 /correct 和 /architect 分析历史提交和评审评论，找出 agent 在这里最常犯的错误。用 /recall 获取以往对话的上下文。通过原型回答未决问题，不要问我。提供真实数据支持的计划。等我批准后，用 autopilot-stack 或 autopilot-full 执行，先问我选哪一个。\n```\n\n"
+    },
+    {
+      "en": "## Let loops start themselves\n\n",
+      "zh": "## 让循环自行启动\n\n"
+    },
+    {
+      "en": "Every loop above still waits for you to start it. A scheduled or event-driven automation removes that step. Software maintenance splits into stages that suit this well: triage a report, reproduce it, fix it, verify the fix. Two rules keep such a line trustworthy:\n\n",
+      "zh": "上面的循环仍需要你启动。定时或事件驱动的自动化可以省去这一步。软件维护很适合拆成几个阶段：分诊报告、复现、修复、验证修复。两条规则能让这样的流程值得信赖：\n\n"
+    },
+    {
+      "en": "- Every stage can stop the line. Triage can decide the report is expected behavior, repro can fail to reproduce it, and the fixer can judge the change too risky. Each of those outcomes is useful, because it keeps bad work from reaching the next stage, where it costs more to undo.\n- Every stage hands over evidence. Repro attaches screenshots and video of the broken state, and the fix attaches before-and-after proof. A human can then check that the agent fixed the right thing before reading a line of code.\n\n",
+      "zh": "- 每个阶段都能停止流程。分诊可以判断报告描述的是预期行为，复现可以发现无法复现，修复者可以判定改动风险过高。这些结果都有用，能阻止不合适的工作进入下一阶段，避免更高的撤回成本。\n- 每个阶段都移交证据。复现阶段附上异常状态的截图和视频，修复阶段附上前后对比证据。这样，人可以在阅读代码之前检查 agent 是否修复了正确的问题。\n\n"
+    },
+    {
+      "en": "pstack ships this as a dormant [automation pack](../../automations/benny/README.md) for Slack issue reports. One automation triages each report. The other reproduces confirmed bugs and may prepare a small draft fix. Point an agent at its [`FOR_AGENTS.md`](../../automations/benny/FOR_AGENTS.md) and name the target repository to set it up.\n\n",
+      "zh": "pstack 为 Slack 问题报告提供了默认未启用的 [自动化包](../../automations/benny/README.md)。一项自动化对每份报告进行分诊，另一项复现已确认的 bug，并可能准备一个小型修复草稿。让 agent 阅读它的 [`FOR_AGENTS.md`](../../automations/benny/FOR_AGENTS.md)，并指定目标仓库，即可配置。\n\n"
     },
     {
       "en": "**Pitfall:** a duration is not a finish condition. \"work on this for 4 hours\" gives the agent nothing to check, and you'll wake up to four hours of motion instead of a result. Give `/loop` a predicate that can pass or fail.\n\n",

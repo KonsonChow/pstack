@@ -1,14 +1,18 @@
 {
   "source": "docs/guide/06-verify-and-ship.md",
-  "sha256": "c93cd50c0359ce875a82b3f7d64eab102a4b0815dbbecdb8e0e5e910bd2d18e9",
+  "sha256": "3ef0eed5ea084dfbbaf1b1ae9e08d84f2c8a2b536ffb3ef5226710bf105f70e6",
   "blocks": [
     {
       "en": "# Verify the result and open a PR\n\n",
       "zh": "# 验证结果并创建 PR"
     },
     {
-      "en": "\"It compiles\" is not evidence. The [Prove It Works principle](../../skills/principle-prove-it-works/SKILL.md) makes the agent check the real artifact before it reports success, and your job is to make \"the real artifact\" checkable. This page covers stating a finish condition, generating a verification skill for your app, opening the PR, and driving it to merged.\n\n",
-      "zh": "“能编译”不能作为任务完成的证据。[Prove It Works 原则](../../skills/principle-prove-it-works/SKILL.md) 要求 agent 在报告成功前检查真实产物，而你要确保“真实产物”有可执行的检查方式。本页介绍如何说明完成条件、为应用生成验证 skill、创建 PR，以及推动它合入。"
+      "en": "\"It compiles\" is not evidence. The [Prove It Works principle](../../skills/principle-prove-it-works/SKILL.md) makes the agent check the real artifact before it reports success, and your job is to make \"the real artifact\" checkable. This page covers stating a finish condition, vetting a measured number, generating a verification skill for your app, opening the PR, and driving it to merged.\n\n",
+      "zh": "“能编译”不是证据。[证明它确实有效原则](../../skills/principle-prove-it-works/SKILL.md) 要求 agent 在宣告成功前检查真实产物，而你的职责是让“真实产物”可以被检查。本页介绍如何定义完成条件、审核测量值、为应用生成验证 skill、创建 PR，并推动它合入。\n\n"
+    },
+    {
+      "en": "Verification is the slowest step in most agent work, because it's the step that usually waits on a human. Make the agent able to do it, and you stop being the bottleneck. Skip it, and running more agents only gets you more unchecked work to review.\n\n",
+      "zh": "验证是大多数 agent 任务中最慢的一步，因为它通常要等人来做。让 agent 能自己验证，你就不再是瓶颈。跳过验证，只会让更多 agent 产生更多未经检查、需要你审查的工作。\n\n"
     },
     {
       "en": "![A prototype plane flies a real test course while she times it with a stopwatch and robots film and checklist the run; the terminal reads verify: pass, evidence: captured.](./images/verification.jpg)\n\n",
@@ -35,12 +39,40 @@
       "zh": "检查方式要与改动匹配："
     },
     {
-      "en": "- A CLI change runs the real command.\n- A UI change walks the changed flow in the running app.\n- A parser or migration replays a saved input.\n- A perf change compares before and after profiles.\n- A storage change reads back the written value.\n\n",
-      "zh": "- CLI 改动要运行真实命令。\n- UI 改动要在运行中的应用里走完被修改的操作流程。\n- parser 或迁移要重放保存的输入。\n- 性能改动要对比前后的性能分析结果。\n- 存储改动要读回实际写入的值。"
+      "en": "- A CLI change runs the real command.\n- A UI change walks the changed flow in the running app. When it must match a reference pixel for pixel, the [Visual parity playbook](../../skills/poteto-mode/playbooks/visual-parity.md) diffs screenshots against a frozen baseline instead of judging by eye.\n- A parser or migration replays a saved input.\n- A perf change compares before and after profiles.\n- A storage change reads back the written value.\n\n",
+      "zh": "- CLI 改动要运行真实命令。\n- UI 改动要在运行中的应用里走完改动后的流程。需要逐像素匹配参考图时，[视觉一致性执行规程](../../skills/poteto-mode/playbooks/visual-parity.md) 会将截图与固定基准做差异比较，而不是目测。\n- 解析器或迁移要重放保存的输入。\n- 性能改动要比较前后的 profile。\n- 存储改动要读回写入值。\n\n"
+    },
+    {
+      "en": "Ask for the proof as an artifact you can inspect yourself: the failing test and then the passing one, a before-and-after video, the trace, the screenshot. If the fix already merged, ask for the same check again on main. An artifact beats a plausible explanation, because you can challenge it without replaying the whole run.\n\n",
+      "zh": "要求提供你能亲自检查的证据文件：先失败后通过的测试、前后对比视频、trace 或截图。如果修复已经合入，要求在 main 上再次执行同一检查。证据文件比看似合理的解释更有用，因为你不用重跑整个过程就能质疑它。\n\n"
     },
     {
       "en": "For a small diff you don't fully trust, [`/blast-radius`](../../skills/blast-radius/SKILL.md) finds what it could break elsewhere. It picks the one fact the change is safe because of and proves it by running code instead of writing an essay about it.\n\n",
       "zh": "如果对一个小 diff 还不放心，[`/blast-radius`](../../skills/blast-radius/SKILL.md) 会找出它可能破坏的其他部分。它会选出足以支持改动安全性的关键事实，再实际运行代码证明，而不是写一篇论述代替验证。"
+    },
+    {
+      "en": "## Vet a measured number with `/benchmark-checklist`\n\n",
+      "zh": "## 用 `/benchmark-checklist` 审核测量值\n\n"
+    },
+    {
+      "en": "A before-and-after number is the easiest evidence to get wrong by accident. A warm cache, a debug build on one side, or work that never ran inside the timed region can each produce a convincing speedup. Before you report or act on a number, type:\n\n",
+      "zh": "前后对比数据最容易在无意中测错。缓存已预热、其中一侧使用调试构建，或实际工作根本没有在计时区间内执行，都能产生看似可信的加速结果。在报告数据或据此行动前，输入：\n\n"
+    },
+    {
+      "en": "```text\n/benchmark-checklist vet the export speedup before it goes in the pr\n```\n\n",
+      "zh": "```text\n/benchmark-checklist 在导出加速数据写入 pr 前先审核它\n```\n\n"
+    },
+    {
+      "en": "[`/benchmark-checklist`](../../skills/benchmark-checklist/SKILL.md) asks seven questions and wants evidence from a run for each:\n\n",
+      "zh": "[`/benchmark-checklist`](../../skills/benchmark-checklist/SKILL.md) 提出七个问题，每个都需要实际运行证据：\n\n"
+    },
+    {
+      "en": "1. What limits the number, and why isn't it double?\n2. Did every side run tuned the way production runs?\n3. Does the result break a physical limit, like disk bandwidth or core count?\n4. Did anything error or return wrong output?\n5. Does it reproduce over alternating runs, with a median and a range?\n6. Does it matter end to end, on the path a user waits on?\n7. Did the work actually happen inside the timed region?\n\n",
+      "zh": "1. 什么限制了这个数值，为什么它不是现在的两倍？\n2. 各方是否都按生产环境的方式调优后运行？\n3. 结果是否突破了磁盘带宽、核心数量等物理限制？\n4. 是否发生错误或返回错误输出？\n5. 交替重复运行时能否复现，是否有中位数和取值范围？\n6. 在用户等待的实际路径上，它是否影响端到端表现？\n7. 工作是否确实发生在计时区间内？\n\n"
+    },
+    {
+      "en": "The verdict comes back as faster, slower, no measurable difference, or inconclusive, with the run count, range, and limiter. It says inconclusive when it can't name the limiter or a side ran untuned. `/poteto-mode` already runs the checklist inside the Perf issue and Hillclimb playbooks, so you type it yourself when you measured something outside them, or when someone else's number looks too good. It's the working form of the [Explain the Number principle](../../skills/principle-explain-the-number/SKILL.md).\n\n",
+      "zh": "结论会是更快、更慢、无可测差异或无法下结论，并附运行次数、取值范围和限制因素。无法确定限制因素，或其中一侧未经调优时，就判定无法下结论。`/poteto-mode` 已在 Perf issue 和 Hillclimb 执行规程内运行这份清单；你在这些规程之外做测量，或别人的数据好得可疑时，再自行调用。它是 [解释测量值原则](../../skills/principle-explain-the-number/SKILL.md) 的具体执行方式。\n\n"
     },
     {
       "en": "## Create a project verification skill\n\n",
@@ -63,20 +95,40 @@
       "zh": "它会创建 `.cursor/skills/verify-<app>/`，其中的 agent 指令严格包含 Launch、Doctor、Drive、Evidence 和 Cleanup 几个部分。同时在 `features/` 下建立功能验证清单，列出应用功能，以及证明各功能可用的预期结果。skill 附带一个[完整的功能验证清单示例](../../skills/create-verification-skill/references/feature-map-example/)，包含 README 索引，并为每个功能提供使用四个规定二级标题的文件。交付前，生成器必须完成一次端到端验证：启动应用、检查环境、操作一个功能、采集证据、清理现场。如果这次验证失败，就不要使用生成结果。"
     },
     {
-      "en": "From then on, \"verify it in the app\" is a step any agent can execute, in this repo, with no setup conversation.\n\n",
-      "zh": "之后，在这个仓库中，任何 agent 都能执行“在应用里验证”这一步，不需要再进行配置对话。"
+      "en": "From then on, \"verify it in the app\" is a step any agent can execute, in this repo, with no setup conversation. Name it in the prompt when you want the proof in a specific form:\n\n",
+      "zh": "此后，在这个仓库里，“到应用中验证”就成为任何 agent 都能执行的一步，不必再讨论配置。如果希望证据以特定形式呈现，在提示词中明确指定：\n\n"
     },
     {
-      "en": "Once the verify skill works, a [`/swarm`](../../skills/swarm/SKILL.md) can split a full pass by feature-map entry and aggregate the results.\n\n",
-      "zh": "验证 skill 可用后，可以用 [`/swarm`](../../skills/swarm/SKILL.md) 按功能验证清单的条目分拆完整检查，再汇总结果。"
+      "en": "```text\n/poteto-mode build the bulk-archive action. use /verify-<app> to verify your changes and show me a video and screenshots as proof.\n```\n\n",
+      "zh": "```text\n/poteto-mode 实现批量归档操作。用 /verify-<app> 验证改动，并提供视频和截图作为证据。\n```\n\n"
+    },
+    {
+      "en": "```text\n/poteto-mode repro this with /verify-<app>. if it repros on main, fix it and show me a video as proof.\n```\n\n",
+      "zh": "```text\n/poteto-mode 用 /verify-<app> 复现这个问题。如果在 main 上能复现，就修复并提供视频作为证据。\n```\n\n"
+    },
+    {
+      "en": "Once the verify skill works, a [`/swarm`](../../skills/swarm/SKILL.md) can split a full pass by feature-map entry and aggregate the results. A swarm of verifiers also confirms a perf win over a big enough sample, or fuzzes the app for regressions before a PR ships.\n\n",
+      "zh": "验证 skill 可用后，[`/swarm`](../../skills/swarm/SKILL.md) 可以按功能验证清单条目分派完整检查，再汇总结果。一组并行验证者也能用足够大的样本确认性能提升，或在 PR 交付前对应用做模糊测试，查找回归问题。\n\n"
+    },
+    {
+      "en": "Treat the verification skill as infrastructure, not a one-off. Commit it, so every person and every agent on the team drives the app the same way. Then [build the lever](../../skills/principle-build-the-lever/SKILL.md). When agents keep writing throwaway scripts to click through the app, ask for a small control CLI that the skill calls instead. Agents spend fewer tokens, and every run becomes repeatable. A CLI that agents use well has these traits:\n\n",
+      "zh": "把验证 skill 当作基础设施。将它提交到仓库，让团队每个人和每个 agent 都以相同方式操作应用。接着 [构建执行工具](../../skills/principle-build-the-lever/SKILL.md)。如果 agent 不断编写一次性脚本来点击应用，要求它编写一个小型操作 CLI，由 skill 调用。这样消耗更少 token，每次运行也可重复。便于 agent 使用的 CLI 有这些特点：\n\n"
+    },
+    {
+      "en": "- A few composable commands, each doing real work, rather than many thin ones.\n- A `--dry-run` option on anything destructive.\n- Subcommands that reveal features gradually instead of all at once.\n- Error messages that say what to do instead.\n- Rich `--help` text.\n- Machine-readable output, such as JSON.\n\n",
+      "zh": "- 少量可组合且能完成实际工作的命令，避免大量功能单薄的命令。\n- 所有破坏性操作都提供 `--dry-run` 选项。\n- 用子命令逐步呈现功能，而不是一次展示全部。\n- 错误消息说明应该改用什么做法。\n- 丰富的 `--help` 说明。\n- JSON 等机器可读输出。\n\n"
+    },
+    {
+      "en": "While you're there, make the dev setup repeatable too: seeded data, test users, and one command that brings the environment up the same way every time.\n\n",
+      "zh": "同时也让开发环境配置可重复：预置数据、测试用户，以及每次都以相同方式启动环境的一条命令。\n\n"
     },
     {
       "en": "## Keep the verification skill honest\n\n",
       "zh": "## 让验证 skill 持续符合实际"
     },
     {
-      "en": "Apps change and feature maps rot. When yours drifts, run:\n\n",
-      "zh": "应用会变化，功能验证清单也会逐渐过时。发现偏差时，运行："
+      "en": "Apps change and feature maps rot. Run this at least once a day, ideally from a scheduled automation so nobody has to remember:\n\n",
+      "zh": "应用会变化，功能验证清单会过时。至少每天运行一次，最好通过定时自动化执行，不必依赖人记住：\n\n"
     },
     {
       "en": "```text\n/maintain-verification-skill\n```\n\n",

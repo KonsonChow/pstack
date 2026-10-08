@@ -1,0 +1,54 @@
+{
+  "source": "skills/poteto-help/references/recipes.md",
+  "sha256": "1872323419a3e5c7783b1933f7a180ca26c25a6e1f4ec83bd65e091ebbfb812b",
+  "blocks": [
+    {
+      "en": "# Prompts worth copying\n\n",
+      "zh": "# 可复用的提示词\n\n"
+    },
+    {
+      "en": "Swap in the real paths, skills, and done checks. Informal wording works.\n\n",
+      "zh": "替换成实际路径、skill 和完成检查。非正式表达也有效。\n\n"
+    },
+    {
+      "en": "## Understand\n\n",
+      "zh": "## 理解\n\n"
+    },
+    {
+      "en": "- `/poteto-mode read <thread>. restate the underlying issue in your own words, in plain english.`\n- `/poteto-mode investigate why <symptom>. give me what we know, what data you used, and your best hypotheses. don't change any code yet.`\n- `use /how to understand <subsystem>. then use /why to find out why it broke recently.`\n- `/recall my work on <topic> from last week, then read <issue>.`\n- `/teach me why you implemented it this way and not <other way>. what did you trade off?`\n- `/poteto-mode take over this branch. read the decision log, find what's done, and continue. don't redo finished work.`\n\n",
+      "zh": "- `/poteto-mode 阅读 <thread>，用你自己的话，以通俗语言复述根本问题。`\n- `/poteto-mode 调查为什么 <symptom>。说明已知事实、使用的数据和最有可能的假设。暂时不要改代码。`\n- `用 /how 理解 <subsystem>，再用 /why 查明它最近为什么出问题。`\n- `/recall 回顾我上周在 <topic> 上的工作，再阅读 <issue>。`\n- `/teach 解释你为什么这样实现，而没有采用 <other way>。做了哪些权衡？`\n- `/poteto-mode 接管这个分支。阅读决策日志，找出已完成内容并继续。不要重复已完成的工作。`\n\n"
+    },
+    {
+      "en": "## Build\n\n",
+      "zh": "## 构建\n\n"
+    },
+    {
+      "en": "- Bug: `/poteto-mode <symptom>. repro first, then fix and verify.`\n- Bug in an app: `/poteto-mode repro this with /verify-<app>. if it repros on main, fix it and show me a video as proof.`\n- Bug with a cheap test: `/poteto-mode repro <bug> first. if there's a cheap test path, /tdd it. then fix and rerun.`\n- Feature: `/poteto-mode add <behavior>. <current output> stays byte-identical. verify both.`\n- Refactor: `/poteto-mode move <code> into one module, zero behavior change. record the current output first and prove it's unchanged after.`\n- Perf: `/poteto-mode <operation> takes <time> on <fixture>. trace it, fix the measured cause, show me before and after.`\n\n",
+      "zh": "- Bug：`/poteto-mode <symptom>。先复现，再修复并验证。`\n- 应用中的 bug：`/poteto-mode 用 /verify-<app> 复现这个问题。如果在 main 上能复现，就修复并提供视频作为证据。`\n- 有低成本测试路径的 bug：`/poteto-mode 先复现 <bug>。如果有低成本测试路径，用 /tdd，再修复并重跑。`\n- 功能：`/poteto-mode 添加 <behavior>。<current output> 必须逐字节不变。验证两者。`\n- 重构：`/poteto-mode 将 <code> 移入一个模块，行为完全不变。先记录当前输出，再证明改动后没有变化。`\n- 性能：`/poteto-mode <operation> 在 <fixture> 上耗时 <time>。采集 trace，修复测量确认的根因，展示前后对比。`\n\n"
+    },
+    {
+      "en": "## Design and plan\n\n",
+      "zh": "## 设计与规划\n\n"
+    },
+    {
+      "en": "- `/poteto-mode prototype a few options for <feature>. take screenshots or videos for me to compare.`\n- `/poteto-mode we need <feature>. /architect it first, and answer open questions with prototypes. let me review before proceeding.`\n- `/poteto-mode write a tutorial for how i would use <new package> first. then /teach me why it beats the current one.`\n- `ask /arena for a second opinion on this thread and our approach.`\n- `/poteto-mode turn this design into a plan. small verifiable PRs, each with its own verification steps.`\n- `/poteto-mode plan the migration of <library> to <target>. small verifiable PRs. the result must match the original exactly, bugs included.`\n\n",
+      "zh": "- `/poteto-mode 为 <feature> 做几个方案的原型。提供截图或视频供我比较。`\n- `/poteto-mode 我们需要 <feature>。先用 /architect 设计，并通过原型回答未决问题。继续之前先让我审查。`\n- `/poteto-mode 先写一份教程，说明我如何使用 <new package>。再用 /teach 解释它为什么优于当前方案。`\n- `请 /arena 对这个讨论串和我们的方法提供第二意见。`\n- `/poteto-mode 将这个设计转为计划。拆成小而可验证的 PR，每个都有自己的验证步骤。`\n- `/poteto-mode 规划将 <library> 迁移到 <target>。拆成小而可验证的 PR。结果必须与原来完全一致，包括 bug。`\n\n"
+    },
+    {
+      "en": "## Review and ship\n\n",
+      "zh": "## 评审与交付\n\n"
+    },
+    {
+      "en": "- `/interrogate the whole branch, but skeptically. don't change anything yet. no nitpicks unless it's a real bug or regression.` Read the dismissals too.\n- `/swarm check every package under <dir> against its check script. one worker per package. one report.`\n- `/poteto-mode open the pr. small ordered commits, evidence in the description.`\n- `/poteto-mode babysit this pr. get it green.` For status only: `/poteto-mode check on pr <number>. anything outstanding?`\n- `/poteto-mode land the stack.`\n\n",
+      "zh": "- `/interrogate 评审整个分支，但保持审慎。暂时不要改任何内容。除非是真实 bug 或回归问题，否则不要挑细枝末节。` 也要阅读被驳回的意见。\n- `/swarm 按各自的检查脚本检查 <dir> 下的每个包。每包一个执行者，一份报告。`\n- `/poteto-mode 创建 pr。提交要小且有序，描述中附证据。`\n- `/poteto-mode 跟进这个 pr，使检查通过。` 只查询状态时：`/poteto-mode 检查 pr <number>，还有什么未解决？`\n- `/poteto-mode 合入 PR 栈。`\n\n"
+    },
+    {
+      "en": "## Away and back\n\n",
+      "zh": "## 离开与回来\n\n"
+    },
+    {
+      "en": "- `/poteto-mode im going to bed. <goal> in a fresh worktree off <base>. done means <checks>. keep a decision log. don't ask me before committing. /loop until done. if you're truly stuck after a few hours, stop and write up why.`\n- `/show-me-your-work catch me up on what you did last night.` Read its Attention section first.\n- `/poteto-mode full autopilot on this queue. each item is independent.`\n- `/poteto-mode autopilot these changes but stack them, don't ship. i'll land the stack.`\n- `/reflect capture what we learned so the next run doesn't repeat it.` Approve only edits that change a future decision.\n- `/bro` restates the last reply in plain words.\n",
+      "zh": "- `/poteto-mode 我要睡觉了。在从 <base> 创建的新 worktree 中完成 <goal>。完成条件是 <checks>。保留决策日志，提交前不必问我。用 /loop 一直执行到完成。如果几小时后确实卡住了，停止并说明原因。`\n- `/show-me-your-work 告诉我昨晚做了什么。` 先读 Attention 章节。\n- `/poteto-mode 对这个队列全自动执行，每个条目相互独立。`\n- `/poteto-mode 自动执行这些改动，但只组织成 PR 栈，不要交付。我会合入。`\n- `/reflect 记录学到的经验，让下次执行不再重蹈覆辙。` 只批准会改变未来决策的改动。\n- `/bro` 用通俗语言复述上一条回复。\n\n"
+    }
+  ]
+}

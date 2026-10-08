@@ -1,6 +1,6 @@
 {
   "source": "skills/how/SKILL.md",
-  "sha256": "0958465ec7241ccf4dbddd8f767e872f7fe0c520661a60780974f732c01cb26c",
+  "sha256": "6039d88a0147776eb058b0a13af495f787a6a40294bfe8868b005c179ed295aa",
   "blocks": [
     {
       "en": "---\nname: how\ndescription: \"Use for \\\"how does X work\\\", code walkthroughs before changing something, and placement / ownership / layering questions (\\\"where should this live\\\", \\\"which package owns this\\\", \\\"is this the right layer\\\"). Explains subsystem architecture, runtime flow, onboarding mental models. Use why for motivation.\"\ndisable-model-invocation: true\n---\n\n",
@@ -63,8 +63,8 @@
       "zh": "启动一名 Task subagent，一次完成探索和解释：\n\n"
     },
     {
-      "en": "- `subagent_type`: `generalPurpose`\n- `model`: the `how explainer` line, default `claude-opus-5-5-max`\n- `readonly`: `true`\n\n",
-      "zh": "- `subagent_type`：`generalPurpose`\n- `model`： `how explainer` 行，默认 `claude-opus-5-5-max`\n- `readonly`：`true`\n\n"
+      "en": "- `subagent_type`: `generalPurpose`\n- `model`: the `how explainer` line, default `claude-opus-5-5-xhigh`\n- `readonly`: `true`\n\n",
+      "zh": "- `subagent_type`：`generalPurpose`\n- `model`： `how explainer` 行，默认 `claude-opus-5-5-xhigh`\n- `readonly`：`true`\n\n"
     },
     {
       "en": "Build its prompt from `references/explainer-prompt.md` without the explorer-findings section. Go to Step 4.\n\n",
@@ -79,8 +79,8 @@
       "zh": "所有探索者返回后，启动一名 Task subagent，将发现综合为一份解释：\n\n"
     },
     {
-      "en": "- `subagent_type`: `generalPurpose`\n- `model`: the `how explainer` line, default `claude-opus-5-5-max`\n- `readonly`: `true`\n\n",
-      "zh": "- `subagent_type`：`generalPurpose`\n- `model`： `how explainer` 行，默认 `claude-opus-5-5-max`\n- `readonly`：`true`\n\n"
+      "en": "- `subagent_type`: `generalPurpose`\n- `model`: the `how explainer` line, default `claude-opus-5-5-xhigh`\n- `readonly`: `true`\n\n",
+      "zh": "- `subagent_type`：`generalPurpose`\n- `model`： `how explainer` 行，默认 `claude-opus-5-5-xhigh`\n- `readonly`：`true`\n\n"
     },
     {
       "en": "Build its prompt from `references/explainer-prompt.md` with every explorer's findings filled in.\n\n",

@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/01-setup.md",
-  "sha256": "bbac20e25fb097029e2676ecf3212f4a72f566eaf2b1031b56317aa1e4fdf490",
+  "sha256": "86d0330f245d16254a2069955f993c15d96cf29cd1a73690a0164074b7ac1190",
   "blocks": [
     {
       "en": "# Set up pstack\n\n",
@@ -43,8 +43,12 @@
       "zh": "[`/setup-pstack`](../../skills/setup-pstack/SKILL.md) 会检测你可以使用的模型，询问推理预算，列出各类角色，包括代码实现者、判断角色和评审组，再询问你的选择。回答这些问题后，它会写入 `~/.cursor/rules/pstack-models.mdc`。这是一份小型规则文件，所有 pstack skill 都会读取它。"
     },
     {
-      "en": "You only override what you care about. A role with no line in the rule keeps the skill's default. To restore a default, delete that role's line. A rerun of `/setup-pstack` keeps any role whose model differs from the default. A rule written before 0.15.3 pins the old default models, so delete those role lines, or delete the file, then run `/setup-pstack` again.\n\n",
-      "zh": "只需要覆盖你在意的配置。规则文件中没有配置的角色继续使用对应 skill 的默认值。要恢复默认值，删除该角色对应的配置行。重新运行 `/setup-pstack` 会保留模型与默认值不同的角色。0.15.3 之前写入的规则会固定使用旧默认模型，因此应删除这些角色配置行，或删除整个文件，再运行 `/setup-pstack`。\n\n"
+      "en": "The defaults run at `xhigh` reasoning, the same as the `large` budget. `unlimited` lifts each model to its highest tier, up to `max`. Opus goes to `max`. Grok tops out at `xhigh`, so it stays there. `medium` and `small` lower the reasoning and spend fewer tokens.\n\n",
+      "zh": "默认推理强度为 `xhigh`，与 `large` 预算相同。`unlimited` 将每个模型提升到其支持的最高档，最高为 `max`。Opus 提升到 `max`；Grok 最高只支持 `xhigh`，因此保持不变。`medium` 和 `small` 会降低推理强度，减少 token 消耗。\n\n"
+    },
+    {
+      "en": "You only override what you care about. A role with no line in the rule keeps the skill's default. To restore a default, delete that role's line. A rerun of `/setup-pstack` keeps any role whose model differs from the default. When a default changes, a rule written before the change still pins the old default, so delete those role lines, or delete the file, then run `/setup-pstack` again.\n\n",
+      "zh": "只覆盖你关心的配置。规则中没有对应行的角色沿用 skill 的默认值。要恢复默认值，删除该角色行。重新运行 `/setup-pstack` 会保留模型与默认值不同的角色配置。默认值变更后，之前写入的规则仍会固定旧默认值，因此要删除对应角色行或整个文件，再运行 `/setup-pstack`。\n\n"
     },
     {
       "en": "You might be wondering what happens if you use Auto. Set a role to `inherit-parent` or `auto` and pstack omits the subagent `model` field, so the subagent inherits your parent chat model. Both values mean the same thing, and neither is a model slug. For a panel role the value is a list, and one subagent runs per entry, so the list length sets the panel size. Setup also configures `swarm workers`, the default model for every `/swarm` worker unless a race names a model for each arm.\n\n",
@@ -59,12 +63,28 @@
       "zh": "配置结束时，`/setup-pstack` 会查找项目中用于证明应用实际行为的机制，包括 `verify-*` skill 或已有的验证运行环境。如果两者都没有，它会询问一次，是否通过 [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md) 生成一个。"
     },
     {
-      "en": "Say yes and it writes `.cursor/skills/verify-<app>/`, a project-local skill that teaches agents to drive your app the way a user does. It proves the skill works once before handing it over. Say no and setup moves on. You can run `/create-verification-skill` yourself any time. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers when it earns its place.\n\n",
-      "zh": "同意后，它会创建 `.cursor/skills/verify-<app>/`。这是项目内的 skill，教 agent 按用户的实际使用方式操作应用。交付前，它会实际执行一次，证明这个 skill 可用。如果拒绝，配置流程继续进行。你随时都可以自行运行 `/create-verification-skill`。[验证并交付](./06-verify-and-ship.md#create-a-project-verification-skill) 会说明何时值得引入它。"
+      "en": "Say yes and it writes `.cursor/skills/verify-<app>/`, a project-local skill that teaches agents to drive your app the way a user does. It proves the skill works once before handing it over. Say no and setup moves on. You can run `/create-verification-skill` yourself any time. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers it in depth.\n\n",
+      "zh": "回答同意后，它会写入 `.cursor/skills/verify-<app>/`，这是一个项目本地 skill，教 agent 像用户一样操作你的应用。交付前，它会实际验证一次该 skill 可用。回答不同意，配置就继续下一步。你随时可以自行运行 `/create-verification-skill`。[验证与交付](./06-verify-and-ship.md#create-a-project-verification-skill) 会详细介绍。\n\n"
+    },
+    {
+      "en": "If you're new to pstack, say yes. An agent that can check its own work keeps going until the check passes. An agent that can't hands every result back to you to check by hand. Of everything in this guide, the verification skill pays off the most.\n\n",
+      "zh": "如果刚开始使用 pstack，建议同意。能检查自己工作的 agent 会继续执行，直到检查通过；不能自检的 agent 会把每个结果交给你手动检查。在本指南介绍的内容中，验证 skill 的收益最大。\n\n"
     },
     {
       "en": "After setup, start a new chat. The model rule applies to new sessions.\n\n",
       "zh": "配置完成后，开始一个新对话。模型规则从新会话开始生效。"
+    },
+    {
+      "en": "## Keep the cost in check\n\n",
+      "zh": "## 控制成本\n\n"
+    },
+    {
+      "en": "pstack spends extra tokens on subagents and review panels. That's the price of the rigor. To spend fewer:\n\n",
+      "zh": "pstack 会在 subagent 和评审组上多花 token，这是严谨流程的成本。要减少消耗：\n\n"
+    },
+    {
+      "en": "- Rerun `/setup-pstack` and pick a smaller reasoning budget or cheaper models. A strong model in the main chat with cheaper, faster models in the code roles is a good split.\n- Set a role to `auto` or `inherit-parent` so it runs on the chat's own model.\n- Shorten a panel list. Each entry runs one subagent.\n- Save `/poteto-mode` for work that needs rigor. A small, obvious edit doesn't.\n\n",
+      "zh": "- 重新运行 `/setup-pstack`，选择更低的推理预算或更便宜的模型。主对话用强模型，代码角色用更便宜、更快的模型，是一种合理分工。\n- 将角色设为 `auto` 或 `inherit-parent`，让它使用主对话的模型。\n- 缩短评审组列表。每个条目都会运行一个 subagent。\n- 在需要严谨处理时再用 `/poteto-mode`。小而明确的改动不需要它。\n\n"
     },
     {
       "en": "## Run your first task\n\n",
@@ -83,8 +103,8 @@
       "zh": "观察待办列表。开头的条目是从匹配到的执行规程中复制的步骤。这个提示词对应 Feature 执行规程。如果 `/poteto-mode` 跳过某一步，该步骤仍会留在列表中，并标注 `skip: <reason>`，让你看到它选择跳过什么，以及原因。"
     },
     {
-      "en": "From here you can type normal follow-ups. `/poteto-mode` is sticky. It stays on for the conversation until you opt out by saying so.\n\n",
-      "zh": "之后可以用普通语言继续对话。`/poteto-mode` 会持续生效，直到你明确表示退出。"
+      "en": "From here you can type normal follow-ups. To keep `/poteto-mode` on for the whole chat, pick it from the `/` menu with Option+Enter (Mac) or Alt+Enter (Windows) instead of Enter. That makes it a [Custom Mode](https://cursor.com/docs/skills), which stays in context on every turn until you exit it. Custom Modes are available in the Agents Window and the CLI. Plain Enter attaches the skill to one message, and it fades as the chat moves on.\n\n",
+      "zh": "接下来可以用普通消息继续对话。要让 `/poteto-mode` 在整个对话中启用，从 `/` 菜单选择它，并按 Option+Enter（Mac）或 Alt+Enter（Windows），而不是 Enter。这会创建一个 [自定义工作模式](https://cursor.com/docs/skills)，每轮都保留在上下文中，直到你退出。自定义工作模式可在 Agents Window 和 CLI 中使用。只按 Enter 会将 skill 附加到一条消息，随着对话继续，它会逐渐退出上下文。\n\n"
     },
     {
       "en": "Next: [Route work through `/poteto-mode`](./02-poteto-mode.md).\n",
