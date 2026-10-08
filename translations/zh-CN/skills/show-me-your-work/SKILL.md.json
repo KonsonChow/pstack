@@ -1,0 +1,130 @@
+{
+  "source": "skills/show-me-your-work/SKILL.md",
+  "sha256": "4debc5860a7b389e4496f5b908340e4bb79cddabf36e5d56cab399a0a299df35",
+  "blocks": [
+    {
+      "en": "---\nname: show-me-your-work\ndescription: \"Keep a reviewable decision trail for long-running or unattended work: a TSV log with one row per decision (what, why, evidence, result). Local by default; commit it when a reviewer needs the trail to trust the result. Use for /show-me-your-work, autonomous or multi-phase runs, or work a human reviews after stepping away.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: show-me-your-work\ndescription: \"为长时间或无人值守的工作保留可评审的决策轨迹：TSV 日志，每个决策一行，记录做了什么、为什么、证据、结果。默认留在本地；评审者需要轨迹才能信任结果时提交。用于 /show-me-your-work、自主或多阶段执行，以及用户离开后回来审阅的工作。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Show me your work\n\n",
+      "zh": "# 展示工作依据\n\n"
+    },
+    {
+      "en": "Keep one canonical log.\n\n",
+      "zh": "只保留一份权威日志。\n\n"
+    },
+    {
+      "en": "## The format\n\n",
+      "zh": "## 格式\n\n"
+    },
+    {
+      "en": "A single TSV file, one row per decision. Cells stay single-line. Evidence is a pointer, not prose.\n\n",
+      "zh": "一个 TSV 文件，每个决策一行。每个单元格保持单行。证据写引用，不写长篇说明。\n\n"
+    },
+    {
+      "en": "Copy `references/decision-log-template.tsv` (the header row) to start a clean log. Columns:\n\n",
+      "zh": "复制 `references/decision-log-template.tsv` 的表头，开始一份新日志。列定义：\n\n"
+    },
+    {
+      "en": "- **ts.** ISO8601 timestamp.\n- **phase.** The phase or workstream.\n- **decision.** What was chosen or done, one line.\n- **why.** The reason in plain words. If a principle drove it, say it plainly, not as a jargon tag.\n- **evidence.** A link or path that proves it: commit SHA, PR number, `file:line`, or an artifact, trace, or screenshot path. Never a paragraph.\n- **result.** The outcome or predicate state: `tests green`, `reverted`, `pixel-diff 0`, `INCONCLUSIVE`, `open`.\n\n",
+      "zh": "- **ts。** ISO8601 时间戳。\n- **phase。** 阶段或工作线。\n- **decision。** 选择或执行了什么，一行说明。\n- **why。** 用平实语言说明原因。如果受某个原则驱动，直说，不用术语标签代替。\n- **evidence。** 能证明它的链接或路径：提交 SHA、PR 编号、`file:line`，或产物、trace、截图路径。绝不写段落。\n- **result。** 结果或终止条件的状态：`tests green`、`reverted`、`pixel-diff 0`、`INCONCLUSIVE`、`open`。\n\n"
+    },
+    {
+      "en": "An example, plain-spoken so a reviewer reads it at a glance.\n\n",
+      "zh": "以下示例用直白语言，让评审者一眼读懂。\n\n"
+    },
+    {
+      "en": "```\nts\tphase\tdecision\twhy\tevidence\tresult\n2026-05-24T09:02:00Z\tframe\tcounted the work first, about 100 components and roughly 75 hours\twanted to know the size before starting a long run\tcommit 3a9f1c2\tfound 5 things to sort out before starting\n2026-05-24T09:40:00Z\tharness\ttook screenshots of the old version before changing anything\tso we can compare old against new and catch any visual change\tscripts/snapshot.sh, baseline/\tsaved 120 reference screenshots\n2026-05-24T11:15:00Z\twidget\tmoved the widget styles over without changing how it looks\tkeep the change small and the result identical\tcommit 7c21e0a, pixel-diff 0\tlooks identical, tests pass\n2026-05-24T12:30:00Z\twidget\tthrew out a helper's work because its screenshots were blank\tchecked the real files instead of trusting its summary\tworktree reset\treverted, tightened the instructions for next time\n```\n\n",
+      "zh": "```\nts\tphase\tdecision\twhy\tevidence\tresult\n2026-05-24T09:02:00Z\tframe\t先统计工作量，约 100 个组件和 75 小时\t长时间执行前先知道规模\tcommit 3a9f1c2\t发现开始前有 5 件事要处理\n2026-05-24T09:40:00Z\tharness\t改动前给旧版本截图\t比较新旧并发现视觉变化\tscripts/snapshot.sh, baseline/\t保存 120 张参考截图\n2026-05-24T11:15:00Z\twidget\t迁移 widget 样式，外观保持不变\t改动小且结果一致\tcommit 7c21e0a, pixel-diff 0\t外观一致，测试通过\n2026-05-24T12:30:00Z\twidget\t丢弃助手的工作，因为截图空白\t检查真实文件，而非相信摘要\tworktree reset\t已回滚，并收紧下次指令\n```\n\n"
+    },
+    {
+      "en": "## Logging a row\n\n",
+      "zh": "## 记录一行\n\n"
+    },
+    {
+      "en": "Write each entry the way you'd tell a teammate what you did. Plain words, concrete actions, no AI speak or abstract jargon (the **unslop** skill applies to log text too).\n\n",
+      "zh": "像向同事说明自己做了什么一样写日志。语言平实、动作具体，不用 AI 套话或抽象术语（**unslop** skill 同样适用于日志）。\n\n"
+    },
+    {
+      "en": "Use the helper `scripts/log.sh <logfile> <phase> <decision> <why> <evidence> <result>`. It stamps `ts`, writes the header on first use, strips stray tabs/newlines, and prefixes any cell starting with `=`, `+`, `-`, or `@` with a single quote. A bare `printf` appending a row works too, but mind those same bytes if cells come from generated or user-supplied text.\n\n",
+      "zh": "使用辅助脚本 `scripts/log.sh <logfile> <phase> <decision> <why> <evidence> <result>`。它填写 `ts`、首次使用时写表头、去除多余 tab 和换行，并为以 `=`、`+`、`-`、`@` 开头的单元格加单引号前缀。直接用 `printf` 追加也可以，但单元格来自生成文本或用户输入时，同样留意这些字节。\n\n"
+    },
+    {
+      "en": "Log decision points and checkpoints, not every action: a fork chosen, a unit completed with its verification result, a pivot or revert with its trigger, a blocker surfaced, a gate fixed. For loop runs, one row per iteration. Skip the trivial and self-evident.\n\n",
+      "zh": "记录决策点和检查点，不记每个动作：选定分支方案、完成单元及验证结果、转向或回滚及其触发因素、发现阻塞、修复检查关卡。循环执行时，每轮一行。跳过琐碎和不言自明的事项。\n\n"
+    },
+    {
+      "en": "A run is one agent conversation, including its later turns and any summary of it. A pickup, a replacement agent, or a new chat starts a new run. When a run adds to a log that already has rows, its first row has phase `start`, and so does its first row after another run's `start` row. So a run that comes back to a log in a later turn first reads the log's last rows to see whether another run wrote since. A `start` row names the `ts` range of the rows before it that this run did not write, and its evidence names this run, such as its agent id. Use phase `start` for nothing else.\n\n",
+      "zh": "一次执行指一个 agent 会话，包括其后续轮次及会话摘要。接手任务、更换 agent 或新建对话都会开始一次新执行。向已有记录的日志追加内容时，本次执行的首行将 phase 设为 `start`；其他执行写入 `start` 后，本次执行再次写入的首行也如此。因此，后续轮次回到日志时，先读取末尾几行，检查期间是否有其他执行写入。`start` 行须写明此前不属于本次执行的记录的 `ts` 范围，evidence 字段须标识本次执行，例如 agent ID。`start` 不得用于其他用途。\n\n"
+    },
+    {
+      "en": "## Where it lives\n\n",
+      "zh": "## 存放位置\n\n"
+    },
+    {
+      "en": "By default the log is a working artifact, not committed. Keep it at `decisions.tsv` in the work dir, or `.audit/<task-slug>.tsv` when several efforts run at once, and leave it out of git.\n\n",
+      "zh": "默认日志是工作产物，不提交。放在工作目录的 `decisions.tsv`，或多任务并行时放在 `.audit/<task-slug>.tsv`，不要纳入 Git。\n\n"
+    },
+    {
+      "en": "Commit it only when the work is ambitious enough that a reviewer needs the trail to trust the result.\n\n",
+      "zh": "只有工作足够复杂，评审者需要轨迹才能信任结果时，才提交。\n\n"
+    },
+    {
+      "en": "## Rules\n\n",
+      "zh": "## 规则\n\n"
+    },
+    {
+      "en": "- Append-only. A wrong call gets a new row that supersedes it. Never edit or delete history.\n- Prefer evidence produced by committed scripts over hand-made one-offs (the **encode-lessons-in-structure** principle skill).\n\n",
+      "zh": "- 只追加。判断错误时新增一行取代旧判断，不编辑或删除历史。\n- 优先使用已提交脚本生成的证据，而非临时手工产物（**encode-lessons-in-structure** 原则 skill）。\n\n"
+    },
+    {
+      "en": "## Audit the log against the transcript\n\n",
+      "zh": "## 对照会话记录审计日志\n\n"
+    },
+    {
+      "en": "At the end of the run, before handing back, check the log told the truth. Read this run's transcript from the active workspace's session directory: in Cursor, the `agent-transcripts/` directory the system prompt names. In Claude Code, `~/.claude/projects/<slug>/` (the workspace path with every character that isn't a letter or digit turned into \"-\"). In Pi, `~/.pi/agent/sessions/--<slug>--/`. In Codex, the `~/.codex/sessions/` file whose first line has `payload.cwd` equal to the workspace path. Don't glob across every project's directory. That reads unrelated private chats. Walk this run's rows against what actually happened. Each stretch of them begins at one of this run's `start` rows, or at the first row if this run created the log, and ends at the next `start` row of another run:\n\n",
+      "zh": "执行结束、交回结果前，检查日志是否如实记录。读取当前工作区会话目录中本次执行的记录：Cursor 用系统提示词指定的 `agent-transcripts/`；Claude Code 用 `~/.claude/projects/<slug>/`（工作区路径中非字母、非数字字符改成“-”）；Pi 用 `~/.pi/agent/sessions/--<slug>--/`；Codex 用 `~/.codex/sessions/` 中首行 `payload.cwd` 等于工作区路径的文件。不要 glob 所有项目目录，那会读取无关私密聊天。对照实际发生的事逐行核对本次执行的记录行。每段连续记录均始于本次执行的某个 `start` 行（若由本次执行创建日志则始于首行），直到其他执行的下一个 `start` 行：\n\n"
+    },
+    {
+      "en": "- Check that every row maps to a real decision or action.\n- Check that each row's evidence resolves and shows what the row claims.\n- A fork, pivot, or abandoned approach that shaped the work but isn't logged is a gap. Add it.\n\n",
+      "zh": "- 检查每行是否对应真实决策或动作。\n- 检查每行证据是否可访问，并支持该行的说法。\n- 影响工作的方案选择、转向、放弃路径未记录，就是缺口。补上。\n\n"
+    },
+    {
+      "en": "Correct the log, not the story. The audit never edits or removes a row, even an invented one. When a row records neither a real decision nor a real action, or its claim or evidence is wrong, add a row that supersedes it with what actually happened and a pointer that resolves. This audit does not check rows outside this run's stretches. If this run's own work shows one of them is wrong, supersede it like any wrong call.\n\n",
+      "zh": "修正日志，不要粉饰过程。审计绝不编辑或删除已有行，哪怕是凭空编造的行。当某行既没有记录真实决策也没有记录真实动作，或者其说法或证据有误时，新增一行取代它，记录实际发生的事并附带可访问的引用。本次审计不检查本次执行 对应区间之外的行。若本次执行 自身的工作证明其中某行有误，按对待任何错误判断的方式新增一行取代它。\n\n"
+    },
+    {
+      "en": "## Cross-model review of the trail\n\n",
+      "zh": "## 跨模型评审轨迹\n\n"
+    },
+    {
+      "en": "Before handing back, spawn a subagent on a different model family from the one that did the work. Self-review is not a substitute. The subagent reads the audit trail and the run's transcript, then flags what the user should pay attention to. Not a redo of the work, a scan for what's suboptimal or risky.\n\n",
+      "zh": "交回结果前，启动一个与执行工作模型不同系列的 subagent。自我评审不能替代。让它读取审计轨迹和本次会话记录，指出用户应注意什么。不是重做工作，而是扫描欠佳或有风险的地方。\n\n"
+    },
+    {
+      "en": "- Decisions logged with weak or absent evidence.\n- Verification steps skipped or claimed without proof in the transcript.\n- Choices that look risky in hindsight (premature, scope-creeping, papering over a symptom).\n- Gaps the user would otherwise miss on a casual skim.\n\n",
+      "zh": "- 决策证据薄弱或缺失。\n- 验证步骤被跳过，或宣称完成却在记录中没有证据。\n- 回头看存在风险的选择（过早决定、范围膨胀、掩盖症状）。\n- 用户快速浏览可能漏掉的缺口。\n\n"
+    },
+    {
+      "en": "Every reply for a run that produced a trail ends with an \"Attention\" section. Lead with the reviewer's model on its own line (`reviewed by <model>`), then list each flag pointing to specific rows or moments. \"No flags\" is a valid value. The model name is not.\n\n",
+      "zh": "任何生成了轨迹的执行，其最终回复都以“Attention”一节结束。第一行单独写评审者模型（`reviewed by <model>`），随后逐项列出标记，指向具体行或时刻。“No flags”是有效结果；仅给模型名不是。\n\n"
+    },
+    {
+      "en": "## Reviewing the trail\n\n",
+      "zh": "## 阅读轨迹\n\n"
+    },
+    {
+      "en": "Read top to bottom, follow the evidence pointers, spot-check. GitHub renders a committed TSV as a table. `column -s$'\\t' -t decisions.tsv` renders it in a terminal.\n\n",
+      "zh": "从上到下阅读，跟随证据引用，抽查。GitHub 会把已提交 TSV 渲染成表格。终端中用 `column -s$'\\t' -t decisions.tsv` 渲染。\n\n"
+    },
+    {
+      "en": "## Composing this skill\n\n",
+      "zh": "## 与其他 skill 组合\n\n"
+    },
+    {
+      "en": "Other skills route their audit trail here instead of inventing one. Reference it by name and let it own the format. Don't restate the columns.\n",
+      "zh": "其他 skill 将审计轨迹路由到这里，不另发明格式。按名称引用，让本 skill 负责格式，不重复列定义。\n\n"
+    }
+  ]
+}

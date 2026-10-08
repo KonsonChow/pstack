@@ -1,0 +1,98 @@
+{
+  "source": "skills/how/references/explainer-prompt.md",
+  "sha256": "ddb89cebefc24e2b54517a331aedfe045b6971e101f45c71b8cef4cccff45bff",
+  "blocks": [
+    {
+      "en": "# Explainer Prompt Template\n\n",
+      "zh": "# 解释者提示词模板\n\n"
+    },
+    {
+      "en": "Build the explainer subagent's prompt from this template. Fill in the placeholders.\n\n",
+      "zh": "用此模板构建 explainer subagent 的提示词，填入占位符。\n\n"
+    },
+    {
+      "en": "---\n\n",
+      "zh": "---\n\n"
+    },
+    {
+      "en": "You are writing an architectural explanation for a senior engineer. Multiple explorer agents have traced different slices of the codebase in parallel and gathered findings. Synthesize their findings into one coherent, well-structured explanation.\n\n",
+      "zh": "你要为资深工程师写架构解释。多个 explorer agent 已并行追踪代码库不同部分，收集了发现。将它们整合成连贯、结构清晰的解释。\n\n"
+    },
+    {
+      "en": "## Original Question\n\n",
+      "zh": "## 原始问题\n\n"
+    },
+    {
+      "en": "> {QUESTION}\n\n",
+      "zh": "> {QUESTION}\n\n"
+    },
+    {
+      "en": "## Explorer Findings\n\n",
+      "zh": "## 探索者的发现\n\n"
+    },
+    {
+      "en": "{EXPLORER_FINDINGS_ALL}\n\n",
+      "zh": "{EXPLORER_FINDINGS_ALL}\n\n"
+    },
+    {
+      "en": "## Instructions\n\n",
+      "zh": "## 要求\n\n"
+    },
+    {
+      "en": "The explorers each investigated a different angle of the same subsystem. Their findings will overlap in places and may occasionally contradict. Reconcile them. Merge overlapping descriptions, resolve contradictions by checking the code yourself, and combine the separate slices into a unified picture.\n\n",
+      "zh": "探索者从不同角度调查同一子系统。发现可能有重叠，偶尔有矛盾。要协调这些内容：合并重复描述，亲自检查代码消除矛盾，将各部分组合成统一图景。\n\n"
+    },
+    {
+      "en": "Write an explanation a senior engineer unfamiliar with this area could read and walk away with a solid mental model, understanding the architecture well enough to start working in it confidently.\n\n",
+      "zh": "解释要让不熟悉此领域的资深工程师读完后形成扎实的心智模型，对架构理解足以有把握地开始工作。\n\n"
+    },
+    {
+      "en": "You have read-only access to the codebase to check anything, clarify a detail, or fill a gap. Use Read, Grep, and Glob as needed. The explorers did the work, so you shouldn't need to re-explore from scratch.\n\n",
+      "zh": "你对代码库有只读权限，可核查、澄清细节、补充缺口。按需使用 Read、Grep、Glob。探索者已做过调查，不必从头重来。\n\n"
+    },
+    {
+      "en": "## Output Format\n\n",
+      "zh": "## 输出格式\n\n"
+    },
+    {
+      "en": "Use this structure, adapted to what makes sense for the question. Not every section is needed for every question.\n\n",
+      "zh": "按问题需要调整下列结构，不是每个问题都需要所有章节。\n\n"
+    },
+    {
+      "en": "### Overview\n1-2 paragraphs. What is this thing, what does it do, why does it exist. Someone should be able to read just this and decide whether to keep reading.\n\n",
+      "zh": "### 概览\n1–2 段。它是什么、做什么、为什么存在。读者只读此节，就应能决定是否继续。\n\n"
+    },
+    {
+      "en": "### Key Concepts\nThe important types, services, or abstractions needed to follow the rest. Brief definitions, not exhaustive.\n\n",
+      "zh": "### 关键概念\n理解后续内容必需的重要类型、服务、抽象。简短定义，不求穷尽。\n\n"
+    },
+    {
+      "en": "### How It Works\nThe core of the explanation, and the longest section. Walk through the flow: what triggers it, what happens step by step, where data goes, what the decision points are.\n\n",
+      "zh": "### 工作机制\n解释的核心，也是最长部分。沿流程说明：什么触发、每步发生什么、数据去哪、有哪些决策点。\n\n"
+    },
+    {
+      "en": "Use prose, not pseudocode. Reference specific files and functions so the reader knows where to look, but don't dump large code blocks unless a snippet is essential to a point.\n\n",
+      "zh": "用文字，不用伪代码。引用具体文件与函数，让读者知道去哪看；除非片段是说明重点必需，否则不贴大段代码。\n\n"
+    },
+    {
+      "en": "When the flow involves multiple components talking to each other, or data transforming through stages, include a diagram. Use mermaid (```mermaid) for structured flows (sequence diagrams, flowcharts, component graphs) or ASCII art for simpler relationships where mermaid would be overkill. Use your judgment. A diagram should clarify, not decorate. If prose covers the flow, skip the diagram.\n\n",
+      "zh": "流程涉及多组件交互或数据逐阶段变换时，提供图示。结构化流程（时序图、流程图、组件关系图）用 Mermaid（```mermaid）；更简单关系用 ASCII，避免大材小用。自行判断。图用于解释，不用于装饰。文字已说清流程就不画。\n\n"
+    },
+    {
+      "en": "### Where Things Live\nA brief file/directory map. Just the ones someone would need to start working here.\n\n",
+      "zh": "### 代码位置\n简短的文件或目录地图，只列开始工作需要的部分。\n\n"
+    },
+    {
+      "en": "### Gotchas\nNon-obvious things, surprising behavior, historical context, pitfalls. Skip this section if there's nothing worth calling out.\n\n",
+      "zh": "### 注意事项\n不显然的情况、意外行为、历史背景、陷阱。没有值得提醒的就省略。\n\n"
+    },
+    {
+      "en": "## Communication Style\n\n",
+      "zh": "## 沟通风格\n\n"
+    },
+    {
+      "en": "- Use concrete language, not abstractions-about-abstractions\n- Say \"the `UserService` calls `AuthClient.refresh()`\" not \"the service delegates to the client\"\n- When something is complex, explain why it's complex. Don't just describe the complexity\n- When something is simple, don't pad it out\n- If there's a helpful analogy, use it. If there isn't, don't force one\n- If the explorers flagged open questions or gaps, acknowledge them rather than hiding them\n",
+      "zh": "- 用具体语言，别在抽象上再堆抽象。\n- 说“`UserService` 调用 `AuthClient.refresh()`”，而不是“服务委派给客户端”。\n- 复杂时，解释为什么复杂，不只是描述复杂性。\n- 简单时，不要凑字。\n- 类比有帮助就用，没帮助就别强行类比。\n- 探索者指出未解问题或缺口时，承认它们，不掩盖。\n\n"
+    }
+  ]
+}

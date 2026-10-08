@@ -1,0 +1,62 @@
+{
+  "source": "skills/create-verification-skill/references/feature-map-example/README.md",
+  "sha256": "cb7bd782cf89968a4ba3d58a5151db837430db92d19a6f52a906973b77b516ba",
+  "blocks": [
+    {
+      "en": "# Notes verification map\n\n",
+      "zh": "# Notes 功能验证清单\n\n"
+    },
+    {
+      "en": "This directory is the maintained source for verifying the user-facing behavior of Notes. Read the index before driving the app, then use the matching feature file as the recipe.\n\n",
+      "zh": "本目录是验证 Notes 用户可见行为的持续维护来源。操作应用前先读索引，再以匹配的功能文件为操作步骤。\n\n"
+    },
+    {
+      "en": "## Baseline preconditions\n\n",
+      "zh": "## 基准前置条件\n\n"
+    },
+    {
+      "en": "- Launch Notes at `http://127.0.0.1:4173` with a disposable data directory.\n- Set `NOTES_DATA_DIR=/tmp/notes-verify-$RUN_ID` so concurrent runs do not share state.\n- Seed notes titled `Quarterly plan` and `Grocery list`.\n- Put `control-notes` and the `notes` CLI on `PATH`.\n- Run `control-notes doctor` and require the expected URL, data directory, and build revision.\n- Never drive an instance that was not started by this verification run.\n\n",
+      "zh": "- 使用可丢弃数据目录，在 `http://127.0.0.1:4173` 启动 Notes。\n- 设置 `NOTES_DATA_DIR=/tmp/notes-verify-$RUN_ID`，避免并行运行共享状态。\n- 准备标题为 `Quarterly plan` 和 `Grocery list` 的笔记。\n- 将 `control-notes` 和 `notes` CLI 放入 `PATH`。\n- 运行 `control-notes doctor`，要求 URL、数据目录和构建版本符合预期。\n- 绝不能操作并非由本次验证运行启动的实例。\n\n"
+    },
+    {
+      "en": "## Driving conventions\n\n",
+      "zh": "## 操作约定\n\n"
+    },
+    {
+      "en": "- Start every recipe from the baseline state unless its preconditions say otherwise.\n- Prefer ARIA roles and accessible names over CSS selectors or DOM position.\n- Treat every command as literal. Keep quoted names and flags unchanged.\n- Run browser actions through `control-notes browser`.\n- Run terminal actions through `control-notes cli -- <command>`.\n- Restore seeded data after a mutation. Do not remove proof artifacts during cleanup.\n\n",
+      "zh": "- 每组操作都从基准状态开始，除非其前置条件另有说明。\n- 优先使用 ARIA role 和可访问名称，而非 CSS 选择器或 DOM 位置。\n- 每条命令均按字面执行。引号中的名称和 flag 保持不变。\n- 浏览器操作通过 `control-notes browser` 运行。\n- 终端操作通过 `control-notes cli -- <command>` 运行。\n- 修改之后恢复预置数据。清理时不要删除证明产物。\n\n"
+    },
+    {
+      "en": "## Proof and skip reporting\n\n",
+      "zh": "## 证明与跳过报告\n\n"
+    },
+    {
+      "en": "- Capture the user action and the resulting state, not only the final screen.\n- UI proof includes an ARIA snapshot and a screenshot with the app identity visible.\n- CLI proof includes the command, stdout, stderr, and exit code.\n- Mutation proof includes a read-only second view of the stored value.\n- Record the feature ID and entry point used with every artifact.\n- Report an unreachable path with the attempted command and the unmet precondition.\n- Do not report a skipped entry point as verified through a different path.\n\n",
+      "zh": "- 记录用户操作和结果状态，而不只是最终画面。\n- UI 证明包含 ARIA 快照及可见应用身份的截图。\n- CLI 证明包含命令、stdout、stderr 和退出码。\n- 修改证明包含通过第二个只读视图观察到的存储值。\n- 每个产物都记录功能 ID 和使用的入口。\n- 路径不可达时，报告尝试过的命令及未满足的前置条件。\n- 不要把跳过的入口说成已通过另一条路径验证。\n\n"
+    },
+    {
+      "en": "## Feature entry contract\n\n",
+      "zh": "## 功能条目约定\n\n"
+    },
+    {
+      "en": "Each feature file starts with an H1 title and one paragraph describing the user-visible behavior. It then uses exactly four H2 sections in this order.\n\n",
+      "zh": "每个功能文件以 H1 标题和描述用户可见行为的一段文字开始，然后严格按以下顺序使用四个 H2 章节。\n\n"
+    },
+    {
+      "en": "1. `Sub-features` lists short IDs with one line for each behavior.\n2. `How to get to it (user POV)` lists every user entry point.\n3. `Driving it with <harness>` starts with `Preconditions:` and uses labeled bullets that pair each user action with an exact command and observable result.\n4. `Gotchas` lists traps that can waste or invalidate a verification run.\n\n",
+      "zh": "1. `Sub-features` 用短 ID 列出子功能，每种行为一行。\n2. `How to get to it (user POV)` 列出所有用户入口。\n3. `Driving it with <harness>` 以 `Preconditions:` 开始，使用带标签的列表，将每个用户动作对应到准确命令和可观察结果。\n4. `Gotchas` 列出可能浪费验证时间或使结果无效的陷阱。\n\n"
+    },
+    {
+      "en": "Keep implementation details out of the map. Name only user paths, stable handles, required state, commands, and observable proof.\n\n",
+      "zh": "验证清单不要包含实现细节。只写用户路径、稳定的操作标识、必需状态、命令和可观察证据。\n\n"
+    },
+    {
+      "en": "## Features\n\n",
+      "zh": "## 功能\n\n"
+    },
+    {
+      "en": "- [Create a note](./create-note.md) covers browser and CLI creation, cancellation, persistence, and cleanup.\n- [Search notes](./search.md) covers toolbar, keyboard, and CLI search with matching, empty, and clear states.\n",
+      "zh": "- [创建笔记](./create-note.md) 覆盖浏览器和 CLI 创建、取消、持久化及清理。\n- [搜索笔记](./search.md) 覆盖工具栏、键盘和 CLI 搜索，以及匹配、空结果和清除状态。\n\n"
+    }
+  ]
+}

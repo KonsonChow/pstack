@@ -1,0 +1,314 @@
+{
+  "source": "automations/benny/skills/triage-issue-reports/SKILL.md",
+  "sha256": "216a758b8711e64d19a55e6032c496527daac6364d010611040f3c04ef1a448f",
+  "blocks": [
+    {
+      "en": "---\nname: triage-issue-reports\ndescription: Triage Slack issue reports with one thread-only verdict, evidence review, cause-aware routing, tracker dedupe, and fail-closed ticket creation. Use only from the configured Benny triage automation.\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: triage-issue-reports\ndescription: 通过仅在线程中发布的一条结论，对 Slack 问题报告分诊；包含证据审查、考虑根因的路由、问题追踪去重，以及条件不足时禁止创建工单。只从配置的 Benny 分诊自动化调用。\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Triage issue reports\n\n",
+      "zh": "# 问题报告分诊\n\n"
+    },
+    {
+      "en": "Classify one Slack report and post one useful verdict in its source thread. Create a tracker issue only for a clear, new bug. Do not reproduce or fix it here.\n\n",
+      "zh": "对一条 Slack 报告分类，并在来源线程发布一条有用结论。仅为明确的新 Bug 创建追踪项。这里不进行复现或修复。\n\n"
+    },
+    {
+      "en": "Load the external Benny configuration supplied by the automation. If the config is missing, malformed, or incomplete, stop without posting or writing to the tracker.\n\n",
+      "zh": "加载自动化提供的外部 Benny 配置。配置缺失、格式错误或不完整时，停止，不发布消息，也不写入追踪系统。\n\n"
+    },
+    {
+      "en": "## Hard safety rules\n\n",
+      "zh": "## 严格安全规则\n\n"
+    },
+    {
+      "en": "- The source channel and root thread coordinates are immutable.\n- Never post a root message in the source channel.\n- Never post to another channel, broadcast a reply, send a DM, or start a replacement thread.\n- Preflight the source parent before any tracker write and immediately before the verdict post.\n- If the parent is missing, deleted, inaccessible, or uncertain, stop with no writes.\n- Post one substantive verdict. Do not narrate progress.\n- The coordinator is the only Slack poster.\n- Delegated workers return findings only. They must be read-only and receive no Slack credentials or write actions.\n- Every child prompt must forbid `SendSlackMessage`, `PostToSlack`, `chat.postMessage`, and every other Slack write.\n- If worker isolation cannot enforce those limits, do the work in the coordinator.\n- Never create an issue that cannot link back to the source thread.\n- Prefer no ticket over a guessed or duplicate ticket.\n- Apply pstack's `principle-separate-before-serializing-shared-state` to source coordinates.\n- Apply pstack's `principle-minimize-reader-load` and `unslop` skills to the final verdict.\n\n",
+      "zh": "- 来源频道与根线程坐标不可变。\n- 绝不能在来源频道发布根消息。\n- 绝不能发布到其他频道、广播回复、发送私信或开启替代线程。\n- 任何追踪系统写入之前，以及结论发布前的最后一刻，都要检查来源父消息。\n- 父消息缺失、已删除、无法访问或状态不确定时，停止且不写入。\n- 发布一条实质性结论，不叙述进度。\n- 只有协调者可以向 Slack 发布。\n- 委派执行者仅返回发现，必须只读且不能得到 Slack 凭据或写操作。\n- 每个子任务提示必须禁止 `SendSlackMessage`、`PostToSlack`、`chat.postMessage` 及所有其他 Slack 写入。\n- 如果执行者隔离无法落实这些限制，就由协调者自己完成工作。\n- 绝不能创建无法链接回来源线程的 issue。\n- 宁可不建工单，也不要猜测或重复创建。\n- 对来源坐标应用 pstack 的 `principle-separate-before-serializing-shared-state`。\n- 对最终结论应用 pstack 的 `principle-minimize-reader-load` 和 `unslop`。\n\n"
+    },
+    {
+      "en": "## 1. Freeze source coordinates\n\n",
+      "zh": "## 1. 固定来源坐标\n\n"
+    },
+    {
+      "en": "Before making a work list or delegating:\n\n",
+      "zh": "制定工作清单或委派前：\n\n"
+    },
+    {
+      "en": "1. Read `source_channel_id` from the trigger.\n2. Require it to equal the configured source channel.\n3. Set `SOURCE_THREAD_TS` to `trigger.thread_ts` when present. Otherwise use `trigger.ts`.\n4. Require a nonempty `SOURCE_THREAD_TS`.\n5. Store `SOURCE_CHANNEL_ID` and `SOURCE_THREAD_TS` as immutable values.\n6. Read the thread and verify that its root has exactly those coordinates.\n7. Fetch a stable source permalink.\n\n",
+      "zh": "1. 从触发信息读取 `source_channel_id`。\n2. 要求它与配置的来源频道相等。\n3. 有 `trigger.thread_ts` 时，将 `SOURCE_THREAD_TS` 设为它；否则用 `trigger.ts`。\n4. 要求 `SOURCE_THREAD_TS` 非空。\n5. 将 `SOURCE_CHANNEL_ID` 和 `SOURCE_THREAD_TS` 存为不可变值。\n6. 读取线程，验证根消息坐标恰好等于上述值。\n7. 获取稳定的来源永久链接。\n\n"
+    },
+    {
+      "en": "Every later source read and post must use those stored values. Never replace them with a reply timestamp or an operations-thread timestamp.\n\n",
+      "zh": "后续每次来源读取和发布都必须使用这些保存的值。绝不能替换为回复时间戳或执行线程时间戳。\n\n"
+    },
+    {
+      "en": "## 2. Read the whole report\n\n",
+      "zh": "## 2. 阅读完整报告\n\n"
+    },
+    {
+      "en": "Read the root and current replies before deciding.\n\n",
+      "zh": "决定之前读取根消息和当前回复。\n\n"
+    },
+    {
+      "en": "Capture:\n\n",
+      "zh": "记录：\n\n"
+    },
+    {
+      "en": "- Reporter wording\n- Product version, app build, environment, and platform when present\n- Expected behavior\n- Observed behavior\n- Frequency and trigger\n- Error text or stack signature\n- Existing issue, commit, or pull request links\n- Any explicit statement that someone is already fixing it\n\n",
+      "zh": "- 报告者原话\n- 提供时记录产品版本、应用构建、环境及平台\n- 预期行为\n- 观察到的行为\n- 频率和触发条件\n- 错误文本或堆栈特征\n- 既有 issue、提交或 PR 链接\n- 任何明确说明已有人员在修复的声明\n\n"
+    },
+    {
+      "en": "Inspect every relevant attachment.\n\n",
+      "zh": "检查每个相关附件。\n\n"
+    },
+    {
+      "en": "- Read screenshots at full useful resolution.\n- Review video for the state transition that separates correct and broken behavior.\n- Read logs, traces, and crash text for concrete signatures.\n- If media needs specialist review, use a read-only media worker and ask a narrow question. The worker returns findings only.\n- If an attachment cannot be read, say so in the verdict. Do not invent what it shows.\n\n",
+      "zh": "- 以足以辨认细节的完整分辨率阅读截图。\n- 查看视频中区分正确与错误行为的状态转换。\n- 阅读日志、trace 和崩溃文本，寻找具体特征。\n- 媒体需要专门分析时，使用只读媒体执行者，提出范围窄的问题；执行者仅返回发现。\n- 无法读取附件时，在结论中说明，不要编造其内容。\n\n"
+    },
+    {
+      "en": "Use evidence already in the thread before asking the reporter for more.\n\n",
+      "zh": "要求报告者提供更多信息之前，先利用线程已有证据。\n\n"
+    },
+    {
+      "en": "## 3. Trace cause before routing\n\n",
+      "zh": "## 3. 路由前追踪原因\n\n"
+    },
+    {
+      "en": "Do a bounded source and history pass before choosing an owner or destination. Use pstack's `how` skill to trace the path from the reported action to the observed result. Use `why` when the report looks like a regression or touches defensive code.\n\n",
+      "zh": "选择负责人或目标之前，做有界的源码与历史分析。用 pstack 的 `how` 追踪报告动作到观测结果的路径。报告像回归问题或涉及防御代码时，使用 `why`。\n\n"
+    },
+    {
+      "en": "1. Identify the likely code path from the reported action to the observed result.\n2. Check whether the visible symptom belongs to that code path or a dependency below it.\n3. Check recent changes when the report looks like a regression.\n4. Check whether a merged commit or open pull request already addresses the same symptom.\n5. Separate confirmed facts from hypotheses.\n\n",
+      "zh": "1. 识别从报告动作到观测结果的可能代码路径。\n2. 检查可见症状归属于该路径，还是下层依赖。\n3. 看起来像回归问题时，检查近期改动。\n4. 检查是否已有已合并提交或未合并 PR 处理同一症状。\n5. 将确认事实与假设分开。\n\n"
+    },
+    {
+      "en": "This pass does not need a complete root cause. It must be strong enough to avoid routing a visible symptom to the wrong owner.\n\n",
+      "zh": "这一步不要求完整根因，但必须足以避免将可见症状交给错误负责人。\n\n"
+    },
+    {
+      "en": "If the repository cannot be read, do not guess a code owner. Continue with a conservative classification and say that cause tracing was unavailable.\n\n",
+      "zh": "仓库不可读时，不要猜代码负责人。继续保守分类，并说明无法追踪原因。\n\n"
+    },
+    {
+      "en": "## 4. Classify\n\n",
+      "zh": "## 4. 分类\n\n"
+    },
+    {
+      "en": "Choose one category.\n\n",
+      "zh": "选择一个类别。\n\n"
+    },
+    {
+      "en": "### Bug\n\n",
+      "zh": "### Bug\n\n"
+    },
+    {
+      "en": "Something violates intended behavior. Examples include wrong output, broken state, an error, a crash, a hang, a silent no-op, or a regression.\n\n",
+      "zh": "违反预期行为，例如输出错误、状态损坏、报错、崩溃、挂起、静默无操作或回归问题。\n\n"
+    },
+    {
+      "en": "### Performance\n\n",
+      "zh": "### 性能\n\n"
+    },
+    {
+      "en": "The report describes measurable slowness, excess memory, battery drain, jank, or another resource problem. Treat it as a bug, but preserve measurements and profiles.\n\n",
+      "zh": "报告描述可测量的缓慢、过高内存、耗电、卡顿或其他资源问题。按 Bug 处理，但保留测量和 profile。\n\n"
+    },
+    {
+      "en": "### Feature request\n\n",
+      "zh": "### 功能请求\n\n"
+    },
+    {
+      "en": "The current behavior appears intentional and the reporter wants a different behavior or affordance.\n\n",
+      "zh": "当前行为看起来是刻意设计，报告者希望不同的行为或操作能力。\n\n"
+    },
+    {
+      "en": "### Question or feedback\n\n",
+      "zh": "### 问题或反馈\n\n"
+    },
+    {
+      "en": "The report asks how something works, expresses a preference without a concrete defect, or gives general feedback.\n\n",
+      "zh": "报告询问工作方式、表达偏好但没有具体缺陷，或提供一般反馈。\n\n"
+    },
+    {
+      "en": "### Reroute\n\n",
+      "zh": "### 转交\n\n"
+    },
+    {
+      "en": "Cause tracing shows that another configured destination owns the issue.\n\n",
+      "zh": "原因追踪表明问题属于另一个已配置目标。\n\n"
+    },
+    {
+      "en": "When the bug versus feature line is unclear, do not file. The one verdict may ask one focused question and use the `other` marker.\n\n",
+      "zh": "Bug 与功能请求界限不清时，不创建工单。唯一结论可以提出一个聚焦问题，并使用 `other` 标记。\n\n"
+    },
+    {
+      "en": "## 5. Apply configured routing\n\n",
+      "zh": "## 5. 应用配置的路由\n\n"
+    },
+    {
+      "en": "Read the optional routing map from `routing.map_path`.\n\n",
+      "zh": "从 `routing.map_path` 读取可选路由表。\n\n"
+    },
+    {
+      "en": "- Match on confirmed product area, code path, or error signature.\n- A visible symptom alone is not enough when cause tracing points elsewhere.\n- If no route matches, say the owner is unclear. Do not guess.\n- Do not cross-post. Tell the reporter where to take the issue in the source thread.\n\n",
+      "zh": "- 根据确认的产品领域、代码路径或错误特征匹配。\n- 原因追踪指向别处时，仅凭可见症状不够。\n- 无匹配路由时，说明负责人不明确，不猜测。\n- 不跨频道发布。在来源线程告诉报告者该去哪里提出问题。\n\n"
+    },
+    {
+      "en": "Owner pings are off by default. A ping is allowed only when all of these hold:\n\n",
+      "zh": "默认不 @ 负责人。只有全部条件成立才允许：\n\n"
+    },
+    {
+      "en": "1. The routing map explicitly names the owner.\n2. The config allows that ping type.\n3. The item is a feature request that needs owner input, or recent history identifies a likely regression author with strong evidence.\n4. The owner is not a broad on-call group.\n\n",
+      "zh": "1. 路由表明确指定负责人。\n2. 配置允许该类型提醒。\n3. 事项是需要负责人意见的功能请求，或近期历史有强证据识别可能引入回归的作者。\n4. 负责人不是范围广泛的值班群组。\n\n"
+    },
+    {
+      "en": "No other case gets a ping.\n\n",
+      "zh": "其他情况一律不提醒。\n\n"
+    },
+    {
+      "en": "## 6. Use the issue-tracker adapter\n\n",
+      "zh": "## 6. 使用问题追踪适配器\n\n"
+    },
+    {
+      "en": "The tracker is an adapter, not a required vendor. A Linear adapter is one valid example. A GitHub Issues adapter or another tracker may implement the same contract.\n\n",
+      "zh": "追踪系统通过适配器接入，不强制某个厂商。Linear 适配器只是一个有效例子；GitHub Issues 或其他系统可以实现同一约定。\n\n"
+    },
+    {
+      "en": "The configured adapter must provide:\n\n",
+      "zh": "配置的适配器必须提供：\n\n"
+    },
+    {
+      "en": "- Search issues by text, state, label, source URL, and date range\n- Read one issue and its links\n- Create an issue with title, body, status, labels, and source URL\n- Update an existing issue without replacing unrelated fields\n- Add a source link and recurrence note\n- Cancel, close, or delete an issue created by this run if the Slack handoff fails\n\n",
+      "zh": "- 按文本、状态、标签、来源 URL 和日期范围搜索 issue\n- 读取一个 issue 及链接\n- 创建带标题、正文、状态、标签、来源 URL 的 issue\n- 更新既有 issue，且不覆盖无关字段\n- 添加来源链接和再次出现的说明\n- Slack 交接失败时，取消、关闭或删除本次运行创建的 issue\n\n"
+    },
+    {
+      "en": "If a required operation is unavailable, fail closed for that write.\n\n",
+      "zh": "必需操作不可用时，禁止执行对应写入。\n\n"
+    },
+    {
+      "en": "Resolve configured team, project, status, and labels at runtime. Do not invent IDs, create labels, assign owners, or set priority unless the config explicitly requires it.\n\n",
+      "zh": "运行时解析配置的团队、项目、状态和标签。除非配置明确要求，否则不要编造 ID、创建标签、分配负责人或设置优先级。\n\n"
+    },
+    {
+      "en": "## 7. Dedupe\n\n",
+      "zh": "## 7. 去重\n\n"
+    },
+    {
+      "en": "Always check whether this source permalink is already linked to a tracker issue or a prior triage reply. If so, do not post or create a duplicate.\n\n",
+      "zh": "始终检查来源永久链接是否已关联到追踪项或先前分诊回复。如果已关联，不发布或创建重复项。\n\n"
+    },
+    {
+      "en": "For bugs and performance reports, search the tracker using:\n\n",
+      "zh": "Bug 和性能报告搜索追踪系统时使用：\n\n"
+    },
+    {
+      "en": "- Exact error or crash signature\n- Product area\n- Trigger\n- Symptom\n- Version or date window\n- Suspected regression commit\n- Source permalink\n\n",
+      "zh": "- 准确错误或崩溃特征\n- 产品领域\n- 触发条件\n- 症状\n- 版本或日期范围\n- 疑似回归提交\n- 来源永久链接\n\n"
+    },
+    {
+      "en": "Choose one outcome:\n\n",
+      "zh": "选择一个结果：\n\n"
+    },
+    {
+      "en": "- Confident duplicate: same signature, or the same area, trigger, and symptom, or a confirmed shared cause.\n- Possibly related: a shared cause is plausible but not proven.\n- Weak resemblance: similarity is superficial.\n- No match.\n\n",
+      "zh": "- 确定重复：特征相同，或领域、触发条件、症状都相同，或确认共同根因。\n- 可能相关：共同根因合理，但未证明。\n- 弱相似：只是表面相似。\n- 无匹配。\n\n"
+    },
+    {
+      "en": "For a confident duplicate, update the existing issue with the source permalink and one short recurrence note. Do not reopen, relabel, or reassign it unless the config says to.\n\n",
+      "zh": "确定重复时，在既有 issue 添加来源链接和一条简短再次出现说明。除非配置要求，否则不重开、不改标签、不重新分配。\n\n"
+    },
+    {
+      "en": "For a possible match, link it in the verdict as uncertain and create nothing.\n\n",
+      "zh": "可能匹配时，在结论中以不确定形式链接，不创建任何内容。\n\n"
+    },
+    {
+      "en": "A long-closed issue is a regression lead, not automatically a live duplicate.\n\n",
+      "zh": "关闭很久的 issue 是回归线索，不自动视为仍有效的重复项。\n\n"
+    },
+    {
+      "en": "## 8. Decide whether to create\n\n",
+      "zh": "## 8. 决定是否创建\n\n"
+    },
+    {
+      "en": "Create only when all of these are true:\n\n",
+      "zh": "只有全部条件为真才创建：\n\n"
+    },
+    {
+      "en": "1. The classification is bug or performance.\n2. The behavior is clearly broken.\n3. The issue is still live or not known to be fixed.\n4. Dedupe found no confident or plausible live match.\n5. The source parent and permalink passed preflight.\n6. The tracker target fields resolved.\n7. The adapter can compensate if the verdict post fails.\n\n",
+      "zh": "1. 分类为 Bug 或性能。\n2. 行为明确错误。\n3. 问题仍存在，或尚不知道已修复。\n4. 去重未找到确定或合理可能的仍有效匹配。\n5. 来源父消息和永久链接通过发布前检查。\n6. 追踪目标字段已解析。\n7. 结论发布失败时，适配器能补偿。\n\n"
+    },
+    {
+      "en": "Never create for a feature request, question, feedback item, reroute, possible duplicate, confident duplicate, or already-fixed issue.\n\n",
+      "zh": "功能请求、问题、反馈、转交、可能重复、确定重复或已修复问题都绝不能创建。\n\n"
+    },
+    {
+      "en": "The new issue must be self-contained:\n\n",
+      "zh": "新 issue 必须信息自足：\n\n"
+    },
+    {
+      "en": "- Plain title that names the area and symptom\n- Reporter quote\n- Expected and observed behavior\n- Version and environment, or `unknown`\n- Trigger and frequency\n- Source thread permalink\n- Short cause-tracing findings with hypotheses labeled as hypotheses\n- Inline screenshot or representative video frame when supported\n- Links to remaining artifacts\n- Configured intake status and labels\n\n",
+      "zh": "- 平实标题，指出领域和症状\n- 报告者引文\n- 预期与观测行为\n- 版本和环境，或 `unknown`\n- 触发条件与频率\n- 来源线程永久链接\n- 简短原因追踪发现，假设必须标为假设\n- 支持时内联截图或代表性视频帧\n- 其他产物链接\n- 配置的接收状态和标签\n\n"
+    },
+    {
+      "en": "Do not put a guessed root cause in the title.\n\n",
+      "zh": "不要把猜测根因写进标题。\n\n"
+    },
+    {
+      "en": "## 9. Post one verdict\n\n",
+      "zh": "## 9. 发布唯一结论\n\n"
+    },
+    {
+      "en": "Run a fresh source-parent preflight. Then post exactly one reply with `channel=SOURCE_CHANNEL_ID` and `thread_ts=SOURCE_THREAD_TS`.\n\n",
+      "zh": "重新检查来源父消息，然后严格发布一条回复，使用 `channel=SOURCE_CHANNEL_ID` 和 `thread_ts=SOURCE_THREAD_TS`。\n\n"
+    },
+    {
+      "en": "Never call a source-channel posting action without a nonempty `thread_ts`.\n\n",
+      "zh": "绝不能在 `thread_ts` 非空条件未满足时调用来源频道发布动作。\n\n"
+    },
+    {
+      "en": "Keep the reply short:\n\n",
+      "zh": "回复保持简短：\n\n"
+    },
+    {
+      "en": "- Lead with the outcome.\n- Link the existing or new tracker issue when there is one.\n- Mention a reroute or one missing fact when needed.\n- Include at most one allowed owner ping.\n- End with exactly one marker line.\n\n",
+      "zh": "- 先说结果。\n- 有既有或新追踪项时链接它。\n- 必要时说明转交目标或一个缺失事实。\n- 最多包含一个允许的负责人提醒。\n- 严格以一行标记结束。\n\n"
+    },
+    {
+      "en": "Marker contract:\n\n",
+      "zh": "标记约定：\n\n"
+    },
+    {
+      "en": "```text\n[benny:bug]\n[benny:bug] tracker=https://tracker.example/issue/123\n[benny:performance]\n[benny:performance] tracker=https://tracker.example/issue/123\n[benny:other]\n```\n\n",
+      "zh": "```text\n[benny:bug]\n[benny:bug] tracker=https://tracker.example/issue/123\n[benny:performance]\n[benny:performance] tracker=https://tracker.example/issue/123\n[benny:other]\n```\n\n"
+    },
+    {
+      "en": "Use only the configured marker strings. The repro automation trusts the marker only when it comes from the configured triage identity in this source thread.\n\n",
+      "zh": "仅使用配置的标记字符串。复现自动化只有在该来源线程中、配置的分诊身份发出标记时才信任它。\n\n"
+    },
+    {
+      "en": "After posting, read the same source thread and verify the verdict appears under `SOURCE_THREAD_TS`. If it does not, never retry at the root.\n\n",
+      "zh": "发布后，读取同一来源线程，确认结论出现在 `SOURCE_THREAD_TS` 下。如果没有，绝不能在根级重试。\n\n"
+    },
+    {
+      "en": "If this run created a tracker issue and the verdict did not land, use the adapter's compensation action. Verify that the issue is canceled, closed, or deleted. If compensation cannot be verified, report the failure only in the automation run output.\n\n",
+      "zh": "本次创建了追踪项但结论没发布成功时，使用适配器补偿动作。验证 issue 已取消、关闭或删除。无法验证补偿时，只在自动化运行输出中报告失败。\n\n"
+    },
+    {
+      "en": "## 10. Watch one follow-up window\n\n",
+      "zh": "## 10. 观察一个跟进窗口\n\n"
+    },
+    {
+      "en": "Watch the source thread for the configured follow-up window, then stop.\n\n",
+      "zh": "在配置的跟进时间窗内观察来源线程，之后停止。\n\n"
+    },
+    {
+      "en": "- Answer only a direct question to the triage identity.\n- Apply a concrete correction to the tracker issue when safe.\n- Do not emit a second marker in the same run.\n- Stay out of human coordination and side chatter.\n- Stop early if someone asks the automation to stop.\n\n",
+      "zh": "- 只回答直接向分诊身份提出的问题。\n- 安全时，对追踪项作具体纠正。\n- 同一次运行不发第二个标记。\n- 不参与人的协调或旁支聊天。\n- 有人要求自动化停止时，提前停止。\n\n"
+    },
+    {
+      "en": "Do not extend the window more than once. A new report should start a new run.\n",
+      "zh": "窗口最多延长一次。新报告应开启新运行。\n"
+    }
+  ]
+}

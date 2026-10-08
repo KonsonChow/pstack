@@ -1,0 +1,26 @@
+{
+  "source": "skills/principle-guard-the-context-window/SKILL.md",
+  "sha256": "d2cef147862576e3d709b7afc149d85196245e8338b9c7eef337c95fba412b3e",
+  "blocks": [
+    {
+      "en": "---\nname: principle-guard-the-context-window\ndescription: \"Apply when context is filling up: large outputs, long files, repeated reads, fan-out planning. Route bulk to subagents; keep summaries in the main thread, not raw payloads.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-guard-the-context-window\ndescription: \"大量输出、长文件、重复读取、并行分工规划使上下文吃紧时应用。大批内容交给 subagent，主线程只保留摘要，不放原始载荷。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Guard the Context Window\n\n",
+      "zh": "# 保护上下文窗口\n\n"
+    },
+    {
+      "en": "The context window is finite and non-renewable within a session. Every token should be worth its cost.\n\n",
+      "zh": "上下文窗口有限，在一个会话内不可再生。每个 token 都应值得其成本。\n\n"
+    },
+    {
+      "en": "**Why:** Context overflow degrades reasoning quality, creates compression artifacts, and halts progress.\n\n",
+      "zh": "**原因：** 上下文溢出会降低推理质量，造成压缩失真，并中断进展。\n\n"
+    },
+    {
+      "en": "**Pattern:**\n- **Isolate large payloads.** Route verbose outputs, screenshots, and large documents to subagents. The main context gets summaries, not raw data.\n- **Keep frequently used content inline.** Templates and references used on every invocation belong in the skill file, not in separate files that cost a read each time.\n- **Size phases and cap scope.** Limit files per phase, set turn budgets, account for mechanism costs.\n",
+      "zh": "**模式：**\n- **隔离大载荷。** 冗长输出、截图、大文档交给 subagent；主上下文只接收摘要，不接收原始数据。\n- **常用内容内联。** 每次调用都用到的模板和参考内容放进 skill 文件，不拆成每次都需另读的文件。\n- **控制阶段大小和范围。** 限制每阶段文件数，设置轮次预算，考虑机制本身的成本。\n"
+    }
+  ]
+}

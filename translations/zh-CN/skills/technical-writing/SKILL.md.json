@@ -1,0 +1,134 @@
+{
+  "source": "skills/technical-writing/SKILL.md",
+  "sha256": "f5c512ffeec70bc4e0dee50f7bb4c26742e1be77967a6e8b15d1921e1c209ceb",
+  "blocks": [
+    {
+      "en": "---\nname: technical-writing\ndescription: \"Layered technical-writing standard: Diátaxis structure, Google developer style sentences, STE instruction rules, Global English syntax. Use for /technical-writing or when writing or reviewing docs, RFCs, readmes, PR descriptions, or commit messages.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: technical-writing\ndescription: \"分层技术写作标准：用 Diátaxis 组织文档，用 Google 开发者风格写句子，用 STE 规则写操作指令，用 Global English 句法消除歧义。用于 /technical-writing，或编写、评审文档、RFC、README、PR 描述和提交信息。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Technical writing\n\n",
+      "zh": "# 技术写作\n\n"
+    },
+    {
+      "en": "The goal is writing a tired engineer understands on the first read. Four layers get you there, one question each: what kind of document is this, how do sentences address the reader, how much does each sentence carry, and can any sentence be read two ways. Apply all four.\n\n",
+      "zh": "目标是让疲惫的工程师读一遍就懂。分四层实现，每层回答一个问题：这是什么类型的文档，句子怎样面向读者，每句承载多少信息，以及一句话是否有两种解释。四层都要应用。\n\n"
+    },
+    {
+      "en": "Three rules sit above the layers:\n\n",
+      "zh": "以下三条规则优先于各层：\n\n"
+    },
+    {
+      "en": "- **Cut every word that does no work.** If the sentence survives without a word, the word goes. \"In order to\" is \"to\". \"It is important to note that\" is nothing.\n- **Use the short, everyday word.** \"Use\", not \"utilize\". \"Help\", not \"facilitate\". \"Do\", not \"perform\". A long word has to buy its length with precision.\n- **When a rule makes a sentence worse, fix the sentence another way or leave it alone.** The rules serve the reader. A sentence that follows every rule and sounds like a machine wrote it has failed.\n\n",
+      "zh": "- **删掉所有不起作用的词。** 删一个词后句子仍成立，就删。“In order to” 改为“to”。“It is important to note that” 整句套话直接删。\n- **用简短、日常的词。** 用“use”，不用“utilize”；用“help”，不用“facilitate”；用“do”，不用“perform”。长词必须带来额外精确性，才值得使用。\n- **规则让句子变差时，换一种改法，或保持原样。** 规则为读者服务。每条都遵守，却像机器写的句子，依然失败。\n\n"
+    },
+    {
+      "en": "The codebase is the word list. Write the real symbol, file, flag, or command name, not a synonym or a description of it.\n\n",
+      "zh": "代码库就是词汇表。写真实的符号、文件、flag 或命令名，不要用同义词或描述替代。\n\n"
+    },
+    {
+      "en": "Don't invent jargon. Use the words a developer would say out loud: \"move\", \"delete\", \"a budget that only decreases\", not \"evacuate\", \"ratchet\", or \"endgame\". A named pattern is fine when the doc says what it means the first time. Propose a new offender and its replacement as an addition to `unslop`'s abstract-metaphor rule in your reply, with the diff. Don't edit that skill.\n\n",
+      "zh": "不要发明术语。用开发者会说出口的词：“move”“delete”“只会减少的预算”，而不是“evacuate”“ratchet”“endgame”。命名模式可以使用，但文档首次出现时要解释含义。在回复中结合 diff，提出一个新的问题词及替代写法，建议加入 `unslop` 的抽象隐喻规则。不要直接修改该 skill。\n\n"
+    },
+    {
+      "en": "## Vary the rhythm\n\n",
+      "zh": "## 有意识地变化行文节奏\n\n"
+    },
+    {
+      "en": "The layers decide what a document says and how much each sentence carries. A doc can obey all of them and still read machine-written: every sentence clipped short, no view anywhere, nothing specific.\n\n",
+      "zh": "各层决定文档说什么、每句承载多少信息。即使全都遵守，文档仍可能像机器写的：句句截得很短，没有观点，没有具体内容。\n\n"
+    },
+    {
+      "en": "- Mix sentence lengths on purpose. Short sentences land a point. Longer ones that take their time carry a fact with its condition or consequence.\n- One thought per sentence does not mean one length per sentence. Split the sentence that carries two thoughts. Keep the long sentence that carries one.\n- Have a view where the mode allows it. Explanation weighs trade-offs, so say what you make of them instead of listing pros and cons. Reference stays dry.\n- Be specific over sterile. Not \"schema changes can cause issues\" but \"a column rename fails the build\".\n\n",
+      "zh": "- 有意识地混合长短句。短句点明重点。较长的句子从容说明事实及其条件或后果。\n- 一句一个意思，不等于每句一样长。承载两个意思的句子要拆开；只承载一个意思的长句可以保留。\n- 文档类型允许时，表达观点。解释型文档要衡量权衡，所以要说明你的判断，而非仅罗列优缺点。参考型文档保持客观。\n- 具体，不要空泛。不是“schema 变更可能造成问题”，而是“重命名列会导致构建失败”。\n\n"
+    },
+    {
+      "en": "## Pick the mode first (Diátaxis)\n\n",
+      "zh": "## 先选文档类型（Diátaxis）\n\n"
+    },
+    {
+      "en": "One document, one mode. Two questions pick it: does the content inform action (doing) or understanding (thinking), and does it serve learning or work?\n\n",
+      "zh": "一份文档只采用一种类型。用两个问题选择：内容服务于行动（做事）还是理解（思考），服务于学习还是工作？\n\n"
+    },
+    {
+      "en": "- Action + learning: **tutorial**.\n- Action + work: **how-to**.\n- Understanding + work: **reference**.\n- Understanding + learning: **explanation**.\n\n",
+      "zh": "- 行动 + 学习：**教程（tutorial）**。\n- 行动 + 工作：**操作指南（how-to）**。\n- 理解 + 工作：**参考资料（reference）**。\n- 理解 + 学习：**解释说明（explanation）**。\n\n"
+    },
+    {
+      "en": "Use the compass on a whole document or on one sentence.\n\n",
+      "zh": "这套定位方法既可用于整篇文档，也可用于一句话。\n\n"
+    },
+    {
+      "en": "**Tutorial: learning by doing.** You are the teacher. The learner's success is your job, not theirs. Open by saying what the learner will build, not what they will \"learn\". Every step produces a visible result, early and often. Tell them what they should see: the expected output, the prompt change, the log line. Cut explanation to one clause and a link. Teaching pauses break the lesson. Stay concrete. Write as \"we\", in commands: \"First, do x. Now, do y.\"\n\n",
+      "zh": "**教程：边做边学。** 你是老师。保证学习者成功是你的职责，不是他们的。开头说明学习者将构建什么，而不是将“学到”什么。每步都产生看得见的结果，尽早、频繁地出现。告诉他们应该看到什么：预期输出、提示符变化、日志行。解释缩减到一个分句和一个链接。停下来讲原理会打断练习。保持具体，以“我们”的口吻给出指令：“先做 x。现在做 y。”\n\n"
+    },
+    {
+      "en": "**How-to: steps to a goal.** Solve a problem a person has, not an operation the machine can perform. Assume competence. Skip teaching. Action only: no digressions, no background, no completeness for its own sake. Link those instead. Allow forks and judgment: \"If you want x, do y.\" Name the guide by the task: \"How to calibrate the radar array\", not \"Radar array calibration\".\n\n",
+      "zh": "**操作指南：通往目标的步骤。** 解决人遇到的问题，而不是展示机器能执行的操作。假定读者具备能力，不做教学。只写行动，不跑题、不补背景、不为完整而完整；相关内容用链接提供。允许分支和判断：“如果你想要 x，就做 y。”标题按任务命名：“如何校准雷达阵列”，而不是“雷达阵列校准”。\n\n"
+    },
+    {
+      "en": "**Reference: facts for lookup.** Describe. Only describe. No instruction, no persuasion, no opinion. Be dry, complete, and sure. State facts, options, limits, and errors with no hedging. Mirror the structure of the thing described, so code and docs can be navigated together. Put material where readers expect it. Generate from code where possible, so it stays true.\n\n",
+      "zh": "**参考资料：供查询的事实。** 只描述。不指导、不劝说、不表达观点。客观、完整、确定。直接陈述事实、选项、限制和错误，不模棱两可。结构与所描述对象一致，使代码和文档可以对照导航。把内容放到读者预期的位置。能从代码生成就从代码生成，确保准确。\n\n"
+    },
+    {
+      "en": "**Explanation: understanding and why.** One bounded topic, readable away from the product. Each title should tolerate an implicit \"About...\" in front. Anchor on a real why question. Give context: design decisions, history, constraints, alternatives. Opinion is allowed here and nowhere else.\n\n",
+      "zh": "**解释说明：理解及其原因。** 围绕一个有明确边界的主题，脱离产品也能阅读。每个标题前都应该可以补上“关于……”。以一个真实的“为什么”问题为中心，提供背景：设计决策、历史、约束、替代方案。只有此类文档可以表达观点。\n\n"
+    },
+    {
+      "en": "Don't mix modes: no reference tables inside a tutorial, no tutorial hand-holding inside reference, no arguing inside a how-to. Split and link instead.\n\n",
+      "zh": "不要混合类型：教程里不塞参考表，参考资料里不手把手教学，操作指南里不展开论辩。拆开，再用链接关联。\n\n"
+    },
+    {
+      "en": "## Write sentences to the reader (Google developer style)\n\n",
+      "zh": "## 面向读者写句子（Google 开发者风格）\n\n"
+    },
+    {
+      "en": "- Talk to the reader as \"you\", in the present tense. \"Will\" only for things that genuinely happen later.\n- Say who does what: \"the compiler checks\", not \"is checked\". Passive is fine only when the actor is unknown or beside the point.\n- Write instructions as commands: \"Click Submit.\" State facts plainly. Never \"should be done\".\n- Put the condition before the instruction: \"To delete the document, click Delete.\" The reader skips what does not apply.\n- Put the common case first. Exceptions after.\n- Sound like a knowledgeable friend. No buzzwords, no figurative language, no \"please\" in instructions, and never \"simply\", \"easy\", or \"quickly\" in a procedure. If it were simple, the reader would not be here.\n- Don't pre-announce (\"we will soon support...\") and don't start consecutive sentences with the same phrase.\n- Link with words that say where the link goes: the page title or a short description. Never \"click here\". Prefer a sentence of context on the page over a link off it.\n- Headings carry the point, not just the topic (\"Pick the mode first\", not \"Modes\"). Sentence case. A task heading is a bare verb phrase (\"Create an instance\"). A concept heading is a noun phrase. One h1 per page, no skipped levels.\n- Numbered lists for sequences, bullets for everything else. Introduce a list with a complete sentence. Keep items parallel.\n- Code goes in code font. UI elements go in bold. Use serial commas. Drop \"etc.\" and say up front that a list is partial.\n\n",
+      "zh": "- 用“你”称呼读者，用现在时。只有确实在以后发生的事才用“will”。\n- 说明谁做什么：“编译器检查”，而不是“被检查”。只有行动者未知或无关紧要时，才用被动语态。\n- 用命令句写操作：“点击 Submit。”直截了当地陈述事实。不要写“应该被完成”。\n- 条件放在指令前：“要删除文档，点击 Delete。”这样读者可以跳过不适用的内容。\n- 常见情况在前，例外在后。\n- 像懂行的朋友说话。不用流行术语、比喻，也不在指令中说“请”。操作步骤中绝不用“simply”“easy”“quickly”。真这么简单，读者就不会来读了。\n- 不提前宣布尚未推出的能力（“我们即将支持……”），也不要连续用同样的措辞开头。\n- 链接文字说明目标：页面标题或简短描述。绝不用“点击这里”。优先在当前页面用一句话补足上下文，而非让读者跳到别处。\n- 标题传达要点，而不仅是主题（“先选文档类型”，而非“文档类型”）。英文标题采用 sentence case。任务标题用动词短语（“创建实例”），概念标题用名词短语。每页只有一个 h1，不跳级。\n- 有顺序的步骤用编号列表，其他内容用项目列表。用完整句子引出列表，各项结构保持一致。\n- 代码用代码字体，UI 元素加粗。英文枚举使用 serial comma。去掉“etc.”，如果列表不完整，提前说明。\n\n"
+    },
+    {
+      "en": "## Make statements load one at a time (STE rules)\n\n",
+      "zh": "## 每句只承载一项信息（STE 规则）\n\n"
+    },
+    {
+      "en": "- One instruction per sentence. One thought per sentence everywhere else.\n- Split instructions longer than about 20 words and other sentences longer than about 25.\n- Put the warning or condition before the step it guards: \"If hot oil touches your skin, injuries can occur.\"\n- Keep \"the\" and \"a\": \"Remove backup file\" reads two ways. \"Remove the backup file\" reads one.\n- Give each word one meaning and one job, then keep it. If \"check\" means inspect, don't also use it for restrain.\n- Pick one word per action and stick to it: \"start\", not \"start\" here and \"initiate\" there.\n- Write procedures as direct commands, never as narration and never in the passive: \"Install the component\", not \"the component must be installed\".\n- Avoid \"-ing\" words where you can. They take too many grammatical jobs and breed misreadings.\n\n",
+      "zh": "- 操作句每句一条指令，其他句子每句一个意思。\n- 操作句超过约 20 个英文词、其他句子超过约 25 个英文词时，拆开。\n- 警告或条件放在受其约束的步骤之前：“热油接触皮肤时，可能造成伤害。”\n- 保留“the”和“a”：“Remove backup file” 有两种理解，“Remove the backup file” 只有一种。\n- 每个词只用一个含义、承担一种作用，并始终一致。如果“check”表示检查，就不要又用它表示约束。\n- 每种动作固定一个词：统一用“start”，不要一处“start”、另一处“initiate”。\n- 流程写成直接命令，不叙述，不用被动语态：“安装组件”，而不是“组件必须被安装”。\n- 尽量避免“-ing”形式。它们承担太多语法角色，容易导致误读。\n\n"
+    },
+    {
+      "en": "## Leave no sentence open to two readings (Global English)\n\n",
+      "zh": "## 不给句子留下两种解释（Global English）\n\n"
+    },
+    {
+      "en": "- Keep words like \"only\" and \"not\" next to the word they change: \"only fails on growth\" and \"fails only on growth\" say different things.\n- Break up long noun strings: \"the proto import budget check script\" becomes \"the script that checks the proto-import budget\".\n- Make every \"it\", \"they\", and \"this\" point at one obvious thing. Repeat the noun when in doubt. Never use \"this\" or \"which\" to point at a whole clause.\n- Don't drop verbs: \"Phase 1 moves the converters and Phase 2 the runtime\" leaves Phase 2 without one. Give it one.\n- Keep the small words that show structure. \"Ensure that the switch is off\" keeps \"that\" because it makes the sentence parse one way. Never trade clarity for word count.\n- Repeat the article in a series when it prevents a misread: \"the client and the host\", not \"the client and host\", when they are two things.\n- Say which parts \"and\" or \"or\" joins when a sentence can group two ways. \"Both...and\", \"either...or\", and \"if...then\" are free disambiguators.\n- Use periods, not semicolons. Replace an em dash with a new sentence.\n- Make text in parentheses a full grammatical unit or its own sentence. Never form plurals with \"(s)\".\n- No slashes: write \"a, b, or both\" instead of \"a/b\" or \"and/or\".\n- Call each thing by one name, everywhere. A doc that says \"the gate\", \"the ratchet\", and \"the budget check\" for one thing teaches three things. Rewording an unchanged sentence between edits costs the same way. Don't churn what didn't change.\n- Skip idioms, colloquialisms, Latin abbreviations, and metaphors. A non-native reader, a translator, and an agent all parse plain constructions best.\n\n",
+      "zh": "- “only”“not”等词紧邻它所限定的词：“only fails on growth”和“fails only on growth”表达的含义不同。\n- 拆开过长的名词串：“the proto import budget check script”改为“the script that checks the proto-import budget”。\n- 每个“it”“they”“this”都明确指向一个对象。有疑问就重复名词。绝不用“this”或“which”指代整个分句。\n- 不省略动词：“Phase 1 moves the converters and Phase 2 the runtime”让 Phase 2 缺了动词。补上。\n- 保留揭示结构的小词。“Ensure that the switch is off”保留“that”，因为它使句子只有一种解析。绝不为减少字数牺牲清晰性。\n- 并列项中重复冠词，避免误读：当 client 和 host 是两个对象时，写“the client and the host”，而不是“the client and host”。\n- 句子可能有两种分组时，明确“and”或“or”连接的是哪些部分。“Both...and”“either...or”“if...then”都能直接消除歧义。\n- 用句号，不用分号。长破折号改为另起一句。\n- 括号内文字写成完整语法单位，或独立成句。不用“(s)”表示单复数兼容。\n- 不用斜线：用“a、b 或二者都有”，而不是“a/b”或“and/or”。\n- 每个对象始终只用一个名字。对同一对象轮流称“the gate”“the ratchet”“the budget check”，会让读者以为有三个东西。修改间反复改写含义未变的句子，也有同样代价。没变化的内容不要来回改。\n- 避免习语、口语俗语、拉丁缩写和隐喻。非母语读者、译者和 agent 都更容易理解平实句式。\n\n"
+    },
+    {
+      "en": "## Voice and repo specifics\n\n",
+      "zh": "## 语气与仓库约定\n\n"
+    },
+    {
+      "en": "- Apply the **unslop** skill to every doc this skill touches. That skill owns the slop-pattern catalog: AI vocabulary, filler, hedging, formatting tells.\n- PR descriptions and commit messages are writing too. Every layer except Diátaxis applies to them. A PR body is a briefing that a reviewer can read in under a minute. Do not paste swarm logs, SHA lists, or metric tables. Link them.\n- Product UI strings are not documentation. Use your product's copy guidelines for those.\n- Indent code snippets with tabs. Write real paths and real symbols. Make every count or tree claim true at the commit that lands it, and include the command that regenerates it.\n\n",
+      "zh": "- 对本 skill 涉及的每份文档应用 **unslop** skill。AI 词汇、填充语、模糊表述、格式套路等问题模式由该 skill 维护。\n- PR 描述和提交信息也是写作。除 Diátaxis 外，各层均适用。PR 正文是一份评审者一分钟内能读完的简报。不要粘贴 swarm 日志、SHA 列表或指标表；链接到它们。\n- 产品 UI 文案不是文档，遵循产品自身的文案指南。\n- 代码片段用 tab 缩进。写真实路径和真实符号。所有数量或目录树的描述，必须在合入的提交上准确，并附上重新生成这些信息的命令。\n\n"
+    },
+    {
+      "en": "## Worked example\n\n",
+      "zh": "## 修改示例\n\n"
+    },
+    {
+      "en": "Before:\n\n",
+      "zh": "修改前：\n\n"
+    },
+    {
+      "en": "> Configuration of the proto import ratchet budget script parameters is performed via budget.json. Note that it's important to remember that running with --write, which updates the committed budget to reflect the current count, should only be done when lowering it. If exceeded, CI fails.\n\n",
+      "zh": "> proto 导入 ratchet 预算脚本的参数配置通过 budget.json 执行。注意，务必记住，使用 --write 运行会更新已提交的预算，使其反映当前数量，但这应该只在降低预算时进行。如果超出，CI 失败。\n\n"
+    },
+    {
+      "en": "After:\n\n",
+      "zh": "修改后：\n\n"
+    },
+    {
+      "en": "> `budget.mjs` reads the committed budget from `budget.json` and counts the files that import protos. If the count exceeds the budget, CI fails. Run `budget.mjs --write` only to lower the budget.\n",
+      "zh": "> `budget.mjs` 从 `budget.json` 读取已提交的预算，并统计导入 proto 的文件数。如果数量超过预算，CI 失败。只有降低预算时才运行 `budget.mjs --write`。"
+    }
+  ]
+}

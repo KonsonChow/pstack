@@ -1,0 +1,74 @@
+{
+  "source": "skills/blast-radius/SKILL.md",
+  "sha256": "2e10745b97f5862323dcda3b29ca60d56b5c3c98e37020085d26b48efbe0a436",
+  "blocks": [
+    {
+      "en": "---\nname: blast-radius\ndescription: \"Find what a change could break somewhere else before it ships, beyond the diff, and prove the one fact it's safe because of by running real code instead of writing it up. Use for 'blast radius of X', 'what could this break', or reviewing a small diff you don't trust.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: blast-radius\ndescription: \"交付前调查改动在 diff 之外可能破坏什么，并通过运行真实代码，证明它为何安全所依赖的关键事实，而不是只写报告。用于‘X 的影响范围’、‘这可能破坏什么’，或评审尚不放心的小 diff。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Blast radius\n\n",
+      "zh": "# 影响范围\n\n"
+    },
+    {
+      "en": "Find what a change breaks somewhere else, before it ships. Use for \"blast radius of X\", \"what could this break\", or reviewing a small diff you don't trust yet.\n\n",
+      "zh": "交付前，找出改动会在其他地方破坏什么。用于“X 的影响范围”“这可能破坏什么”，或评审尚不放心的小 diff。\n\n"
+    },
+    {
+      "en": "Companion to `how` and `why`. `how` tells you what the code does. `why` tells you why it's shaped that way. Blast radius tells you what it breaks somewhere else.\n\n",
+      "zh": "与 `how` 和 `why` 配合。`how` 告诉你代码做什么，`why` 解释为何这样设计，Blast radius 则告诉你它会在其他地方破坏什么。\n\n"
+    },
+    {
+      "en": "Listing the callers is not the job. The agent can grep those in a second. The job is the breakage grep won't show you.\n\n",
+      "zh": "列出调用方不是任务本身，agent 一秒就能 grep 出来。任务是找出 grep 看不到的破坏。\n\n"
+    },
+    {
+      "en": "## Don't trust your own writeup\n\n",
+      "zh": "## 不要相信自己写的报告\n\n"
+    },
+    {
+      "en": "A blast-radius writeup that sounds right is worthless. It reads as convincing whether or not it's true. So don't hand back the writeup. Find the one or two facts the whole thing depends on and prove them by running code.\n\n",
+      "zh": "听起来正确的影响范围报告毫无价值。无论真假，它都能写得有说服力。因此不要只交报告，找出整个判断依赖的一两个事实，通过运行代码来证明。\n\n"
+    },
+    {
+      "en": "### How sure are you\n\n",
+      "zh": "### 你有多确定\n\n"
+    },
+    {
+      "en": "For each fact the change's safety depends on, get it as far down this list as is cheap, and say where it stopped.\n\n",
+      "zh": "对于改动安全性所依赖的每个事实，以低成本尽量推进到以下列表更靠后的层级，并说明停在哪里。\n\n"
+    },
+    {
+      "en": "1. You said so. Worthless on its own.\n2. You pointed at the line. A real `file:line`, or the library's own source.\n3. You showed the bad case can't happen. You walked the failure step by step and it doesn't reach.\n4. You ran it. A script or test that calls the real code and fails loud if you're wrong.\n5. You reproduced it in the running app.\n\n",
+      "zh": "1. 你说它成立。单独来看毫无价值。\n2. 你指出了具体代码行。真实的 `file:line`，或库自身的源码。\n3. 你证明坏情况不可能发生。逐步追踪失败路径，确认无法到达。\n4. 你运行过。脚本或测试调用真实代码，如果你判断错误会明确失败。\n5. 你在运行中的应用里复现过。\n\n"
+    },
+    {
+      "en": "Step 4 is usually one small script that imports the same library the app ships and calls the exact function you're worried about.\n\n",
+      "zh": "第 4 步通常只需要一个小脚本：导入应用实际交付的同一个库，并调用你担忧的具体函数。\n\n"
+    },
+    {
+      "en": "## Steps\n\n",
+      "zh": "## 步骤\n\n"
+    },
+    {
+      "en": "1. Read the change. The diff, the symbols it adds, changes, and deletes, and what it now does differently, including the part the diff doesn't spell out. Use `why` step 2 to pull the PR and commits.\n2. Find the one fact it's safe because of. Most changes that look risky are safe because of a single fact, like \"this call only drops already-dead cache entries and does nothing else\". Find that fact. If it holds, most risky cases are cleared at once. Spend your time here, not on a long list of maybes.\n3. Look where grep stops. Read the source of the library you call, and check its pinned version and any local patch. Work out when things run: microtasks, unmount and teardown, Solid versus React. Follow what a symbol search misses: the JSON an API returns, a DB column, a wire format, another language reading the same bytes, a feature flag, code three hops downstream.\n4. Be honest about each risk. Give it a real chance of happening and a real cost if it does. Keep the risks you confirmed. List the ones you checked and cleared separately. Same rules as `why`. Cite a real `file:line`, a search that finds nothing is still an answer, and never make up a caller or an API.\n5. Prove the one fact. Write a script or test that runs the real code, run it, and paste what happened.\n6. For a big or wide change, run it as an `arena`. Ask more than one model the same question and merge the answers. Different models catch different real bugs.\n\n",
+      "zh": "1. 阅读改动，包括 diff、新增或修改或删除的符号，以及行为现在有何变化，也要理解 diff 未明确说明的部分。用 `why` 的步骤 2 获取 PR 和提交。\n2. 找出保障改动安全的那项关键事实。多数看似有风险的改动，都因某个单一事实而安全，比如“这个调用只删除已经失效的缓存条目，不做其他事”。找出这项事实。如果它成立，大多数风险场景就能一次排除。将时间花在这里，不要罗列大量可能性。\n3. 看符号搜索到不了的地方。阅读所调用库的源码，检查固定版本及本地补丁。弄清执行时机：微任务、卸载与清理、Solid 与 React 的差别。追踪符号搜索会遗漏的内容：API 返回的 JSON、数据库列、传输格式、另一种语言读取的相同字节、功能标志、下游三层的代码。\n4. 如实描述每项风险，给出实际发生概率和代价。保留已确认风险，单独列出检查后排除的风险。规则同 `why`。引用真实的 `file:line`；搜索没有结果也是答案；绝不编造调用方或 API。\n5. 证明这项关键事实。编写运行真实代码的脚本或测试，执行并贴出结果。\n6. 对大型或涉及范围广的改动，用 `arena` 执行。向不止一个模型提出同一问题，再整合答案。不同模型能发现不同的真实 bug。\n\n"
+    },
+    {
+      "en": "## What to hand back\n\n",
+      "zh": "## 交回什么\n\n"
+    },
+    {
+      "en": "- **What it does.** What changed, including the part that isn't obvious.\n- **The one fact it's safe because of.** State it, say which step you got it to, and show the proof. If you couldn't prove it, write unproven.\n- **Risks.** Each names how it breaks, the `file:line`, how likely and how bad, and how to check. Paste the proof for the ones that matter.\n- **Cleared.** What you checked and why it's fine.\n- **Before you merge.** The cheapest test or repro that catches the real bug, including the script you wrote.\n\n",
+      "zh": "- **它做什么。** 改了什么，包括不明显的部分。\n- **保证安全的关键事实。** 陈述事实，说明达到哪一步，展示证据。如果无法证明，写明未经证明。\n- **风险。** 每项说明如何破坏、`file:line`、概率和严重程度，以及如何检查。重要风险粘贴证明。\n- **已排除。** 检查了什么，为什么没问题。\n- **合并之前。** 能捕捉真实 Bug 的最低成本测试或复现，包括你写的脚本。\n\n"
+    },
+    {
+      "en": "Write it through `unslop`, cite real code, and strip anything private before it goes anywhere public.\n\n",
+      "zh": "使用 `unslop` 编辑，引用真实代码，公开发布前去除所有私密内容。\n\n"
+    },
+    {
+      "en": "**Reply:** the writeup above, with the one safety fact either proven or marked unproven.\n",
+      "zh": "**回复：** 按上述格式给出报告，关键安全事实必须已证明或明确标为未经证明。\n\n"
+    }
+  ]
+}

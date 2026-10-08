@@ -1,0 +1,234 @@
+{
+  "source": "skills/why/SKILL.md",
+  "sha256": "1f9c0a97e30582b1733110314e171b14f68340b0edf63d14dac422aa2525b17a",
+  "blocks": [
+    {
+      "en": "---\nname: why\ndescription: \"Use for 'why does X work this way', 'why we picked Y', design rationale, regressions, postmortems, or data-backed thresholds. Discovers available MCPs and queries each evidence category (source control, issue tracker, long-form docs, real-time chat, infrastructure observability, error tracking, product analytics warehouse) in parallel, then returns a cited read on decisions and tradeoffs. Use how for runtime behavior.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: why\ndescription: \"用于“X 为什么这样工作”“为什么选 Y”、设计理由、回归问题、复盘，或有数据依据的阈值。发现可用 MCP，并行查询每类证据（源码管理、工单系统、长篇文档、即时聊天、基础设施可观测性、错误追踪、产品分析仓库），再给出附引用的决策和取舍分析。运行时行为使用 how。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Why\n\n",
+      "zh": "# Why\n\n"
+    },
+    {
+      "en": "Investigate the motivation and intent behind code.\n\n",
+      "zh": "调查代码背后的动机与意图。\n\n"
+    },
+    {
+      "en": "Companion to the `how` skill. `how` answers what the code does and how it works. `why` answers what forces led to its shape.\n\n",
+      "zh": "与 `how` skill 配套。`how` 回答代码做什么、如何工作；`why` 回答哪些因素促成了当前结构。\n\n"
+    },
+    {
+      "en": "Each spawn below names a role line in the pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.agents/pstack-models.md` in other harnesses) and a default. Set `model` to that line's value, or to the default if the file or the line is missing. Leave `model` unset when the value is `auto` or `inherit-parent`. If your subagent tool rejects a slug, use the default and say so. If it rejects the default, use the closest valid slug of the same family from its error message or your harness's model list.\n\n",
+      "zh": "下方的每次启动均指明了 pstack 设置文件（在 Cursor 中为 `~/.cursor/rules/pstack-models.mdc`，在其他运行环境中为 `~/.agents/pstack-models.md`）中的角色行及默认值。将 `model` 设为该行的值；若文件或该行缺失，则设为默认值。当值为 `auto` 或 `inherit-parent` 时，不设置 `model`。若 subagent 工具拒绝某个模型标识，使用默认值并说明情况。若拒绝默认值，从错误信息或 运行环境模型列表中选取同家族最接近的有效模型标识。\n\n"
+    },
+    {
+      "en": "## Operating Posture\n\n",
+      "zh": "## 工作姿态\n\n"
+    },
+    {
+      "en": "Operate as a **careful, cautious, and precise investigator**. Be honest about what you know vs what you're inferring. Read `references/epistemics.md` for the full confidence framework and phrasing guide. The synthesizer must follow it.\n\n",
+      "zh": "以**认真、谨慎、精确的调查者**身份工作。如实区分已知与推断。阅读 `references/epistemics.md`，了解完整置信度框架和措辞指南；综合者必须遵循。\n\n"
+    },
+    {
+      "en": "## Step 1. Understand the Target and the Question\n\n",
+      "zh": "## 步骤 1：理解目标和问题\n\n"
+    },
+    {
+      "en": "Parse what the user is asking. The **target** is usually a chunk of code, a pattern, a feature, or a named design decision. The **question** is usually a design rationale, a tradeoff, a motivating edge case, an external constraint, dead code, or a broad history sweep.\n\n",
+      "zh": "解析用户询问。**目标**通常是一段代码、一种模式、一项功能或明确的设计决策。**问题**通常涉及设计理由、取舍、促成设计的边界情况、外部约束、死代码或广泛历史调查。\n\n"
+    },
+    {
+      "en": "If the target is vague (\"why do we do it this way?\" with no clear referent), make your best guess from conversation context (open files, recent edits, cursor location, what was just discussed). State your interpretation briefly so the user can redirect if you're off, then proceed.\n\n",
+      "zh": "目标模糊时（例如“为何这样做”却无明确指代），根据对话上下文作最佳判断（打开的文件、近期编辑、光标位置、刚讨论的内容）。简短说明理解，让用户能纠偏，然后继续。\n\n"
+    },
+    {
+      "en": "## Step 2. Establish the Code Anchor\n\n",
+      "zh": "## 步骤 2：建立代码锚点\n\n"
+    },
+    {
+      "en": "Before spawning investigators, anchor the investigation in concrete code. You need:\n\n",
+      "zh": "启动调查者前，用具体代码固定调查范围。需要：\n\n"
+    },
+    {
+      "en": "- The relevant file path(s) and line range(s)\n- The key symbols (function names, class names, constants)\n- An initial commit list. The last few commits touching the target.\n- PR numbers from merge commits (pattern `(#1234)` in the subject line)\n\n",
+      "zh": "- 相关文件路径及行号范围\n- 关键符号（函数名、类名、常量）\n- 初始提交列表：最近几次涉及目标的提交\n- 合并提交中的 PR 编号（主题行中的 `(#1234)` 模式）\n\n"
+    },
+    {
+      "en": "Build this inline.\n\n",
+      "zh": "直接在当前任务中建立这些信息。\n\n"
+    },
+    {
+      "en": "```bash\n# Blame target lines for last-touch commits\ngit blame -L <start>,<end> <file>\n\n# Full file history, with patches, through renames\ngit log --follow -p -- <file>\n\n# Last N commits touching the file, PR numbers visible\ngit log --oneline -20 -- <file>\n\n# Extract PR numbers from a commit message\ngit log -1 --format=%B <commit>\n```\n\n",
+      "zh": "```bash\n# 通过目标行 blame 找最近修改的提交\ngit blame -L <start>,<end> <file>\n\n# 跨重命名的完整文件历史，包含补丁\ngit log --follow -p -- <file>\n\n# 涉及文件的最近 N 次提交，显示 PR 编号\ngit log --oneline -20 -- <file>\n\n# 从提交消息提取 PR 编号\ngit log -1 --format=%B <commit>\n```\n\n"
+    },
+    {
+      "en": "Pull PR bodies and discussion via `gh` for any substantive commits:\n\n",
+      "zh": "对有实质意义的提交，通过 `gh` 获取 PR 正文及讨论：\n\n"
+    },
+    {
+      "en": "```bash\ngh pr view <number> --json title,body,author,createdAt,mergedAt,labels,closingIssuesReferences,comments,reviews\n```\n\n",
+      "zh": "```bash\ngh pr view <number> --json title,body,author,createdAt,mergedAt,labels,closingIssuesReferences,comments,reviews\n```\n\n"
+    },
+    {
+      "en": "Capture this as seed context (file paths, symbols, commits, PR numbers, linked ticket IDs). Pass it to the investigators.\n\n",
+      "zh": "记录为起始上下文（文件路径、符号、提交、PR 编号、关联工单 ID），交给调查者。\n\n"
+    },
+    {
+      "en": "## Step 3. Spawn Parallel Investigators (default posture)\n\n",
+      "zh": "## 步骤 3：启动并行调查者（默认方式）\n\n"
+    },
+    {
+      "en": "**Default to the full parallel investigation.**\n\n",
+      "zh": "**默认进行完整并行调查。**\n\n"
+    },
+    {
+      "en": "### Discovery\n\n",
+      "zh": "### 发现可用工具\n\n"
+    },
+    {
+      "en": "Before spawning investigators, list the MCP servers connected to your harness. Use the available-tools map when present. In Cursor, you can also inspect the `mcps/` directory it exposes for enabled MCP servers. In other harnesses, MCP tools usually appear in your tool list with the server name in the tool name (for example `mcp__<server>__<tool>` in Claude Code).\n\n",
+      "zh": "启动调查者前，列出连接到 agent 运行环境的 MCP 服务器。有可用工具映射时，使用该映射。Cursor 也可检查其提供的 `mcps/` 目录，了解已启用 MCP；其他环境中，MCP 工具通常在工具列表名称中带服务器名（例如 Claude Code 的 `mcp__<server>__<tool>`）。\n\n"
+    },
+    {
+      "en": "Map each available MCP to one evidence category:\n\n",
+      "zh": "将每个可用 MCP 映射到一种证据类别：\n\n"
+    },
+    {
+      "en": "1. Source control history\n2. Issue / ticket tracker\n3. Long-form documents\n4. Real-time team chat\n5. Infrastructure observability\n6. Error / exception tracking\n7. Product analytics warehouse\n\n",
+      "zh": "1. 源码管理历史\n2. Issue / 工单系统\n3. 长篇文档\n4. 团队即时聊天\n5. 基础设施可观测性\n6. 错误 / 异常追踪\n7. 产品分析仓库\n\n"
+    },
+    {
+      "en": "Source control is always available through git and `gh`. For the other six, classify using the MCP name, server instructions, tool names, and resource descriptors. If an MCP could fit more than one category, choose the one matching its primary evidence. Record ambiguous cases in the coverage map.\n\n",
+      "zh": "源码管理始终可通过 git 和 `gh` 使用。其他六类根据 MCP 名、服务器说明、工具名和资源描述分类。MCP 可适配多类时，选择与其主要证据对应的类别，并在覆盖清单记录歧义。\n\n"
+    },
+    {
+      "en": "Aim for a complete **coverage map**, not a minimal one. Document the null, don't skip the search.\n\n",
+      "zh": "目标是完整的**覆盖清单**，而不是最小清单。记录查无结果，不要跳过搜索。\n\n"
+    },
+    {
+      "en": "Launch all matching investigators in a single message so they run concurrently. Don't ask one agent to cover multiple MCPs.\n\n",
+      "zh": "在同一消息中启动所有匹配的调查者，让它们并行运行。不要让一个 agent 覆盖多个 MCP。\n\n"
+    },
+    {
+      "en": "**Other harnesses.** The spawns in this skill use Cursor's `Task` tool. In another harness, use its subagent tool: `Agent` in Claude Code (`subagent_type: general-purpose`), `task` in OpenCode (`subagent_type: general`), `spawn_agent` in Codex. Keep the prompt and the model. Drop parameters your tool doesn't have. If your harness has no subagent tool, as in Pi without an extension, run each investigator yourself, one after another.\n\n",
+      "zh": "**其他 agent 运行环境。**本 skill 的启动步骤使用 Cursor 的 `Task` 工具。其他环境请使用对应 subagent 工具：Claude Code 的 `Agent`（`subagent_type: general-purpose`）、OpenCode 的 `task`（`subagent_type: general`）、Codex 的 `spawn_agent`。保持提示词和模型不变，去掉工具不支持的参数。环境没有 subagent 工具时，例如无扩展的 Pi，自行依次执行每个调查者角色。\n\n"
+    },
+    {
+      "en": "Subagent config (each):\n- `subagent_type`: `generalPurpose`\n- `model`: the `why investigators` line, default `grok-4.7-xhigh-fast`\n- `readonly`: `false` (agent mode). **Do not use readonly/Ask mode.** It strips MCP access, which disables MCP-backed investigators entirely. Investigators still shouldn't write anything.\n\n",
+      "zh": "每名 subagent 的配置：\n- `subagent_type`：`generalPurpose`\n- `model`： `why investigators` 行，默认 `grok-4.7-xhigh-fast`\n- `readonly`：`false`（agent 模式）。**不要使用 readonly/Ask 模式。**它会移除 MCP 访问能力，使依赖 MCP 的调查者完全无法工作。但调查者仍不应写任何内容。\n\n"
+    },
+    {
+      "en": "Each investigator gets:\n1. The base prompt from `references/investigator-prompt.md`\n2. The category playbook `references/sources/<source>.md` for the selected MCP, adapted from the examples in `references/source-playbook.md`\n3. The cross-cutting `references/sources/incident-postmortem.md` **if the target code looks defensive** (null checks, retry logic, timeout handling, rate limiting, feature flags, egress guards, OOM handlers)\n4. The code anchor from Step 2 (file paths, symbols, commit hashes, PR numbers, ticket IDs)\n5. The user's original question\n\n",
+      "zh": "每名调查者收到：\n1. `references/investigator-prompt.md` 的基础提示词\n2. 选定 MCP 对应的分类执行规程 `references/sources/<source>.md`，根据 `references/source-playbook.md` 示例调整\n3. **目标代码具有防御性质时**，加入横跨来源的 `references/sources/incident-postmortem.md`（null 检查、重试、超时处理、限流、功能开关、出口防护、OOM 处理）\n4. 步骤 2 的代码锚点（文件路径、符号、提交 hash、PR 编号、工单 ID）\n5. 用户原始问题\n\n"
+    },
+    {
+      "en": "### Investigator roster. One per available evidence category\n\n",
+      "zh": "### 调查者名单：每种可用证据类别一名\n\n"
+    },
+    {
+      "en": "Spawn one investigator per category that has a matching MCP. Each owns exactly one tool or MCP.\n\n",
+      "zh": "每种有匹配 MCP 的类别启动一名调查者，每名只负责一个工具或 MCP。\n\n"
+    },
+    {
+      "en": "Each entry names the category and the kind of \"why\" it uniquely surfaces. Use it to know what to expect back, how to name a gap when a category returns empty, and (only in the rare provably-irrelevant case) to justify a skip.\n\n",
+      "zh": "每项说明该类别及其独有的“为什么”线索。用它判断预期返回什么、某类别查无结果时如何说明缺口，以及仅在极少数可证明无关的情况下说明跳过理由。\n\n"
+    },
+    {
+      "en": "1. **Source control investigator**. Git history, `gh` for PRs, code comments, tests. Always spawn. The only guaranteed source. Best at surfacing *implementation-time rationale captured during review*.\n\n",
+      "zh": "1. **源码管理调查者。**Git 历史、用 `gh` 查询 PR、代码注释、测试。始终启动，这是唯一保证可用的来源。最擅长发现**实现期间在评审中留下的理由**。\n\n"
+    },
+    {
+      "en": "2. **Issue / ticket tracker investigator** (e.g. Linear, Jira, GitHub Issues, Plane, Shortcut MCP). Best at surfacing *the product or business forcing function*. Strongest when the why is external to engineering.\n\n",
+      "zh": "2. **Issue / 工单系统调查者**（例如 Linear、Jira、GitHub Issues、Plane、Shortcut MCP）。最擅长发现**迫使改动作出的产品或业务因素**，当理由来自工程之外时最有力。\n\n"
+    },
+    {
+      "en": "3. **Long-form documents investigator** (e.g. Notion, Confluence, Google Docs, Coda MCP). Best at surfacing *long-form design rationale*. Where the why is written out before it becomes code.\n\n",
+      "zh": "3. **长篇文档调查者**（例如 Notion、Confluence、Google Docs、Coda MCP）。最擅长发现**完整设计理由**，也就是理由在变成代码前被写下的地方。\n\n"
+    },
+    {
+      "en": "4. **Real-time team chat investigator** (e.g. Slack, Discord, Microsoft Teams, Mattermost MCP). Best at surfacing *real-time deliberation that never reached a doc*. Especially important when the source control, ticket, and doc paper trail is thin.\n\n",
+      "zh": "4. **团队即时聊天调查者**（例如 Slack、Discord、Microsoft Teams、Mattermost MCP）。最擅长发现**从未进入文档的即时讨论**。源码管理、工单和文档记录薄弱时尤其重要。\n\n"
+    },
+    {
+      "en": "5. **Infrastructure observability investigator** (e.g. Datadog, New Relic, Honeycomb, Grafana, Splunk MCP). Infra/runtime view. Best at surfacing *infrastructure and runtime reality that motivated the code*. Strongest when the target reacts to an infra signal (timeouts, retries, rate limits, circuit breakers).\n\n",
+      "zh": "5. **基础设施可观测性调查者**（例如 Datadog、New Relic、Honeycomb、Grafana、Splunk MCP）。采用基础设施与运行时视角，最擅长发现**促成代码的基础设施和运行现实**。目标响应基础设施信号（超时、重试、限流、熔断）时最有力。\n\n"
+    },
+    {
+      "en": "6. **Error / exception tracking investigator** (e.g. Sentry, Rollbar, Bugsnag, Airbrake MCP). Best at surfacing *the specific exceptions and error trajectories that motivated defensive or corrective code*. Strongest for catch blocks, null guards, type checks, retries, and other defenses.\n\n",
+      "zh": "6. **错误 / 异常追踪调查者**（例如 Sentry、Rollbar、Bugsnag、Airbrake MCP）。最擅长发现**促成防御或纠正代码的具体异常及错误变化趋势**。针对 catch 块、null 防护、类型检查、重试及其他防御代码时最有力。\n\n"
+    },
+    {
+      "en": "7. **Product analytics warehouse investigator** (e.g. Databricks, Snowflake, BigQuery, ClickHouse, dbt, Redshift MCP). Product/data view. Best at surfacing *product and data reality that shaped the code*. Strongest for flag-gated code, experiment-driven ships, data migrations, and \"where did this number come from\" questions.\n\n",
+      "zh": "7. **产品分析仓库调查者**（例如 Databricks、Snowflake、BigQuery、ClickHouse、dbt、Redshift MCP）。采用产品与数据视角，最擅长发现**塑造代码的产品与数据现实**。适合功能开关控制的代码、实验驱动交付、数据迁移，以及“这个数字从何而来”类问题。\n\n"
+    },
+    {
+      "en": "### When to skip an investigator\n\n",
+      "zh": "### 何时跳过调查者\n\n"
+    },
+    {
+      "en": "Only skip with an **explicit, written justification** that goes in the final \"Sources Consulted\" section. Two valid reasons:\n\n",
+      "zh": "只有给出**明确、书面的理由**，并纳入最终“查阅的来源”章节，才可跳过。两种有效理由：\n\n"
+    },
+    {
+      "en": "- **No MCP is available for that category** in this environment. Flag this as a gap, not a choice. Example: \"Real-time team chat skipped. No matching MCP available, so the conversational record was not searchable.\"\n- **The source is provably irrelevant**, not just \"probably irrelevant.\" A high bar. Example: \"Error / exception tracking skipped. Target is a build-time script with no runtime code path.\"\n\n",
+      "zh": "- 本环境**没有该类别可用 MCP**。标为证据缺口，不是自主选择。例如：“跳过团队即时聊天。没有对应 MCP，因此无法搜索对话记录。”\n- **来源可证明无关**，而非“可能无关”。门槛很高。例如：“跳过错误 / 异常追踪。目标是构建期脚本，没有运行时代码路径。”\n\n"
+    },
+    {
+      "en": "If your scope assessment suggests a single-commit trivial target where the PR description already contains the complete answer, you may answer inline **only after** confirming all seven available category searches would be redundant. Say so explicitly. This should be rare.\n\n",
+      "zh": "评估范围后认为目标只是单次提交的小改动，且 PR 描述已包含完整答案时，**只有确认全部七类可用搜索都会重复已有信息之后**，才可直接回答。必须明确说明，这应是罕见情况。\n\n"
+    },
+    {
+      "en": "## Step 4. Synthesize\n\n",
+      "zh": "## 步骤 4：综合\n\n"
+    },
+    {
+      "en": "Spawn one synthesizer subagent:\n\n",
+      "zh": "启动一名综合 subagent：\n\n"
+    },
+    {
+      "en": "- `subagent_type`: `generalPurpose`\n- `model`: the `why synthesizer` line, default `claude-opus-5-5-xhigh`\n- `readonly`: `false` (agent mode). The synthesizer's quality check spot-verifies citations, which can require MCP access. Readonly/Ask mode strips MCPs and defeats that.\n\n",
+      "zh": "- `subagent_type`：`generalPurpose`\n- `model`： `why synthesizer` 行，默认 `claude-opus-5-5-xhigh`\n- `readonly`：`false`（agent 模式）。综合者质量检查会抽查引用，可能需要 MCP。Readonly/Ask 模式会移除 MCP，使此检查失效。\n\n"
+    },
+    {
+      "en": "The synthesizer gets:\n1. The investigator findings, including any null results and any categories skipped with justification\n2. The code anchor from Step 2 (file paths, symbols, commit hashes, PR numbers, ticket IDs)\n3. The user's original question\n4. The epistemics framework from `references/epistemics.md`\n5. The synthesizer prompt template from `references/synthesizer-prompt.md`\n\n",
+      "zh": "综合者收到：\n1. 调查者发现，包括查无结果，以及有理由跳过的类别\n2. 步骤 2 的代码锚点（路径、符号、提交 hash、PR 编号、工单 ID）\n3. 用户原始问题\n4. `references/epistemics.md` 的证据与认知边界框架\n5. `references/synthesizer-prompt.md` 的综合者提示词模板\n\n"
+    },
+    {
+      "en": "## Step 5. Present\n\n",
+      "zh": "## 步骤 5：呈现\n\n"
+    },
+    {
+      "en": "Take the synthesizer's output and present it to the user. You may lightly edit for clarity or add context from the conversation, but **do not rewrite the confidence language**.\n\n",
+      "zh": "将综合者输出呈现给用户。可以轻微调整以改善清晰度，或补充对话上下文，但**不要改写表达置信度的措辞**。\n\n"
+    },
+    {
+      "en": "## Output Format\n\n",
+      "zh": "## 输出格式\n\n"
+    },
+    {
+      "en": "The output structure is the one in `references/synthesizer-prompt.md`: The Question, The Code in Question, What We Found, What We Can Reasonably Infer, Competing Hypotheses, What We Don't Know, Sources Consulted, Confidence Summary. Adapt as needed, but keep the confidence separation intact, and keep Sources Consulted as one line per investigator, including the ones that returned nothing or were skipped, with the reason.\n\n",
+      "zh": "使用 `references/synthesizer-prompt.md` 的结构：问题、涉及的代码、我们发现了什么、我们可以合理推断什么、竞争性假设、我们不知道什么、查阅的来源、置信度概述。可按需调整，但必须保留置信层级区分。“查阅的来源”每名调查者一行，包括查无结果或被跳过的调查者及原因。\n\n"
+    },
+    {
+      "en": "After the Sources Consulted block, if the user's `why` question is a precursor to actually changing this code, convert the lineage findings into a Preserve / Change / Avoid / Risk constraint set suitable for planning the change.\n\n",
+      "zh": "“查阅的来源”之后，如果用户的 `why` 问题是实际改动代码的前置工作，将历史沿革发现转为适合规划改动的约束集合：保留 / 改变 / 避免 / 风险。\n\n"
+    },
+    {
+      "en": "## Common Failure Modes to Avoid\n\n",
+      "zh": "## 应避免的常见失败模式\n\n"
+    },
+    {
+      "en": "- **Recency bias**. Assuming the most recent commit is authoritative. The current shape is often the accretion of many earlier decisions. Trace back.\n\n",
+      "zh": "- **近因偏差。**假定最新提交具有权威性。当前结构常由更早的多次决策逐渐累积而成，应向前追溯。\n\n"
+    },
+    {
+      "en": "## Reference Files\n\n",
+      "zh": "## 参考文件\n\n"
+    },
+    {
+      "en": "- `references/epistemics.md`. Confidence tiers and phrasing guide. The synthesizer must follow it.\n- `references/investigator-prompt.md`. Base prompt template for investigator subagents.\n- `references/source-playbook.md`. Index pointing at the category playbooks below.\n- `references/sources/*.md`. One self-contained example playbook per category, plus cross-cutting `incident-postmortem.md`. Give an investigator the single file that matches its category and adapt it to the available MCP.\n- `references/synthesizer-prompt.md`. Prompt template for the synthesizer subagent, including the output format.\n",
+      "zh": "- `references/epistemics.md`：置信层级和措辞指南，综合者必须遵循。\n- `references/investigator-prompt.md`：调查 subagent 的基础提示词模板。\n- `references/source-playbook.md`：下方分类执行规程的索引。\n- `references/sources/*.md`：每类一个独立完整的执行规程示例，加上横跨来源的 `incident-postmortem.md`。给调查者与其类别匹配的单个文件，并针对可用 MCP 调整。\n- `references/synthesizer-prompt.md`：综合 subagent 提示词模板，包含输出格式。\n"
+    }
+  ]
+}

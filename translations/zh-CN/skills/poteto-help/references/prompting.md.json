@@ -1,0 +1,70 @@
+{
+  "source": "skills/poteto-help/references/prompting.md",
+  "sha256": "463f450c44a60afd001a2f69fdf8a5dea174351f339369b12ec3c41515e564d3",
+  "blocks": [
+    {
+      "en": "# Word the prompt\n\n",
+      "zh": "# 提示词如何措辞\n\n"
+    },
+    {
+      "en": "A prompt states the intent and the check for done. The playbook supplies the steps, so a few plain sentences beat a spec.\n\n",
+      "zh": "提示词说明意图与完成检查。执行规程提供步骤，因此几句直白的话比一份规格说明更有效。\n\n"
+    },
+    {
+      "en": "## Put in\n\n",
+      "zh": "## 写进去\n\n"
+    },
+    {
+      "en": "- The goal. Say what is wrong or what the user wants.\n- The done check. It can pass or fail. \"Make it better\" and a duration are not checks.\n- The proof to show. Ask for the real command output, a video of the flow, the stored value, or a before and after number.\n- What the user already knows. A symptom, a repro step, a log, or a link saves the agent a search.\n- The real constraints. \"repro first\", \"don't change any code yet\", \"zero behavior change\", and \"let me review before proceeding\" each change what the agent does.\n\n",
+      "zh": "- 目标。说明哪里有问题，或用户想要什么。\n- 完成检查。能判断通过或失败。“让它更好”和时长都不是检查。\n- 要展示的证据。要求真实命令输出、流程视频、存储值或前后对比数据。\n- 用户已经知道的信息。症状、复现步骤、日志或链接可以省去 agent 的一次搜索。\n- 实际约束。“先复现”“暂时不要改代码”“行为完全不变”“继续之前先让我审查”都会改变 agent 的做法。\n\n"
+    },
+    {
+      "en": "## Leave out\n\n",
+      "zh": "## 先不写\n\n"
+    },
+    {
+      "en": "- The how. Say what to achieve, and leave the agent room to find a better way.\n- A list of skills or steps. A hand-written order drops or reorders steps the playbook keeps. Name a skill only to override one choice.\n- The user's theory of the cause, until the agent restates the problem. A stated guess narrows the search.\n\n",
+      "zh": "- 具体做法。说明要实现什么，让 agent 有空间找到更好的方法。\n- 一串 skill 或步骤。手工编排的顺序会遗漏或重排执行规程保留的步骤。只有需要覆盖某个默认选择时，才指定 skill。\n- 用户对根因的猜测。在 agent 复述问题之前先不说，明确的猜测会缩小搜索范围。\n\n"
+    },
+    {
+      "en": "## Load the context first\n\n",
+      "zh": "## 先加载上下文\n\n"
+    },
+    {
+      "en": "- For a noisy report, ask the agent to restate the underlying issue in its own words and in plain English before it does anything else. A misreading shows up before any code exists.\n- In a fresh chat, `/recall` earlier work on the topic. Old chats hold context that the new agent lacks.\n- Before a change to unfamiliar code, ask `/how` for the mechanics and `/why` for the reasons. An agent with no traced model fixes the symptom at the first plausible spot.\n- Ask `/teach` to make the case for a choice, as in \"convince me it fixes the cause and not the symptom\". A case is easier to check than a summary.\n\n",
+      "zh": "- 对杂乱的报告，要求 agent 在做任何其他事前，用自己的话以通俗语言复述根本问题。误读会在写代码前暴露。\n- 在新对话中，用 `/recall` 回顾这个主题的早期工作。旧对话中有新 agent 缺少的上下文。\n- 修改不熟悉的代码前，用 `/how` 了解机制，用 `/why` 了解原因。没有追踪并建立理解模型的 agent，会在第一个看似合理的位置修补症状。\n- 用 `/teach` 要求 agent 为某个选择论证，例如“说服我，它修复的是根因，而不是症状”。论证比摘要更容易核对。\n\n"
+    },
+    {
+      "en": "## Design before the plan\n\n",
+      "zh": "## 先设计，再计划\n\n"
+    },
+    {
+      "en": "- Never take the first design. Ask for prototypes of a few options, with screenshots or videos for UI, and pick from the evidence.\n- Let prototypes answer the open questions. Don't review an abstract plan adversarially, because reviewers invent risks that never happen.\n- For a shared package or API, ask for the README or a tutorial first, then work back to the code. The doc becomes the target the agent checks itself against.\n- Ask for the plan only after the design is settled. Each step of the plan ends in a check.\n\n",
+      "zh": "- 不要接受第一个设计。要求几个方案的原型；UI 要附截图或视频，根据证据选择。\n- 让原型回答未决问题。不要对抽象计划做对抗性评审，评审者会虚构不会发生的风险。\n- 对共享包或 API，先要求 README 或教程，再反推代码。文档会成为 agent 自检的目标。\n- 设计确定后再要求计划，每个步骤都以检查结束。\n\n"
+    },
+    {
+      "en": "## Follow up short\n\n",
+      "zh": "## 后续提示保持简短\n\n"
+    },
+    {
+      "en": "- \"do it\", \"continue\", and \"keep going until done\" are whole prompts once the chat holds the task.\n- Start with \"new task\" when the subject changes. Otherwise the mode treats the message as the next step.\n\n",
+      "zh": "- 对话已包含任务上下文时，“执行”“继续”“一直做到完成”就是完整的提示词。\n- 主题改变时，以“新任务”开头。否则工作模式会把消息视为下一步。\n\n"
+    },
+    {
+      "en": "## Before stepping away\n\n",
+      "zh": "## 离开之前\n\n"
+    },
+    {
+      "en": "- Say \"im going to bed\" or \"im stepping away\" so the agent stops asking.\n- Write done as checks every iteration can run, and give `/loop` that predicate.\n- Ask for a fresh worktree off a named base.\n- Pre-answer what the agent would stop for, such as \"don't ask me before committing\".\n- Ask for a decision log to audit later.\n- Give an exit: \"if you're truly stuck after a few hours, stop and write up why\".\n\n",
+      "zh": "- 说明“我要睡觉了”或“我要离开一会儿”，让 agent 停止询问。\n- 将完成条件写成每轮都能运行的检查，并将这个判定条件交给 `/loop`。\n- 要求从指定基线创建新 worktree。\n- 提前回答会让 agent 停下的问题，例如“提交前不必问我”。\n- 要求保留决策日志，方便之后审查。\n- 给出退出条件：“如果几小时后确实卡住了，停止并说明原因”。\n\n"
+    },
+    {
+      "en": "## Steer in one line\n\n",
+      "zh": "## 用一句话纠偏\n\n"
+    },
+    {
+      "en": "- Restate the goal: \"i said the goal is to repro. i did not ask for a fix yet.\"\n- Name the principle: \"apply prove it works. show me the real output, not the build log.\"\n- A principle name works because the agent already read the rule. Its reply names the decision the rule changed.\n",
+      "zh": "- 重申目标：“我说的目标是复现，还没要求修复。”\n- 指定原则：“应用 prove it works，给我看真实输出，不要只给构建日志。”\n- 原则名称有效，是因为 agent 已读过这条规则。它的回复会指出这条规则改变了哪项决策。\n\n"
+    }
+  ]
+}

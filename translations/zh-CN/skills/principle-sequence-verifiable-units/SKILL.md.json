@@ -1,0 +1,34 @@
+{
+  "source": "skills/principle-sequence-verifiable-units/SKILL.md",
+  "sha256": "2ccbbacc56ace5afdfb8670cef19d7bd009fb2a0033b9a741cbdf2b6baf72187",
+  "blocks": [
+    {
+      "en": "---\nname: principle-sequence-verifiable-units\ndescription: \"Apply to multi-step work (sweeps, migrations, runs of similar edits) and to how you stack commits and PRs. Break work into small units that each end in a verifiable state, check each before the next, and order delivery so the sequence proves itself to a reviewer.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-sequence-verifiable-units\ndescription: \"适用于多步工作（批量修改、迁移、一串类似编辑）及提交与 PR 的堆叠方式。将工作拆成以可验证状态结束的小单元，验证一个再做下一个，让交付顺序本身向评审者证明结果。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Sequence work into verifiable units\n\n",
+      "zh": "# 将工作拆成可验证单元并排序\n\n"
+    },
+    {
+      "en": "Order work as a sequence of small units, each ending in a state you can check, and don't advance until the current one is green.\n\n",
+      "zh": "按一系列小单元组织工作，每个结束于可检查状态；当前单元通过前，不进入下一个。\n\n"
+    },
+    {
+      "en": "**Why:** A break caught at the unit that caused it is cheap to localize. A break caught after a batch is buried, and you have already built further on a broken base. Sequencing those same units into a delivery a reviewer can replay turns \"trust me\" into \"watch it go red, then green.\"\n\n",
+      "zh": "**原因：** 在导致问题的单元就发现失败，定位很便宜；整批之后才发现，原因已埋深，还已在坏基线上继续构建。把这些单元安排成评审者可重放的交付顺序，就能把“相信我”变成“看它先失败，再通过”。\n\n"
+    },
+    {
+      "en": "**Execution.** In a sweep, migration, or any run of similar edits, verify each change before starting the next. Each unit is a before/after bracket: known-good state, one change, run the check, then proceed. Rebase onto clean trunk first so every check measures against the real baseline. When a lever does the edits, the per-unit check is nearly free. Run it anyway.\n\n",
+      "zh": "**执行。** 批量修改、迁移或一连串类似编辑，都先验证当前改动再开始下一个。每个单元形成前后对照：已知正常状态、一个改动、运行检查、再继续。先 rebase 到干净 trunk，确保每项检查对照真实基线。由工具做编辑时，逐单元检查几乎无成本，仍必须运行。\n\n"
+    },
+    {
+      "en": "**Delivery.** Stack commits and PRs in the order that proves the work. The canonical shape is the failing test first, then the fix on top. Other story orders are a subtraction before the reshape, a baseline capture before the treatment, the scaffold before the feature. Each commit lands on its own and the sequence reads as an argument.\n\n",
+      "zh": "**交付。** 按能证明工作的顺序堆叠提交和 PR。典型形态是先失败测试，再在上面放修复。其他顺序包括先减法再重塑、先采集基准再施加改动、先基础结构再功能。每个提交可独立合入，序列整体像一段论证。\n\n"
+    },
+    {
+      "en": "The sequencing complement to the **prove-it-works** principle skill, which keeps each check real, and the **build-the-lever** principle skill, which makes the per-unit check cheap.\n",
+      "zh": "这是 **prove-it-works** 原则 skill 与 **build-the-lever** 原则 skill 在顺序上的补充：前者让检查真实，后者让逐单元检查成本低。\n\n"
+    }
+  ]
+}

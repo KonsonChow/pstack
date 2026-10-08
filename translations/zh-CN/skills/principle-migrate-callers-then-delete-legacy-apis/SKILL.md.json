@@ -1,0 +1,30 @@
+{
+  "source": "skills/principle-migrate-callers-then-delete-legacy-apis/SKILL.md",
+  "sha256": "09978915a4a11990cf0a9a02d9c08cc59e0b7a04c5c24b83aa560fbe4146f75b",
+  "blocks": [
+    {
+      "en": "---\nname: principle-migrate-callers-then-delete-legacy-apis\ndescription: \"Apply when introducing a new internal API while old callers still exist. Migrate callers and delete the old API in the same wave instead of preserving compatibility layers.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-migrate-callers-then-delete-legacy-apis\ndescription: \"引入新的内部 API，而旧调用方仍存在时应用。同一轮迁移调用方并删除旧 API，不保留兼容层。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Migrate Callers Then Delete Legacy APIs\n\n",
+      "zh": "# 迁移调用方后删除旧 API\n\n"
+    },
+    {
+      "en": "When we decide a new API is the right design, migrate callers and remove the old API in the same refactor wave instead of preserving compatibility layers.\n\n",
+      "zh": "确认新 API 是正确设计后，在同一轮重构中迁移调用方、删除旧 API，不保留兼容层。\n\n"
+    },
+    {
+      "en": "**Rule:**\n- Do not keep legacy API paths only because internal callers still exist\n- Inventory callers, migrate them, and delete the old API immediately\n- Treat temporary adapters as exceptional and time-boxed, not default architecture\n- Update tests to assert the new contract, and delete tests that only protect pre-refactor implementation details\n\n",
+      "zh": "**规则：**\n- 不要仅因内部调用方还存在就保留旧 API 路径。\n- 清点调用方、迁移，立即删除旧 API。\n- 临时适配器是有期限的例外，不是默认架构。\n- 更新测试以断言新契约，删除只保护重构前实现细节的测试。\n\n"
+    },
+    {
+      "en": "**When this applies:**\n- No external users depend on backward compatibility\n- The project can absorb coordinated breaking changes\n- The new API is part of a simplification or refactor initiative\n\n",
+      "zh": "**适用条件：**\n- 没有外部用户依赖向后兼容。\n- 项目能接受协调一致的破坏性变更。\n- 新 API 属于简化或重构工作。\n\n"
+    },
+    {
+      "en": "Keeping both old and new APIs creates dual-path complexity, slows cleanup, and makes the codebase feel append-only.\n",
+      "zh": "新旧 API 同时保留会带来双路径复杂性，拖慢清理，让代码库看起来只能追加、不能删除。\n\n"
+    }
+  ]
+}

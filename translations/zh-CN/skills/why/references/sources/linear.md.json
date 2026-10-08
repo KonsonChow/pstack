@@ -1,0 +1,58 @@
+{
+  "source": "skills/why/references/sources/linear.md",
+  "sha256": "01304e7f1badfcfb78babbb0edcadeb3cc8dd3f713793420cdff24ba190f907c",
+  "blocks": [
+    {
+      "en": "# Linear Tickets\n\n",
+      "zh": "# Linear 工单\n\n"
+    },
+    {
+      "en": "## What this source contains\n\n",
+      "zh": "## 此来源包含什么\n\n"
+    },
+    {
+      "en": "- Issues describing features, bugs, and their motivation\n- Project docs attached to issues (often PRDs or specs)\n- Parent/sub-issue relationships (broader initiative → specific tickets)\n- Comments on issues (clarifications, scope changes, \"why we're doing this\" rationale)\n- Labels (e.g., `compliance`, `customer-request`, `perf`) that signal the type of motivation\n- Status updates that explain scope changes\n- Attachments and linked GitHub PRs\n\n",
+      "zh": "- 描述功能、bug 及其动机的 issue。\n- issue 附带的项目文档（常为 PRD 或规范）。\n- 父子 issue 关系（大方向 → 具体工单）。\n- 评论（澄清、范围变化、“为什么做”的理由）。\n- 提示动机类型的标签，如 `compliance`、`customer-request`、`perf`。\n- 解释范围变化的状态更新。\n- 附件与关联 GitHub PR。\n\n"
+    },
+    {
+      "en": "Linear is where the product/business context often lives: the \"we're doing this because customer X asked\" or \"this is for the Q3 compliance initiative\" layer.\n\n",
+      "zh": "产品和业务背景常在 Linear：“客户 X 要求所以做”，或“服务于 Q3 合规计划”这一层。\n\n"
+    },
+    {
+      "en": "## How to search it\n\n",
+      "zh": "## 如何搜索\n\n"
+    },
+    {
+      "en": "Use the Linear MCP.\n\n",
+      "zh": "使用 Linear MCP。\n\n"
+    },
+    {
+      "en": "1. **Start with linked tickets.** If the seed commits or PRs reference ticket IDs (e.g., `ENG-1234`, `[BUG-567]`), fetch those first with `get_issue`. Read the full issue including comments.\n2. **List related issues by keyword.** Use `list_issues` with text search for the feature name, key symbol, or business term. Try multiple phrasings.\n3. **Walk the issue tree.** If you land on a sub-issue, fetch its parent. Sub-issues are tactical. Parents often carry the \"why.\"\n4. **Read project docs.** If the issue belongs to a project, use `get_project` and check attached docs. Project-level documents are where specs and rationale are most often captured.\n5. **Check labels and milestones.** Labels hint at the category of motivation (customer-request, incident-followup, compliance). Milestones tie work to deadlines, which often reveal motivation.\n\n",
+      "zh": "1. **先看关联工单。** 种子提交或 PR 引用工单 ID（如 `ENG-1234`、`[BUG-567]`）时，先用 `get_issue` 获取，完整阅读 issue 和评论。\n2. **按关键词列相关 issue。** 用 `list_issues` 文本搜索功能名、关键符号或业务术语，尝试多种表述。\n3. **沿 issue 树追踪。** 找到子 issue 时，获取父 issue。子 issue 偏执行，父 issue 常保留“为什么”。\n4. **阅读项目文档。** issue 属于项目时，用 `get_project` 查附带文档。规范与理由最常记在项目级文档。\n5. **检查标签和里程碑。** 标签提示动机类别（customer-request、incident-followup、compliance），里程碑将工作关联到期限，常能揭示动机。\n\n"
+    },
+    {
+      "en": "## What good evidence looks like here\n\n",
+      "zh": "## 什么是好的证据\n\n"
+    },
+    {
+      "en": "- An issue description stating the business problem: \"Customer Acme needs X because of their SOC2 audit\"\n- A comment recording a decision: \"We decided to go with approach B because approach A would require touching the billing service\"\n- A parent issue titled like an initiative: \"Q3 Enterprise Readiness\" or \"Reduce Payment Failures\"\n- An attached PRD or spec\n- Labels like `customer:acme`, `incident-followup`, `compliance`, `perf-regression`\n\n",
+      "zh": "- 直接陈述业务问题的描述：“Acme 客户因 SOC2 审计需要 X”。\n- 记录决策的评论：“选择 B，因为 A 要改 billing service”。\n- 计划型父 issue 标题：“Q3 Enterprise Readiness”或“Reduce Payment Failures”。\n- 附带的 PRD 或规范。\n- `customer:acme`、`incident-followup`、`compliance`、`perf-regression` 等标签。\n\n"
+    },
+    {
+      "en": "## Common pitfalls\n\n",
+      "zh": "## 常见陷阱\n\n"
+    },
+    {
+      "en": "- **Scope drift.** The ticket the PR references may have been closed and reopened with a different scope. Read the whole history.\n- **Mechanical templates.** Some teams require \"Why\" sections but fill them with boilerplate. Generic text (\"improve user experience\") is probably not a real answer.\n- **Stale tickets.** Old tickets often reflect a version of the plan that changed. Check dates and cross-reference with the code's ship date.\n- **Closed-as-duplicate chains.** Follow the duplicate-of relationships back to the canonical ticket.\n- **Private workspace content.** If you can't access an issue, note that as a gap rather than guessing.\n\n",
+      "zh": "- **范围漂移。** PR 引用的工单可能关闭后，以新范围重开。读完整历史。\n- **机械模板。** 有些团队要求 Why 一节，却填套话。“改善用户体验”等泛泛文字通常不是真答案。\n- **过期工单。** 老工单往往记录已变化的计划版本。查日期，与代码交付日期交叉核对。\n- **因重复关闭的链。** 沿 duplicate-of 关系追到权威工单。\n- **私有工作区内容。** 无法访问就记为缺口，不要猜。\n\n"
+    },
+    {
+      "en": "## What to return\n\n",
+      "zh": "## 返回内容\n\n"
+    },
+    {
+      "en": "For each relevant ticket:\n- Ticket ID and title\n- The problem/motivation quoted from the description or comments (not paraphrased. The synthesizer needs the exact text to cite)\n- Labels, parent issue, project\n- Author, created date, closed date\n- Link to the ticket if available\n",
+      "zh": "每个相关工单返回：\n- ID 与标题。\n- 描述或评论中关于问题和动机的原文引用（不转述，synthesizer 需要准确文字来引用）。\n- 标签、父 issue、项目。\n- 作者、创建日期、关闭日期。\n- 可用时给工单链接。\n\n"
+    }
+  ]
+}

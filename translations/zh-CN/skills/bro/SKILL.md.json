@@ -1,0 +1,14 @@
+{
+  "source": "skills/bro/SKILL.md",
+  "sha256": "aa329d0ceeeecb6822a7174ad76bb07a7826a3c52ceb6a588dec4138815084bb",
+  "blocks": [
+    {
+      "en": "---\nname: bro\ndescription: Restate the last message in plain human language, with no jargon.\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: bro\ndescription: 用没有术语的普通人话，重新表述上一条消息。\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "Restate your last message. Stop using jargon and speak coherently. State it more simply and concisely, like one human talking to another.\n",
+      "zh": "重新说一遍你上一条消息。别再用术语，连贯地说人话。更简单、更简洁，就像一个人对另一个人说话。\n\n"
+    }
+  ]
+}

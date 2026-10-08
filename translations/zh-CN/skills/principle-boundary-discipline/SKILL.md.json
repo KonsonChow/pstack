@@ -1,0 +1,42 @@
+{
+  "source": "skills/principle-boundary-discipline/SKILL.md",
+  "sha256": "62ac2862c2caa22dd14531f51c9c6bb445ceb198ca98a687e25b4d47c1f10a28",
+  "blocks": [
+    {
+      "en": "---\nname: principle-boundary-discipline\ndescription: \"Apply when wiring validation, error handling, or framework adapters. Concentrate guards at system boundaries (CLI, config, network, external APIs); trust internal types and keep business logic in pure functions.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-boundary-discipline\ndescription: \"连接校验、错误处理或框架适配器时使用。将保护措施集中在系统边界（CLI、配置、网络、外部 API）；内部信任类型，业务逻辑放在纯函数中。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Boundary Discipline\n\n",
+      "zh": "# 边界纪律\n\n"
+    },
+    {
+      "en": "Place validation, type narrowing, and error handling at system boundaries. Trust internal code unconditionally. Business logic lives in pure functions. The shell is thin and mechanical.\n\n",
+      "zh": "将校验、类型收窄和错误处理放在系统边界。无条件信任内部代码。业务逻辑放在纯函数中。外围封装层保持轻薄，只做机械性连接。\n\n"
+    },
+    {
+      "en": "**Why:** Scattered validation is noisy, redundant, and gives a false sense of safety. Keep logic out of framework wiring so it can be tested without the framework.\n\n",
+      "zh": "**原因：** 散落的校验嘈杂、重复，并制造虚假的安全感。逻辑应与框架连接代码分离，这样无需框架也能测试。\n\n"
+    },
+    {
+      "en": "**The pattern:**\n- **At boundaries** (CLI args, config files, external APIs, network protocols): validate, return errors, handle defensively.\n- **Inside the system:** typed data, error propagation, no re-validation. Trust the types.\n- **Across the boundary.** Expose domain concepts, not the boundary's private representation. Keep general-purpose mechanism inside and special-purpose policy at the edge.\n\n",
+      "zh": "**模式：**\n- **边界处**（CLI 参数、配置文件、外部 API、网络协议）：校验、返回错误、防御性处理。\n- **系统内部：** 使用类型化数据、传播错误，不重新校验。信任类型。\n- **跨越边界。** 对外暴露领域概念，而不是边界内部的私有表示。通用机制放内部，专用策略放边缘。\n\n"
+    },
+    {
+      "en": "**Applications:**\n\n",
+      "zh": "**应用：**\n\n"
+    },
+    {
+      "en": "Validation and error handling:\n- Validate config at parse time (the boundary), not inside business logic\n- Parse raw data into domain types at the boundary\n- Do not re-export transport, storage, framework, or wire types through the public surface\n- No redundant nil checks deep in call chains if the boundary already validated\n\n",
+      "zh": "校验与错误处理：\n- 在解析时（边界处）校验配置，而不是在业务逻辑中校验。\n- 在边界处将原始数据解析为领域类型。\n- 不通过公开接口重新导出传输、存储、框架或 wire 类型。\n- 如果边界已经校验，调用链深处就不要添加重复的 nil 检查。\n\n"
+    },
+    {
+      "en": "Code organization:\n- Business logic in pure functions with no framework dependencies\n- Parse functions: pure transforms from raw bytes to typed state\n- Prompt construction: structured state in, string out\n- Scoring and assessment: pure transforms from state to results\n\n",
+      "zh": "代码组织：\n- 业务逻辑放在不依赖框架的纯函数中。\n- 解析函数：从原始字节到类型化状态的纯转换。\n- 提示词构建：输入结构化状态，输出字符串。\n- 打分与评估：从状态到结果的纯转换。\n\n"
+    },
+    {
+      "en": "**The tests:**\n- \"Is this data crossing a system boundary right now?\" If not, validation is redundant.\n- \"Can this be a pure function that the shell just calls?\" If yes, extract it.\n",
+      "zh": "**检验问题：**\n- “这份数据此刻是否跨越系统边界？”如果没有，校验就是重复的。\n- “这能否成为由外围封装层直接调用的纯函数？”如果能，就提取出来。\n\n"
+    }
+  ]
+}

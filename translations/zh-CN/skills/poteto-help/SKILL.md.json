@@ -1,0 +1,182 @@
+{
+  "source": "skills/poteto-help/SKILL.md",
+  "sha256": "2fc82841d4645a4010a815bebbcdb788fb09b78fa4b6e7675d7f0b199f9eac72",
+  "blocks": [
+    {
+      "en": "---\nname: poteto-help\ndescription: Guides users through pstack setup, /poteto-mode, and picking the skill, playbook, or principle for a task. Type /poteto-help with a question.\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: poteto-help\ndescription: 指导用户配置 pstack、使用 /poteto-mode，并为任务选择 skill、执行规程或原则。输入 /poteto-help 并附上问题。\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Poteto help\n\n",
+      "zh": "# Poteto 使用帮助\n\n"
+    },
+    {
+      "en": "Answer the user's question about pstack, hand them a prompt they can send, and link the file the answer came from. For a help question, don't start the work. The user asked how, and a pstack run spends real tokens, so let them send the prompt.\n\n",
+      "zh": "回答用户关于 pstack 的问题，给出他们可以发送的提示词，并链接答案来自的文件。对于求助问题，不要开始工作。用户询问的是做法，而 pstack 的运行会消耗实际 token，因此让他们自行发送提示词。\n\n"
+    },
+    {
+      "en": "A message that asks for work, such as \"use pstack to fix this bug\", is not a help question. Read [`poteto-mode`](../poteto-mode/SKILL.md), do the work under it, and mention once that a Custom Mode keeps it on.\n\n",
+      "zh": "“用 pstack 修复这个 bug”这类要求执行工作的消息，不是求助问题。阅读 [`poteto-mode`](../poteto-mode/SKILL.md)，按它的要求完成工作，并提一次自定义工作模式可以让它持续启用。\n\n"
+    },
+    {
+      "en": "This file maps questions to the skills and guide pages that hold the answers. Those files own the details. Read the file you route to before you quote it, and trust it when it disagrees with this map. The links here point into the installed plugin, which the user may not be able to open, so give the user the file's public copy: `https://github.com/cursor/plugins/blob/main/pstack/` followed by its path.\n\n",
+      "zh": "本文件将问题映射到提供答案的 skill 和指南页面。细节以那些文件为准。引用前先阅读路由目标文件；与本映射冲突时，以目标文件为准。这里的链接指向已安装插件内部，用户可能无法打开，因此给用户公开副本地址：`https://github.com/cursor/plugins/blob/main/pstack/` 后接文件路径。\n\n"
+    },
+    {
+      "en": "## Find out what they need\n\n",
+      "zh": "## 弄清用户需要什么\n\n"
+    },
+    {
+      "en": "Infer the need from the message and the conversation. A named situation, such as \"which skill reviews a PR?\", goes straight to its section. If the need is still unclear, ask one multiple-choice question with these options, then answer only the section they pick:\n\n",
+      "zh": "根据消息和对话推断需求。如果用户已明确场景，例如“哪个 skill 可以评审 PR？”，直接进入对应章节。如果仍不清楚，只问一个选择题，提供以下选项，然后只回答用户选择的章节：\n\n"
+    },
+    {
+      "en": "- Get set up\n- Start a task with `/poteto-mode`\n- Pick a skill for a situation\n- Fix a run that went wrong\n- Make pstack my own\n\n",
+      "zh": "- 完成配置\n- 用 `/poteto-mode` 启动任务\n- 为具体场景选择 skill\n- 修正执行出错的任务\n- 按自己的方式定制 pstack\n\n"
+    },
+    {
+      "en": "Check the state that changes the answer, and mention it only when it does:\n\n",
+      "zh": "检查会影响答案的状态，只有确实影响时才提及：\n\n"
+    },
+    {
+      "en": "- No pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.agents/pstack-models.md` in other harnesses) means `/setup-pstack` hasn't run for this user, so every role uses its default model.\n- No `verify-*` skill or other app harness in the project means agents have no scripted way to drive the app. Mention `/create-verification-skill` when the question is about proving a change works.\n\n",
+      "zh": "- 没有 pstack 配置文件（Cursor 中为 `~/.cursor/rules/pstack-models.mdc`，其他 agent 运行环境中为 `~/.agents/pstack-models.md`），说明用户尚未运行 `/setup-pstack`，每个角色都使用默认模型。\n- 项目中没有 `verify-*` skill 或其他应用运行环境，说明 agent 没有通过脚本操作应用的方法。问题涉及证明改动有效时，提及 `/create-verification-skill`。\n\n"
+    },
+    {
+      "en": "When the model rule is missing and it matters, ask whether the user wants to pick a model for each role and a reasoning budget now. It matters when the user is new, the question is about setup or cost, or the answer depends on which models run. Ask at most once per chat. If the need is also unclear, ask both questions together. Offer two choices:\n\n",
+      "zh": "模型规则缺失且会影响回答时，询问用户是否现在为每个角色选择模型及推理预算。用户初次使用、询问配置或成本，或者答案取决于运行模型时，这项配置就会影响回答。每段对话最多问一次。如果需求也不明确，将两个问题一起询问。提供两个选项：\n\n"
+    },
+    {
+      "en": "- Now: give them `/setup-pstack` to type, and answer their question too.\n- Later: answer their question, and add one line saying every role keeps its default model until they run `/setup-pstack`.\n\n",
+      "zh": "- 现在配置：让用户输入 `/setup-pstack`，同时回答他们的问题。\n- 稍后配置：回答问题，并补充一句，在运行 `/setup-pstack` 之前每个角色都沿用默认模型。\n\n"
+    },
+    {
+      "en": "## Get set up\n\n",
+      "zh": "## 完成配置\n\n"
+    },
+    {
+      "en": "1. Install with `/add-plugin pstack` in chat, or from Customize in the sidebar. Outside Cursor, run `npx skills add backnotprop/pstack` and pick the skills.\n2. Run [`/setup-pstack`](../setup-pstack/SKILL.md). It asks for a reasoning budget, maps a model to each role, and writes a rule. The rule applies to new chats.\n3. Start a real task with `/poteto-mode`, a goal, and a check that can pass or fail.\n\n",
+      "zh": "1. 在对话中输入 `/add-plugin pstack`，或从侧栏的 Customize 安装。在 Cursor 之外，运行 `npx skills add backnotprop/pstack` 并选择 skill。\n2. 运行 [`/setup-pstack`](../setup-pstack/SKILL.md)。它询问推理预算，为各角色分配模型，并写入规则。规则对新对话生效。\n3. 用 `/poteto-mode`、目标及能判定通过或失败的检查，启动一个真实任务。\n\n"
+    },
+    {
+      "en": "Installing changes nothing until the user invokes a skill. Only `/setup-pstack` loads from the user's words. The [README](../../README.md) and [guide page 1](../../docs/guide/01-setup.md) have the details. Offer to word their first prompt with them, per [`references/prompting.md`](references/prompting.md).\n\n",
+      "zh": "安装本身不会改变任何行为，用户调用 skill 后才会生效。只有 `/setup-pstack` 能根据用户的自然语言自动加载。[README](../../README.md) 和 [指南第 1 页](../../docs/guide/01-setup.md) 提供细节。按照 [`references/prompting.md`](references/prompting.md)，提议帮助用户措辞第一个提示词。\n\n"
+    },
+    {
+      "en": "If cost is the worry, say where the tokens go and how to spend fewer. pstack spends extra tokens on subagents and review panels. Rerun `/setup-pstack` and pick a smaller budget or cheaper models. A role set to `auto` or `inherit-parent` runs on the chat's model, which saves tokens when the chat runs on Auto or a cheaper model. A shorter panel list runs fewer subagents, one for each entry. Save `/poteto-mode` for work that needs rigor.\n\n",
+      "zh": "用户担心成本时，说明 token 花在哪里，以及如何降低消耗。pstack 会在 subagent 和评审组上多花 token。重新运行 `/setup-pstack`，选择更低预算或更便宜的模型。设为 `auto` 或 `inherit-parent` 的角色使用主对话模型；主对话使用 Auto 或更便宜模型时，这能节省 token。缩短评审组列表会减少 subagent 数量，每个条目对应一个。只在需要严谨处理时用 `/poteto-mode`。\n\n"
+    },
+    {
+      "en": "pstack was built for Cursor. This mirror's skills also work in other harnesses (Claude Code, Codex, Pi, OpenCode, and others): the Harness section of [`poteto-mode`](../poteto-mode/SKILL.md) maps Cursor's subagent, question, transcript, and settings paths to the harness's own. Custom Modes are a Cursor feature.\n\n",
+      "zh": "pstack 最初为 Cursor 构建。此镜像中的 skill 也能在其他 agent 运行环境中使用，包括 Claude Code、Codex、Pi、OpenCode 等。[`poteto-mode`](../poteto-mode/SKILL.md) 的 Harness 章节将 Cursor 的 subagent、提问、对话记录和配置路径映射到各运行环境的对应能力。自定义工作模式是 Cursor 的功能。\n\n"
+    },
+    {
+      "en": "## Start a task with `/poteto-mode`\n\n",
+      "zh": "## 用 `/poteto-mode` 启动任务\n\n"
+    },
+    {
+      "en": "`/poteto-mode` matches the task to a playbook, copies the playbook's steps into the todo list, and runs the other skills as the steps need them. A step it skips stays in the list as `skip: <reason>`. A good prompt states the goal and how to tell it's done. It doesn't list skills, because a hand-written sequence tends to drop or reorder steps the playbook would keep. Read [`references/prompting.md`](references/prompting.md) before you help word one. [Guide page 2](../../docs/guide/02-poteto-mode.md) has examples.\n\n",
+      "zh": "`/poteto-mode` 将任务匹配到执行规程，将规程步骤复制到待办列表，并按步骤需要运行其他 skill。跳过的步骤仍保留在列表中，标记为 `skip: <reason>`。好的提示词说明目标及如何判断完成，不列一串 skill，因为手工编排的序列容易遗漏或重排执行规程保留的步骤。帮助措辞前，阅读 [`references/prompting.md`](references/prompting.md)。[指南第 2 页](../../docs/guide/02-poteto-mode.md) 提供示例。\n\n"
+    },
+    {
+      "en": "Whether `/poteto-mode` stays on depends on how the user starts it:\n\n",
+      "zh": "`/poteto-mode` 是否持续启用，取决于用户如何启动它：\n\n"
+    },
+    {
+      "en": "- Enter on `/poteto-mode` attaches the skill to one message. It fades as the chat moves on.\n- Option+Enter on Mac or Alt+Enter on Windows, or Use as Mode from the skill entry, makes it a Custom Mode. It stays in context every turn until the user exits the mode, and it stays out of casual turns.\n- Cursor's docs list Custom Modes in the Agents Window and the CLI. Elsewhere, start each new task with `/poteto-mode`.\n\n",
+      "zh": "- 在 `/poteto-mode` 上按 Enter，会将 skill 附加到一条消息。随着对话继续，它会逐渐退出上下文。\n- Mac 上按 Option+Enter，Windows 上按 Alt+Enter，或从 skill 条目选择 Use as Mode，会将其设为自定义工作模式。它每轮都保留在上下文中，直到用户退出；闲聊轮次不介入。\n- Cursor 文档列出的自定义工作模式支持位置为 Agents Window 和 CLI。在其他地方，每个新任务都以 `/poteto-mode` 开头。\n\n"
+    },
+    {
+      "en": "Link [Cursor's skills docs](https://cursor.com/docs/skills) when this comes up. Mid-chat, \"new task\" makes the mode match a fresh playbook. `/poteto-mode` already uses `poteto-agent` for the subagents its playbook steps spawn. To get the same style from a subagent of your own, spawn it with `subagent_type: \"poteto-agent\"`.\n\n",
+      "zh": "涉及此问题时，链接 [Cursor 的 skill 文档](https://cursor.com/docs/skills)。对话中说“新任务”会让工作模式重新匹配执行规程。`/poteto-mode` 已对执行规程步骤启动的 subagent 使用 `poteto-agent`。要让你自行启动的 subagent 采用同样风格，使用 `subagent_type: \"poteto-agent\"`。\n\n"
+    },
+    {
+      "en": "## Pick a skill\n\n",
+      "zh": "## 选择 skill\n\n"
+    },
+    {
+      "en": "The default answer is `/poteto-mode`, which runs most of the others when its steps need them. Name a skill directly when the user wants more or less of something than the playbook gives. Read the skill before you recommend it, and give one example prompt.\n\n",
+      "zh": "默认答案是 `/poteto-mode`，它会在步骤需要时运行大多数其他 skill。用户希望某方面比执行规程默认安排更多或更少时，直接指定 skill。推荐前先阅读它，并给出一个示例提示词。\n\n"
+    },
+    {
+      "en": "| The user wants to | Skill |\n|---|---|\n| Do any non-trivial task with rigor | [`/poteto-mode`](../poteto-mode/SKILL.md) |\n| Know how code works now, or where new code should live | [`/how`](../how/SKILL.md) |\n| Know why code is shaped this way, or where a number came from | [`/why`](../why/SKILL.md) |\n| Understand a change or subsystem, explained plainly | [`/teach`](../teach/SKILL.md) |\n| Catch up on their own recent work on a topic | [`/recall`](../recall/SKILL.md) |\n| Know what a small diff could break outside itself | [`/blast-radius`](../blast-radius/SKILL.md) |\n| Settle types and module shape before code that crosses a function boundary | [`/architect`](../architect/SKILL.md) |\n| Get several attempts at one brief, merged into the best one | [`/arena`](../arena/SKILL.md) |\n| Run parallel checks over slices, or race workers, as cloud agents | [`/swarm`](../swarm/SKILL.md) |\n| Have different models review a diff and try to break it | [`/interrogate`](../interrogate/SKILL.md) |\n| Fix a bug test-first when a cheap local test exists | [`/tdd`](../tdd/SKILL.md) |\n| Apply TypeScript rules to `.ts` or `.tsx` work | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |\n| Strip comments before review, using a reviewer that didn't write them | [`/no-comments`](../no-comments/SKILL.md) |\n| Clean AI tells out of prose | [`/unslop`](../unslop/SKILL.md) |\n| Write docs, an RFC, a README, a PR description, or a commit message to a standard | [`/technical-writing`](../technical-writing/SKILL.md) |\n| Hear the last reply again in plain words | [`/bro`](../bro/SKILL.md) |\n| Give agents a scripted way to drive the app and prove behavior | [`/create-verification-skill`](../create-verification-skill/SKILL.md) |\n| Bring a verification skill and its feature map back in line with the app | [`/maintain-verification-skill`](../maintain-verification-skill/SKILL.md) |\n| Vet a performance number before reporting or acting on it | [`/benchmark-checklist`](../benchmark-checklist/SKILL.md) |\n| Run a large or cross-cutting change, or one to review after stepping away | [`/figure-it-out`](../figure-it-out/SKILL.md) |\n| Keep a decision log during a run, and review it afterward | [`/show-me-your-work`](../show-me-your-work/SKILL.md) |\n| Pick a model for each role and a reasoning budget | [`/setup-pstack`](../setup-pstack/SKILL.md) |\n| Turn their own working habits into a personal mode skill | [`/automate-me`](../automate-me/SKILL.md) |\n| Turn what a finished task taught into skill edits | [`/reflect`](../reflect/SKILL.md) |\n| Stop agents from repeating the same mistakes in this repo | [`/correct`](../correct/SKILL.md) |\n| Build a page whose buttons wake a Grok Bot over a webhook | [`/make-bot-ui`](../make-bot-ui/SKILL.md) |\n| Find their way around pstack | `/poteto-help` |\n\n",
+      "zh": "| 用户想要 | Skill |\n|---|---|\n| 严谨处理任何非简单任务 | [`/poteto-mode`](../poteto-mode/SKILL.md) |\n| 了解代码当前如何工作，或新代码应放在哪里 | [`/how`](../how/SKILL.md) |\n| 了解代码为什么这样设计，或某个数值来自哪里 | [`/why`](../why/SKILL.md) |\n| 用通俗说明理解改动或子系统 | [`/teach`](../teach/SKILL.md) |\n| 回顾自己在某个主题上的近期工作 | [`/recall`](../recall/SKILL.md) |\n| 了解小型 diff 可能破坏哪些范围外的行为 | [`/blast-radius`](../blast-radius/SKILL.md) |\n| 跨函数边界编码前确定类型与模块结构 | [`/architect`](../architect/SKILL.md) |\n| 对同一任务做多次尝试，整合成最佳方案 | [`/arena`](../arena/SKILL.md) |\n| 通过云端 agent 分部分并行检查，或让执行者竞赛 | [`/swarm`](../swarm/SKILL.md) |\n| 让不同模型评审 diff，尝试找出问题 | [`/interrogate`](../interrogate/SKILL.md) |\n| 存在低成本本地测试时，先写测试再修 bug | [`/tdd`](../tdd/SKILL.md) |\n| 对 `.ts` 或 `.tsx` 工作应用 TypeScript 规则 | [`/typescript-best-practices`](../typescript-best-practices/SKILL.md) |\n| 评审前移除注释，使用未参与编写的评审者 | [`/no-comments`](../no-comments/SKILL.md) |\n| 清理文字中的 AI 套话 | [`/unslop`](../unslop/SKILL.md) |\n| 按规范编写文档、RFC、README、PR 描述或提交消息 | [`/technical-writing`](../technical-writing/SKILL.md) |\n| 用通俗语言重听上一条回复 | [`/bro`](../bro/SKILL.md) |\n| 让 agent 能通过脚本操作应用并证明行为 | [`/create-verification-skill`](../create-verification-skill/SKILL.md) |\n| 让验证 skill 及其功能验证清单重新与应用一致 | [`/maintain-verification-skill`](../maintain-verification-skill/SKILL.md) |\n| 在报告性能数据或据此行动前审核数据 | [`/benchmark-checklist`](../benchmark-checklist/SKILL.md) |\n| 执行大型或涉及多个部分的改动，或离开后再审查的工作 | [`/figure-it-out`](../figure-it-out/SKILL.md) |\n| 执行中记录决策，事后审查 | [`/show-me-your-work`](../show-me-your-work/SKILL.md) |\n| 为每个角色选择模型及推理预算 | [`/setup-pstack`](../setup-pstack/SKILL.md) |\n| 将自己的工作习惯转为个人工作模式 skill | [`/automate-me`](../automate-me/SKILL.md) |\n| 将已完成任务中的经验转为 skill 改动 | [`/reflect`](../reflect/SKILL.md) |\n| 阻止 agent 在仓库中重复犯同类错误 | [`/correct`](../correct/SKILL.md) |\n| 构建按钮通过 webhook 唤醒 Grok Bot 的页面 | [`/make-bot-ui`](../make-bot-ui/SKILL.md) |\n| 了解 pstack 的使用方法 | `/poteto-help` |\n\n"
+    },
+    {
+      "en": "If a skill directory next to this one is missing from the table, read its frontmatter and route by its description. The `principle-*` directories are covered under principles below.\n\n",
+      "zh": "如果旁边某个 skill 目录不在表中，阅读它的 frontmatter，按 description 路由。`principle-*` 目录在下文原则部分说明。\n\n"
+    },
+    {
+      "en": "Close calls:\n\n",
+      "zh": "相近场景的区别：\n\n"
+    },
+    {
+      "en": "- `/how` explains what the code does. `/why` explains the reasons. `/teach` runs one or both and explains the result plainly.\n- `/arena` gives every worker the same brief and merges the best parts. `/swarm` splits work into slices or a race and returns one report.\n- `/architect` implements right after it settles the design. Add \"with checkpoint\" to review the design before it writes code.\n- `/interrogate` reviews the diff. `/blast-radius` looks for breakage outside the diff and proves the one fact that makes the change safe.\n- `/recall` rebuilds context across recent chats. Resuming one specific chat or branch is the Session pickup playbook.\n- `/figure-it-out` designs one rigorous run. The Orchestrate playbook runs a program that spans days and many PRs. The Autonomous run playbook drives one task to a finish condition.\n\n",
+      "zh": "- `/how` 解释代码做什么；`/why` 解释原因；`/teach` 运行其中一个或两个，再通俗解释结果。\n- `/arena` 给每个执行者相同任务说明，整合最好的部分。`/swarm` 将工作拆成不同部分或竞赛，返回一份报告。\n- `/architect` 确定设计后马上实施。加上“with checkpoint”，即可在写代码前审查设计。\n- `/interrogate` 评审 diff。`/blast-radius` 查找 diff 之外可能受损的行为，并证明保障改动安全的那项关键事实。\n- `/recall` 根据近期多段对话重建上下文。恢复特定对话或分支，则使用 Session pickup 执行规程。\n- `/figure-it-out` 设计一次严谨执行。Orchestrate 执行规程处理跨多日、多 PR 的计划。Autonomous run 执行规程将一个任务推进到完成条件满足。\n\n"
+    },
+    {
+      "en": "Not in pstack:\n\n",
+      "zh": "以下内容不属于 pstack：\n\n"
+    },
+    {
+      "en": "- `/deslop`, `control-cli`, and `control-ui` ship in the `cursor-team-kit` plugin.\n- `/loop` and `/create-skill` are Cursor built-ins.\n- pstack has no `/orchestrate` skill. Orchestrate is a `/poteto-mode` playbook. If the slash menu shows `/orchestrate`, another plugin provides it.\n\n",
+      "zh": "- `/deslop`、`control-cli` 和 `control-ui` 由 `cursor-team-kit` 插件提供。\n- `/loop` 和 `/create-skill` 是 Cursor 内置能力。\n- pstack 没有 `/orchestrate` skill。Orchestrate 是 `/poteto-mode` 的执行规程。如果斜杠菜单显示 `/orchestrate`，它来自其他插件。\n\n"
+    },
+    {
+      "en": "## Playbooks and principles\n\n",
+      "zh": "## 执行规程与原则\n\n"
+    },
+    {
+      "en": "Playbooks are step lists inside `/poteto-mode`, not skills, so they have no slash command. Inside `/poteto-mode`, describing the task picks one, and these phrases name one directly:\n\n",
+      "zh": "执行规程是 `/poteto-mode` 内部的步骤列表，并非 skill，因此没有斜杠命令。在 `/poteto-mode` 中，描述任务会选出一项执行规程，以下短语可以直接指定：\n\n"
+    },
+    {
+      "en": "- \"babysit this pr\" or \"check on pr 123\" runs Babysit. It drives the PR to merge-ready and stops there. It doesn't merge unless the user asks to merge, land, or ship.\n- \"land the stack\" runs Shipping.\n- \"take over this branch\" runs Session pickup.\n- \"pause safely\" runs Pause safely.\n- \"full autopilot on this queue\" runs Autopilot-full. \"stack them, don't ship\" runs Autopilot-stack.\n- \"run the eval playbook\" runs Eval.\n\n",
+      "zh": "- “babysit this pr”或“check on pr 123”运行 Babysit。它将 PR 推进到满足合并条件后停止。除非用户要求 merge、land 或 ship，否则不会合并。\n- “land the stack”运行 Shipping。\n- “take over this branch”运行 Session pickup。\n- “pause safely”运行 Pause safely。\n- “full autopilot on this queue”运行 Autopilot-full；“stack them, don't ship”运行 Autopilot-stack。\n- “run the eval playbook”运行 Eval。\n\n"
+    },
+    {
+      "en": "Without `/poteto-mode`, a phrase such as \"babysit this pr\" can start Cursor's own skill for the same job instead. The Playbooks section of [`poteto-mode`](../poteto-mode/SKILL.md) lists every playbook and when it applies. [Guide page 6](../../docs/guide/06-verify-and-ship.md) covers opening, babysitting, and landing a PR.\n\n",
+      "zh": "未启用 `/poteto-mode` 时，“babysit this pr”之类的短语可能启动 Cursor 自己用于同一工作的 skill。[`poteto-mode`](../poteto-mode/SKILL.md) 的 Playbooks 章节列出全部执行规程及适用场景。[指南第 6 页](../../docs/guide/06-verify-and-ship.md) 介绍创建、跟进及合入 PR。\n\n"
+    },
+    {
+      "en": "pstack has no planning skill. Cursor's Plan Mode works alongside it. For work that spans phases or stacked PRs, asking `/poteto-mode` for a plan runs the [Multi-phase plan playbook](../poteto-mode/playbooks/multi-phase-plan.md), which writes the plan and doesn't implement it. For a design question, the Prototype playbook or `/architect` settles it in code first.\n\n",
+      "zh": "pstack 没有规划 skill。Cursor 的 Plan Mode 可以与它配合。对于跨阶段或有依赖关系的 PR 栈，要求 `/poteto-mode` 制定计划，会运行 [多阶段规划执行规程](../poteto-mode/playbooks/multi-phase-plan.md)，它只写计划，不实施。设计问题则先通过 Prototype 执行规程或 `/architect` 用代码确定。\n\n"
+    },
+    {
+      "en": "Principles are one-rule skills that `/poteto-mode` reads and cites in its replies. The user rarely invokes one. They steer with the names instead, as in \"apply prove it works. show me the real output.\" Typing `/principle-<name>` still loads one on demand. [Guide page 8](../../docs/guide/08-principles.md) lists them.\n\n",
+      "zh": "原则是只有一条规则的 skill，`/poteto-mode` 会阅读并在回复中引用。用户很少直接调用，而是用名称引导，例如“应用 prove it works，给我看真实输出”。输入 `/principle-<name>` 仍可以按需加载。[指南第 8 页](../../docs/guide/08-principles.md) 列出了它们。\n\n"
+    },
+    {
+      "en": "## Fix a run that went wrong\n\n",
+      "zh": "## 修正执行出错的任务\n\n"
+    },
+    {
+      "en": "| Symptom | Fix |\n|---|---|\n| The mode stopped applying after a few turns | It was started with Enter. Start it as a Custom Mode, or start each task with `/poteto-mode`. |\n| A question got treated as the next step of the last task | Say \"new task\", or say the turn doesn't need the mode. |\n| A new model choice had no effect | The rule from `/setup-pstack` applies to new chats. Start one. |\n| Runs cost more than expected | See the cost paragraph under Get set up. |\n| A skill didn't load on its own | Only `/setup-pstack` loads from the user's words. The others load when the user types them or when `/poteto-mode` runs them, and it doesn't run every skill. |\n| Parallel agents overwrote each other | Give each agent its own worktree, or run them as cloud agents, which each get their own machine. |\n| An overnight run moved but finished nothing | `/loop` needs a check that can pass or fail, not a duration. See [guide page 7](../../docs/guide/07-overnight.md). |\n| The reply claims success from a green build | Ask for the real command, flow, stored value, or profile. That's the prove-it-works principle. |\n\n",
+      "zh": "| 症状 | 修正方法 |\n|---|---|\n| 工作模式几轮后不再生效 | 它是用 Enter 启动的。改为自定义工作模式，或每个任务都以 `/poteto-mode` 开头。 |\n| 问题被当作上个任务的下一步 | 说“新任务”，或说明本轮不需要工作模式。 |\n| 新选的模型没有生效 | `/setup-pstack` 写入的规则对新对话生效。启动新对话。 |\n| 运行费用高于预期 | 参见“完成配置”下的成本段落。 |\n| skill 没有自行加载 | 只有 `/setup-pstack` 能根据用户自然语言加载。其他 skill 在用户输入时或 `/poteto-mode` 调用时加载；它不会调用每个 skill。 |\n| 并行 agent 相互覆盖 | 给每个 agent 独立 worktree，或使用各自有独立机器的云端 agent。 |\n| 通宵运行有进展却没完成任何内容 | `/loop` 需要能判定通过或失败的检查，而非时长。参见 [指南第 7 页](../../docs/guide/07-overnight.md)。 |\n| 回复仅凭构建通过就宣告成功 | 要求真实命令、流程、存储值或 profile。这是 prove-it-works 原则。 |\n\n"
+    },
+    {
+      "en": "For a run that drifts, [`references/prompting.md`](references/prompting.md) has one-line steers. [Guide page 10](../../docs/guide/10-recipes-and-pitfalls.md) has more pitfalls and the recipes worth copying.\n\n",
+      "zh": "运行偏离目标时，[`references/prompting.md`](references/prompting.md) 提供一句话的纠偏提示。[指南第 10 页](../../docs/guide/10-recipes-and-pitfalls.md) 提供更多误区和可复用的提示词。\n\n"
+    },
+    {
+      "en": "## Make pstack my own\n\n",
+      "zh": "## 按自己的方式定制 pstack\n\n"
+    },
+    {
+      "en": "- [`/automate-me`](../automate-me/SKILL.md) drafts a personal mode skill from the user's own history, to use alongside `/poteto-mode`.\n- [`/reflect`](../reflect/SKILL.md) after a session turns its lessons into skill edits the user approves.\n- `/poteto-mode write a skill for <workflow>` runs the authoring playbook. The eval playbook tests a skill change blind.\n- Fix a misbehaving skill in its own PR, not inside the feature work where it went wrong.\n\n",
+      "zh": "- [`/automate-me`](../automate-me/SKILL.md) 根据用户自己的历史记录起草个人工作模式 skill，与 `/poteto-mode` 配合使用。\n- 会话结束后，运行 [`/reflect`](../reflect/SKILL.md)，将经验转为需要用户批准的 skill 改动。\n- `/poteto-mode write a skill for <workflow>` 运行编写执行规程。评估执行规程会对 skill 改动做盲测。\n- 行为有误的 skill 应在独立 PR 中修复，不要混入发现问题时正在开发的功能。\n\n"
+    },
+    {
+      "en": "[Guide page 9](../../docs/guide/09-make-it-yours.md) covers each of these.\n\n",
+      "zh": "[指南第 9 页](../../docs/guide/09-make-it-yours.md) 分别介绍了这些内容。\n\n"
+    },
+    {
+      "en": "## Reply\n\n",
+      "zh": "## 回复\n\n"
+    },
+    {
+      "en": "Lead with the answer. Give at most one example prompt in a code block, adapted from [`references/recipes.md`](references/recipes.md) when one fits, then the link to that file. Keep it short unless the user asked for the whole map.\n",
+      "zh": "先给答案。最多在代码块中提供一个示例提示词；适用时根据 [`references/recipes.md`](references/recipes.md) 调整，然后附上该文件链接。保持简短，除非用户要求完整映射。\n\n"
+    }
+  ]
+}

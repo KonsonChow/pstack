@@ -1,0 +1,26 @@
+{
+  "source": "skills/poteto-mode/playbooks/worktree-cleanup.md",
+  "sha256": "fc464dc4121926df1704f483c5feca83717c0a40b4651d3e11bd3aedd89441b6",
+  "blocks": [
+    {
+      "en": "### Worktree and simulator cleanup\n\n",
+      "zh": "### worktree 与模拟器清理\n\n"
+    },
+    {
+      "en": "**You own the disk and the safety gate.** Prune merged or abandoned git worktrees and stale iOS simulators to reclaim space. Deletion is irreversible, so every step guards against deleting something in use or holding uncommitted work.\n\n",
+      "zh": "**你负责磁盘空间和安全关卡。** 清理已合并或废弃的 Git worktree 和过期 iOS 模拟器，回收空间。删除不可逆，因此每一步都要防止删除正在使用或有未提交工作的内容。\n\n"
+    },
+    {
+      "en": "1. Snapshot and audit. Record `df -h /`, then run `scripts/worktree-audit.sh` (principle-build-the-lever). It reads paths from `git worktree list`, never hand-typed, since a hand-typed `myrepo-worktrees/x` misses one that lives at `.cursor/worktrees/myrepo/x` (principle-encode-lessons-in-structure). It classifies each worktree by size, age, merge state, uncommitted work, PR state, and the newest chat that touched it, then suggests a bucket. The transcript scan is slow, so background it.\n2. The bucket is advice, not permission. The pinned and active chats are the real artifact (principle-prove-it-works). Get that set from the user or sidebar and cross-check every candidate. The lever has marked `safe` a worktree the user had pinned, so the pinned set wins.\n3. Verify usage before deleting. For every `verify-recent-chat` row, or anything you doubt, fan subagents out to read the transcripts and report whether the chat is pinned or ongoing and which worktrees it touches (principle-guard-the-context-window, transcripts are bulk). A pinned chat spawns arena and repro trees into sibling worktrees via background subagents, and those are in use even when their names never hit the sidebar.\n4. Pause on irreversible loss. `wip:N` is N tracked uncommitted edits. Show the diff and get a decision first, since removing a clean worktree is recoverable from its branch but uncommitted work is gone. `scratch:N` is untracked throwaway, safe to drop, but name the files. Per Autonomy, clean and merged and not-in-use proceeds. `wip` and in-use pause.\n5. Prune the confirmed set. Per path, `git worktree remove --force <path>`. If the dir survives on ignored build artifacts, `rm -rf` it, then `git worktree prune`. Branch refs survive, so no commits are lost. Confirm with `df -h /` and re-list.\n6. Simulators and other reclaimers. Simulators are usually the next-biggest win. `xcrun simctl --set testing delete all` (XCTestDevices clones), `xcrun simctl delete unavailable`, and `xcrun simctl runtime list` then `runtime delete <id>` for old runtimes. More when needed: Xcode `DerivedData` and `iOS DeviceSupport`, `~/Library/Application Support/Cursor` (`state.vscdb.backup`, and `snapshots/roots/<root>` where a `<root>` named for a folder you opened as a workspace balloons), package caches (pnpm, uv, brew, yarn). Clear only caches the user has not said to keep.\n\n",
+      "zh": "1. 快照并审计。记录 `df -h /`，然后运行 `scripts/worktree-audit.sh`（principle-build-the-lever）。路径由 `git worktree list` 读取，绝不手工填写，因为手写 `myrepo-worktrees/x` 会漏掉 `.cursor/worktrees/myrepo/x` 中的 worktree（principle-encode-lessons-in-structure）。它根据大小、年龄、合并状态、未提交工作、PR 状态及最近涉及它的聊天分类，并建议归类。对话扫描较慢，放后台运行。\n2. 分类是建议，不是许可。置顶及活跃聊天才是真实依据（principle-prove-it-works）。从用户或侧栏获取该集合，与每个候选交叉核对。工具曾把用户置顶的 worktree 标为 `safe`，因此以置顶集合为准。\n3. 删除前核实使用情况。对每个 `verify-recent-chat` 行或任何不确定项，并行派 subagent 读记录，报告聊天是否置顶或仍在进行，以及涉及哪些 worktree（principle-guard-the-context-window，记录属于大体量内容）。置顶聊天会经后台 subagent 在同级 worktree 中建立 arena 和复现任务树，即使名称没有出现在侧栏，它们也仍在使用。\n4. 不可逆损失前暂停。`wip:N` 表示 N 处已跟踪但未提交改动，先展示 diff 并获得决定：干净 worktree 可从分支恢复，未提交工作却会丢失。`scratch:N` 是未跟踪的可丢弃内容，可安全删除，但要列出文件。按照 Autonomy，干净、已合并且未使用的可直接处理；`wip` 和正在使用的要暂停。\n5. 清理确认集合。逐路径运行 `git worktree remove --force <path>`。如果目录因忽略的构建产物仍存在，执行 `rm -rf`，再 `git worktree prune`。分支引用仍保留，所以不丢提交。用 `df -h /` 并重新列出 worktree 确认。\n6. 模拟器及其他可回收项。模拟器通常是下一项最大收益。运行 `xcrun simctl --set testing delete all`（XCTestDevices 克隆）、`xcrun simctl delete unavailable`，以及 `xcrun simctl runtime list` 后用 `runtime delete <id>` 删除旧 runtime。必要时再处理：Xcode `DerivedData`、`iOS DeviceSupport`、`~/Library/Application Support/Cursor`（`state.vscdb.backup` 和 `snapshots/roots/<root>`，其中以曾作为工作区打开的目录命名的 `<root>` 会膨胀）、包缓存（pnpm、uv、brew、yarn）。只清理用户没有要求保留的缓存。\n\n"
+    },
+    {
+      "en": "This is the one playbook that deletes user state with no code review to catch a slip, so the gates above are the review.\n\n",
+      "zh": "这是唯一一个会删除用户状态、且没有代码评审来捕捉失误的 playbook，因此上述关卡就是评审。\n\n"
+    },
+    {
+      "en": "**Reply:** `df -h /` before and after with space reclaimed, the worktrees pruned, and a one-line reason for each held back (in-use by which chat, or uncommitted work).\n",
+      "zh": "**回复：** 清理前后的 `df -h /` 及回收空间、已清理的 worktree，并为每个保留项给一行原因（哪个聊天正在使用，或有未提交工作）。\n\n"
+    }
+  ]
+}
