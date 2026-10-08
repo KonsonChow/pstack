@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block content %}
+<div class="editorial">
+  <p class="eyebrow">本站编者注 / READER NOTES</p>
+  <div class="prose">{{ content }}</div>
+  <p class="article-source">
+    本站编者注不计入 {{ published.count }} 篇上游文档的翻译覆盖统计。
+  </p>
+</div>
+{% endblock %}

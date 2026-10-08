@@ -1,0 +1,32 @@
+{% extends 'base.html' %} {% block content %}
+<div class="collection">
+  <p class="eyebrow">PSTACK LIBRARY / {{ section|upper }}</p>
+  <h1>{{ title }}</h1>
+  <p class="lead">{{ description }}</p>
+  <div class="collection-count">
+    {{ documents|length }} 篇文档 · 完整中文与英文原文
+  </div>
+  {% for group, members in groups|default([('', documents)]) %}{% if group %}
+  <h2 class="group-title">{{ group }}</h2>
+  {% endif %}
+  <div class="document-list">
+    {% for doc in members %}<a href="{{ url(doc.route) }}"
+      ><span class="document-number">{{ '%02d'|format(loop.index) }}</span>
+      <div>
+        <h2>{{ doc.title_zh }}</h2>
+        <p lang="en">{{ doc.title_en }}</p>
+        {% if doc.parent and catalog.by_source.get(doc.parent) %}<small
+          >属于 {{ catalog.by_source[doc.parent].title_zh }}</small
+        >{% endif %}
+      </div>
+      <span class="document-arrow" aria-hidden="true">↗</span></a
+    >{% endfor %}
+  </div>
+  {% endfor %} {% if section == 'about' %}
+  <p class="notice">
+    PStack 原项目由 Lauren Tan 创建，使用 MIT
+    许可。本站提供中文学习文库。源文件、翻译记录与网站代码均可在 GitHub 查看。
+  </p>
+  {% endif %}
+</div>
+{% endblock %}

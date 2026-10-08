@@ -1,0 +1,81 @@
+{% extends 'base.html' %} {% block content %}
+<div class="changes">
+  <p class="eyebrow">UPSTREAM NOTES</p>
+  <h1>看见每一次变化。</h1>
+  <p class="lead">
+    本站内容版本与上游提交分别记录。你读到的是完整、经过校验的中文快照。
+  </p>
+  <section class="published-snapshot">
+    <div>
+      <span class="eyebrow">当前发布内容</span>
+      <h2>v{{ published.version }}</h2>
+      <p>{{ published.count }} 篇文档 · 中英文完整覆盖</p>
+    </div>
+    <dl>
+      <dt>本站构建修订</dt>
+      <dd>
+        <a
+          href="https://github.com/{{ repository }}/commit/{{ published.revision }}"
+          ><code>{{ published.revision[:12] }}</code></a
+        >
+      </dd>
+      <dt>独立仓库导入基线</dt>
+      <dd><code>{{ published.upstream_base[:12] }}</code></dd>
+      <dt>原始上游导入记录</dt>
+      <dd><code>{{ published.original_base }}</code></dd>
+    </dl>
+  </section>
+  <p class="notice">
+    上游检查只更新下方提交记录，不会自动合并源文件或改写翻译。提交日期由 GitHub
+    提供；检查时间保留最近一次成功获取记录的时间。
+  </p>
+  {% for feed in snapshot.feeds %}
+  <section class="upstream-feed">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">
+          {{ feed.repository }}{% if feed.path %} / {{ feed.path }}{% endif %}
+        </p>
+        <h2>{{ feed.label }}</h2>
+      </div>
+      <a href="{{ feed.history_url }}">完整历史 ↗</a>
+    </div>
+    <div class="feed-meta">
+      <span>检查时间 <time>{{ feed.checked_at }}</time></span
+      ><span>最新 <code>{{ feed.head[:12] }}</code></span
+      ><a href="{{ feed.compare_url }}">与导入版本比较 ↗</a>
+    </div>
+    <p class="feed-status">
+      {% if feed.head.startswith(feed.imported) %}最近检查与本站导入基线一致。{%
+      else %}上游有不同于本站导入基线的提交，尚未声明全部同步。{% endif %}
+      以下展示最近 {{ feed.commits|length }} 次提交。
+    </p>
+    <ol class="commit-list">
+      {% for commit in feed.commits %}
+      <li>
+        <time datetime="{{ commit.date }}">{{ commit.date[:10] }}</time>
+        <div>
+          <a href="{{ commit.url }}">{{ commit.subject }}</a
+          ><code>{{ commit.sha[:8] }}</code>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endfor %} {% if defects %}
+  <details class="source-defects">
+    <summary>源文档链接说明 · {{ defects|length }} 项</summary>
+    <p>
+      以下链接在源文档中已经缺少目标。网站保留指向仓库的链接，便于核对，不生成不存在的文章。
+    </p>
+    <ul>
+      {% for defect in defects %}
+      <li>
+        <code>{{ defect.source }}</code> → <code>{{ defect.target }}</code>
+      </li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+</div>
+{% endblock %}

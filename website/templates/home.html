@@ -1,0 +1,73 @@
+{% extends 'base.html' %} {% block content %}
+<div class="home">
+  <div class="edition">
+    <span>THE PRACTICAL GUIDE TO PSTACK</span
+    ><span>VOL. {{ published.version }}</span>
+  </div>
+  <section class="hero">
+    <p class="eyebrow accent">给 AI 一个目标，也给它完成的标准。</p>
+    <h1>学会协作，<br />把工作交付。<span class="hero-period">●</span></h1>
+    <p class="hero-copy">
+      PStack
+      把理解、设计、实现和验证组织成一套代理工作流。从十章指南开始，再查阅每个技能背后的原则与执行规程。
+    </p>
+    <div class="hero-actions">
+      <a class="primary-link" href="{{ url('/guide/01-setup/') }}"
+        >从第一章开始 <span>↗</span></a
+      ><a class="text-link" href="{{ url('/guide/') }}">浏览学习路线 →</a>
+    </div>
+    <div class="hero-stats">
+      <span><b>10</b> 章入门指南</span
+      ><span><b>{{ published.count }}</b> 篇完整文档</span
+      ><span><b>中 / EN</b> 原文对照</span>
+    </div>
+  </section>
+  <section class="reading-path">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">01 / READ IN ORDER</p>
+        <h2>先走一遍完整流程</h2>
+      </div>
+      <a href="{{ url('/guide/') }}">全部章节 →</a>
+    </div>
+    <div class="path-grid">
+      {% for guide in guides[:4] %}<a
+        class="path-item"
+        href="{{ url(guide.route) }}"
+        ><span class="step-number">0{{ loop.index }}</span>
+        <h3>{{ guide.title_zh }}</h3>
+        <span class="path-arrow" aria-hidden="true">↗</span></a
+      >{% endfor %}
+    </div>
+  </section>
+  <section class="library-overview">
+    <div class="section-heading">
+      <div>
+        <p class="eyebrow">02 / KEEP AS A REFERENCE</p>
+        <h2>按工作中的问题查阅</h2>
+      </div>
+    </div>
+    <div class="library-rows">
+      {% for key in ['skills', 'principles', 'playbooks', 'agents',
+      'automations', 'references'] %}<a
+        class="library-row"
+        href="{{ url('/' + key + '/') }}"
+        ><h3>{{ sections[key][0] }}</h3>
+        <p>{{ sections[key][1] }}</p>
+        <span>{{ catalog.section(key)|length }} 篇 <b>↗</b></span></a
+      >{% endfor %}
+    </div>
+  </section>
+  <section class="freshness">
+    <div>
+      <p class="eyebrow">03 / FOLLOW THE SOURCE</p>
+      <h2>读完整版本，也看它如何变化。</h2>
+      <p>
+        本站发布经过校验的中文快照。独立仓库与 Cursor
+        原始上游的提交分别记录；新提交不代表翻译已经同步。
+      </p>
+    </div>
+    <a class="text-link" href="{{ url('/changes/') }}">查看上游变更 →</a>
+  </section>
+</div>
+{% endblock %}
