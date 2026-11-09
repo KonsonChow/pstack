@@ -6,6 +6,8 @@ Markdown and ``translations/zh-CN`` remain authoritative. The two editorial
 notes in ``docs/bilingual`` are published separately and excluded from the
 translation coverage count. Website maintenance files use reStructuredText so
 they do not enter the Markdown translation inventory.
+Dependency files under ``node_modules`` and generated statechart test reports
+under ``skills/statechart/scripts/test/corpus`` are excluded from that inventory.
 
 Build and preview
 -----------------
@@ -71,6 +73,8 @@ After importing and reviewing a new source version, update
 commit, the original Cursor subtree import commit, and the plugin version. The
 build verifies the independent commit is an ancestor of HEAD and the version
 matches the plugin manifest. A full git history is required.
+Local previews also accept a baseline included in an in-progress merge, before
+its merge commit exists. Publishing still follows the main-branch workflow.
 
 Fetch metadata explicitly when needed.
 

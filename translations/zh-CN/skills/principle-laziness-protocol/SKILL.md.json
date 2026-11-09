@@ -1,6 +1,6 @@
 {
   "source": "skills/principle-laziness-protocol/SKILL.md",
-  "sha256": "9006579e9e3f33955d17569733db688ae65f22577dc3b21803d219a5a8445aff",
+  "sha256": "1be6e7a435f26a75a76eb848b9c3d611b9977d0f5822361753244da25ca3ca45",
   "blocks": [
     {
       "en": "---\nname: principle-laziness-protocol\ndescription: \"Apply when refactoring, evaluating diff size, or tempted to add abstractions, layers, or signal threading. Bias toward deletion and the smallest change that solves the problem.\"\ndisable-model-invocation: true\n---\n\n",
@@ -11,16 +11,8 @@
       "zh": "# 懒惰协议\n\n"
     },
     {
-      "en": "Aim for the most result with the least code and complexity.\n\n",
-      "zh": "用最少的代码和复杂度获得最大的结果。\n\n"
-    },
-    {
-      "en": "- **Prefer deletion.** When asked to refactor or improve, look for removals before additions.\n- **Maintain a flat call hierarchy.** Avoid deep call chains. A rich interface that hides substantial work is not a deep call chain. If answering a question requires tracing through more than 3 files or layers, flatten it.\n- **Consolidate decisions.** Do not repeat the same choice in several places. Put it behind one source of truth and pass the result as a simple flag.\n- **Minimize the diff.** Make the smallest change that solves the problem. Fewer lines beat \"elegant\" boilerplate.\n- **Question the threading.** If a task asks you to pass a new signal through types, schemas, pipelines, or similar layers, stop and look for a more direct path.\n- **Sweat the small leaks.** Remove tiny pass-throughs, representation leaks, and duplicated choices before they spread. Small leaks compound into permanent coordination costs.\n\n",
-      "zh": "- **优先删除。** 被要求重构或改进时，先寻找可以移除的内容，再考虑新增。\n- **保持调用层级扁平。** 避免深调用链。能够封装大量工作的丰富接口，并不等于深调用链。如果回答一个问题需要追踪超过 3 个文件或层次，就将它扁平化。\n- **集中决策。** 不要在多个地方重复同一个选择。让一个权威来源作出选择，再用简单标志传递结果。\n- **最小化 diff。** 选择能解决问题的最小改动。更少的代码胜过“优雅”的样板代码。\n- **质疑逐层传递。** 如果任务要求把新信号穿过类型、schema、流水线或类似层次，先停下来寻找更直接的路径。\n- **认真处理微小泄漏。** 在小型透传、表示泄漏和重复选择扩散之前移除它们。微小泄漏会累积成长期的协调成本。\n\n"
-    },
-    {
-      "en": "**The test:** If a human developer would find the code exhausting to maintain, it is a bad solution.\n",
-      "zh": "**检验：** 如果人类开发者会觉得这份代码维护起来令人疲惫，它就是一个糟糕的方案。\n\n"
+      "en": "- **Consolidate decisions.** Do not repeat the same choice in several places. Put it behind one source of truth and pass the result as a simple flag.\n- **Minimize the diff.** Make the smallest change that solves the problem. Fewer lines beat \"elegant\" boilerplate.\n",
+      "zh": "- **统一决策。** 不在多个位置重复相同选择，建立单一权威来源，将结果作为简单标志传递。\n- **缩小差异。** 采用能解决问题的最小修改。更少代码优于所谓优雅的样板。\n\n"
     }
   ]
 }

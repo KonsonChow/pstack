@@ -1,6 +1,6 @@
 {
   "source": "skills/typescript-best-practices/references/patterns.md",
-  "sha256": "faa1362055374452efccac1b629677c61acfb0bcc6c4e3311836b5715638ee18",
+  "sha256": "12e70c9419a8b3f5d6a1ab80e272c1f00a43ac0b3bbf72d68199033570e5de77",
   "blocks": [
     {
       "en": "# TypeScript patterns\n\n",
@@ -19,8 +19,8 @@
       "zh": "为原始类型添加品牌标记，防止混用。在边界处校验一次，后续代码信任类型。\n\n"
     },
     {
-      "en": "```ts\ntype AgentId = string & { readonly __brand: \"AgentId\" };\n\nfunction parseAgentId(input: string): AgentId {\n  if (!isUUID(input)) throw new Error(`Invalid agent id: ${input}`);\n  return input as AgentId;\n}\n\nfunction focusAgent(id: AgentId): void {\n  /* input is trusted */\n}\n```\n\n",
-      "zh": "```ts\ntype AgentId = string & { readonly __brand: \"AgentId\" };\n\nfunction parseAgentId(input: string): AgentId {\n  if (!isUUID(input)) throw new Error(`Invalid agent id: ${input}`);\n  return input as AgentId;\n}\n\nfunction focusAgent(id: AgentId): void {\n  /* 输入已可信 */\n}\n```\n\n"
+      "en": "```ts\ntype AgentId = string & { readonly __brand: \"AgentId\" };\n\nfunction isAgentId(input: string): input is AgentId {\n  return isUUID(input);\n}\n\nfunction parseAgentId(input: string): AgentId {\n  if (!isAgentId(input)) throw new Error(`Invalid agent id: ${input}`);\n  return input;\n}\n\nfunction focusAgent(id: AgentId): void {\n  /* input is trusted */\n}\n```\n\n",
+      "zh": "```ts\ntype AgentId = string & { readonly __brand: \"AgentId\" };\n\nfunction isAgentId(input: string): input is AgentId {\n  return isUUID(input);\n}\n\nfunction parseAgentId(input: string): AgentId {\n  if (!isAgentId(input)) throw new Error(`Invalid agent id: ${input}`);\n  return input;\n}\n\nfunction focusAgent(id: AgentId): void {\n  /* input is trusted */\n}\n```\n\n"
     },
     {
       "en": "Match the `readonly __brand: 'X'` shape. Don't invent a new convention.\n\n",

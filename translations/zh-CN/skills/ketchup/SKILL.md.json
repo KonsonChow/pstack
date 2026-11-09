@@ -1,0 +1,86 @@
+{
+  "source": "skills/ketchup/SKILL.md",
+  "sha256": "94d04bd4f4dd5d77229f2a349796b1863143edac7551a6c2068e1d80f73228b9",
+  "blocks": [
+    {
+      "en": "---\nname: ketchup\ndescription: \"Catch the user up on what changed in this chat since their last message, in plain words and small visuals. List every item waiting on them with what they need to decide it from the reply alone. Use for /ketchup.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: ketchup\ndescription: \"用通俗语言和小幅图示，说明本聊天自用户上次消息以来的变化。列出每项待用户决定的事，并给出仅凭回复就能决定的依据。用于 /ketchup。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Ketchup\n\n",
+      "zh": "# Ketchup 进展回顾\n\n"
+    },
+    {
+      "en": "Catch the user up on what changed in this chat since the last message they wrote before `/ketchup`, and help them understand each change, not only where it stands. Then lay out every call waiting on them so they can make it from your reply alone. Notifications and subagent results are not their messages. Assume the user remembers their last message and nothing after it.\n\n",
+      "zh": "回顾用户输入 `/ketchup` 之前最后一条消息以来，本聊天发生的变化。帮助用户理解每项变化，而不只是当前状态。随后列出每项待他们决定的事，让他们仅凭回复就能作决定。通知和子代理结果不算用户消息。假定用户只记得自己的上条消息，不知道之后发生了什么。\n\n"
+    },
+    {
+      "en": "Use [`/bro`](../bro/SKILL.md)'s voice, not its task: plain words, short sentences, no jargon, like one person catching up another. Say what changed for the user, not how you did it. Say \"the tests pass\", not \"CI is green\". Leave out hashes, file paths, commands, build numbers, and test counts unless the user needs one to act. Call each PR, branch, or agent by a name the user would know, not by a label you invented. If a fact needs context to make sense, give the context or leave the fact out.\n\n",
+      "zh": "使用 [`/bro`](../bro/SKILL.md) 的语气，不执行它的任务：常用词、短句、无术语，像一个人向另一个人说明进展。说明用户得到了什么变化，不叙述执行过程。写“测试通过”，不写“CI 变绿”。除非用户行动需要，否则不写哈希、路径、命令、构建编号和测试数量。PR、分支和代理使用用户认识的名称，不用自创标签。事实需要背景才能理解时，补上背景或省略该事实。\n\n"
+    },
+    {
+      "en": "## Gather what changed\n\n",
+      "zh": "## 收集变化\n\n"
+    },
+    {
+      "en": "Keep this turn read-only. Make visuals only from what you already have: do not change code, start an app or a job, or post anything. Collect your own work since that message, reports from subagents, and messages from anyone else in this chat. Check the current state of each PR, CI run, or agent this chat touched. Check each number you will show against the facts it comes from, and say so when you correct one.\n\n",
+      "zh": "本轮只读。图示仅使用已有材料，不改代码、不启动应用或任务、不发布内容。收集该消息之后自己的工作、子代理报告和本聊天其他人的消息。核对聊天涉及的每个 PR、CI 运行和代理的当前状态。所有要展示的数字都与原始事实核对，纠正数字时明确说明。\n\n"
+    },
+    {
+      "en": "An action item is a call or step only the user can take, such as a product choice, an approval, an irreversible action, or access you lack. Include any still waiting on the user, even one raised before their last message. Work you can still do yourself is not an action item. Never make up a call to fill the reply. A step the user did not ask for and the work does not need is not an action item, unless it is irreversible and waiting on the user: give it one line and no visual.\n\n",
+      "zh": "待办事项只能是用户才能作出的决定或步骤，如产品选择、批准、不可逆行动，或你缺少的访问权限。尚待用户处理的都要列出，包括上条消息之前提出的事。自己还能完成的工作不算用户待办。不要为了填满回复虚构决定。用户没要求且工作不需要的步骤不算待办；若它不可逆且正在等待用户，只给一行说明，不画图。\n\n"
+    },
+    {
+      "en": "One call can cover many items, such as each PR in a set awaiting merge. For each item, collect its link, what it changes for users, the evidence behind your pick, its risk, and your pick. Write \"unknown\" for a fact the call needs that you do not know. Leave out a link you do not have.\n\n",
+      "zh": "同一决定可以涵盖多项，例如一组待合并 PR。对每项收集链接、用户行为变化、建议依据、风险和建议。决定所需而未知的事实写“未知”。没有链接就不写链接。\n\n"
+    },
+    {
+      "en": "## Write the reply\n\n",
+      "zh": "## 撰写回复\n\n"
+    },
+    {
+      "en": "Spend words on the calls, not on the story. Keep what happened under 100 words, not counting pictures, and shorter when less happened. Leave out work that changed nothing for the user. Give each item about 30 words. The reply grows with the number of items: two items need well under 150 words in all, not counting pictures, and thirty need far more. Never cut items or shrink them to stay under a word count: no count in place of a list, and no link in place of an item. A link can add depth, but the reply alone must be enough to decide.\n\n",
+      "zh": "把篇幅用在决策事项上，少叙述过程。进展部分控制在 100 个英文词以内，图片不计，变化少时更短。省略没有改变用户结果的工作。每个事项约用 30 个英文词。回复长度随事项数量增加：两项通常远少于 150 词，三十项则长得多。不要为字数限制删项目或过度压缩；不能以数量代替列表，也不能以链接代替事项。链接可以补充深度，但仅凭回复必须足以决定。\n\n"
+    },
+    {
+      "en": "Open with one short sentence that names what waits on the user, or says nothing does. The action items give the detail. If nothing happened and nothing waits on the user, say so and stop.\n\n",
+      "zh": "用一句短话说明有什么在等用户，或说明没有待办。细节放在待办列表中。如果没有变化，也没有待用户处理的事，就说明并结束。\n\n"
+    },
+    {
+      "en": "Then show what happened, pictures first. Embed inline the screenshots and videos the work produced, then any diagram that explains a change. Then sum up in one short bullet per thing the user asked for: what came of it, and whether it is done, still running, failed, or not checked. Write each line the way you would say it out loud: \"Search was slow from a missing index\", not \"Search review: done\" or \"Slow search: missing index\". Name any bug found and fixed on the way. Each line must stay true when read alone. Never mark something done that still waits on the user, and leave out anything the action items say. Under the summary, give at most three short lines that change what the user knows or must do. Then name in one line any work left that you can do yourself.\n\n",
+      "zh": "随后展示进展，图片优先。内嵌工作产出的截图和视频，再放解释变化的图示。对用户要求的每件事用一条简短项目说明结果，以及已完成、仍在运行、失败或尚未检查。像口头说明一样写“搜索缺索引，所以变慢了”，不写“搜索审查：完成”或“搜索慢：缺索引”。说明途中发现并修复的缺陷。每条独立阅读也必须属实。仍待用户处理的事不能写已完成，待办部分已写的内容不重复。摘要下最多补三行会改变用户认知或行动的信息。最后用一行说明自己还能继续完成的工作。\n\n"
+    },
+    {
+      "en": "Then list the action items. Ask the call the user owns, such as merge, approve, or pick, and give your pick. A step you would take first goes in your pick. So does anything that must happen first, and anything that cannot be undone. Give the number or link of each PR, issue, or agent a call is about, also in a call between options.\n\n",
+      "zh": "然后列出待办。提出归用户所有的决定，例如合并、批准或选择，并给出建议。你认为应先执行的步骤放在建议里，包括前置条件和不可撤销后果。每个决定都应标明相关 PR、问题或代理的编号或链接，方案选择也一样。\n\n"
+    },
+    {
+      "en": "Fit the shape to the call. A call about one item is one bullet: the call, your pick, what it changes for users, the evidence behind your pick, and its risk, with the item named once. When items share a call, write the call and your pick once, then give each item its own bullet, riskiest first: its link and name, what it changes for users, the evidence behind your pick, and its risk. Name an item's pick only where it differs from the call's. Give each item's risk even when it is low, such as \"Low risk: only the colors change.\" Say what waiting costs only when it is more than a delay, such as a deadline or lost data.\n\n",
+      "zh": "按决定选择形式。单项决定用一条项目说明：决定、建议、用户变化、证据和风险，只点名一次。多项共用一个决定时，决定和建议只写一次，再逐项列出，风险最高的在前；每项包含链接与名称、用户变化、建议依据和风险。只有某项建议与整体建议不同时才单独写。即使风险低也要说明，例如“风险低：只改变颜色”。等待若只带来延迟则无需说明代价，有截止期限或数据损失等后果时才写。\n\n"
+    },
+    {
+      "en": "For a call between options, give every option the work weighed, each with what it gets the user and what it costs, and the current state when there is one. Those costs are the call's risk, so add no separate risk line. When the screenshots above show the options, write each option's gain and cost under its screenshot.\n\n",
+      "zh": "选择方案时，列出工作中考虑过的每个选项，说明用户得到什么、付出什么，并在适用时说明现状。这些代价就是风险，不另加风险行。如果上方截图展示了各方案，把各自收益与代价写在对应截图下。\n\n"
+    },
+    {
+      "en": "## Visuals\n\n",
+      "zh": "## 图示\n\n"
+    },
+    {
+      "en": "A visual is a picture: a screenshot, a video, a Mermaid diagram, a chart or diagram from `/visualize` (Cursor) or your harness's charting tool, or a generated image. A Markdown table is not a visual, even with before and after columns.\n\n",
+      "zh": "图示是图片：截图、视频、Mermaid 图、由 `/visualize`（Cursor）或当前环境绘图工具生成的图表，以及生成图像。Markdown 表格不算图示，即使列出了前后对照。\n\n"
+    },
+    {
+      "en": "When something is easier to grasp as a picture than as sentences, draw it: how a design or system works, a PR stack or dependency chain with each PR's state, a before and after of a fix, or options side by side. Never draw a status list, a list of action items, or boxes with nothing connecting them. Never give a fact twice, in text or across visuals.\n\n",
+      "zh": "图片比文字更容易解释时就绘图，例如设计或系统如何运作、带每个 PR 状态的堆栈或依赖链、修复前后，或并排方案。不要画状态清单、待办清单或互不连接的方框。文字之间、图示之间都不重复同一事实。\n\n"
+    },
+    {
+      "en": "Keep each visual small enough to read at a glance: at most six boxes, with at most eight words in each. Write labels as plain words a person would say, not tags like \"Tests: pass\". A fact that needs a sentence belongs in the text, or nowhere.\n\n",
+      "zh": "每张图要能一眼看懂，最多六个方框，每框最多八个英文词。标签使用人会说的普通话，不写“测试：通过”之类标签。需要完整句子解释的事实放正文，或省略。\n\n"
+    },
+    {
+      "en": "Embed screenshots and videos inline when the change is visible, not only as links. If a visible change has none, mark its summary line \"No screenshot yet,\" and say there what changed on screen. Draw diagrams and charts from facts you have: a Mermaid diagram for how things connect and a chart for numbers (`/visualize` in Cursor, or your harness's charting tool). Never invent a number, and never draw or generate a picture of a screen you did not capture. Link only artifacts that exist.\n",
+      "zh": "可见变化应内嵌截图和视频，不能只给链接。如果没有截图，在对应摘要标明“尚无截图”，并说明屏幕上改了什么。依据已有事实画图，用 Mermaid 表达连接关系，用图表表达数字；Cursor 可用 `/visualize`，其他环境用自己的绘图工具。不虚构数字，不绘制或生成从未截取的屏幕。只链接真实存在的产物。\n\n"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "source": "skills/in-your-own-words/SKILL.md",
+  "sha256": "fa8ba74e27d7be371dc270ec78bbf816411477d0dfab185356c861ac8dd413ad",
+  "blocks": [
+    {
+      "en": "---\nname: in-your-own-words\ndescription: \"Restate in your own words what you think the user's goals are and what problem they're trying to solve. Use for /in-your-own-words.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: in-your-own-words\ndescription: \"用自己的话复述你理解的用户目标和试图解决的问题。用于 /in-your-own-words。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "Restate in your own words what you think the user's goals are and what problem they're trying to solve.\n",
+      "zh": "用自己的话复述你理解的用户目标，以及他们试图解决的问题。\n\n"
+    }
+  ]
+}

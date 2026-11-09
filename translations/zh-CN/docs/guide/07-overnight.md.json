@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/07-overnight.md",
-  "sha256": "d7bd33a3d880768688dff4c1c2b5481ca9f0f194f5d97e44b65c9f96624d3ff0",
+  "sha256": "0ec096f152aaa744cb93e581cc6bd972aa32986d00c560e94a02bc1147e972fb",
   "blocks": [
     {
       "en": "# Run work while you sleep\n\n",
@@ -91,6 +91,10 @@
       "zh": "生成摘要之前，这个 skill 会启动一个不同模型系列的评审者，阅读记录和对话。回复最后的 Attention 部分列出值得你重点检查的事项。先读这一部分，再查看它引用的记录行。你要复核的是决策，而不是重读一整夜的对话。"
     },
     {
+      "en": "For a quick status instead of an audit, run [`/ketchup`](../../skills/ketchup/SKILL.md) in the chat that ran the work. It reads only, and tells you in plain words what changed since your last message, with the screenshots and small diagrams the work produced. Then it lists each call waiting on you, such as a merge, an approval, or a choice between options, with its pick, the evidence, and the risk, so you can decide from the reply alone.\n\n",
+      "zh": "若只想了解进度而不审计，在执行工作的聊天中运行 [`/ketchup`](../../skills/ketchup/SKILL.md)。它只读检查，用通俗语言说明自你上次消息以来的变化，并呈现工作生成的截图和小幅图示。随后列出每项待你决定的事，如合并、批准或方案选择，附建议、证据和风险，让你仅凭回复就能决定。\n\n"
+    },
+    {
       "en": "## When the night holds a queue, not a task\n\n",
       "zh": "## 当夜间工作是一组任务"
     },
@@ -99,24 +103,24 @@
       "zh": "上述约定把一个任务推进到一个完成条件。有些夜间工作是一组独立改动，甚至整个项目计划。下面三套执行规程把同样的验证机制扩展到更大范围。"
     },
     {
-      "en": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) runs a queue of independent PRs to merged. Each PR gets one owner agent that carries it from build through merge, and no owner merges on its own verdict. A swarm of fresh verifiers starts a round at the owner's code-ready head and again at every later push that changes the patch. Only a clean verdict on the patch that merges authorizes the merge:\n\n",
-      "zh": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) 把一组独立 PR 推进到合入。每个 PR 有一个负责 agent，从实现一路负责到合并，但任何负责 agent 都不能仅凭自己的判断合并。新启动的一组验证者会在负责 agent 达到代码就绪的 commit 处启动一轮验证，并在后续每次改动补丁的推送时再次启动。只有对最终合入补丁给出的干净通过结论，才能授权合并：\n\n"
+      "en": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) runs a queue of independent PRs to merged. Each PR gets one owner agent that carries it from build through merge, and no owner merges on its own verdict. A swarm of fresh verifiers checks the owner's code-ready head. A later rebase or minor fix gets one fresh verifier, and only new behavior or a large new diff calls the full swarm again. Only a clean verdict on the patch that merges authorizes the merge:\n\n",
+      "zh": "[Autopilot-full](../../skills/poteto-mode/playbooks/autopilot-full.md) 为每个 PR 分配负责人，并在合并前做独立验证。完整 swarm 先运行一次；之后的 rebase 或小修只需一位新的验证者。只有新增行为或大幅新增差异，才再次运行完整 swarm。\n\n"
     },
     {
       "en": "```text\n/poteto-mode full autopilot on this queue. each item is independent. i want them merged by morning.\n```\n\n",
       "zh": "```text\n/poteto-mode 对这个队列全自动执行。每项任务互相独立。我希望明早之前全部合入。\n```"
     },
     {
-      "en": "[Autopilot-stack](../../skills/poteto-mode/playbooks/autopilot-stack.md) runs the same owner loop but ships nothing. You wake up to one linear base-branch stack with a verifier's verdict on every link, and you review and land it yourself. Pick it over Autopilot-full when the changes are coupled, or when you want your own eyes on the work before anything merges:\n\n",
-      "zh": "[Autopilot-stack](../../skills/poteto-mode/playbooks/autopilot-stack.md) 使用相同的负责者循环，但不执行合入。第二天你会得到一个线性的基线分支 PR 栈，每一环都有验证者的判断，由你自行评审并合入。如果改动相互依赖，或你希望所有改动合并前都亲自看过，应选择它而不是 Autopilot-full："
+      "en": "[Autopilot-stack](../../skills/poteto-mode/playbooks/autopilot-stack.md) is Autopilot-full without the merge. You wake up to verified PRs, each with its verdict, and you review and land them yourself. A PR stacks only on a PR it builds on. Pick it over Autopilot-full when you want your own eyes on the work before anything merges:\n\n",
+      "zh": "[Autopilot-stack](../../skills/poteto-mode/playbooks/autopilot-stack.md) 是不合并 PR 的 Autopilot-full。它交付经过验证、各自附有审查结论的 PR，供你合并。只有确实依赖另一 PR 时才堆叠。适合希望保留最终合并权的情况。\n\n"
     },
     {
-      "en": "```text\n/poteto-mode autopilot these five changes but stack them, don't ship. i'll land the stack in the morning.\n```\n\n",
-      "zh": "```text\n/poteto-mode 自动推进这五项改动，但组织成 PR 栈，不要合入。我明早自己合入。\n```"
+      "en": "```text\n/poteto-mode autopilot these five changes, but don't merge. i'll land them in the morning.\n```\n\n",
+      "zh": "```text\n/poteto-mode autopilot these five changes, but don't merge. i'll land them in the morning.\n```\n\n"
     },
     {
-      "en": "[Orchestrate](../../skills/poteto-mode/playbooks/orchestrate.md) is for a program that outlives any single agent: multi-day, many stacked PRs, fleets of subagents under one standing coordinator chat. The coordinator authors briefs, collects what its subagents finish, keeps the lowest unmerged PR green, and never writes code itself. It's deliberately heavy machinery. If one agent could finish the work in a session, the playbook itself routes you back to the overnight contract above:\n\n",
-      "zh": "[Orchestrate](../../skills/poteto-mode/playbooks/orchestrate.md) 用于超过单个 agent 生命周期的项目级工作：持续多天、包含多个相互依赖的 PR，由一个长期协调对话管理大量 subagent。协调者编写任务说明、收集 subagent 的完成结果、让最底层尚未合入的 PR 保持检查通过，自己从不写代码。这套机制刻意设计得较重。如果一个 agent 能在一次会话内完成，执行规程会把你引回上面的夜间执行约定："
+      "en": "[Orchestrate](../../skills/poteto-mode/playbooks/orchestrate.md) is for a program that outlives any single agent: multi-day, many stacked PRs, fleets of subagents under one standing coordinator chat. The coordinator decides which agent does each piece of work, checks what each one produces, and never writes code itself. If one agent could finish the work in a session, the playbook itself routes you back to the overnight contract above:\n\n",
+      "zh": "[Orchestrate](../../skills/poteto-mode/playbooks/orchestrate.md) 面向持续多天、横跨多个 PR 的大型计划。根代理决定每项工作交给哪个代理，并在每个负责人接到下一条消息时核查其工作。它根据产出来追踪进度。\n\n"
     },
     {
       "en": "```text\n/poteto-mode orchestrate the store migration. own it until every package is converted and merged. i'll check in twice a day.\n```\n\n",

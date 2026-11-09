@@ -40,7 +40,7 @@ SECTIONS = {
 MD = MarkdownIt('commonmark', {'html': True}).enable('table').enable('strikethrough')
 SAFE_TAGS = set(bleach.sanitizer.ALLOWED_TAGS) | {
     'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'code', 'hr', 'br',
-    'img', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'details', 'summary', 'del',
+    'img', 'picture', 'source', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'details', 'summary', 'del',
 }
 
 
@@ -56,7 +56,7 @@ class Document:
 
     def markdown(self, language):
         text = ''.join(block['en'] for block in self.blocks) if language == 'en' else '\n\n'.join(block['zh'].rstrip() for block in self.blocks) + '\n'
-        return re.sub(r'\A---\s*\n.*?\n---\s*\n', '', text, count=1, flags=re.S)
+        return reading_markdown(text)
 
 
 @dataclass(frozen=True)
@@ -86,8 +86,13 @@ def route_for(source):
     return '/references/' + str(source.with_suffix('')) + '/', 'references'
 
 
+def reading_markdown(text):
+    text = re.sub(r'\A---\s*\n.*?\n---\s*\n', '', text, count=1, flags=re.S)
+    return re.sub(r'(?im)^<h([1-6])\b[^>]*>(.*?)</h\1>[ \t]*$', lambda m: '#' * int(m[1]) + ' ' + m[2], text)
+
+
 def title_of(markdown, fallback):
-    tokens = MD.parse(re.sub(r'\A---\s*\n.*?\n---\s*\n', '', markdown, count=1, flags=re.S))
+    tokens = MD.parse(reading_markdown(markdown))
     for i, token in enumerate(tokens):
         if token.type == 'heading_open':
             return tokens[i + 1].content.replace('`', '')
@@ -208,13 +213,17 @@ def render_document(catalog, doc, base, revision, root, output, defects):
             if lang == 'zh' and index > 0 and level in (2, 3):
                 toc.append({'anchor': anchor, 'title': label.replace('`', ''), 'level': level})
         for token in tokens:
+            if token.type == 'html_block':
+                token.content = bilingual.html_links(token.content, lambda href: rewrite_link(catalog, doc, href, base, revision, root, output, defects))
             for child in token.children or []:
+                if child.type == 'html_inline':
+                    child.content = bilingual.html_links(child.content, lambda href: rewrite_link(catalog, doc, href, base, revision, root, output, defects))
                 attribute = 'href' if child.type == 'link_open' else 'src' if child.type == 'image' else None
                 if attribute:
                     href = child.attrGet(attribute)
                     child.attrSet(attribute, rewrite_link(catalog, doc, href, base, revision, root, output, defects))
         html = MD.renderer.render(tokens, MD.options, {})
-        rendered[lang] = Markup(bleach.clean(html, tags=SAFE_TAGS, attributes={'*': ['id', 'data-anchor', 'data-document-title'], 'a': ['href', 'title'], 'img': ['src', 'alt', 'title'], 'code': ['class'], 'details': ['open'], 'th': ['align'], 'td': ['align']}, protocols=['http', 'https', 'mailto'], strip=False))
+        rendered[lang] = Markup(bleach.clean(html, tags=SAFE_TAGS, attributes={'*': ['id', 'data-anchor', 'data-document-title'], 'a': ['href', 'title'], 'img': ['src', 'alt', 'title', 'width'], 'source': ['srcset', 'media'], 'code': ['class'], 'details': ['open'], 'th': ['align'], 'td': ['align']}, protocols=['http', 'https', 'mailto'], strip=False))
     return rendered, toc
 
 
@@ -328,7 +337,12 @@ def content_provenance(root):
     for field in ('mirror', 'original'):
         if not re.fullmatch(r'[a-f0-9]{7,40}', data[field]):
             raise ValueError(f'Invalid provenance revision {field}')
-    subprocess.run(['git', 'merge-base', '--is-ancestor', data['mirror'], 'HEAD'], cwd=root, check=True)
+    included = subprocess.run(['git', 'merge-base', '--is-ancestor', data['mirror'], 'HEAD'], cwd=root).returncode == 0
+    if not included:
+        merge = subprocess.run(['git', 'rev-parse', '--verify', 'MERGE_HEAD'], cwd=root, capture_output=True, text=True)
+        if merge.returncode:
+            raise ValueError('The imported mirror revision is not included in this checkout')
+        subprocess.run(['git', 'merge-base', '--is-ancestor', data['mirror'], merge.stdout.strip()], cwd=root, check=True)
     version = json.loads((root / '.cursor-plugin/plugin.json').read_text())['version']
     if data['version'] != version:
         raise ValueError('Update website/content-provenance.json after reviewing the source import')
@@ -344,7 +358,12 @@ def principle_groups(catalog):
         if part in titles:
             groups.append((titles[part], []))
         elif groups:
-            for name in re.findall(r'\*\*(principle-[a-z-]+)\*\*', part):
+            for line in part.splitlines():
+                heading = re.match(r'- \*\*([^*]+)\*\*', line)
+                if not heading:
+                    continue
+                explicit = re.search(r'\*\*(principle-[a-z-]+)\*\*', line)
+                name = explicit[1] if explicit else 'principle-' + re.sub(r'[^a-z0-9 -]', '', heading[1].lower()).strip().replace(' ', '-')
                 doc = catalog.by_source.get(PurePosixPath('skills') / name / 'SKILL.md')
                 if doc:
                     groups[-1][1].append(doc)

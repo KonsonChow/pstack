@@ -43,6 +43,16 @@ class PublishingTests(unittest.TestCase):
         tokens = site.MD.parse('# A\n\n## A\n\n## A-1\n\n## A\n')
         self.assertEqual([item[1] for item in site.heading_data(tokens)], ['a', 'a-1', 'a-1-1', 'a-2'])
 
+    def test_readme_html_title_and_images_publish_under_the_base(self):
+        doc = self.catalog.by_source[PurePosixPath('README.md')]
+        self.assertEqual(doc.title_en, 'pstack — standalone mirror')
+        page = (self.output / 'about/pstack/index.html').read_text()
+        for name in ('header-light.svg', 'header-dark.svg', 'sponsor-inbox-light.svg', 'sponsor-plannotator-light.svg'):
+            self.assertIn('/pstack/assets/source/mirror-assets/' + name, page)
+            self.assertTrue((self.output / 'assets/source/mirror-assets' / name).is_file())
+        rendered = site.bilingual.local_links('<img src="mirror-assets/header-light.svg">', site.ROOT / 'README.md', site.ROOT / 'docs/bilingual/README.md')
+        self.assertIn('src="../../mirror-assets/header-light.svg"', rendered)
+
     def test_chinese_paragraphs_preserve_headings(self):
         doc = self.catalog.by_source[PurePosixPath('MIRROR.md')]
         headings = site.heading_data(site.MD.parse(doc.markdown('zh')))

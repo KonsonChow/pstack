@@ -1,0 +1,58 @@
+{
+  "source": "skills/ketchup-video/SKILL.md",
+  "sha256": "027aed9a01adf208aeac3a134f47d12f7c1e42d6fea03095aedc2bae58cdcfd1",
+  "blocks": [
+    {
+      "en": "---\nname: ketchup-video\ndescription: \"Catch the user up like /ketchup, with a short subtitled video of slides for what happened and the waiting calls as text under it. Use for /ketchup-video.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: ketchup-video\ndescription: \"像 /ketchup 一样回顾进展，用带字幕的简短幻灯片视频说明变化，在下方以文字列出待用户决定的事项。用于 /ketchup-video。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "# Ketchup video\n\n",
+      "zh": "# Ketchup 视频回顾\n\n"
+    },
+    {
+      "en": "Follow [`/ketchup`](../ketchup/SKILL.md), but show what happened in a short subtitled video instead of its summary and visuals. Its window starts at the last message the user wrote before `/ketchup-video`, not before any earlier `/ketchup`. Writing and rendering the video, outside the repo, is the one exception to its read-only rule. The reply is ketchup's opening sentence, the embedded video, one line naming any work left that you can do yourself, and the action items. When the video shows a call's options, call each option by the name the video gives it. If the render fails, say so in one line and give only the calls.\n\n",
+      "zh": "遵循 [`/ketchup`](../ketchup/SKILL.md)，但用带字幕的简短视频代替摘要和图示。时间窗口从用户输入 `/ketchup-video` 前的最后一条消息开始，不从更早的 `/ketchup` 开始。在仓库外写入并渲染视频，是只读规则的唯一例外。回复包含 ketchup 的开场句、内嵌视频、一行自己仍可完成的工作，以及用户待办。视频展示选择方案时，待办用视频里的名称称呼各选项。渲染失败时用一行说明，只给待办。\n\n"
+    },
+    {
+      "en": "## Slides\n\n",
+      "zh": "## 幻灯片\n\n"
+    },
+    {
+      "en": "Use the screenshots, recordings, diffs, and data the work produced, not the chat's prose about them. Before you draw, write the one sentence the user should leave with and one line per slide. Drop each slide that does not change what the user knows. Use at most 10 slides, and fewer is better. Neither note goes in the reply.\n\n",
+      "zh": "使用工作产出的截图、录屏、差异和数据，不使用聊天中对它们的描述。绘制前，写一句用户应记住的结论，以及每页一行提纲。删去不会改变用户认知的页面。最多十页，越少越好。这些准备笔记不放入回复。\n\n"
+    },
+    {
+      "en": "Each slide makes one point. Build the slides on one picture and change it from slide to slide, rather than cut to an unrelated one. A color or shape means the same thing on every slide. Show the work in pictures, such as how a system works, a PR stack with each PR's state, a before and after of a fix, or options side by side. Point at what changed with arrows, highlights, and motion. A slide is never a bullet list, a status list, a table, or boxes with nothing connecting them.\n\n",
+      "zh": "每页只表达一个意思。围绕同一幅图逐页改变，不切换到不相关画面。颜色和形状在所有页面中保持相同含义。用图片展示工作，如系统原理、带各 PR 状态的堆栈、修复前后或并排方案。通过箭头、高亮和动画指出变化。幻灯片不能是项目清单、状态清单、表格或互不连接的方框。\n\n"
+    },
+    {
+      "en": "Keep text to the minimum. Put each label on the thing it names, in plain words a person would say, not tags like \"Tests: pass\". Never caption what a picture shows, and never give a fact twice, across slides or in the text under them.\n\n",
+      "zh": "文字尽量少。标签放在所指对象上，用人会说的普通话，不写“测试：通过”。不要用说明文字重复图片，也不在页面之间或视频下的文字中重复同一事实。\n\n"
+    },
+    {
+      "en": "Show what came of each thing the user asked for, and whether it is done, still running, failed, or not checked. Never show something done that still waits on the user. Show any bug found and fixed on the way. If a visible change has no screenshot, say so on its slide and name what changed on screen. Draw only from facts you have. Never invent a number, and never draw a screen you did not capture.\n\n",
+      "zh": "展示用户要求的每件事的结果，说明已完成、运行中、失败或尚未检查。仍待用户处理的事不能标成完成。展示途中发现并修复的缺陷。可见变化没有截图时，在该页说明，并点明屏幕改了什么。只依据已有事实，不虚构数字，不绘制未截取的屏幕。\n\n"
+    },
+    {
+      "en": "## Subtitles\n\n",
+      "zh": "## 字幕\n\n"
+    },
+    {
+      "en": "Give each slide one short subtitle line, about ten words, that says its point the way you would tell the user, from only what that slide shows. Say what the picture means rather than read out its labels. Put the subtitle in a strip below the slide, the same height on every slide and empty except for the subtitle, so it never covers the slide. Set it small, but readable when the video plays at chat size.\n\n",
+      "zh": "每页给一句短字幕，约十个英文词，只依据该页画面，像向用户口头说明一样点出要旨。说明图的含义，不逐字朗读标签。字幕放在页面下方的独立条带中，每页同高，除字幕外保持空白，避免遮住画面。字号要小，但在聊天尺寸播放时仍可读。\n\n"
+    },
+    {
+      "en": "## Render\n\n",
+      "zh": "## 渲染\n\n"
+    },
+    {
+      "en": "Render one silent landscape video, such as an mp4, with motion between slides. Every frame is the slide itself, edge to edge, above its subtitle strip. Make the frames from the slides, never by recording a screen, and burn each subtitle into its slide's frames so it stays on screen for the slide's whole hold. The hold is the time a slide is fully on screen, not counting the motion into or out of it. Hold each slide long enough to read the words it adds, at least one second for each three words. A slide adds its subtitle and each word that was not on the slide before it, including a label it changes. The first slide adds all its words. Words inside a screenshot do not count.\n\n",
+      "zh": "渲染一个无声横屏视频，例如 mp4，页面间有转场。每帧由幻灯片本身铺满字幕条带上方，直接由页面生成，不录制屏幕。将字幕烧录到该页的所有帧中，在整段停留时间内持续显示。停留时间仅指页面完全显示的时段，不含转入转出动画。按每三个新增英文词至少一秒留足阅读时间。新增词包括字幕和上页没有的文字，也包括改变过的标签。首页全部文字都计入，截图内文字不计。\n\n"
+    },
+    {
+      "en": "Before you embed the video, check the rendered file. Look at one frame from each slide at chat size, and check that its subtitle is readable and covers nothing. Measure each hold by matching the file's frames to the slide, not with a still-frame detector, which counts the faint ends of a fade as still. Count the words each slide adds against its measured hold. Fix any slide you cannot read in that time, render again, and check again.\n",
+      "zh": "内嵌视频前检查渲染文件。按聊天尺寸查看每页一帧，确认字幕可读且不遮挡。根据视频帧与页面的匹配测量实际停留时间，不用静帧检测器，因为它可能把淡入淡出的尾端算作静帧。将新增词数与实际停留时间比较。读不完的页面要修改，再渲染、再检查。\n\n"
+    }
+  ]
+}

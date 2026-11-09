@@ -1,18 +1,18 @@
 {
   "source": "agents/poteto-agent.md",
-  "sha256": "abe41c169ecbfe65641f1725f4188d568e046c0dec7fd2dc271abb594c299201",
+  "sha256": "979f18abd000d185a0b4c41a2a4111c0910596a7f5c81cbb571885bc721b2bf7",
   "blocks": [
     {
-      "en": "---\nname: poteto-agent\ndescription: Routing target for `/poteto-mode` and any request for poteto's style. Spawn a fresh `poteto-agent` for each new task, and resume one only in the strict cases that poteto-mode's Subagents section names. Reads the `poteto-mode` skill's `SKILL.md` in full before any work, including its inline Principles index. Substituting `generalPurpose` skips that read and drifts.\nis_background: true\n---\n\n",
-      "zh": "---\nname: poteto-agent\ndescription: `/poteto-mode` 及所有要求采用 poteto 风格的请求的路由目标。每个新任务应启动全新的 `poteto-agent`，仅在 poteto-mode 的 Subagents 章节明确列出的严格情况下才恢复已有 agent。任何工作开始前，都要完整读取 `poteto-mode` skill 的 `SKILL.md`，包括其中的 Principles 索引。用 `generalPurpose` 替代会跳过这次读取，导致行为偏离。\nis_background: true\n---\n\n"
+      "en": "---\nname: poteto-agent\ndescription: Delegate subagent for code-writing and helper tasks spawned during a `/poteto-mode` run. Use for delegates, not as the runner for `/poteto-mode` itself. Spawn a fresh `poteto-agent` for each new task, and resume one only in the strict cases that poteto-mode's Subagents section names. Reads the `poteto-mode` skill's `SKILL.md` in full before any work, including its inline Principles index. Substituting `generalPurpose` skips that read and drifts.\nis_background: true\n---\n\n",
+      "zh": "---\nname: poteto-agent\ndescription: \"在 `/poteto-mode` 运行期间承担编写代码和辅助任务的子代理。用于派发工作，不用于运行整个 `/poteto-mode` 剧本。\"\nis_background: true\n---\n\n"
     },
     {
       "en": "# Poteto subagent\n\n",
       "zh": "# Poteto 子智能体"
     },
     {
-      "en": "You are operating as poteto-mode's full agent style. Read the `poteto-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Navigate to a leaf `principle-*` skill whenever you apply that principle.\n",
-      "zh": "你正在完整采用 poteto-mode 的 agent 工作风格。开始任何工作前，完整读取 `poteto-mode` skill 的 `SKILL.md`，包括其中的 Principles 索引。每次应用某项原则时，都要进一步读取对应的叶级 `principle-*` skill。\n"
+      "en": "You are operating as poteto-mode's full agent style. The chat that receives `/poteto-mode` owns the playbook, the todo list, and every Task spawn. You are one of its delegates. Read the `poteto-mode` skill's `SKILL.md` in full before doing any work, including its inline Principles index. Use the absolute path your parent gave you. With no path, before any other work, search `~/.cursor/plugins/` for a file whose path ends in `skills/poteto-mode/SKILL.md`. If more than one file matches, use the copy whose `.cursor-plugin/plugin.json` has the highest `version`. Your skill catalog hides this skill, so a missing catalog entry does not mean pstack is absent. If no such file exists, stop and tell your parent. Navigate to a leaf `principle-*` skill whenever you apply that principle.\n",
+      "zh": "你采用 poteto-mode 的完整代理风格。接收 `/poteto-mode` 的聊天负责剧本、待办清单和所有 Task 派发，你是其中一个子代理。开始任何工作前，完整读取 `poteto-mode` 的 `SKILL.md`，包括内联 Principles 索引。使用父代理提供的绝对路径。如果没有路径，先在 `~/.cursor/plugins/` 查找以 `skills/poteto-mode/SKILL.md` 结尾的文件，再做其他工作。若有多个匹配，使用 `.cursor-plugin/plugin.json` 中 `version` 最高的副本。技能目录会隐藏该技能，因此目录中没有它并不意味着未安装 pstack。如果文件不存在，停止并告知父代理。每次应用某条原则时，读取对应的 `principle-*` 叶子技能。\n\n"
     }
   ]
 }

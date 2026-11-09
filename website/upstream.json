@@ -4,120 +4,192 @@
       "repository": "backnotprop/pstack",
       "label": "独立仓库",
       "path": null,
-      "checked_at": "2026-10-08T10:00:57+00:00",
-      "head": "3a604672c46cd8187d2b19980eae0a34f9f91138",
-      "imported": "3a604672c46cd8187d2b19980eae0a34f9f91138",
+      "checked_at": "2026-11-09T08:59:28+00:00",
+      "head": "0b239bbfa26674efd5c371055eadfc5f488ac1be",
+      "imported": "0b239bbfa26674efd5c371055eadfc5f488ac1be",
       "api_url": "https://api.github.com/repos/backnotprop/pstack/commits?sha=main&per_page=30",
       "history_url": "https://github.com/backnotprop/pstack/commits/main",
-      "compare_url": "https://github.com/backnotprop/pstack/compare/3a604672c46cd8187d2b19980eae0a34f9f91138...3a604672c46cd8187d2b19980eae0a34f9f91138",
+      "compare_url": "https://github.com/backnotprop/pstack/compare/0b239bbfa26674efd5c371055eadfc5f488ac1be...0b239bbfa26674efd5c371055eadfc5f488ac1be",
       "commits": [
         {
-          "sha": "3a604672c46cd8187d2b19980eae0a34f9f91138",
-          "date": "2026-10-08T01:39:16Z",
-          "subject": "Use kebab-case names for poteto-mode and make-bot-ui",
-          "url": "https://github.com/backnotprop/pstack/commit/3a604672c46cd8187d2b19980eae0a34f9f91138"
+          "sha": "0b239bbfa26674efd5c371055eadfc5f488ac1be",
+          "date": "2026-11-09T06:09:16Z",
+          "subject": "README: use the new glass Plannotator icon in the sponsor cards",
+          "url": "https://github.com/backnotprop/pstack/commit/0b239bbfa26674efd5c371055eadfc5f488ac1be"
         },
         {
-          "sha": "1edf0a5cf2337f69ca81cc65cbdcac7a4ffe29dd",
-          "date": "2026-10-08T01:34:51Z",
-          "subject": "Sync upstream cursor/plugins/pstack @ ccb5507 (0.15.15)",
-          "url": "https://github.com/backnotprop/pstack/commit/1edf0a5cf2337f69ca81cc65cbdcac7a4ffe29dd"
+          "sha": "2c7dd73df7e3658527b4ffba03d9d4630976ce71",
+          "date": "2026-11-08T21:40:09Z",
+          "subject": "Sync log: 2026-11-08 check, no upstream change",
+          "url": "https://github.com/backnotprop/pstack/commit/2c7dd73df7e3658527b4ffba03d9d4630976ce71"
         },
         {
-          "sha": "4aed5afa251ea30ebcd694f894687301ee8bc1b3",
-          "date": "2026-10-08T01:34:04Z",
-          "subject": "upstream: cursor/plugins/pstack @ ccb5507",
-          "url": "https://github.com/backnotprop/pstack/commit/4aed5afa251ea30ebcd694f894687301ee8bc1b3"
+          "sha": "a6342ded43a2437e3c664b46c2cff103787773fd",
+          "date": "2026-11-07T17:56:42Z",
+          "subject": "Sync log: 2026-11-07 check, no upstream change",
+          "url": "https://github.com/backnotprop/pstack/commit/a6342ded43a2437e3c664b46c2cff103787773fd"
         },
         {
-          "sha": "124f622bcaeac490e7e9dac6af83f3ef9611d554",
-          "date": "2026-10-04T15:01:26Z",
-          "subject": "Sync upstream cursor/plugins/pstack @ e43c7ee (0.15.9)",
-          "url": "https://github.com/backnotprop/pstack/commit/124f622bcaeac490e7e9dac6af83f3ef9611d554"
+          "sha": "f104aa8f821a3f7397318b0dc8ad2f7e4a1f8bc7",
+          "date": "2026-11-06T17:03:13Z",
+          "subject": "Sync log: 2026-11-06 check, no upstream change",
+          "url": "https://github.com/backnotprop/pstack/commit/f104aa8f821a3f7397318b0dc8ad2f7e4a1f8bc7"
         },
         {
-          "sha": "c0c3f13cc58005cce7f28c1e6d7ccc439867f171",
-          "date": "2026-10-04T14:58:49Z",
-          "subject": "upstream: cursor/plugins/pstack @ e43c7ee",
-          "url": "https://github.com/backnotprop/pstack/commit/c0c3f13cc58005cce7f28c1e6d7ccc439867f171"
+          "sha": "e388616361ac78eeb2da66c148d882534aca4cb9",
+          "date": "2026-11-05T17:17:01Z",
+          "subject": "statechart: drop the trailing CR at chunk ends (#17)",
+          "url": "https://github.com/backnotprop/pstack/commit/e388616361ac78eeb2da66c148d882534aca4cb9"
         },
         {
-          "sha": "157aae39a733135e93d8b5b19ff62c6a84b0ad56",
-          "date": "2026-09-14T15:57:09Z",
-          "subject": "README: clarify pointer to Cursor's original README",
-          "url": "https://github.com/backnotprop/pstack/commit/157aae39a733135e93d8b5b19ff62c6a84b0ad56"
+          "sha": "4ae1636abe217c7215774bf6b2265916a5c5f648",
+          "date": "2026-11-04T22:50:58Z",
+          "subject": "Sync log: second 2026-11-04 check, no upstream change",
+          "url": "https://github.com/backnotprop/pstack/commit/4ae1636abe217c7215774bf6b2265916a5c5f648"
         },
         {
-          "sha": "5bb3bfe8eb653b6a02ed0f751177aa9284c7e422",
-          "date": "2026-09-14T15:55:44Z",
-          "subject": "README: shorten mirror changes note",
-          "url": "https://github.com/backnotprop/pstack/commit/5bb3bfe8eb653b6a02ed0f751177aa9284c7e422"
+          "sha": "06572d29471840030140f9155a3b57fd6da9fd4c",
+          "date": "2026-11-04T16:16:28Z",
+          "subject": "statechart: run on Windows (#17)",
+          "url": "https://github.com/backnotprop/pstack/commit/06572d29471840030140f9155a3b57fd6da9fd4c"
         },
         {
-          "sha": "aa2db4611e58e12db602e62bc8ca75735ebb0ae2",
-          "date": "2026-09-14T15:54:54Z",
-          "subject": "Rewrite Cursor-only parts of skills for any harness; add MIRROR.md",
-          "url": "https://github.com/backnotprop/pstack/commit/aa2db4611e58e12db602e62bc8ca75735ebb0ae2"
+          "sha": "4a3f660da0dea9cc36036778cc9335d7d10289f0",
+          "date": "2026-11-04T16:05:49Z",
+          "subject": "Sync log: 2026-11-04 check, no upstream change, issue #17 noted",
+          "url": "https://github.com/backnotprop/pstack/commit/4a3f660da0dea9cc36036778cc9335d7d10289f0"
         },
         {
-          "sha": "838a0da7f07dd96d5a204b610d20df383f2ec43c",
-          "date": "2026-09-14T15:48:09Z",
-          "subject": "upstream: cursor/plugins/pstack @ 5bf2b15",
-          "url": "https://github.com/backnotprop/pstack/commit/838a0da7f07dd96d5a204b610d20df383f2ec43c"
+          "sha": "ecec42adbe4f240e4ae19d296768445f0dfbd38e",
+          "date": "2026-11-03T15:36:50Z",
+          "subject": "Sync log: 2026-11-03 check, no upstream change",
+          "url": "https://github.com/backnotprop/pstack/commit/ecec42adbe4f240e4ae19d296768445f0dfbd38e"
         },
         {
-          "sha": "cc7953352b4837bf86348081d3b9fa8534c63868",
-          "date": "2026-09-14T15:48:09Z",
-          "subject": "Record upstream baseline cursor/plugins/pstack@5bf2b15",
-          "url": "https://github.com/backnotprop/pstack/commit/cc7953352b4837bf86348081d3b9fa8534c63868"
+          "sha": "6c75f4e67546c2ddbf9634734c1e3ebbea34861a",
+          "date": "2026-11-02T15:17:23Z",
+          "subject": "Add a sync log and record each check in it",
+          "url": "https://github.com/backnotprop/pstack/commit/6c75f4e67546c2ddbf9634734c1e3ebbea34861a"
         },
         {
-          "sha": "eab50dffe90c6c5256afe7584b30a7dda2893868",
-          "date": "2026-09-14T15:32:23Z",
-          "subject": "README: trim mirror section, add Pi, list Cursor dependencies per skill",
-          "url": "https://github.com/backnotprop/pstack/commit/eab50dffe90c6c5256afe7584b30a7dda2893868"
+          "sha": "25abb38559ddbabec563646224d09eff9a250eca",
+          "date": "2026-10-28T23:22:02Z",
+          "subject": "Revise README for clarity and additional resources",
+          "url": "https://github.com/backnotprop/pstack/commit/25abb38559ddbabec563646224d09eff9a250eca"
         },
         {
-          "sha": "ff5596854af2de338f13d90aaf6e13214f8248b2",
-          "date": "2026-09-14T15:26:29Z",
-          "subject": "README: put the mirror section on top, upstream README below unchanged",
-          "url": "https://github.com/backnotprop/pstack/commit/ff5596854af2de338f13d90aaf6e13214f8248b2"
+          "sha": "23707a30f9cd2f12edef61f2506e2222e30b35aa",
+          "date": "2026-10-28T20:54:08Z",
+          "subject": "Update README to reflect new sponsorship details",
+          "url": "https://github.com/backnotprop/pstack/commit/23707a30f9cd2f12edef61f2506e2222e30b35aa"
         },
         {
-          "sha": "55bfdc262dd7f99254d19b53a96cf1dfb24c213b",
-          "date": "2026-09-14T15:24:44Z",
-          "subject": "Sync mirror with upstream cursor/plugins/pstack (0.14.1 -> 0.15.2)",
-          "url": "https://github.com/backnotprop/pstack/commit/55bfdc262dd7f99254d19b53a96cf1dfb24c213b"
+          "sha": "23ef87404aab32b4364c698141e7f9916671ad91",
+          "date": "2026-10-28T19:16:46Z",
+          "subject": "Sync upstream cursor/plugins/pstack @ 0f77cd5 (0.15.36)",
+          "url": "https://github.com/backnotprop/pstack/commit/23ef87404aab32b4364c698141e7f9916671ad91"
         },
         {
-          "sha": "a437be288d963ce386af2ec9547e2232c77bcb4a",
-          "date": "2026-09-14T15:24:44Z",
-          "subject": "README: add npx skills install section for use outside Cursor",
-          "url": "https://github.com/backnotprop/pstack/commit/a437be288d963ce386af2ec9547e2232c77bcb4a"
+          "sha": "396c27e825b7aa656854e5a62e89f73ae9c0a17e",
+          "date": "2026-10-28T19:15:29Z",
+          "subject": "upstream: cursor/plugins/pstack @ 0f77cd5",
+          "url": "https://github.com/backnotprop/pstack/commit/396c27e825b7aa656854e5a62e89f73ae9c0a17e"
         },
         {
-          "sha": "18e0e908a13553b0e58d065ab26dbc9a972ec8ba",
-          "date": "2026-08-19T17:27:24Z",
-          "subject": "Reference backnotprop/bro under the mirror note",
-          "url": "https://github.com/backnotprop/pstack/commit/18e0e908a13553b0e58d065ab26dbc9a972ec8ba"
+          "sha": "37d989cabf310ea2d7631f1d006117ca4cc8a799",
+          "date": "2026-10-27T13:09:44Z",
+          "subject": "Sync upstream cursor/plugins/pstack @ 519d36a (0.15.34)",
+          "url": "https://github.com/backnotprop/pstack/commit/37d989cabf310ea2d7631f1d006117ca4cc8a799"
         },
         {
-          "sha": "4b32d9d120aaefddb0e0a99b526671ada12fca8b",
-          "date": "2026-08-19T17:22:33Z",
-          "subject": "Sync mirror with upstream cursor/plugins/pstack (0.2.0 -> 0.14.1)",
-          "url": "https://github.com/backnotprop/pstack/commit/4b32d9d120aaefddb0e0a99b526671ada12fca8b"
+          "sha": "0410d4b5ed5fc050e05357163d30a6bdf998faad",
+          "date": "2026-10-27T13:09:44Z",
+          "subject": "upstream: cursor/plugins/pstack @ 519d36a",
+          "url": "https://github.com/backnotprop/pstack/commit/0410d4b5ed5fc050e05357163d30a6bdf998faad"
         },
         {
-          "sha": "bf5378aaf3e1dba8ab75f9c2b07f21c4d7b673d3",
-          "date": "2026-05-27T02:30:30Z",
-          "subject": "Add mirror note to README",
-          "url": "https://github.com/backnotprop/pstack/commit/bf5378aaf3e1dba8ab75f9c2b07f21c4d7b673d3"
+          "sha": "f51fdeba3d803ef90e4eaa4a95ffb4e76008ab37",
+          "date": "2026-10-26T11:46:57Z",
+          "subject": "Update README to include sponsorship information",
+          "url": "https://github.com/backnotprop/pstack/commit/f51fdeba3d803ef90e4eaa4a95ffb4e76008ab37"
         },
         {
-          "sha": "b3eabf1ab0ff04de27f59954b480177db18f19ce",
-          "date": "2026-05-27T02:30:13Z",
-          "subject": "Initial mirror of pstack from cursor/plugins/pstack",
-          "url": "https://github.com/backnotprop/pstack/commit/b3eabf1ab0ff04de27f59954b480177db18f19ce"
+          "sha": "fad8d01588a1b1ae803f87c8a1e0de79e28cffec",
+          "date": "2026-10-25T22:22:35Z",
+          "subject": "Remove the added description line from the README top",
+          "url": "https://github.com/backnotprop/pstack/commit/fad8d01588a1b1ae803f87c8a1e0de79e28cffec"
+        },
+        {
+          "sha": "02b59d7f73a693d40ad2090d00789f3e3a772151",
+          "date": "2026-10-25T19:07:35Z",
+          "subject": "no-comments: keep unverifiable outside-rule comments for review and stop aborting on a rejected rerun (#14)",
+          "url": "https://github.com/backnotprop/pstack/commit/02b59d7f73a693d40ad2090d00789f3e3a772151"
+        },
+        {
+          "sha": "f4d08bee3b2787811782b7b35dcfe9e7379cb4f2",
+          "date": "2026-10-25T19:06:57Z",
+          "subject": "Merge PR #15: support explicit orchestrate frontier base",
+          "url": "https://github.com/backnotprop/pstack/commit/f4d08bee3b2787811782b7b35dcfe9e7379cb4f2"
+        },
+        {
+          "sha": "d31d44e3b55a1ac36a7394380e1895746080217a",
+          "date": "2026-10-25T19:05:16Z",
+          "subject": "Make the README title real text and add a plain description line",
+          "url": "https://github.com/backnotprop/pstack/commit/d31d44e3b55a1ac36a7394380e1895746080217a"
+        },
+        {
+          "sha": "aac6b9b28e837d7ba72999719369334ae22aa600",
+          "date": "2026-10-25T18:57:50Z",
+          "subject": "Add SVG header and sponsor cards to the mirror README",
+          "url": "https://github.com/backnotprop/pstack/commit/aac6b9b28e837d7ba72999719369334ae22aa600"
+        },
+        {
+          "sha": "636f722fbd70c13fed18bc413b39bfef21cabf37",
+          "date": "2026-10-25T18:23:05Z",
+          "subject": "Update README with sponsorship and Bro Skill info",
+          "url": "https://github.com/backnotprop/pstack/commit/636f722fbd70c13fed18bc413b39bfef21cabf37"
+        },
+        {
+          "sha": "18b6c36e6e201b110acc62472de987416ac4e23b",
+          "date": "2026-10-24T01:03:09Z",
+          "subject": "Sync upstream cursor/plugins/pstack @ e73df47 (0.15.32)",
+          "url": "https://github.com/backnotprop/pstack/commit/18b6c36e6e201b110acc62472de987416ac4e23b"
+        },
+        {
+          "sha": "eed14406567133659e349b9830f70e32e2f3e77c",
+          "date": "2026-10-24T01:02:31Z",
+          "subject": "upstream: cursor/plugins/pstack @ e73df47",
+          "url": "https://github.com/backnotprop/pstack/commit/eed14406567133659e349b9830f70e32e2f3e77c"
+        },
+        {
+          "sha": "da3ef14c15ae4653419c43a10f7803704b35736c",
+          "date": "2026-10-23T19:06:01Z",
+          "subject": "fix(poteto-mode): support explicit orchestrate frontier base",
+          "url": "https://github.com/backnotprop/pstack/commit/da3ef14c15ae4653419c43a10f7803704b35736c"
+        },
+        {
+          "sha": "e44668c2aad92eacf4e84df47984121fefb11b82",
+          "date": "2026-10-20T19:17:24Z",
+          "subject": "Use ~/.claude/rules/pstack-models.md for settings in Claude Code",
+          "url": "https://github.com/backnotprop/pstack/commit/e44668c2aad92eacf4e84df47984121fefb11b82"
+        },
+        {
+          "sha": "0c3333f09655d7933919795fbf4f9946d62b6f77",
+          "date": "2026-10-19T18:30:41Z",
+          "subject": "Sync upstream cursor/plugins/pstack @ d457567 (0.15.28)",
+          "url": "https://github.com/backnotprop/pstack/commit/0c3333f09655d7933919795fbf4f9946d62b6f77"
+        },
+        {
+          "sha": "6ddf66a99554ea5c20f391479cbfbbd1520224a2",
+          "date": "2026-10-19T18:30:01Z",
+          "subject": "upstream: cursor/plugins/pstack @ d457567",
+          "url": "https://github.com/backnotprop/pstack/commit/6ddf66a99554ea5c20f391479cbfbbd1520224a2"
+        },
+        {
+          "sha": "6f131f137de64fdaf928278c0fd9ecec520ccbee",
+          "date": "2026-10-15T14:43:29Z",
+          "subject": "Sync upstream cursor/plugins/pstack @ e5136d8 (0.15.25)",
+          "url": "https://github.com/backnotprop/pstack/commit/6f131f137de64fdaf928278c0fd9ecec520ccbee"
         }
       ]
     },
@@ -125,192 +197,192 @@
       "repository": "cursor/plugins",
       "label": "Cursor 原始上游",
       "path": "pstack",
-      "checked_at": "2026-10-08T10:00:57+00:00",
-      "head": "df581122cde17e6e27686b5a448bde23e4ad4318",
-      "imported": "ccb5507",
+      "checked_at": "2026-11-09T08:59:28+00:00",
+      "head": "c742dd61706fbacc1b95f1a20b7b988cf096ce6c",
+      "imported": "0f77cd5",
       "api_url": "https://api.github.com/repos/cursor/plugins/commits?sha=main&per_page=30&path=pstack",
       "history_url": "https://github.com/cursor/plugins/commits/main/pstack",
-      "compare_url": "https://github.com/cursor/plugins/compare/ccb5507...df581122cde17e6e27686b5a448bde23e4ad4318",
+      "compare_url": "https://github.com/cursor/plugins/compare/0f77cd5...c742dd61706fbacc1b95f1a20b7b988cf096ce6c",
       "commits": [
         {
-          "sha": "df581122cde17e6e27686b5a448bde23e4ad4318",
-          "date": "2026-10-06T01:05:41Z",
-          "subject": "feat(pstack): drop Sol, default to Opus xhigh and Grok (#511)",
-          "url": "https://github.com/cursor/plugins/commit/df581122cde17e6e27686b5a448bde23e4ad4318"
+          "sha": "c742dd61706fbacc1b95f1a20b7b988cf096ce6c",
+          "date": "2026-10-27T23:12:40Z",
+          "subject": "feat(pstack): make Orchestrate agentic and delete the orch scripts (#1043)",
+          "url": "https://github.com/cursor/plugins/commit/c742dd61706fbacc1b95f1a20b7b988cf096ce6c"
         },
         {
-          "sha": "1e56b2913469f05101e4ffd4d437c2e6fd2c1b8d",
-          "date": "2026-10-06T00:57:23Z",
-          "subject": "feat(pstack): have /poteto-help ask about /setup-pstack when no model rule exists (#509)",
-          "url": "https://github.com/cursor/plugins/commit/1e56b2913469f05101e4ffd4d437c2e6fd2c1b8d"
+          "sha": "ab1f702ce8e8b6557edb56b09f52cde8bfb83f17",
+          "date": "2026-10-27T18:49:18Z",
+          "subject": "feat(pstack): port recent skill updates (#986)",
+          "url": "https://github.com/cursor/plugins/commit/ab1f702ce8e8b6557edb56b09f52cde8bfb83f17"
         },
         {
-          "sha": "2cbf58508f40de470d7490b55c51d71241928fa2",
-          "date": "2026-10-05T16:57:16Z",
-          "subject": "docs(pstack): refresh guide for /correct, checklist, prompting tips (#508)",
-          "url": "https://github.com/cursor/plugins/commit/2cbf58508f40de470d7490b55c51d71241928fa2"
+          "sha": "519d36aa98955bf680db01bcde5fdfba686dc901",
+          "date": "2026-10-27T05:52:45Z",
+          "subject": "test(pstack): wait for the reap in the statechart SIGKILL view test (#981)",
+          "url": "https://github.com/cursor/plugins/commit/519d36aa98955bf680db01bcde5fdfba686dc901"
         },
         {
-          "sha": "807c031086fcf71c88c863b4a4e6938b6785c58f",
-          "date": "2026-10-05T16:40:42Z",
-          "subject": "feat(pstack): add prompting references to /poteto-help (#507)",
-          "url": "https://github.com/cursor/plugins/commit/807c031086fcf71c88c863b4a4e6938b6785c58f"
+          "sha": "164ced10fa576ddf91e1f03b4fa9d1183c8272fe",
+          "date": "2026-10-27T04:33:31Z",
+          "subject": "chore(pstack): bump to 0.15.34 (#983)",
+          "url": "https://github.com/cursor/plugins/commit/164ced10fa576ddf91e1f03b4fa9d1183c8272fe"
         },
         {
-          "sha": "00b52d954a99ff67802cad428ff19218659f76fd",
-          "date": "2026-10-05T16:03:10Z",
-          "subject": "fix(pstack): make /poteto-help typed-only (#506)",
-          "url": "https://github.com/cursor/plugins/commit/00b52d954a99ff67802cad428ff19218659f76fd"
+          "sha": "740d2c0786246cafac41906198f656b135194d3b",
+          "date": "2026-10-27T04:30:22Z",
+          "subject": "fix(pstack): keep qualified action names in property traces (#982)",
+          "url": "https://github.com/cursor/plugins/commit/740d2c0786246cafac41906198f656b135194d3b"
         },
         {
-          "sha": "4e5b1cf2ccb0ea3716f08c8ee0a5856b5ab93536",
-          "date": "2026-10-05T06:36:15Z",
-          "subject": "feat(pstack): add /poteto-help skill (#502)",
-          "url": "https://github.com/cursor/plugins/commit/4e5b1cf2ccb0ea3716f08c8ee0a5856b5ab93536"
+          "sha": "7c7bde7033df2a83a23294571ef12c51cf560217",
+          "date": "2026-10-27T04:08:38Z",
+          "subject": "chore(pstack): bump to 0.15.33 (#978)",
+          "url": "https://github.com/cursor/plugins/commit/7c7bde7033df2a83a23294571ef12c51cf560217"
         },
         {
-          "sha": "e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a",
-          "date": "2026-10-04T00:06:48Z",
-          "subject": "refactor(pstack): use bare performance mantras in perf-issue step 2 (#496)",
-          "url": "https://github.com/cursor/plugins/commit/e43c7ee26e0038c6c1fa8380dd34ce86ff94cb2a"
+          "sha": "34b1b7c96f09f81a21a6c78f65b7833f7dcb5b24",
+          "date": "2026-10-27T04:08:29Z",
+          "subject": "feat(pstack): port the statechart compiler (#977)",
+          "url": "https://github.com/cursor/plugins/commit/34b1b7c96f09f81a21a6c78f65b7833f7dcb5b24"
         },
         {
-          "sha": "a58628271271837ef5f386adca29c0812683a19a",
-          "date": "2026-10-03T23:19:16Z",
-          "subject": "feat(pstack): make /architect designs resist agent mistakes (#495)",
-          "url": "https://github.com/cursor/plugins/commit/a58628271271837ef5f386adca29c0812683a19a"
+          "sha": "e73df471cd4bd918367e99f3dd9c51bd53ddf5f0",
+          "date": "2026-10-23T22:56:09Z",
+          "subject": "fix(pstack): renumber swarm's Phase A and fix its dangling table reference (#807)",
+          "url": "https://github.com/cursor/plugins/commit/e73df471cd4bd918367e99f3dd9c51bd53ddf5f0"
         },
         {
-          "sha": "9511e60321f7e533a187d62854a3d53a53752874",
-          "date": "2026-10-03T20:28:30Z",
-          "subject": "feat(pstack): add /correct skill (#494)",
-          "url": "https://github.com/cursor/plugins/commit/9511e60321f7e533a187d62854a3d53a53752874"
+          "sha": "a0b0ad99fc11efee2b18b50c33dc94abad4fd51e",
+          "date": "2026-10-23T22:55:46Z",
+          "subject": "docs(pstack): note Claude Code auto-update is off for third-party marketplaces (#806)",
+          "url": "https://github.com/cursor/plugins/commit/a0b0ad99fc11efee2b18b50c33dc94abad4fd51e"
         },
         {
-          "sha": "23e4138daa01c42d4969f7a5465f82704e64f798",
-          "date": "2026-10-03T04:37:34Z",
-          "subject": "feat(pstack): port explain-the-number, fresh subagents, hourly autopilot tick, PR headings, schema-first cast (0.15.6)",
-          "url": "https://github.com/cursor/plugins/commit/23e4138daa01c42d4969f7a5465f82704e64f798"
+          "sha": "f83fbe695ee14badf3ac128d3718f9fb71a3a3f9",
+          "date": "2026-10-23T22:55:23Z",
+          "subject": "fix(pstack): read transcript mtimes with GNU stat and date in worktree-audit (#805)",
+          "url": "https://github.com/cursor/plugins/commit/f83fbe695ee14badf3ac128d3718f9fb71a3a3f9"
         },
         {
-          "sha": "12d587dfb20741cafc376c42c696c5f6e2a64487",
-          "date": "2026-09-23T20:03:21Z",
-          "subject": "fix(pstack): resolve rule conflicts and read the model rule the same way (#422)",
-          "url": "https://github.com/cursor/plugins/commit/12d587dfb20741cafc376c42c696c5f6e2a64487"
+          "sha": "3c596e701b5ca3d213e072464eec36baf0dee3e7",
+          "date": "2026-10-23T22:55:01Z",
+          "subject": "fix(orch): prefer active PR over branch history (#804)",
+          "url": "https://github.com/cursor/plugins/commit/3c596e701b5ca3d213e072464eec36baf0dee3e7"
         },
         {
-          "sha": "b0b9c7a0baf8b6aa1d00bf77d4101e577d4ba411",
-          "date": "2026-09-23T17:37:17Z",
-          "subject": "docs(pstack): cut 19 more instructions Opus 5.5 does not need (#419)",
-          "url": "https://github.com/cursor/plugins/commit/b0b9c7a0baf8b6aa1d00bf77d4101e577d4ba411"
+          "sha": "86c2448db179ad2f9193aecea549e664c5905895",
+          "date": "2026-10-23T22:54:39Z",
+          "subject": "fix(pstack): recognize matching inline code delimiters (#803)",
+          "url": "https://github.com/cursor/plugins/commit/86c2448db179ad2f9193aecea549e664c5905895"
         },
         {
-          "sha": "b42effe0aa50f59c693d7e2924714e015e00bf7c",
-          "date": "2026-09-23T07:40:34Z",
-          "subject": "fix(pstack): scrub old model names from public upgrade help (#416)",
-          "url": "https://github.com/cursor/plugins/commit/b42effe0aa50f59c693d7e2924714e015e00bf7c"
+          "sha": "fe096ef31c94c30997207ffb6e30c51f15a34f16",
+          "date": "2026-10-23T22:54:14Z",
+          "subject": "fix(watch-pr): cap polling sleeps at the deadline (#802)",
+          "url": "https://github.com/cursor/plugins/commit/fe096ef31c94c30997207ffb6e30c51f15a34f16"
         },
         {
-          "sha": "70b2dc8b4b85c8d5648624ca40d692c421fff32f",
-          "date": "2026-09-23T02:21:59Z",
-          "subject": "feat(pstack): port skill updates and default to Opus 5.5 and Grok 4.7 (#414)",
-          "url": "https://github.com/cursor/plugins/commit/70b2dc8b4b85c8d5648624ca40d692c421fff32f"
+          "sha": "96dec8ee58deb7b388fa080fbceaba4460a7c9dd",
+          "date": "2026-10-23T22:53:28Z",
+          "subject": "fix(watch-pr): distinguish fork heads during stack discovery (#801)",
+          "url": "https://github.com/cursor/plugins/commit/96dec8ee58deb7b388fa080fbceaba4460a7c9dd"
         },
         {
-          "sha": "5bf2b1544db739998121a306340631963c2ff3de",
-          "date": "2026-09-13T03:38:59Z",
-          "subject": "feat(pstack): setup-pstack budget ask (max/xhigh/high/medium) (#366)",
-          "url": "https://github.com/cursor/plugins/commit/5bf2b1544db739998121a306340631963c2ff3de"
+          "sha": "7054003c3723e82d099fb7620e3bc8d7d63eebc6",
+          "date": "2026-10-23T22:40:13Z",
+          "subject": "fix(pstack): route reflect edits out of the plugin cache (#800)",
+          "url": "https://github.com/cursor/plugins/commit/7054003c3723e82d099fb7620e3bc8d7d63eebc6"
         },
         {
-          "sha": "889ec4b68fa5aab0e867dad71ec3fdf386ae48f3",
-          "date": "2026-09-12T05:40:22Z",
-          "subject": "fix(pstack): bug-fix/perf/hillclimb defaults to grok 4.6 (#365)",
-          "url": "https://github.com/cursor/plugins/commit/889ec4b68fa5aab0e867dad71ec3fdf386ae48f3"
+          "sha": "b1a129891c49f6b84d0613477f5d021a0782b5e0",
+          "date": "2026-10-23T22:09:47Z",
+          "subject": "chore(pstack): bump to 0.15.32 (#798)",
+          "url": "https://github.com/cursor/plugins/commit/b1a129891c49f6b84d0613477f5d021a0782b5e0"
         },
         {
-          "sha": "f5bdd6826fd0a0d9cbc4347134c3a74a200b9d9d",
-          "date": "2026-09-11T01:17:03Z",
-          "subject": "fix(pstack): operator-neutral pronouns + in-chat status tick (#362)",
-          "url": "https://github.com/cursor/plugins/commit/f5bdd6826fd0a0d9cbc4347134c3a74a200b9d9d"
+          "sha": "3c0fdb4e76293ebcdaed16f0d096c788bd3b49b2",
+          "date": "2026-10-23T22:09:39Z",
+          "subject": "feat(pstack): add the ketchup-video skill (#797)",
+          "url": "https://github.com/cursor/plugins/commit/3c0fdb4e76293ebcdaed16f0d096c788bd3b49b2"
         },
         {
-          "sha": "f8abeddd1862dc73704e3d719dd73df0d51b8c71",
-          "date": "2026-09-09T19:17:39Z",
-          "subject": "pstack: every claim carries its evidence or its label (#341)",
-          "url": "https://github.com/cursor/plugins/commit/f8abeddd1862dc73704e3d719dd73df0d51b8c71"
+          "sha": "00d5decc6f05669044fd092dec73da9ef6f7eec0",
+          "date": "2026-10-23T19:58:12Z",
+          "subject": "feat(pstack): tell generated verify skills to read each model-check result with /statechart (#794)",
+          "url": "https://github.com/cursor/plugins/commit/00d5decc6f05669044fd092dec73da9ef6f7eec0"
         },
         {
-          "sha": "71ed0d1076fec562c1b74ee353121a8d00f75382",
-          "date": "2026-09-08T05:16:53Z",
-          "subject": "chore(pstack): bump to 0.15.0 and sync README/docs counts (#333)",
-          "url": "https://github.com/cursor/plugins/commit/71ed0d1076fec562c1b74ee353121a8d00f75382"
+          "sha": "642289e6b1eb01c25b02ea041dccaf7b5864e131",
+          "date": "2026-10-23T19:37:32Z",
+          "subject": "chore(pstack): bump to 0.15.31 (#792)",
+          "url": "https://github.com/cursor/plugins/commit/642289e6b1eb01c25b02ea041dccaf7b5864e131"
         },
         {
-          "sha": "d7cde2b84eadbcd6fd890302c876f4436ccb6d82",
-          "date": "2026-09-08T00:00:12Z",
-          "subject": "pstack: replace semicolons, em dashes, and connector colons in skill prose with periods or commas (#331)",
-          "url": "https://github.com/cursor/plugins/commit/d7cde2b84eadbcd6fd890302c876f4436ccb6d82"
+          "sha": "076f4b2f57844ff9eb4ada914d4763884d40146e",
+          "date": "2026-10-23T19:37:18Z",
+          "subject": "feat(pstack): bring the statechart skill up to date, with the Pele renderer (#791)",
+          "url": "https://github.com/cursor/plugins/commit/076f4b2f57844ff9eb4ada914d4763884d40146e"
         },
         {
-          "sha": "e8d856f0273b42ebafe0ec3546bd645709e7c1b0",
-          "date": "2026-09-07T22:14:11Z",
-          "subject": "pstack: density and mannered-prose pass across the skills, two new principle leaves (#329)",
-          "url": "https://github.com/cursor/plugins/commit/e8d856f0273b42ebafe0ec3546bd645709e7c1b0"
+          "sha": "4ec7ffa173eaa70d3d9467a627baf0954645a353",
+          "date": "2026-10-22T18:27:25Z",
+          "subject": "refactor(pstack): delete statechart comments that repeat the code, and rename helpers (#779)",
+          "url": "https://github.com/cursor/plugins/commit/4ec7ffa173eaa70d3d9467a627baf0954645a353"
         },
         {
-          "sha": "7314f723a487ec406b6369fe5865ba034cfed166",
-          "date": "2026-09-03T04:37:11Z",
-          "subject": "fix(pstack): shrink logo under 512KiB (#309)",
-          "url": "https://github.com/cursor/plugins/commit/7314f723a487ec406b6369fe5865ba034cfed166"
+          "sha": "7698375f92a729f8bb89d113c633dce9ff9dc6db",
+          "date": "2026-10-22T16:57:12Z",
+          "subject": "fix(pstack): bring the statechart skill up to date with six fixes (#776)",
+          "url": "https://github.com/cursor/plugins/commit/7698375f92a729f8bb89d113c633dce9ff9dc6db"
         },
         {
-          "sha": "efa2a531985e0a8084d36ff3cf87233be8a9f34b",
-          "date": "2026-09-02T04:38:22Z",
-          "subject": "feat(pstack): add plugin logo (#303)",
-          "url": "https://github.com/cursor/plugins/commit/efa2a531985e0a8084d36ff3cf87233be8a9f34b"
+          "sha": "eb4db2b55b2b7dec3d9282754cddf0a56bf4ff10",
+          "date": "2026-10-22T06:08:55Z",
+          "subject": "feat(pstack): add the statechart skill to draw TLA+ models as charts (#741)",
+          "url": "https://github.com/cursor/plugins/commit/eb4db2b55b2b7dec3d9282754cddf0a56bf4ff10"
         },
         {
-          "sha": "23a56e2dac2efd54788056db8eced26e371d7b5e",
-          "date": "2026-09-01T20:06:07Z",
-          "subject": "docs(pstack): port forge-neutral playbooks and Fable 5.1 defaults",
-          "url": "https://github.com/cursor/plugins/commit/23a56e2dac2efd54788056db8eced26e371d7b5e"
+          "sha": "88d47514b82e7c44f00f2b2a72ff6dd12158038c",
+          "date": "2026-10-20T02:24:33Z",
+          "subject": "pstack: restore /sharpen to the original prompt, return only the rewrite (#729)",
+          "url": "https://github.com/cursor/plugins/commit/88d47514b82e7c44f00f2b2a72ff6dd12158038c"
         },
         {
-          "sha": "73f8be4873ea4ba2b7378243a036d3360c69e04d",
-          "date": "2026-09-01T19:15:40Z",
-          "subject": "fix(pstack): disable model invocation for five skills (#300)",
-          "url": "https://github.com/cursor/plugins/commit/73f8be4873ea4ba2b7378243a036d3360c69e04d"
+          "sha": "d457567332aa6989e753ea289f30ea2bfbc80bc0",
+          "date": "2026-10-19T05:35:26Z",
+          "subject": "chore(pstack): bump to 0.15.28, sync guide with create-formal-verification-skill (#724)",
+          "url": "https://github.com/cursor/plugins/commit/d457567332aa6989e753ea289f30ea2bfbc80bc0"
         },
         {
-          "sha": "6fecddba65801f9b9c08b8b328d998ee5b09d290",
-          "date": "2026-08-27T17:33:06Z",
-          "subject": "fix(pstack): register make-bot-ui at skills root (#275)",
-          "url": "https://github.com/cursor/plugins/commit/6fecddba65801f9b9c08b8b328d998ee5b09d290"
+          "sha": "7b353f78f6ec193bdbe48ed8059444eb09b6878e",
+          "date": "2026-10-19T05:06:39Z",
+          "subject": "pstack: add maintain-formal-verification-skill (#716)",
+          "url": "https://github.com/cursor/plugins/commit/7b353f78f6ec193bdbe48ed8059444eb09b6878e"
         },
         {
-          "sha": "799151d91b6e12ee7dbd09f708eec108d7de9b3b",
-          "date": "2026-08-27T01:42:39Z",
-          "subject": "feat(pstack): add make-bot-ui skill (#271)",
-          "url": "https://github.com/cursor/plugins/commit/799151d91b6e12ee7dbd09f708eec108d7de9b3b"
+          "sha": "6b78e9f4e46c75d1697d837e51f07c2692e60b24",
+          "date": "2026-10-19T01:51:15Z",
+          "subject": "fix(pstack): add TLA+ default and no-verifier fallback to create-formal-verification-skill (#721)",
+          "url": "https://github.com/cursor/plugins/commit/6b78e9f4e46c75d1697d837e51f07c2692e60b24"
         },
         {
-          "sha": "bdf7aa355337897f167153e05069aca505dae17c",
-          "date": "2026-08-25T04:25:16Z",
-          "subject": "docs(pstack): make the multi-PR plan a verified checklist (#258)",
-          "url": "https://github.com/cursor/plugins/commit/bdf7aa355337897f167153e05069aca505dae17c"
+          "sha": "f9be7aa00c2b2bf4b13562143a6918445e06b99d",
+          "date": "2026-10-18T21:58:59Z",
+          "subject": "pstack: offer formal verification in setup, sync help and guide (#715)",
+          "url": "https://github.com/cursor/plugins/commit/f9be7aa00c2b2bf4b13562143a6918445e06b99d"
         },
         {
-          "sha": "46125561306434d8a1d7745d540d8932ab0cd2a2",
-          "date": "2026-08-21T03:10:04Z",
-          "subject": "docs(pstack): port workflow and boundary guidance (#238)",
-          "url": "https://github.com/cursor/plugins/commit/46125561306434d8a1d7745d540d8932ab0cd2a2"
+          "sha": "0148b78c56c72a1b8412055913c79f767095b217",
+          "date": "2026-10-18T20:18:12Z",
+          "subject": "chore(pstack): bump to 0.15.27 (#713)",
+          "url": "https://github.com/cursor/plugins/commit/0148b78c56c72a1b8412055913c79f767095b217"
         },
         {
-          "sha": "63d938c2e4a165a0fec1bd0f61a8e325f0cb751e",
-          "date": "2026-08-13T19:40:59Z",
-          "subject": "chore(pstack): bump Grok default from 4.5 to 4.6 (#210)",
-          "url": "https://github.com/cursor/plugins/commit/63d938c2e4a165a0fec1bd0f61a8e325f0cb751e"
+          "sha": "75fabace38ce507ee044546eaca64167c8c1e21b",
+          "date": "2026-10-18T19:45:41Z",
+          "subject": "pstack: drop the rewritten-prompt ban from sharpen (#712)",
+          "url": "https://github.com/cursor/plugins/commit/75fabace38ce507ee044546eaca64167c8c1e21b"
         }
       ]
     }

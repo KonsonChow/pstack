@@ -1,6 +1,6 @@
 {
   "source": "skills/architect/SKILL.md",
-  "sha256": "cb2507870a6a6dda4283a3e9642b813f9df5da41b7d78c310c4309d9091d7827",
+  "sha256": "8b06915a5e728c4f78b6a685fec0213b5cb1a89b9476fae680d4cc3f67d4e79e",
   "blocks": [
     {
       "en": "---\nname: architect\ndescription: \"Sketch types, signatures, and module structure before code, then stay in the loop while implementation fills in. Use for /architect, 'architect this', 'design this', or non-trivial work where jumping to code would lock in the wrong shape.\"\ndisable-model-invocation: true\n---\n\n",
@@ -11,8 +11,8 @@
       "zh": "# Architect\n\n"
     },
     {
-      "en": "Design before implementing. Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch. If implementation proves the sketch wrong, throw it out and redesign.\n\n",
-      "zh": "先设计，再实现。用 `not implemented` 函数体和伪代码勾画类型、函数签名、类结构与模块边界。综合多个模型视角，再按照选定草图填入代码。实现证明草图有误时，舍弃并重新设计。\n\n"
+      "en": "Sketch types, function signatures, class shapes, and module boundaries with `not implemented` bodies and pseudocode. Synthesize across multiple model perspectives, then fill in code against the chosen sketch.\n\n",
+      "zh": "先用 `not implemented` 函数体和伪代码勾勒类型、函数签名、类结构及模块边界。综合多个模型的视角，再按所选草图填写代码。\n\n"
     },
     {
       "en": "## Start\n\n",
@@ -31,12 +31,8 @@
       "zh": "## 阶段 A：建立对问题的真实理解\n\n"
     },
     {
-      "en": "Build a real mental model of every system the new code touches. Run the **how** skill over the relevant subsystems.\n\n",
-      "zh": "对新代码接触的每个系统形成真实心智模型。在相关子系统上运行 **how** skill。\n\n"
-    },
-    {
-      "en": "Naming a file isn't grounding. Produce the traced model `how` prescribes. If the design redefines ownership or layering, also run the **why** skill on the existing shape so the rationale becomes a constraint, not a guess.\n\n",
-      "zh": "点名文件不等于理解系统。产出 `how` 要求的、已追踪实际流程的模型。如果设计重新划分职责或层次，还应对当前结构运行 **why** skill，将其设计理由作为约束，而非猜测。\n\n"
+      "en": "Build a real mental model of every system the new code touches. Run the **how** skill over the relevant subsystems. Naming a file isn't grounding. Produce the architectural explanation `how` prescribes. If the design redefines ownership or layering, also run the **why** skill on the existing shape so the rationale becomes a constraint, not a guess.\n\n",
+      "zh": "先真正理解新代码涉及的每个系统，对相关子系统运行 **how** 技能。点名文件不等于理解系统。产出 `how` 要求的、已追踪实际流程的模型。如果设计重新划分职责或层次，还应对当前结构运行 **why** skill，将其设计理由作为约束，而非猜测。\n\n"
     },
     {
       "en": "Skip Phase A only when the work is genuinely greenfield with no surrounding system to integrate.\n\n",
@@ -47,12 +43,12 @@
       "zh": "## 阶段 B：勾画设计\n\n"
     },
     {
-      "en": "Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Pass `references/runner-prompt.md` as each runner's prompt. Each candidate produces a design package shaped per `references/rationale-template.md`.\n\n",
-      "zh": "带着设计草图任务和阶段 A 的理解产物运行 **arena** skill。将 `references/runner-prompt.md` 作为每个执行者的提示词。每个候选者按 `references/rationale-template.md` 生成设计包。\n\n"
+      "en": "Run the **arena** skill with the design-sketch task and the Phase A grounding artifacts. Pass `references/runner-prompt.md` as each runner's prompt.\n\n",
+      "zh": "运行 **arena** 技能，提供设计草图任务和阶段 A 的调查产物。各运行者都以 `references/runner-prompt.md` 为提示词。\n\n"
     },
     {
-      "en": "Take the runners from the `architect runners` line in the pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.agents/pstack-models.md` in other harnesses), in place of the `arena runners` line. If the file or that line is missing, use `claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`. Alias and rejected entries follow the runner rules in the **arena** skill's Phase A.\n\n",
-      "zh": "执行者取自 pstack 配置文件中的 `architect runners` 行（Cursor 中为 `~/.cursor/rules/pstack-models.mdc`，其他 agent 运行环境中为 `~/.agents/pstack-models.md`），替代 `arena runners` 行。如果文件或该行缺失，使用 `claude-opus-5-5-xhigh` 和 `grok-4.7-xhigh-fast`。别名条目及被拒绝的条目遵循 **arena** skill 阶段 A 的执行者规则。\n\n"
+      "en": "Take the runners from the `architect runners` line in the pstack settings file (`~/.cursor/rules/pstack-models.mdc` in Cursor, `~/.claude/rules/pstack-models.md` in Claude Code, `~/.agents/pstack-models.md` in other harnesses), in place of the `arena runners` line. If the file or that line is missing, use `claude-opus-5-5-xhigh` and `grok-4.7-xhigh-fast`. Alias and rejected entries follow the runner rules in the **arena** skill's Phase A.\n\n",
+      "zh": "执行者取自 pstack 配置文件中的 `architect runners` 行（Cursor 中为 `~/.cursor/rules/pstack-models.mdc`，其他 agent 运行环境中为 `~/.agents/pstack-models.md`），替代 `arena runners` 行。如果文件或该行缺失，使用 `claude-opus-5-5-xhigh` 和 `grok-4.7-xhigh-fast`。别名条目及被拒绝的条目遵循 **arena** skill 阶段 A 的执行者规则。 Claude Code 中的设置文件为 `~/.claude/rules/pstack-models.md`。\n\n"
     },
     {
       "en": "Design it twice. Require at least two structurally distinct candidates before synthesis, even when the first looks sufficient. This is the **exhaust-the-design-space** principle skill made concrete. Whole-shape alternatives, not point fixes inside one shape.\n\n",
@@ -67,7 +63,7 @@
       "zh": "比较可行方案的接口深度。优先选择用更小、更简单的公共接口隐藏更多复杂度的设计。能力丰富的接口能将能力集中起来、缩短调用链，而不是分散到多层。\n\n"
     },
     {
-      "en": "Arena returns one synthesized design package. The synthesis decision populates the rationale's \"Synthesis decision\" section.\n\n",
+      "en": "Arena returns one synthesized design package. Its synthesis decision fills the rationale's \"Synthesis decision\" section.\n\n",
       "zh": "Arena 返回一个综合设计包，将综合决策填入设计理由中的“Synthesis decision”章节。\n\n"
     },
     {
@@ -95,12 +91,8 @@
       "zh": "## 阶段 D：按草图实现\n\n"
     },
     {
-      "en": "Replace `not implemented` bodies with code, pseudocode with logic. The synthesized sketch is the contract.\n\n",
-      "zh": "用代码替换 `not implemented` 函数体，用实际逻辑替换伪代码。综合草图就是约定。\n\n"
-    },
-    {
-      "en": "Deviations from the sketch are signal worth surfacing, not friction to absorb silently. If a function needs a parameter the sketch didn't anticipate, ask whether the sketch was wrong, the requirement was missed, or the implementation is overreaching.\n\n",
-      "zh": "偏离草图是值得报告的信号，不能默默消化。如果函数需要草图未预料的参数，应问：是草图有误、需求遗漏，还是实现越界？\n\n"
+      "en": "Replace `not implemented` bodies with code, pseudocode with logic. The synthesized sketch is the contract. Deviations from it are signal to surface, not friction to absorb silently. If a function needs a parameter the sketch didn't anticipate, ask whether the sketch was wrong, the requirement was missed, or the implementation is overreaching.\n\n",
+      "zh": "将 `not implemented` 函数体替换为代码，将伪代码替换为实际逻辑。综合后的设计草图就是实现合同。偏离草图是值得报告的信号，不能默默消化。如果函数需要草图未预料的参数，应问：是草图有误、需求遗漏，还是实现越界？\n\n"
     },
     {
       "en": "## Phase E: Scrap when the architecture is wrong\n\n",

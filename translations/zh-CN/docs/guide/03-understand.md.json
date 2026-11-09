@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/03-understand.md",
-  "sha256": "0090afa9b8670adf175466a2a973ff4349e95ed67d2aa8cebdfc55ff4b7382c9",
+  "sha256": "1ac97cbad51c15c18b3aade8634d81c8bbe50d2b3135c75c113ddb2a6dcb7af0",
   "blocks": [
     {
       "en": "# Understand the code before changing it\n\n",
@@ -55,12 +55,12 @@
       "zh": "```text\n/why 为什么把重试上限设为五次？当初的理由现在还成立吗？\n```"
     },
     {
-      "en": "[`/why`](../../skills/why/SKILL.md) works like a detective on a cold case. It starts from source control, then queries whatever evidence categories your MCPs expose, such as the issue tracker, long-form docs, team chat, observability, error tracking, and analytics, all in parallel. The report cites everything, separates direct evidence from inference, and says \"appears to\" when the record is thin. A null result gets reported too, because \"nobody wrote down why\" is itself an answer.\n\n",
-      "zh": "[`/why`](../../skills/why/SKILL.md) 像在重新调查一桩旧案。它从版本控制记录入手，再并行查询 MCP 能访问的证据类别，例如 issue 跟踪、长篇文档、团队聊天、可观测性数据、错误跟踪和分析数据。报告为各项结论注明来源，区分直接证据与推断；记录不足时，会明确用“看起来”这样的措辞。没有查到结果也会报告，因为“没有人记录原因”本身就是答案。"
+      "en": "[`/why`](../../skills/why/SKILL.md) starts from source control, then queries whatever evidence categories your MCPs expose, such as the issue tracker, long-form docs, team chat, observability, error tracking, and analytics, all in parallel. The report cites everything, separates direct evidence from inference, and says \"appears to\" when the record is thin. A null result gets reported too, because \"nobody wrote down why\" is itself an answer.\n\n",
+      "zh": "[`/why`](../../skills/why/SKILL.md) 像在重新调查一桩旧案。它从版本控制记录入手，再并行查询 MCP 能访问的证据类别，例如 issue 跟踪、长篇文档、团队聊天、可观测性数据、错误跟踪和分析数据。报告为各项结论注明来源，区分直接证据与推断；记录不足时，会明确用“看起来”这样的措辞。没有查到结果也会报告，因为“没有人记录原因”本身就是答案。\n\n"
     },
     {
-      "en": "The two compose naturally. `do why first then how` is a perfectly good prompt when you suspect the history explains the mess.\n\n",
-      "zh": "这两个 skill 可以自然组合。如果怀疑历史原因能解释当前的混乱，可以直接说 `先 why，再 how`。"
+      "en": "The two compose naturally. `do why first then how` is a good prompt when you suspect the history explains the mess.\n\n",
+      "zh": "这两个 skill 可以自然组合。如果怀疑历史原因能解释当前的混乱，可以直接说 `先 why，再 how`。\n\n"
     },
     {
       "en": "## Actually understand it with `/teach`\n\n",
@@ -71,8 +71,8 @@
       "zh": "```text\n/teach 讲清这个 PR 如何改变重试行为。用证据说服我，它解决的是根因，而不是只处理症状。\n```"
     },
     {
-      "en": "[`/teach`](../../skills/teach/SKILL.md) is for when a summary isn't enough. It runs `/how` and `/why`, for a small change maybe just one of them, and weaves the findings into a plain explanation that builds up diagram by diagram. The \"convince me\" framing is worth stealing. It turns the explanation into an argument you can poke at instead of a tour.\n\n",
-      "zh": "当概述不足以帮助你理解时，使用 [`/teach`](../../skills/teach/SKILL.md)。它会运行 `/how` 和 `/why`，小改动也可能只运行其中一个，再把结果整合成通俗的说明，配合逐步展开的图示。“说服我”这个表达值得借用，它让解释变成可以质疑、核查的论证，而不是泛泛介绍。"
+      "en": "[`/teach`](../../skills/teach/SKILL.md) is for when a summary isn't enough. It runs `/how` and `/why`, for a small change maybe just one of them, and weaves the findings into a plain explanation that builds up diagram by diagram. The \"convince me\" framing is worth reusing. It turns the explanation into an argument you can test instead of a tour.\n\n",
+      "zh": "当概述不足以帮助你理解时，使用 [`/teach`](../../skills/teach/SKILL.md)。它会运行 `/how` 和 `/why`，小改动也可能只运行其中一个，再把结果整合成通俗的说明，配合逐步展开的图示。“说服我”这个表达值得借用，它让解释变成可以质疑、核查的论证，而不是泛泛介绍。\n\n"
     },
     {
       "en": "It works on the agent's own choices too:\n\n",

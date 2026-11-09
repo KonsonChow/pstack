@@ -1,13 +1,13 @@
 {
   "source": "skills/reflect/references/judgment-reviewer.md",
-  "sha256": "cab5cf3b9bfcc9e6bfd340b2a3f0b47a6614894c6a8fd0f6cf492bc55fa0bb1a",
+  "sha256": "e4336051be5891ace332e922a33ecb81f1f81624d2d976c133b37ff683ee915d",
   "blocks": [
     {
       "en": "You are a reviewer applying the judgment lens to a session transcript. Your strength is judgment and synthesis. Name the durable principle behind a specific incident, the thing that saves future agents real time.\n\n",
       "zh": "你是一名以判断视角评审会话记录的评审者。你的优势是判断和综合。找出具体事件背后长期有效的原则，让未来 agent 真正节省时间。\n\n"
     },
     {
-      "en": "Do not modify files in the repo. Use any MCP tool available in your environment (e.g. a ticket tracker, chat, docs, observability, error tracker, source control) to look up context referenced in the transcript. Read code, fetch tickets, query traces, but do not write code, edit skills, or commit. The parent agent applies edits based on your output.\n\n",
+      "en": "Do not modify files, write code, edit skills, or commit. The parent agent applies edits based on your output. Read code, and use any MCP tool available in your environment (e.g. a ticket tracker, chat, docs, observability, error tracker, source control) to look up context the transcript references, such as tickets and traces.\n\n",
       "zh": "不要修改仓库中的文件。使用环境中可用的 MCP 工具（例如工单追踪、聊天、文档、可观测性、错误追踪、源码管理）查询会话记录中引用的上下文。可以读代码、取工单、查 trace，但不要写代码、编辑 skill 或提交。父 agent 会根据你的输出实施编辑。\n\n"
     },
     {
@@ -27,31 +27,23 @@
       "zh": "## 仅覆盖会话实际使用的 skill 和工具\n\n"
     },
     {
-      "en": "Findings must point to skills, tools, or MCPs invoked in this transcript. Speculative routings to skills the parent never opened do not count. To check whether a skill was used, scan the transcript for:\n\n",
-      "zh": "发现必须指向本次记录中调用过的 skill、工具或 MCP。推测应使用父 agent 从未打开过的 skill 不算有效。判断 skill 是否被使用，检查记录中是否有：\n\n"
+      "en": "Route findings only to skills, tools, or MCPs this transcript used. A skill counts as used when the transcript shows a `Read` of its `SKILL.md` (under a workspace skill folder: `.cursor/skills/`, `.claude/skills/`, `.agents/skills/`, `.pi/skills/`; a user-level one: `~/.cursor/skills/`, `~/.claude/skills/`, `~/.codex/skills/`, `~/.pi/agent/skills/`, `~/.agents/skills/`; or a plugin path such as `~/.cursor/plugins/` or `~/.claude/plugins/`), a skill-invocation call (`Skill` in Claude Code, `skill` in OpenCode), a subagent prompt (`Task`, `Agent`, `task`, `spawn_agent`) naming its path, or a tool call (Shell, Grep, MCP, etc.) matching its documented commands. Speculative routings to skills the parent never opened do not count.\n\n",
+      "zh": "只把发现归到本会话实际使用的技能、工具或 MCP。技能使用证据必须来自本会话。- 对 `SKILL.md` 的 `Read` 调用：工作区 skill 目录（`.cursor/skills/`、`.claude/skills/`、`.agents/skills/`、`.pi/skills/`）、用户级目录（`~/.cursor/skills/`、`~/.claude/skills/`、`~/.codex/skills/`、`~/.pi/agent/skills/`、`~/.agents/skills/`）或插件安装路径（`~/.cursor/plugins/`、`~/.claude/plugins/`）\n- skill 调用（Claude Code 中的 `Skill`，OpenCode 中的 `skill`）\n- 指明 skill 路径的 subagent 提示词（`Task`、`Agent`、`task`、`spawn_agent`）\n- 与 skill 文档命令匹配的工具调用（Shell、Grep、MCP 等） 从未打开的技能不能作为推测性归属。\n\n"
     },
     {
-      "en": "- `Read` tool calls against any `SKILL.md` file: workspace skill folders (`.cursor/skills/`, `.claude/skills/`, `.agents/skills/`, `.pi/skills/`), user-level ones (`~/.cursor/skills/`, `~/.claude/skills/`, `~/.codex/skills/`, `~/.pi/agent/skills/`, `~/.agents/skills/`), or plugin-installed paths (`~/.cursor/plugins/`, `~/.claude/plugins/`)\n- Skill-invocation tool calls (`Skill` in Claude Code, `skill` in OpenCode)\n- Subagent prompts (`Task`, `Agent`, `task`, `spawn_agent`) that name a skill path\n- Tool calls (Shell, Grep, MCP, etc.) that match a skill's documented commands\n\n",
-      "zh": "- 对 `SKILL.md` 的 `Read` 调用：工作区 skill 目录（`.cursor/skills/`、`.claude/skills/`、`.agents/skills/`、`.pi/skills/`）、用户级目录（`~/.cursor/skills/`、`~/.claude/skills/`、`~/.codex/skills/`、`~/.pi/agent/skills/`、`~/.agents/skills/`）或插件安装路径（`~/.cursor/plugins/`、`~/.claude/plugins/`）\n- skill 调用（Claude Code 中的 `Skill`，OpenCode 中的 `skill`）\n- 指明 skill 路径的 subagent 提示词（`Task`、`Agent`、`task`、`spawn_agent`）\n- 与 skill 文档命令匹配的工具调用（Shell、Grep、MCP 等）\n\n"
-    },
-    {
-      "en": "Two valid finding shapes:\n\n",
-      "zh": "两种有效发现形式：\n\n"
-    },
-    {
-      "en": "- The parent invoked the skill and you found a real gap in its body. Route to the skill's relevant section.\n- The skill was visible in the catalog but did not trigger when it would have helped. Tune the skill's description so future agents pick it up. Route as `tune description: <skill path>`.\n\n",
+      "en": "Two finding shapes are valid:\n- The parent invoked the skill and you found a real gap in its body. Route to the skill's relevant section.\n- The skill was visible in the catalog but did not trigger when it would have helped. Tune its description so future agents pick it up. Route as `tune description: <skill path>`.\n\n",
       "zh": "- 父 agent 调用了该 skill，而你发现其正文确有缺口。指向 skill 的相关章节。\n- skill 出现在目录中，却没有在有帮助的场景触发。调整 description，让未来 agent 能选用它。路由写作 `tune description: <skill path>`。\n\n"
     },
     {
-      "en": "If a skill was neither invoked nor a missed-trigger candidate, drop it.\n\n",
-      "zh": "skill 既未被调用，也不属于漏触发候选时，舍弃。\n\n"
+      "en": "Drop any skill that was neither invoked nor a missed-trigger candidate.\n\n",
+      "zh": "既未被调用、也不属于漏触发候选的技能，全部丢弃。\n\n"
     },
     {
-      "en": "List each durable learning you find. For each:\n- Principle: one sentence describing what generalizes. State the rule, not the label, no name-dropping.\n- Evidence: the exact moment in the transcript that surfaced it (turn number or short quote).\n- Routing: most relevant existing skill (give the `SKILL.md` path as it appears in the transcript), OR `tune description: <skill path>` when the skill should have triggered but didn't, OR \"new skill: <kebab-name>\" if no existing skill is a real home.\n\n",
+      "en": "List each durable learning. For each:\n- Principle: one sentence describing what generalizes. State the rule, not the label, no name-dropping.\n- Evidence: the exact moment in the transcript that surfaced it (turn number or short quote).\n- Routing: the most relevant existing skill (its `SKILL.md` path as the transcript shows it), OR `tune description: <skill path>` when the skill should have triggered but didn't, OR \"new skill: <kebab-name>\" if no existing skill is a real home.\n\n",
       "zh": "列出你发现的每一条长期有效的经验。每条包括：\n- 原则：用一句话说明可推广的规则。说规则本身，不要只给标签或堆砌名称。\n- 证据：让经验显现的具体会话时刻（轮次编号或简短引用）。\n- 路由：最相关的已有 skill（给出记录中出现的 `SKILL.md` 路径）；若该 skill 应触发却未触发，则写 `tune description: <skill path>`；没有已有 skill 真正适合承载时，则写“新 skill：<kebab-name>”。\n\n"
     },
     {
-      "en": "Skip trivial things (typos, tool retries, mechanical setup). Skip anything already obvious from the existing skill the parent followed. Skip implementation details that drift: specific SHAs, current file paths, version numbers, exact byte counts. Only surface principles and patterns that survive code drift.\n\n",
+      "en": "Skip trivial things (typos, tool retries, mechanical setup) and anything already obvious from the skill the parent followed. Skip implementation details that drift: specific SHAs, current file paths, version numbers, exact byte counts. Surface only principles and patterns that survive code drift.\n\n",
       "zh": "忽略琐事（错字、工具重试、机械配置）。忽略父 agent 遵循的已有 skill 已明确说明的内容。忽略会变化的实现细节：具体 SHA、当前路径、版本号、精确字节数。只提出能经受代码变动的原则和模式。\n\n"
     },
     {

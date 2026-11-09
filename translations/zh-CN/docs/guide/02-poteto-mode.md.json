@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/02-poteto-mode.md",
-  "sha256": "979f61ca3d44cb8e68affda40327d32797e93fa9cc53ced7444c15e2600897e1",
+  "sha256": "d168829def6c410b1afd87d1a6eb297df385f89faa9b31260684074e9e4eb52a",
   "blocks": [
     {
       "en": "# Route work through `/poteto-mode`\n\n",
@@ -23,8 +23,8 @@
       "zh": "```mermaid\nflowchart TD\n    A[你的提示词] --> B[poteto-mode]\n    B --> C[阅读 Principles 部分]\n    C --> D{匹配任务类型}\n    D -->|只读问题| E[调查]\n    D -->|缺陷| F[修复 bug]\n    D -->|新增行为| G[功能实现]\n    D -->|只改结构| H[重构]\n    D -->|已测量的性能问题| I[性能优化]\n    D -->|大型任务或无法匹配| J[figure-it-out]\n    E --> K[验证并报告]\n    F --> K\n    G --> K\n    H --> K\n    I --> K\n    J --> K\n```"
     },
     {
-      "en": "The diagram shows the common routes. There are also playbooks for hillclimbing a metric, diagnosing runtime symptoms and captured traces, prototypes, visual parity, authoring and evaluating skills, autonomous runs, babysitting a PR or stack to merge-ready, shipping a verified stack, running a PR queue on autopilot, orchestrating project-scale programs, session pickup, pausing safely, multi-phase plans, and worktree cleanup. The [playbook directory](../../skills/poteto-mode/playbooks/) has the full set.\n\n",
-      "zh": "图中展示了常见的分派路径。此外还有执行规程用于持续优化某项指标、诊断运行时症状和已采集的 trace、制作原型、对齐视觉效果、编写与评估 skill、自主执行任务、推动 PR 或 PR 栈达到可合并状态、合入已验证的 PR 栈、自动推进 PR 队列、协调项目级工作、接续会话、安全暂停、分阶段计划，以及清理 worktree。完整列表见[执行规程目录](../../skills/poteto-mode/playbooks/)。"
+      "en": "The diagram shows the common routes. There are also playbooks for hillclimbing a metric, diagnosing runtime symptoms and captured traces, prototypes, visual parity, authoring and evaluating skills, autonomous runs, opening a PR, babysitting a PR or stack to merge-ready, shipping a verified stack, running a PR queue or a stack on autopilot, orchestrating project-scale programs, session pickup, pausing safely, multi-phase plans, and worktree cleanup. The [playbook directory](../../skills/poteto-mode/playbooks/) has the full set.\n\n",
+      "zh": "图中展示了常见的分派路径。此外还有执行规程用于持续优化某项指标、诊断运行时症状和已采集的 trace、制作原型、对齐视觉效果、编写与评估 skill、自主执行任务、推动 PR 或 PR 栈达到可合并状态、合入已验证的 PR 栈、自动推进 PR 队列、协调项目级工作、接续会话、安全暂停、分阶段计划，以及清理 worktree。完整列表见[执行规程目录](../../skills/poteto-mode/playbooks/)。 其他路线还包括打开 PR，以及运行 PR 堆栈。\n\n"
     },
     {
       "en": "## Say the goal, not the ceremony\n\n",
@@ -79,8 +79,20 @@
       "zh": "```text\n/poteto-mode 阅读这个讨论串，用你自己的话，以通俗语言复述根本问题。暂时不要改代码。\n```\n\n"
     },
     {
-      "en": "A misreading shows up in the restatement, before any code exists. Correct it there, and it costs you one message instead of one wrong fix.\n\n",
-      "zh": "误读会在写代码前的复述中暴露。此时纠正只需一条消息，不必付出一次错误修复的代价。\n\n"
+      "en": "A misreading shows up in the restatement, before any code exists. Correct it there, and it costs you one message instead of one wrong fix. For the restatement alone, with no playbook, run [`/in-your-own-words`](../../skills/in-your-own-words/SKILL.md). It restates what the agent thinks your goals are and what problem you're trying to solve.\n\n",
+      "zh": "误解会在写代码之前的复述中暴露。在那里纠正，只需一条消息，不必付出错误修复的代价。若只需要复述而不运行剧本，使用 [`/in-your-own-words`](../../skills/in-your-own-words/SKILL.md)。它会说明代理理解的目标和你想解决的问题。\n\n"
+    },
+    {
+      "en": "When you're unsure whether a prompt is aimed right, run [`/sharpen`](../../skills/sharpen/SKILL.md) on it before you send it:\n\n",
+      "zh": "不确定提示词是否对准问题时，发送前先运行 [`/sharpen`](../../skills/sharpen/SKILL.md)：\n\n"
+    },
+    {
+      "en": "```text\n/sharpen write a migration guide for the v2 config format.\n```\n\n",
+      "zh": "```text\n/sharpen write a migration guide for the v2 config format.\n```\n\n"
+    },
+    {
+      "en": "The agent says what a top professional would do that you didn't ask for, the rawest material they would start from, the methods and tools they would use, and what other than you or the agent would show the result is right. Then it rewrites your prompt to ask for exactly that, deeper but not bigger, and leaves your choices open. It doesn't do the task. Read the rewrite, then send it, for example with `/poteto-mode`.\n\n",
+      "zh": "代理会指出顶尖专业人士还会做哪些你没有要求的事、会从哪些原始材料着手、使用什么方法和工具，以及由你和代理之外的什么依据判断结果正确。随后将提示词改写为恰好要求这些内容，使它更深入而不扩大范围，并保留你的选择。它不会执行任务。读完改写后，可配合 `/poteto-mode` 等方式发送。\n\n"
     },
     {
       "en": "## Follow up short\n\n",

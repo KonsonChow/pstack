@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/01-setup.md",
-  "sha256": "86d0330f245d16254a2069955f993c15d96cf29cd1a73690a0164074b7ac1190",
+  "sha256": "384655bdecc713122ca69a485723c58462002a1d512415e94e48597d0dce2fa5",
   "blocks": [
     {
       "en": "# Set up pstack\n\n",
@@ -25,6 +25,10 @@
     {
       "en": "Cursor confirms the plugin is installed.\n\n",
       "zh": "Cursor 会确认插件已安装。"
+    },
+    {
+      "en": "In Claude Code, run `/plugin marketplace add cursor/plugins`, then `/plugin install pstack@cursor-plugins`. Claude Code prefixes plugin commands, so each command in this guide takes a `pstack:` prefix there, such as `/pstack:setup-pstack`, which writes its model rule to `~/.claude/rules/pstack-models.md`. The [Claude Code adapter](../harness/claude-code.md) covers the other differences.\n\n",
+      "zh": "在 Claude Code 中，先运行 `/plugin marketplace add cursor/plugins`，再运行 `/plugin install pstack@cursor-plugins`。Claude Code 为插件命令添加 `pstack:` 前缀，因此本指南中的命令在那里应写为 `/pstack:setup-pstack` 等形式。它将模型规则写入 `~/.claude/rules/pstack-models.md`。[Claude Code 适配说明](../harness/claude-code.md) 介绍其他差异。\n\n"
     },
     {
       "en": "## Pick your models\n\n",
@@ -55,8 +59,8 @@
       "zh": "如果使用 Auto 会怎样？将角色设为 `inherit-parent` 或 `auto` 时，pstack 会省略 subagent 的 `model` 字段，让它继承主对话的模型。这两个值含义相同，都不是模型标识。评审组角色的配置值是列表，每个列表项启动一个 subagent，因此列表长度决定评审组人数。配置过程还会设置 `swarm workers`，作为所有 `/swarm` worker 的默认模型；只有在竞赛任务为各个候选明确指定模型时，才使用指定值。"
     },
     {
-      "en": "## Accept the verification offer, or don't\n\n",
-      "zh": "## 决定是否创建验证能力"
+      "en": "## Accept the verification offers, or don't\n\n",
+      "zh": "## 决定是否创建验证能力\n\n"
     },
     {
       "en": "At the end of setup, `/setup-pstack` looks for a way to prove app behavior in your project, either a `verify-*` skill or an existing harness. If it finds neither, it offers once to generate one with [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md).\n\n",
@@ -69,6 +73,10 @@
     {
       "en": "If you're new to pstack, say yes. An agent that can check its own work keeps going until the check passes. An agent that can't hands every result back to you to check by hand. Of everything in this guide, the verification skill pays off the most.\n\n",
       "zh": "如果刚开始使用 pstack，建议同意。能检查自己工作的 agent 会继续执行，直到检查通过；不能自检的 agent 会把每个结果交给你手动检查。在本指南介绍的内容中，验证 skill 的收益最大。\n\n"
+    },
+    {
+      "en": "Then setup offers once to generate a formal verification skill with [`/create-formal-verification-skill`](../../skills/create-formal-verification-skill/SKILL.md), unless the project already has one. Tests check the cases someone thought to write. A formal verification skill checks one key property of your code, such as \"a job never runs twice at once\", in every case within a stated scope. Say yes when your code has concurrency, retries, a state machine, or a parser, where a bug is costly and tests rarely reach the case that breaks. Otherwise say no, and run it later if that changes. [Verify and ship](./06-verify-and-ship.md#prove-a-property-with-a-formal-verification-skill) covers it.\n\n",
+      "zh": "随后，如果项目还没有形式化验证技能，setup 会询问一次是否用 [`/create-formal-verification-skill`](../../skills/create-formal-verification-skill/SKILL.md) 生成一个。测试覆盖人们想到的例子；形式化验证技能则在明确范围内检查某个关键性质的所有情形，例如“同一任务不会同时运行两次”。如果代码包含并发、重试、状态机或解析器，且缺陷代价高、测试很难触达失效场景，可以接受。否则可以拒绝，以后需要时再运行。参见[验证与交付](./06-verify-and-ship.md#prove-a-property-with-a-formal-verification-skill)。\n\n"
     },
     {
       "en": "After setup, start a new chat. The model rule applies to new sessions.\n\n",
@@ -103,8 +111,8 @@
       "zh": "观察待办列表。开头的条目是从匹配到的执行规程中复制的步骤。这个提示词对应 Feature 执行规程。如果 `/poteto-mode` 跳过某一步，该步骤仍会留在列表中，并标注 `skip: <reason>`，让你看到它选择跳过什么，以及原因。"
     },
     {
-      "en": "From here you can type normal follow-ups. To keep `/poteto-mode` on for the whole chat, pick it from the `/` menu with Option+Enter (Mac) or Alt+Enter (Windows) instead of Enter. That makes it a [Custom Mode](https://cursor.com/docs/skills), which stays in context on every turn until you exit it. Custom Modes are available in the Agents Window and the CLI. Plain Enter attaches the skill to one message, and it fades as the chat moves on.\n\n",
-      "zh": "接下来可以用普通消息继续对话。要让 `/poteto-mode` 在整个对话中启用，从 `/` 菜单选择它，并按 Option+Enter（Mac）或 Alt+Enter（Windows），而不是 Enter。这会创建一个 [自定义工作模式](https://cursor.com/docs/skills)，每轮都保留在上下文中，直到你退出。自定义工作模式可在 Agents Window 和 CLI 中使用。只按 Enter 会将 skill 附加到一条消息，随着对话继续，它会逐渐退出上下文。\n\n"
+      "en": "From here you can type normal follow-ups. To keep `/poteto-mode` on for the whole chat, pick it from the `/` menu with Option+Enter (Mac) or Alt+Enter (Windows) instead of Enter. That makes it a [Custom Mode](https://cursor.com/docs/skills#using-a-skill-as-a-custom-mode), which stays in context on every turn until you exit it. Custom Modes are available in the Agents Window and the CLI. Plain Enter attaches the skill to one message, and it fades as the chat moves on.\n\n",
+      "zh": "接下来可以用普通消息继续对话。要让 `/poteto-mode` 在整个对话中启用，从 `/` 菜单选择它，并按 Option+Enter（Mac）或 Alt+Enter（Windows），而不是 Enter。这会创建一个 [自定义工作模式](https://cursor.com/docs/skills#using-a-skill-as-a-custom-mode)，每轮都保留在上下文中，直到你退出。自定义工作模式可在 Agents Window 和 CLI 中使用。只按 Enter 会将 skill 附加到一条消息，随着对话继续，它会逐渐退出上下文。\n\n"
     },
     {
       "en": "Next: [Route work through `/poteto-mode`](./02-poteto-mode.md).\n",

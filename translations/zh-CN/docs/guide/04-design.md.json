@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/04-design.md",
-  "sha256": "31f2abe6e9b29feafd1a9eece8f4fe21992f86b8c19ab2e9b5c11a20f36587e7",
+  "sha256": "2421f2793303a2cb02aabac5ecdc4bfafb5e68024a28123f4f134cc7df4a5211",
   "blocks": [
     {
       "en": "# Design before you write code\n\n",
@@ -11,7 +11,7 @@
       "zh": "复杂设计如果只尝试一次，很容易固化成模型最先想到的方案。`/architect` 在实现前确定类型与边界。`/arena` 针对同一份任务说明并行尝试多个方案，再综合各方案的长处。`/interrogate` 让其他模型尝试找出结果中的问题。如果目标是扩大检查覆盖，而不是综合设计方案，`/swarm` 会分派不同的任务范围或候选竞赛，再汇总结果。"
     },
     {
-      "en": "The two most common design mistakes are taking the agent's first design and polishing a plan that no code has tested. This page fixes both. You plan through code: prototypes answer the open questions, a README or tutorial sets the target, and the written plan comes last.\n\n",
+      "en": "The two most common design mistakes are taking the agent's first design and polishing a plan that no code has tested. This page fixes both. You plan through code. Prototypes answer the open questions, a README or tutorial sets the target, and the written plan comes last.\n\n",
       "zh": "两种最常见的设计错误，是接受 agent 的第一个设计，以及打磨未经代码检验的计划。本页处理这两个问题。通过代码规划：用原型回答未决问题，用 README 或教程设定目标，最后再写计划。\n\n"
     },
     {
@@ -51,8 +51,8 @@
       "zh": "```text\n/arena 把我的提示词原样交给各个候选。我想把它们的方案与你的方案对比。\n```"
     },
     {
-      "en": "[`/arena`](../../skills/arena/SKILL.md) is the general tool underneath. N subagents attempt the same design or code brief in parallel, each writing to its own worktree or directory. A read-only judge, on a different model family when your configuration allows one, scores every candidate against a rubric. The coordinator reads each candidate end to end, picks a base, grafts in the best ideas from the losers, and verifies the result.\n\n",
-      "zh": "[`/arena`](../../skills/arena/SKILL.md) 是底层的通用工具。N 个 subagent 并行处理同一份设计或代码任务说明，各自在独立 worktree 或目录中写入产物。只读评审者按照评分标准评估所有候选；配置允许时，评审者使用不同系列的模型。协调者从头到尾阅读每个候选，选择一个作为基础，吸收其他候选中最好的思路，最后验证综合结果。"
+      "en": "[`/arena`](../../skills/arena/SKILL.md) is the general tool underneath. N subagents attempt the same design or code brief in parallel, each writing to its own worktree or directory. A read-only judge from a different model family scores every candidate against a rubric. When no model from another family can run, the coordinator skips the judge and picks the base itself. The coordinator reads each candidate end to end, picks a base, grafts in the best ideas from the losers, and verifies the result.\n\n",
+      "zh": "[`/arena`](../../skills/arena/SKILL.md) 是底层通用工具。N 个子代理依据同一简报各自尝试，由不同模型家族的交叉评审者评分。协调者选择基础方案，再把其他方案的优点合入。如果没有其他家族的模型可运行，跳过评审者，由协调者自行选择。\n\n"
     },
     {
       "en": "```mermaid\nflowchart LR\n    A[One task] --> B[Configured panel]\n    B --> C[Candidate 1]\n    B --> D[Candidate 2]\n    B --> E[Candidate N]\n    C --> F[Cross-judge]\n    D --> F\n    E --> F\n    F --> G[Pick a base]\n    G --> H[Graft the best parts]\n    H --> I[Verify]\n```\n\n",
@@ -91,12 +91,12 @@
       "zh": "```text\n/interrogate 带着怀疑审查整个分支。只报告实际 bug 或回归问题，不要挑无关紧要的小毛病。\n```"
     },
     {
-      "en": "[`/interrogate`](../../skills/interrogate/SKILL.md) sends the same diff, intent, and rubric to reviewers on different model families. Model diversity is the point. Different models have different blind spots, so a finding two models raise independently is high-confidence signal. The lead sorts everything into `Act on`, `Consider`, `Noted`, and `Dismissed`, with a reason for each dismissal, and applies nothing automatically.\n\n",
-      "zh": "[`/interrogate`](../../skills/interrogate/SKILL.md) 将同一份 diff、意图和评审准则发给不同模型家族的评审者。关键是模型多样性。不同模型有不同盲点，因此两个模型独立提出的同一问题是高可信度信号。主评审将结果分为 `Act on`、`Consider`、`Noted` 和 `Dismissed`，说明每项驳回的理由，不会自动应用任何结果。\n\n"
+      "en": "[`/interrogate`](../../skills/interrogate/SKILL.md) gives the change and its intent to adversaries on the configured models, and each tries to break it with a run against the real code. Adversaries find different failures. A finding survives only when rerunning its command shows a failure that breaks the intent. The report lists every verified finding with the adversaries that found it, then what each adversary dropped and why, and applies nothing.\n\n",
+      "zh": "[`/interrogate`](../../skills/interrogate/SKILL.md) 将改动及其意图交给配置模型上的对抗审查者。每个审查者通过实际运行代码尝试破坏改动，各自发现不同失效。只有重跑命令确实产生违背意图的失败，发现才会保留。报告列出全部已验证发现及其提出者，再列出各审查者丢弃的发现和原因，不自动应用修复。\n\n"
     },
     {
-      "en": "Read the dismissals too. The lead is a pragmatic senior engineer, not an oracle, and you can override it.\n\n",
-      "zh": "被驳回的发现也值得阅读。负责人相当于一位务实的资深工程师，不是绝不会错的权威；你可以推翻它的判断。"
+      "en": "Read the Dropped list too. You can override the verdict.\n\n",
+      "zh": "也要阅读 Dropped 列表。你可以推翻审查结论。\n\n"
     },
     {
       "en": "## Prototype instead of debating\n\n",
@@ -123,8 +123,8 @@
       "zh": "```text\n/poteto-mode 我们需要为外部 webhook 加限流。先用 /architect 设计，并通过原型回答未决问题。继续之前先让我审查。\n```\n\n"
     },
     {
-      "en": "Don't spend reviewers on an abstract plan. `/interrogate` belongs on a diff. Point adversarial review at a plan with no code behind it and the reviewers invent theoretical risks and edge cases that will never happen. Let prototypes settle the questions, then review what got built.\n\n",
-      "zh": "不要将评审资源花在抽象计划上。`/interrogate` 应用于 diff。对没有代码支撑的计划做对抗性评审，会让评审者虚构不会发生的理论风险和边界情况。先让原型解决问题，再评审实际产物。\n\n"
+      "en": "Don't spend adversaries on an abstract plan. `/interrogate` drops every finding a run does not prove, so a plan with no code behind it gives them little to break. Let prototypes settle the questions, then review what got built.\n\n",
+      "zh": "不要对抽象计划消耗对抗审查资源。`/interrogate` 会丢弃任何无法通过运行证明的发现，因此抽象计划几乎没有可破坏的对象。\n\n"
     },
     {
       "en": "## Write the README first for shared code\n\n",

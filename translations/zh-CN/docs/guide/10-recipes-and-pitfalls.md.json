@@ -1,6 +1,6 @@
 {
   "source": "docs/guide/10-recipes-and-pitfalls.md",
-  "sha256": "c652474764b08da4a6364d85f5d03cf1fc1cf35e9d7c549348fb66e2d09f7b1f",
+  "sha256": "784da0a2373e58123c4591b778909efc8d01b2b1f820b6029fa85a3fe2491fb4",
   "blocks": [
     {
       "en": "# Recipes and pitfalls\n\n",
@@ -35,8 +35,20 @@
       "zh": "```text\n/poteto-mode 阅读这个讨论串，用你自己的话，以通俗语言复述根本问题。暂时不要改代码。\n```\n\n"
     },
     {
-      "en": "A misreading shows up in the restatement, where it costs one message to correct. Keep your own theory to yourself until the agent has stated its own.\n\n",
-      "zh": "误读会在复述中暴露，此时只需一条消息就能纠正。先让 agent 陈述自己的理解，再分享你的根因猜测。\n\n"
+      "en": "A misreading shows up in the restatement, where it costs one message to correct. Keep your own theory to yourself until the agent has stated its own. `/in-your-own-words` asks for the restatement alone, with no playbook.\n\n",
+      "zh": "误读会在复述中暴露，此时只需一条消息就能纠正。先让 agent 陈述自己的理解，再分享你的根因猜测。 `/in-your-own-words` 只要求复述，不运行剧本。\n\n"
+    },
+    {
+      "en": "## Sharpen a prompt before you send it\n\n",
+      "zh": "## 发送前改进提示词\n\n"
+    },
+    {
+      "en": "```text\n/sharpen write the onboarding doc for the new billing service.\n```\n\n",
+      "zh": "```text\n/sharpen write the onboarding doc for the new billing service.\n```\n\n"
+    },
+    {
+      "en": "The agent names what an expert would do that you didn't ask for, the raw material they'd start from, their methods and tools, and an outside check that the result is right. It hands back your prompt rewritten to ask for that and doesn't do the task. Send the rewrite when it reads right.\n\n",
+      "zh": "代理指出专家还会做哪些你未要求的事、会用哪些原始材料、方法和工具，以及如何独立检查结果正确。它返回要求这些内容的改写提示词，不执行任务。确认改写合适后再发送。\n\n"
     },
     {
       "en": "## Prototype before you pick\n\n",
@@ -71,8 +83,8 @@
       "zh": "```text\n请 /arena 对这段讨论和我们的方案给出独立意见\n```"
     },
     {
-      "en": "Your current design becomes one candidate among several, and the synthesis tells you whether the panel found something better or confirmed what you had. Cheap insurance before a costly commitment.\n\n",
-      "zh": "当前设计会成为多个候选之一。综合结果会告诉你，模型组是找到更好的方案，还是验证了现有方案。可以在做出高成本承诺之前，用较低成本降低风险。"
+      "en": "Your current design becomes one candidate among several, and the synthesis tells you whether the panel found something better or confirmed what you had. It costs little next to a design that is expensive to reverse.\n\n",
+      "zh": "当前设计会成为多个候选之一。综合结果会告诉你，模型组是找到更好的方案，还是验证了现有方案。可以在做出高成本承诺之前，用较低成本降低风险。\n\n"
     },
     {
       "en": "## Check independent slices in parallel\n\n",
@@ -95,8 +107,8 @@
       "zh": "```text\n/interrogate 带着怀疑审查整个分支。暂时不要修改。只报告实际 bug 或行为回归，不要挑无关紧要的小毛病。\n```"
     },
     {
-      "en": "The qualifiers do real work. \"don't change anything yet\" keeps it read-only, and the nitpick rule pre-filters the noise so `Act on` findings are worth your time.\n\n",
-      "zh": "这些限定语有实际作用。“暂时不要修改”保证只读，“不要挑小毛病”提前过滤噪声，让 `Act on` 中的问题值得你投入时间。"
+      "en": "The qualifiers do real work. \"don't change anything yet\" keeps it read-only, and the nitpick rule pre-filters the noise so the verified findings are worth your time.\n\n",
+      "zh": "这些限定语有实际作用。“暂时不要修改”保证只读，“不要挑小毛病”提前过滤噪声，让经过运行验证的发现值得你投入时间。\n\n"
     },
     {
       "en": "## Fix a bug through a failing test\n\n",
@@ -121,6 +133,18 @@
     {
       "en": "\"if it repros on main\" lets the run stop early when the bug is already gone. The video lets you check the fix before you read the diff.\n\n",
       "zh": "“如果在 main 上能复现”允许在 bug 已经消失时提前停止。视频让你在阅读 diff 前检查修复。\n\n"
+    },
+    {
+      "en": "## Prove a property tests rarely reach\n\n",
+      "zh": "## 证明测试很难触达的性质\n\n"
+    },
+    {
+      "en": "```text\n/create-formal-verification-skill the retry queue. a message must never be delivered twice.\n```\n\n",
+      "zh": "```text\n/create-formal-verification-skill the retry queue. a message must never be delivered twice.\n```\n\n"
+    },
+    {
+      "en": "You get one property checked in every case within a stated scope, a counterexample in your code's terms if the code already breaks it, and a project skill the next agent runs on any change to that code.\n\n",
+      "zh": "你会得到明确范围内对某一性质所有情形的检查；若代码已违反它，会得到用代码术语描述的反例，以及供下一位代理在修改相关代码时运行的项目技能。\n\n"
     },
     {
       "en": "## Vet a number before you post it\n\n",
@@ -207,12 +231,28 @@
       "zh": "整个提示词就这一条。[`/bro`](../../skills/bro/SKILL.md) 会把上一条消息改写得像人与人之间的交流，减少术语、缩短篇幅。如果回复技术上很完整，但你还是没理解它说什么，可以用它。"
     },
     {
+      "en": "## Catch up on a chat you left running\n\n",
+      "zh": "## 了解持续运行的聊天进展\n\n"
+    },
+    {
+      "en": "```text\n/ketchup\n```\n\n",
+      "zh": "```text\n/ketchup\n```\n\n"
+    },
+    {
+      "en": "[`/ketchup`](../../skills/ketchup/SKILL.md) tells you in plain words what changed since your last message, then lists each call waiting on you with its pick, evidence, and risk. It changes nothing while it reports.\n\n",
+      "zh": "[`/ketchup`](../../skills/ketchup/SKILL.md) 用通俗语言说明自你上次消息以来的变化，列出每项待你决定的事及建议、证据和风险。汇报期间不修改任何内容。\n\n"
+    },
+    {
+      "en": "To watch the catch-up instead, run [`/ketchup-video`](../../skills/ketchup-video/SKILL.md). It shows what happened in a short subtitled video of slides, and lists the calls waiting on you as text under it.\n\n",
+      "zh": "也可运行 [`/ketchup-video`](../../skills/ketchup-video/SKILL.md)，通过带字幕的简短幻灯片视频了解进展。待你决定的事项以文字列在视频下。\n\n"
+    },
+    {
       "en": "## The pitfalls\n\n",
       "zh": "## 常见易错点"
     },
     {
-      "en": "- **Enumerating skills in the prompt.** \"use /how then /architect then /arena\" reorders steps the playbook already sequences. State the goal and constraints. Name a skill only to override a default.\n- **A vague finish condition.** \"make it better\" gives `/loop` nothing to check. Give a command or artifact that can pass or fail.\n- **Leading with your theory of the cause.** The agent searches wherever you pointed. Ask it to restate the problem first, then share your hunch.\n- **Taking the first design.** One attempt locks in the first shape the model thought of. Ask for prototypes or `/architect` and pick from evidence.\n- **Polishing an abstract plan.** Adversarial review of a plan with no code behind it invents risks that will never happen. Settle the open questions with prototypes, then review what got built.\n- **Parallel agents in one worktree.** They overwrite each other and the diff becomes archaeology. Run them as cloud agents, or say \"own worktree per attempt\".\n- **Looping before you trust the loop.** A loop that can't verify its own work only makes unchecked work faster. Get the verification skill working first.\n- **Trusting an unvetted number.** A warm cache or a skipped code path can fake a speedup. Run `/benchmark-checklist` before the number goes anywhere.\n- **Correcting the same mistake by hand.** A correction in chat helps one run. `/correct` fixes the repo so no later run repeats it.\n- **Using `/arena` for coverage.** `/arena` repeats one design or code brief, then picks a base and grafts the best parts. `/swarm` partitions slices or declared race arms and aggregates one report.\n- **Accepting every review comment.** Bots and humans both file real catches and noise in one list. `/interrogate` sorts findings into act-on and dismissed buckets with reasons, and you can override either way.\n- **Treating `auto` as a model slug.** `auto` and `inherit-parent` mean \"omit the model field so the subagent inherits the parent chat model.\" [Setup](./01-setup.md) covers the roles.\n- **Reporting success off a green build.** A build proves it compiles. Ask for the real command, flow, stored value, or profile, and expect the evidence in the reply.\n- **Writing a `SKILL.md` freehand.** Route it through the [Authoring or modifying a skill playbook](../../skills/poteto-mode/playbooks/authoring-a-skill.md) so validation and review happen.\n\n",
-      "zh": "- **在提示词中列出一串 skill。** “先用 /how，再用 /architect，再用 /arena”会重排执行规程已安排的步骤。说明目标与约束，仅在需要覆盖默认选择时指定 skill。\n- **模糊的完成条件。** “让它更好”没有给 `/loop` 可检查的内容。提供能判定通过或失败的命令或产物。\n- **先说根因猜测。** agent 会沿你指向的位置搜索。先要求它复述问题，再分享猜测。\n- **接受第一个设计。** 一次尝试会固定模型最先想到的结构。要求原型或 `/architect`，根据证据选择。\n- **打磨抽象计划。** 对没有代码支撑的计划做对抗性评审，会虚构不会发生的风险。通过原型解决未决问题，再评审实际产物。\n- **并行 agent 共用一个 worktree。** 它们会相互覆盖，使 diff 难以追溯。使用云端 agent，或要求“每次尝试各用一个 worktree”。\n- **尚未信任循环就让它循环运行。** 无法自检的循环只会更快地产生未经检查的工作。先让验证 skill 可用。\n- **相信未经审核的数据。** 预热缓存或跳过代码路径都能制造虚假的加速。数据用于任何地方前，先运行 `/benchmark-checklist`。\n- **手工反复纠正同一种错误。** 对话中的纠正只帮助一次运行。`/correct` 改善仓库，防止后续运行重犯。\n- **用 `/arena` 做覆盖检查。** `/arena` 对同一设计或编码任务做重复尝试，再选择基础方案并吸收最佳部分。`/swarm` 按任务部分或明确指定的竞赛方案分工，汇总一份报告。\n- **接受每条评审意见。** 机器人和人都会将真实问题与噪声放在同一列表中。`/interrogate` 将发现分成应处理和已驳回的类别，并说明理由；你可以改变任一判断。\n- **将 `auto` 当作模型 slug。** `auto` 和 `inherit-parent` 表示“省略模型字段，让 subagent 继承父对话模型”。[配置](./01-setup.md) 介绍了角色。\n- **仅凭构建通过就宣告成功。** 构建只证明能编译。要求真实命令、流程、存储值或 profile，回复中应提供证据。\n- **直接手写 `SKILL.md`。** 通过 [编写或修改 skill 执行规程](../../skills/poteto-mode/playbooks/authoring-a-skill.md) 处理，确保进行校验与评审。\n\n"
+      "en": "- **Enumerating skills in the prompt.** \"use /how then /architect then /arena\" reorders steps the playbook already sequences. State the goal and constraints. Name a skill only to override a default.\n- **A vague finish condition.** \"make it better\" gives `/loop` nothing to check. Give a command or artifact that can pass or fail.\n- **Leading with your theory of the cause.** The agent searches wherever you pointed. Ask it to restate the problem first, then share your hunch.\n- **Taking the first design.** One attempt locks in the first shape the model thought of. Ask for prototypes or `/architect` and pick from evidence.\n- **Polishing an abstract plan.** Adversarial review of a plan with no code behind it invents risks that will never happen. Settle the open questions with prototypes, then review what got built.\n- **Parallel agents in one worktree.** They overwrite each other, and nobody can tell which agent changed what. Run them as cloud agents, or say \"own worktree per attempt\".\n- **Looping before you trust the loop.** A loop that can't verify its own work only makes unchecked work faster. Get the verification skill working first.\n- **Trusting an unvetted number.** A warm cache or a skipped code path can fake a speedup. Run `/benchmark-checklist` before the number goes anywhere.\n- **Correcting the same mistake by hand.** A correction in chat helps one run. `/correct` fixes the repo so no later run repeats it.\n- **Using `/arena` for coverage.** `/arena` repeats one design or code brief, then picks a base and grafts the best parts. `/swarm` partitions slices or declared race arms and aggregates one report.\n- **Accepting every review comment.** Bots and humans both file real catches and noise in one list. `/interrogate` keeps only the findings a rerun proves and lists what it dropped and why, and you can override either way.\n- **Treating `auto` as a model slug.** `auto` and `inherit-parent` mean \"omit the model field so the subagent inherits the parent chat model.\" [Setup](./01-setup.md) covers the roles.\n- **Reporting success off a green build.** A build proves it compiles. Ask for the real command, flow, stored value, or profile, and expect the evidence in the reply.\n- **Writing a `SKILL.md` freehand.** Route it through the [Authoring or modifying a skill playbook](../../skills/poteto-mode/playbooks/authoring-a-skill.md) so validation and review happen.\n\n",
+      "zh": "- **在提示词中列出一串 skill。** “先用 /how，再用 /architect，再用 /arena”会重排执行规程已安排的步骤。说明目标与约束，仅在需要覆盖默认选择时指定 skill。\n- **模糊的完成条件。** “让它更好”没有给 `/loop` 可检查的内容。提供能判定通过或失败的命令或产物。\n- **先说根因猜测。** agent 会沿你指向的位置搜索。先要求它复述问题，再分享猜测。\n- **接受第一个设计。** 一次尝试会固定模型最先想到的结构。要求原型或 `/architect`，根据证据选择。\n- **打磨抽象计划。** 对没有代码支撑的计划做对抗性评审，会虚构不会发生的风险。通过原型解决未决问题，再评审实际产物。\n- **并行 agent 共用一个 worktree。** 它们会相互覆盖，让人分不清各自改了什么。使用云端 agent，或要求“每次尝试各用一个 worktree”。\n- **尚未信任循环就让它循环运行。** 无法自检的循环只会更快地产生未经检查的工作。先让验证 skill 可用。\n- **相信未经审核的数据。** 预热缓存或跳过代码路径都能制造虚假的加速。数据用于任何地方前，先运行 `/benchmark-checklist`。\n- **手工反复纠正同一种错误。** 对话中的纠正只帮助一次运行。`/correct` 改善仓库，防止后续运行重犯。\n- **用 `/arena` 做覆盖检查。** `/arena` 对同一设计或编码任务做重复尝试，再选择基础方案并吸收最佳部分。`/swarm` 按任务部分或明确指定的竞赛方案分工，汇总一份报告。\n- **接受每条评审意见。** 机器人和人都会将真实问题与噪声放在同一列表中。`/interrogate` 只保留重跑能够证明的发现，并列出丢弃项及原因；你可以推翻任一结论。\n- **将 `auto` 当作模型 slug。** `auto` 和 `inherit-parent` 表示“省略模型字段，让 subagent 继承父对话模型”。[配置](./01-setup.md) 介绍了角色。\n- **仅凭构建通过就宣告成功。** 构建只证明能编译。要求真实命令、流程、存储值或 profile，回复中应提供证据。\n- **直接手写 `SKILL.md`。** 通过 [编写或修改 skill 执行规程](../../skills/poteto-mode/playbooks/authoring-a-skill.md) 处理，确保进行校验与评审。\n\n"
     },
     {
       "en": "That's the guide. If you skipped ahead, go back to [setup](./01-setup.md) and run one real task. The habits stick from use, not from reading.\n\n",

@@ -1,13 +1,13 @@
 {
   "source": "docs/guide/09-make-it-yours.md",
-  "sha256": "157e0c20ad3c657857c2fbbea3afd26895b71b8f68475bc56f4c382dcdd0e118",
+  "sha256": "50642f7f894988f7c263700f46478e7aed7eb94a257683350d91a9a0d70dc141",
   "blocks": [
     {
       "en": "# Make it yours\n\n",
       "zh": "# 形成自己的工作方式"
     },
     {
-      "en": "poteto-mode is one person's style. The machinery underneath, playbooks, routing, model roles, works just as well wearing yours. This page covers generating a personal mode, capturing lessons from a session, fixing the repo so agents stop repeating mistakes, authoring a focused skill, and testing a skill change before you trust it.\n\n",
+      "en": "poteto-mode is one person's style. The playbooks, routing, and model roles underneath it work just as well with yours. This page covers generating a personal mode, capturing lessons from a session, fixing the repo so agents stop repeating mistakes, authoring a focused skill, and testing a skill change before you trust it.\n\n",
       "zh": "poteto-mode 是一个人的工作风格。底层的执行规程、任务路由和模型角色也能适配你的风格。本页介绍生成个人工作模式、记录一次会话的经验、改进仓库以防 agent 重复犯错、编写职责集中的 skill，以及验证 skill 改动。\n\n"
     },
     {
@@ -35,8 +35,8 @@
       "zh": "```text\n/automate-me 根据上次编辑之后的所有工作，更新我的 mode skill\n```"
     },
     {
-      "en": "Update mode mines only the history since the skill last changed. It keeps rules you haven't contradicted, revises the ones with new evidence, and adds sections only for genuinely new patterns.\n\n",
-      "zh": "更新模式只分析 skill 上次修改之后的历史。未被新行为推翻的规则会保留；有新证据的规则会修订；只有发现新的模式时才增加章节。"
+      "en": "Update mode mines only the history since the skill last changed. It keeps rules you haven't contradicted, revises the ones with new evidence, and adds sections only for new patterns.\n\n",
+      "zh": "更新模式只分析 skill 上次修改之后的历史。未被新行为推翻的规则会保留；有新证据的规则会修订；只有发现新的模式时才增加章节。\n\n"
     },
     {
       "en": "## Capture a session's lessons with `/reflect`\n\n",
@@ -99,8 +99,8 @@
       "zh": "编写 skill 会匹配 [Authoring or modifying a skill 执行规程](../../skills/poteto-mode/playbooks/authoring-a-skill.md)，通过 Cursor 内置的 `create-skill` 生成，校验 frontmatter 和链接，再通过 Opening a PR 执行规程交付。面向 agent 的文字比面向人的文字要求更高，因为一句没有帮助的话，可能成为未来某个 agent 实际执行的指令。让执行规程保证这些要求，不要随手写一份 `SKILL.md`。"
     },
     {
-      "en": "One special case has its own generator. A skill that must drive your app and prove behavior is a verification skill, so use [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md) and [`/maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md) instead. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers both.\n\n",
-      "zh": "有一类特殊情况有专用生成器。如果 skill 需要操作应用并证明行为正确，它就是验证 skill，应使用 [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md) 和 [`/maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md)。[验证并交付](./06-verify-and-ship.md#create-a-project-verification-skill) 介绍了两者。"
+      "en": "Two special cases have their own generators. A skill that must drive your app and prove behavior is a verification skill, so use [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md) and [`/maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md) instead. A skill that checks a property of your code with a model checker, a proof, or another verifier is a formal verification skill, so use [`/create-formal-verification-skill`](../../skills/create-formal-verification-skill/SKILL.md) and [`/maintain-formal-verification-skill`](../../skills/maintain-formal-verification-skill/SKILL.md). [Verify and ship](./06-verify-and-ship.md#prove-a-property-with-a-formal-verification-skill) covers both kinds.\n\n",
+      "zh": "两类特殊技能有自己的生成器。驱动应用并证明行为的技能使用 [`/create-verification-skill`](../../skills/create-verification-skill/SKILL.md) 和 [`/maintain-verification-skill`](../../skills/maintain-verification-skill/SKILL.md)。通过模型检查、证明或其他验证器检查代码性质的形式化验证技能，使用 [`/create-formal-verification-skill`](../../skills/create-formal-verification-skill/SKILL.md) 和 [`/maintain-formal-verification-skill`](../../skills/maintain-formal-verification-skill/SKILL.md)。[验证与交付](./06-verify-and-ship.md#prove-a-property-with-a-formal-verification-skill) 涵盖两类技能。\n\n"
     },
     {
       "en": "## Write docs to a standard with `/technical-writing`\n\n",
@@ -115,8 +115,8 @@
       "zh": "```text\n/technical-writing 审查 README 的改动\n```"
     },
     {
-      "en": "[`/technical-writing`](../../skills/technical-writing/SKILL.md) applies a layered standard with one goal, prose a tired engineer understands on the first read. It picks the document's mode first (tutorial, how-to, reference, or explanation), then works sentence by sentence: who does what, one thought per sentence, nothing readable two ways. Use it to review what you or an agent just wrote, or name it up front when you ask for a doc.\n\n",
-      "zh": "[`/technical-writing`](../../skills/technical-writing/SKILL.md) 应用分层标准，目标只有一个：让疲惫的工程师第一次读就能理解。它先判断文档类型，是教程、操作指南、参考还是解释，再逐句检查谁做什么、每句是否只承载一个意思，以及是否存在歧义。可以用它审查你或 agent 刚写的内容，也可以在提出写文档的要求时就指定它。"
+      "en": "[`/technical-writing`](../../skills/technical-writing/SKILL.md) applies a layered standard. Its goal is prose that a tired engineer understands on the first read. It picks the document's mode first (tutorial, how-to, reference, or explanation), then works sentence by sentence: who does what, one thought per sentence, nothing readable two ways. Use it to review what you or an agent just wrote, or name it up front when you ask for a doc.\n\n",
+      "zh": "[`/technical-writing`](../../skills/technical-writing/SKILL.md) 应用分层标准，目标只有一个：让疲惫的工程师第一次读就能理解。它先判断文档类型，是教程、操作指南、参考还是解释，再逐句检查谁做什么、每句是否只承载一个意思，以及是否存在歧义。可以用它审查你或 agent 刚写的内容，也可以在提出写文档的要求时就指定它。\n\n"
     },
     {
       "en": "## Test a skill change blind\n\n",

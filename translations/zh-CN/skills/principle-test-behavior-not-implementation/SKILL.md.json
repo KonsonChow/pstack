@@ -1,42 +1,38 @@
 {
   "source": "skills/principle-test-behavior-not-implementation/SKILL.md",
-  "sha256": "87e40efe4e486f7ea639d2ed1fc0abe6c93b8fd0e89a81218086909d2470a52e",
+  "sha256": "f7223698623b6a26fea49c751e466b38e6691b1f32ce841d3983e7ffbe2b74a6",
   "blocks": [
     {
-      "en": "---\nname: principle-test-behavior-not-implementation\ndescription: \"Apply when you write, change, or keep a test. Call the code the way its users do and assert the result they observe against a literal expected value. If the test would still pass when every imported function returns undefined, rewrite the assertion or delete the test.\"\ndisable-model-invocation: true\n---\n\n",
-      "zh": "---\nname: principle-test-behavior-not-implementation\ndescription: \"编写、修改或保留测试时使用。像使用者一样调用代码，并针对可观察到的结果断言字面预期值。如果所有导入函数都返回 `undefined` 时测试仍会通过，就重写断言或删除测试。\"\ndisable-model-invocation: true\n---\n\n"
+      "en": "---\nname: principle-test-behavior-not-implementation\ndescription: \"Apply when you write, change, or keep a test. Assert what the code's users can observe, so that the test fails when that behavior breaks and keeps passing when only the internals change.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: principle-test-behavior-not-implementation\ndescription: \"新增、修改或保留测试时应用。断言用户可观察行为，行为失效时测试失败，仅内部实现变化时继续通过。\"\ndisable-model-invocation: true\n---\n\n"
     },
     {
       "en": "# Test Behavior, Not Implementation\n\n",
       "zh": "# 测试行为，而非实现\n\n"
     },
     {
-      "en": "A test calls the code the way its users do and asserts the result they observe against a literal expected value. A test that asserts which calls the code made, or restates a constant the code contains, does neither.\n\n",
-      "zh": "测试应像使用者一样调用代码，并针对观察到的结果断言字面预期值。断言代码调用了哪些函数，或复述代码中的常量，都不符合这一点。\n\n"
+      "en": "A test is a claim about what the code does for its users: a caller, an end user, or another service. Behavior is what those users can observe through the interface they use. That includes return values, errors, state they can read back, and effects on systems outside the code, such as a request sent, a row written, or a message emitted. Implementation is what they cannot observe: private helpers, internal call order, intermediate data, and which internal collaborator did the work.\n\n",
+      "zh": "测试声明代码为调用者、最终用户或其他服务做什么。行为是这些使用者通过接口能观察到的结果，包括返回值、错误、可回读状态，以及发送请求、写入记录、发出消息等外部效果。实现则是不可观察的内部细节：私有辅助函数、内部调用顺序、中间数据，以及由哪个内部组件完成工作。\n\n"
     },
     {
-      "en": "The check: before you keep a test, ask whether it would still pass if every function it imports returned `undefined`. If yes, it observes no behavior and cannot fail for a defect. Rewrite the assertion or delete the test.\n\n",
-      "zh": "检查方法：保留测试前，问自己：如果它导入的每个函数都返回 `undefined`，测试仍会通过吗？如果会，它没有观察任何行为，也不可能因缺陷失败。请重写断言或删除测试。\n\n"
+      "en": "Judge each test against two imagined edits:\n\n",
+      "zh": "用两种假想修改判断每个测试：\n\n"
     },
     {
-      "en": "**Why:** A test that cannot fail for a defect costs CI time and review attention and catches nothing. A constant pin also fails when someone edits the constant or the prompt it restates, so it prevents that edit.\n\n",
-      "zh": "**原因：**不会因缺陷失败的测试只会消耗 CI 时间和评审注意力，什么也捕获不到。固定常量的断言在有人修改常量或它复述的提示词时也会失败，因此反而阻止这种修改。\n\n"
+      "en": "- **Break the behavior.** Make the code return a wrong value, skip an effect, or do the effect twice. If the test still passes, it proves nothing. The usual causes are an assertion looser than the contract, an expected value computed by the code under test, a restated constant or prompt string that never runs the code that reads it, and an assertion on data that the test built itself.\n- **Change the internals.** Keep every observable result the same and restructure the code underneath. If the test now fails, it is pinned to the implementation. It will need a rewrite on every refactor and still catches no bug.\n\n",
+      "zh": "- **破坏行为。** 返回错误值、跳过效果或执行两次。如果测试仍通过，就没有证明力。常见原因是断言比合同宽松、用被测代码计算期望、只复述从未实际使用的常量或提示词，以及只断言测试自己构造的数据。\n- **改变内部实现。** 保持全部可观察结果，调整底层结构。如果测试失败，它就绑定了实现，每次重构都需重写，却没有抓住真实缺陷。\n\n"
     },
     {
-      "en": "**Five shapes that still pass when every imported function returns `undefined`:**\n\n",
-      "zh": "**所有导入函数都返回 `undefined` 时仍会通过的五种形式：**\n\n"
+      "en": "Keep a test that catches the first edit and survives the second. Rewrite or delete the rest. To write a test that does both, drive the code through its users' interface with a concrete input. Derive the expected value from the requirement, not from a run of the code. Assert what the contract promises, no less and no more.\n\n",
+      "zh": "保留能抓住第一种修改、又能容忍第二种修改的测试。其余改写或删除。通过使用者接口传入具体输入，从需求推导期望，不从被测代码的运行结果推导。断言合同承诺的全部内容，不多也不少。\n\n"
     },
     {
-      "en": "- **Weak or no assertion.** No `expect`, or only `toBeDefined`, `toBeTruthy`, `not.toThrow`, `toBeInstanceOf`, `toBeGreaterThan(0)`.\n- **Mock or absence only.** Only `toHaveBeenCalled`, `not.toHaveBeenCalled`, `toBeUndefined`, `toEqual([])`, `toHaveLength(0)`, `not.toBe(wrongValue)`.\n- **Self-referential.** The expected value comes from the code under test: `expect(f(a)).toBe(f(a))`, `expect(parsed.url).toBe(buildUrl(...))`.\n- **Constant pin.** The assertion restates a hand-maintained constant, config default, table row, or prompt string: `expect(LIMITS.maxTools).toBe(8)`, `expect(PROMPT).toContain(\"You are\")`.\n- **Fixture asserts fixture.** The assertion reads data the test built or a value computed in `beforeEach`, and the subject never runs inside the body.\n\n",
-      "zh": "- **断言很弱或没有断言。**没有 `expect`，或只有 `toBeDefined`、`toBeTruthy`、`not.toThrow`、`toBeInstanceOf`、`toBeGreaterThan(0)`。\n- **只有 mock 或缺失检查。**仅使用 `toHaveBeenCalled`、`not.toHaveBeenCalled`、`toBeUndefined`、`toEqual([])`、`toHaveLength(0)`、`not.toBe(wrongValue)`。\n- **自我引用。**预期值来自被测代码：`expect(f(a)).toBe(f(a))`、`expect(parsed.url).toBe(buildUrl(...))`。\n- **固定常量。**断言复述手工维护的常量、配置默认值、表行或提示词字符串：`expect(LIMITS.maxTools).toBe(8)`、`expect(PROMPT).toContain(\"You are\")`。\n- **夹具断言夹具。**断言读取测试自身构建的数据或在 `beforeEach` 中计算的值，而被测对象从未在测试体内运行。\n\n"
+      "en": "The contract decides, not the shape of the assertion. When \"an empty cart never charges\" is the promise, an assertion that the payment client got no call is behavior. Pair it with a case where the charge happens, so that the test shows it can see a call. The payload that a mocked external service receives is behavior, because that service observes it. A call to an internal helper is implementation, because no user can see it. An empty list is the exact answer when no record matches, and a hollow check when the test only needs some result. An exact error message pins wording that no caller reads. The error type that callers branch on is the contract.\n\n",
+      "zh": "由合同决定，而非断言形式。“空购物车绝不扣款”时，断言支付客户端未被调用是行为，应搭配会扣款的正例，证明测试能观察调用。外部服务收到的模拟载荷是行为，因为服务可观察它；内部辅助函数调用是实现。没有匹配记录时，空列表是精确答案；测试只需要某个结果时，检查空列表则可能没有意义。无人依赖的精确错误文案只绑定措辞，调用者据以分支的错误类型才是合同。\n\n"
     },
     {
-      "en": "**The fix:** call the subject inside the test body with one concrete input and assert the literal output or the observable effect, `expect(slugify(\"Hello, World!\")).toBe(\"hello-world\")`. For an absence, assert the presence on the other input in the same test. For a constant, test the mechanism that reads it with one input instead of restating the value. For a mock, assert the payload it received or the state after the call, not that it was called. When no such assertion exists, delete the test.\n\n",
-      "zh": "**修复方式：**在测试体内用一个具体输入调用被测对象，并断言字面输出或可观察效果，例如 `expect(slugify(\"Hello, World!\")).toBe(\"hello-world\")`。对于不存在的情况，在同一测试中用另一个输入断言其存在。对于常量，使用一个输入测试读取常量的机制，而不是复述数值。对于 mock，断言它收到的负载或调用后的状态，而不是仅断言调用发生。不存在上述断言时，删除测试。\n"
-    },
-    {
-      "en": "**Keep** a test of a relation across a table's rows (a key present in two tables, a parent that exists), and a compile-time check in a `*.test-d.ts` file.\n",
-      "zh": "**保留**跨表行关系的测试（例如某个键同时出现在两张表中、父项确实存在），以及 `*.test-d.ts` 文件中的编译期检查。\n"
+      "en": "A test can pin an invariant instead of a call, such as a key that must exist in two tables or a compile-time type check. The invariant is the behavior.\n",
+      "zh": "测试也可以固定不变量而非调用，例如两个表都必须存在某个键，或编译期类型检查。不变量本身就是行为。\n\n"
     }
   ]
 }

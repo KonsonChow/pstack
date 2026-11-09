@@ -1,0 +1,26 @@
+{
+  "source": "skills/sharpen/SKILL.md",
+  "sha256": "563dfc460c605d311e650726288e2f1cbd61eab817db178d6e7e29643e07e7a2",
+  "blocks": [
+    {
+      "en": "---\nname: sharpen\ndescription: \"Make a task deeper, not bigger, then rewrite the prompt. Use for /sharpen.\"\ndisable-model-invocation: true\n---\n\n",
+      "zh": "---\nname: sharpen\ndescription: \"让任务更深入，而不扩大范围，再改写提示词。用于 /sharpen。\"\ndisable-model-invocation: true\n---\n\n"
+    },
+    {
+      "en": "I want a deeper version of this task, not a bigger one. Before rewriting it, do four things:\n\n",
+      "zh": "我希望这个任务更深入，而不是范围更大。改写前先做四件事：\n\n"
+    },
+    {
+      "en": "1. Say what a top professional in this field would do here that I'm not asking for.\n2. Name the rawest material they would start from instead of what has already been digested for me.\n3. Name the specific methods and tools they would use.\n4. Say what, other than you or me, would show the result is right.\n\n",
+      "zh": "1. 说明本领域顶尖专业人士还会做哪些我没有要求的事。\n2. 指出他们会从哪些最原始的材料着手，而不是已经为我整理消化的材料。\n3. 点名他们会使用的具体方法和工具。\n4. 说明由你我之外的什么依据判断结果正确。\n\n"
+    },
+    {
+      "en": "Then rewrite my prompt to ask for exactly that.\n\n",
+      "zh": "然后把我的提示词改写为恰好要求这些内容。\n\n"
+    },
+    {
+      "en": "Leave choices that are mine to make open instead of deciding them.\n",
+      "zh": "保留应由我作出的选择，不替我决定。\n\n"
+    }
+  ]
+}

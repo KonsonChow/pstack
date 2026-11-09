@@ -5,6 +5,7 @@ import hashlib
 import json
 import os
 import re
+from html import escape, unescape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,7 +14,7 @@ OUT = ROOT / 'docs/bilingual'
 
 
 def sources():
-    return sorted(p for p in ROOT.rglob('*.md') if not any(x in p.relative_to(ROOT).parts for x in ('.git', '.translation-work', 'translations', 'bilingual')))
+    return sorted(p for p in ROOT.rglob('*.md') if not any(x in p.relative_to(ROOT).parts for x in ('.git', '.translation-work', 'translations', 'bilingual', 'node_modules')) and not p.is_relative_to(ROOT / 'skills/statechart/scripts/test/corpus'))
 
 
 def chunks(text):
@@ -60,19 +61,37 @@ def init():
     print(f'Initialized missing translation records for {len(sources())} source documents.')
 
 
+def html_links(text, rewrite):
+    def tag(match):
+        def attribute(attr):
+            original = unescape(attr[3])
+            if attr[1].strip().lower().startswith('srcset'):
+                values = []
+                for entry in original.split(','):
+                    parts = entry.strip().split(maxsplit=1)
+                    if parts:
+                        values.append(rewrite(parts[0]) + (' ' + parts[1] if len(parts) > 1 else ''))
+                updated = ', '.join(values)
+            else:
+                updated = rewrite(original)
+            return attr[0] if updated == original else attr[1] + attr[2] + escape(updated, quote=True) + attr[2]
+        return re.sub(r'''(\b(?:href|src|srcset)\s*=\s*)(["'])(.*?)\2''', attribute, match[0], flags=re.I | re.S)
+    return re.sub(r'<(?:a|img|source)\b[^>]*>', tag, text, flags=re.I | re.S)
+
+
 def local_links(text, source, target):
-    # Link rewriting is limited to Markdown destinations; original wording stays intact.
-    def replace(m):
-        dest = m.group(2)
+    # Rewrite Markdown and HTML link destinations without changing the wording.
+    def destination(dest):
         if re.match(r'^[a-zA-Z][a-zA-Z0-9+.-]*:', dest) or dest.startswith(('#', '/')):
-            return m.group(0)
+            return dest
         path, sep, anchor = dest.partition('#')
         actual = source.parent / path
         if actual.suffix == '.md' or (actual.is_dir() and any(actual.rglob('*.md'))):
-            return m.group(0)
+            return dest
         rewritten = os.path.relpath(actual, target.parent)
-        return m.group(1) + rewritten + (sep + anchor if sep else '') + m.group(3)
-    return re.sub(r'(!?\[[^\]\n]*\]\()([^\s)]+)(\))', replace, text)
+        return rewritten + (sep + anchor if sep else '')
+    result = re.sub(r'(!?\[[^\]\n]*\]\()([^\s)]+)(\))', lambda m: m[1] + destination(m[2]) + m[3], text)
+    return html_links(result, destination)
 
 
 def render(source, data):
